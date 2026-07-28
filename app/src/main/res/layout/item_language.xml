@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/languageContainer"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_78sdp"
+    android:layout_marginBottom="@dimen/_14sdp"
+    android:background="@drawable/bg_language_item"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingStart="@dimen/_18sdp"
+    android:paddingEnd="@dimen/_18sdp">
+
+    <TextView
+        android:id="@+id/tvLanguageName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_semibold"
+        android:maxLines="1"
+        android:textColor="#111827"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintBottom_toTopOf="@id/tvLanguageNativeName"
+        app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="English (US)" />
+
+    <TextView
+        android:id="@+id/tvLanguageNativeName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins_regular"
+        android:maxLines="1"
+        android:textColor="#9AA0AA"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLanguageName"
+        tools:text="English" />
+
+    <ImageView
+        android:id="@+id/imgLanguageSelected"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_language_selected" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

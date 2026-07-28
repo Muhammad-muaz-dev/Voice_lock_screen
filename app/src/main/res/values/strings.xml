@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Voice Lock Screen</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="voice_lock_screen">Voice Screen Lock</string>
+    <string name="secure_smart">Secure &amp; Smart</string>
+    <string name="voice_lock_is_off">Voice Lock is Off</string>
+    <string name="unlock_with_voice">Unlock with Voice</string>
+    <string name="say_unlock_now">Say \'Unlock now\' to open your phone</string>
+    <string name="lock_with_voice">Lock with Voice</string>
+    <string name="say_lock_my_phone">Say \'Lock my phone\' to secure your phone</string>
+    <string name="advertisement">ADVERTISEMENT</string>
+    <string name="ad_banner">Ad Banner</string>
+    <string name="security_tools">Security Tools</string>
+    <string name="see_all">See All</string>
+    <string name="voice_unlock">Voice Unlock</string>
+    <string name="pin_lock">PIN Lock</string>
+    <string name="pattern_lock">Pattern Lock</string>
+    <string name="fingerprint_lock">Fingerprint Lock</string>
+    <string name="preview">Preview</string>
+    <string name="lock_screen_themes">Lock Screen Themes</string>
+    <string name="ocean">Ocean</string>
+
+    <string name="secure_your_phone_with_your_voice">Secure your phone with your voice</string>
+    <string name="setting_up_vice_security">Setting up vice security.......</string>
+    <string name="select_language">Select Language</string>
+    <string name="search_language">Search language...</string>
+    <string name="suggested">Suggested</string>
+    <string name="no_language_found">No language found</string>
+    <string name="continue_text">Continue</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
+    <string name="back">Back</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="create_your_pin">Create Your PIN</string>
+    <string name="pin_hint">Enter a %1$d-digit PIN to protect your apps.</string>
+    <string name="use_digit_pin">Use a %1$d-digit PIN</string>
+    <string name="confirm_pin">Confirm PIN</string>
+    <string name="pin_saved">PIN saved</string>
+    <string name="pin_incomplete">Enter your complete PIN</string>
+
+    <!-- Settings Screen -->
+    <string name="setting">Setting</string>
+    <string name="premium">PREMIUM</string>
+    <string name="upgrade_to_premium">Upgrade to Premium</string>
+    <string name="premium_desc">Unlock all app features &amp; more — no limits, no ads.</string>
+    <string name="upgrade_now">Upgrade Now</string>
+    <string name="general_settings">GENERAL SETTINGS</string>
+    <string name="change_language">Change Language</string>
+    <string name="select_preferred_language">Select your preferred language</string>
+    <string name="change_security_question">Change Security Question</string>
+    <string name="update_account_recovery">Update your account recovery question</string>
+    <string name="disable_system_lock">Disable System Lock</string>
+    <string name="avoid_multiple_lock">Avoid multiple lock screens</string>
+    <string name="other">OTHER</string>
+    <string name="share_app">Share App</string>
+    <string name="share_with_friends">Share this app with friends</string>
+    <string name="feedback">Feedback</string>
+    <string name="help_us_improve">Help us improve the app</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="read_our_privacy">Read our privacy policy</string>
+
+    <!-- Permissions Screen -->
+    <string name="permissions_required">Permissions Required</string>
+    <string name="allow_required_permissions">Allow Required Permissions</string>
+    <string name="permissions_desc">Enable these permissions so Voice Screen Lock can work correctly.</string>
+    <string name="phone_call_access">Phone Call Access</string>
+    <string name="phone_call_desc">Helps detect calls and keep voice lock working correctly.</string>
+    <string name="display_over_other_apps">Display Over Other Apps</string>
+    <string name="display_over_desc">Shows the voice lock screen above other apps.</string>
+    <string name="privacy_protected">Your privacy is protected</string>
+    <string name="privacy_desc">We only use these permissions for Voice Screen Lock features.</string>
+    <string name="permissions_enabled_count">%1$d of %2$d permissions enabled</string>
+
+    <!-- Fingerprint Lock Screen -->
+    <string name="enable_fingerprint_unlock">Enable Fingerprint Unlock</string>
+    <string name="use_fingerprint_desc">Use your fingerprint to secure your device.</string>
+    <string name="enable_fingerprint">Enable Fingerprint</string>
+    <string name="voice_setup">Voice Setup</string>
+    <string name="record_voice">Record Voice</string>
+    <string name="confirm_voice">Confirm Voice</string>
+    <string name="create_voice_password">Create Your Voice Password</string>
+    <string name="voice_password_hint">Say a unique phrase that you will remember and use to unlock your screen.</string>
+    <string name="ad">AD</string>
+    <string name="recorded_successfully">Recorded successfully</string>
+    <string name="tap_to_record_again">Tap to record again</string>
+    <string name="detected_phrase">DETECTED PHRASE</string>
+    <string name="default_voice_phrase">"hello hello hello hello hello hello hello"</string>
+    <string name="record_again">Record Again</string>
+    <string name="setup_security_question">Set Up a Security Question</string>
+    <string name="security_question_hint">Choose a question and answer to help recover your voice password if you forget it.</string>
+    <string name="security_question_label">• SECURITY QUESTION</string>
+    <string name="choose_security_question">Choose a security question</string>
+    <string name="your_answer">• YOUR ANSWER</string>
+    <string name="enter_your_answer">Enter your answer</string>
+    <string name="answer_help">Use an answer you can remember but others cannot easily guess.</string>
+    <string name="ad_320">Advertisement · 320 × 50</string>
+    <string name="save_finish">Save &amp; Finish</string>
+    <string name="pick_security_question">Pick a Security Question</string>
+    <string name="select_one_question">Select one question to protect your account</string>
+    <string name="confirm_question">Confirm Question</string>
+    <string name="security_saved">Security question saved</string>
+    <string name="choose_question_error">Choose a security question</string>
+    <string name="answer_required">Enter your answer</string>
+    <string name="good_afternoon">☀️ Good afternoon!</string>
+    <string name="tap_microphone">Tap the microphone and speak</string>
+    <string name="settings">Settings</string>
+    <string name="security">Security</string>
+</resources>

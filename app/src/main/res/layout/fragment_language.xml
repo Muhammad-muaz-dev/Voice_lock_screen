@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F9FD"
+    tools:context=".ui.prelogin.LanguageFragment">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/select_language"
+        android:textColor="#111827"
+        android:textSize="@dimen/_18ssp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSearchLanguage"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_58sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/bg_language_search"
+        android:drawableStart="@drawable/ic_language_search"
+        android:drawablePadding="@dimen/_12sdp"
+        android:fontFamily="@font/poppins_regular"
+        android:hint="@string/search_language"
+        android:imeOptions="actionSearch"
+        android:inputType="textCapWords"
+        android:paddingStart="@dimen/_18sdp"
+        android:paddingEnd="@dimen/_18sdp"
+        android:singleLine="true"
+        android:textColor="#111827"
+        android:textColorHint="#A0A5AE"
+        android:textSize="@dimen/_15ssp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <TextView
+        android:id="@+id/tvSuggested"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:fontFamily="@font/poppins_semibold"
+        android:letterSpacing="0.08"
+        android:text="@string/suggested"
+        android:textAllCaps="true"
+        android:textColor="#818894"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearchLanguage" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvLanguages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/btnContinue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSuggested"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_language" />
+
+    <TextView
+        android:id="@+id/tvEmptyLanguages"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center"
+        android:text="@string/no_language_found"
+        android:textColor="#818894"
+        android:textSize="@dimen/_13ssp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/rvLanguages"
+        app:layout_constraintEnd_toEndOf="@id/rvLanguages"
+        app:layout_constraintStart_toStartOf="@id/rvLanguages"
+        app:layout_constraintTop_toTopOf="@id/rvLanguages" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinue"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/continue_text"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/_14ssp"
+        app:backgroundTint="#2875FF"
+        app:cornerRadius="@dimen/_18sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_afterlogin"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_voiceSetupFragment"
+            app:destination="@id/voiceSetupFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_permissionFragment"
+            app:destination="@id/permissionFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_fingerprintLockFragment"
+            app:destination="@id/fingerprintLockFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_screenPreviewFragment"
+            app:destination="@id/screenPreviewFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_pinLockFragment"
+            app:destination="@id/pinLockFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_patternLockFragment"
+            app:destination="@id/patternLockFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_premiumFragment"
+            app:destination="@id/premiumFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/fingerprintLockFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.FingerprintLockFragment"
+        android:label="fragment_fingerprint_lock"
+        tools:layout="@layout/fragment_fingerprint_lock" />
+    <fragment
+        android:id="@+id/voiceSetupFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.VoiceSetupFragment"
+        android:label="fragment_voice_setup"
+        tools:layout="@layout/fragment_voice_setup">
+        <action
+            android:id="@+id/action_voiceSetupFragment_to_securityQuestionFragment"
+            app:destination="@id/securityQuestionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/securityQuestionFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.SecurityQuestionFragment"
+        android:label="fragment_security_question"
+        tools:layout="@layout/fragment_security_question" />
+    <fragment
+        android:id="@+id/screenPreviewFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.ScreenPreviewFragment"
+        android:label="fragment_screen_preview"
+        tools:layout="@layout/fragment_screen_preview" />
+    <fragment
+        android:id="@+id/pinLockFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.PinLockFragment"
+        android:label="fragment_pin_lock"
+        tools:layout="@layout/fragment_pin_lock" />
+    <fragment
+        android:id="@+id/permissionFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.PermissionFragment"
+        android:label="fragment_permission"
+        tools:layout="@layout/fragment_permission" />
+    <fragment
+        android:id="@+id/patternLockFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.PatternLockFragment"
+        android:label="fragment_pattern_lock"
+        tools:layout="@layout/fragment_pattern_lock" />
+    <fragment
+        android:id="@+id/premiumFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.PremiumFragment"
+        android:label="fragment_premium"
+        tools:layout="@layout/fragment_premium" />
+</navigation>

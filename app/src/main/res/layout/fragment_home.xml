@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_20sdp">
+
+        <!-- Header -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/voice_lock_screen"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/secure_smart"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <ImageView
+            android:id="@+id/ivPremium"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/bg_circle_white"
+            android:backgroundTint="@color/premium_gold"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/ic_crown"
+            app:layout_constraintBottom_toBottomOf="@id/tvSubtitle"
+            app:layout_constraintEnd_toStartOf="@id/ivSettings"
+            app:layout_constraintTop_toTopOf="@id/tvTitle" />
+
+        <ImageView
+            android:id="@+id/ivSettings"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:background="@drawable/bg_circle_white"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/ic_settings"
+            app:layout_constraintBottom_toBottomOf="@id/ivPremium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivPremium" />
+
+        <!-- Main Card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clMainCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/bg_main_card"
+            android:padding="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+            <ImageView
+                android:id="@+id/ivMic"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:background="@drawable/bg_circle_white"
+                android:contentDescription="@string/app_name"
+                android:elevation="@dimen/_8sdp"
+                android:padding="@dimen/_15sdp"
+                android:layout_margin="@dimen/_1sdp"
+                android:src="@drawable/ic_mic_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivWaves"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_waves"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivMic" />
+
+            <TextView
+                android:id="@+id/tvVoiceLockStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:drawablePadding="@dimen/_6sdp"
+                android:gravity="center"
+                android:text="@string/voice_lock_is_off"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/_12ssp"
+                app:drawableStartCompat="@drawable/ic_dot"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivWaves" />
+
+            <!-- Row 1: Unlock with Voice -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clUnlockVoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintTop_toBottomOf="@id/tvVoiceLockStatus">
+
+                <View
+                    android:id="@+id/ivIconUnlockContainer"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:background="@drawable/bg_icon_container"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_lock_open"
+                    app:layout_constraintBottom_toBottomOf="@id/ivIconUnlockContainer"
+                    app:layout_constraintEnd_toEndOf="@id/ivIconUnlockContainer"
+                    app:layout_constraintStart_toStartOf="@id/ivIconUnlockContainer"
+                    app:layout_constraintTop_toTopOf="@id/ivIconUnlockContainer" />
+
+                <TextView
+                    android:id="@+id/tvUnlockTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/unlock_with_voice"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@id/swUnlock"
+                    app:layout_constraintStart_toEndOf="@id/ivIconUnlockContainer"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvUnlockDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/say_unlock_now"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="@id/tvUnlockTitle"
+                    app:layout_constraintStart_toStartOf="@id/tvUnlockTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvUnlockTitle" />
+
+<!--                <com.google.android.material.materialswitch.MaterialSwitch-->
+<!--                    android:id="@+id/swUnlock"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:checked="true"-->
+<!--                    android:minWidth="@dimen/_48sdp"-->
+<!--                    android:minHeight="@dimen/_24sdp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    android:thumb="@drawable/selector_permission_thumb"-->
+<!--                    app:trackTint="@drawable/selector_permission_track"-->
+<!--                    />-->
+
+
+<!--                <com.google.android.material.materialswitch.MaterialSwitch-->
+<!--                    android:id="@+id/swUnlock"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:checked="true"-->
+<!--                    android:minWidth="@dimen/_48sdp"-->
+<!--                    android:minHeight="@dimen/_24sdp"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent-->
+<!--                    app:thumbTint="@drawable/selector_permission_thumb"-->
+<!--                    app:trackTint="@drawable/selector_permission_track" />-->
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/swUnlock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:minWidth="@dimen/_48sdp"
+                    android:minHeight="@dimen/_24sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:thumbTint="@drawable/selector_permission_thumb"
+                    app:trackTint="@drawable/selector_permission_track" />
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/viewDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="#F0F0F0"
+                app:layout_constraintTop_toBottomOf="@id/clUnlockVoice" />
+
+            <!-- Row 2: Lock with Voice -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clLockVoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@id/viewDivider">
+
+                <View
+                    android:id="@+id/ivIconLockContainer"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:background="@drawable/bg_icon_container"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_lock_closed"
+                    app:layout_constraintBottom_toBottomOf="@id/ivIconLockContainer"
+                    app:layout_constraintEnd_toEndOf="@id/ivIconLockContainer"
+                    app:layout_constraintStart_toStartOf="@id/ivIconLockContainer"
+                    app:layout_constraintTop_toTopOf="@id/ivIconLockContainer" />
+
+                <TextView
+                    android:id="@+id/tvLockTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/lock_with_voice"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@id/swLock"
+                    app:layout_constraintStart_toEndOf="@id/ivIconLockContainer"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvLockDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/say_lock_my_phone"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="@id/tvLockTitle"
+                    app:layout_constraintStart_toStartOf="@id/tvLockTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvLockTitle" />
+
+<!--                <androidx.appcompat.widget.SwitchCompat-->
+<!--                    android:id="@+id/swLock"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/swLock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:minWidth="@dimen/_48sdp"
+                    android:minHeight="@dimen/_24sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:thumbTint="@drawable/selector_permission_thumb"
+                    app:trackTint="@drawable/selector_permission_track" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Ad Placeholder -->
+        <FrameLayout
+            android:id="@+id/flAdContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/bg_main_card"
+            app:layout_constraintTop_toBottomOf="@id/clMainCard">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_margin="@dimen/_8sdp"
+                android:text="@string/advertisement"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/_8ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_12sdp"
+                android:background="@color/blue_light" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/ad_banner"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/_12ssp" />
+        </FrameLayout>
+
+        <!-- Security Tools -->
+        <TextView
+            android:id="@+id/tvSecurityTools"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/security_tools"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flAdContainer" />
+
+        <TextView
+            android:id="@+id/tvSeeAllTools"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/see_all"
+            android:textColor="@color/blue_primary"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="@id/tvSecurityTools"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvSecurityTools" />
+
+        <GridLayout
+            android:id="@+id/glSecurityTools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:columnCount="3"
+            app:layout_constraintTop_toBottomOf="@id/tvSecurityTools">
+
+            <!-- Tool 1: Voice Unlock -->
+            <LinearLayout
+                android:id="@+id/voiceUnlock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/bg_main_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:background="@drawable/bg_icon_container"
+                    android:contentDescription="@string/voice_unlock"
+                    android:padding="@dimen/_8sdp"
+                    android:src="@drawable/ic_mic_blue" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:minLines="2"
+                    android:text="@string/voice_unlock"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_9ssp" />
+            </LinearLayout>
+
+            <!-- Tool 2: PIN Lock -->
+            <LinearLayout
+                android:id="@+id/pinLock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/bg_main_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:background="@drawable/bg_icon_container"
+                    android:contentDescription="@string/pin_lock"
+                    android:padding="@dimen/_8sdp"
+                    android:src="@drawable/ic_pin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:minLines="2"
+                    android:text="@string/pin_lock"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_9ssp" />
+            </LinearLayout>
+
+            <!-- Tool 3: Pattern Lock -->
+            <LinearLayout
+                android:id="@+id/patternLock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/bg_main_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:background="@drawable/bg_icon_container"
+                    android:contentDescription="@string/pattern_lock"
+                    android:padding="@dimen/_8sdp"
+                    android:src="@drawable/ic_pattern" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:minLines="2"
+                    android:text="@string/pattern_lock"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_9ssp" />
+            </LinearLayout>
+
+            <!-- Tool 4: Fingerprint Lock -->
+            <LinearLayout
+                android:id="@+id/fingerLock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/bg_main_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:background="@drawable/bg_icon_container"
+                    android:contentDescription="@string/fingerprint_lock"
+                    android:padding="@dimen/_8sdp"
+                    android:src="@drawable/ic_fingerprint" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:minLines="2"
+                    android:text="@string/fingerprint_lock"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_9ssp" />
+            </LinearLayout>
+
+            <!-- Tool 5: Preview -->
+            <LinearLayout
+                android:id="@+id/preview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/bg_main_card"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:background="@drawable/bg_icon_container"
+                    android:contentDescription="@string/preview"
+                    android:padding="@dimen/_8sdp"
+                    android:src="@drawable/ic_preview" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:minLines="2"
+                    android:text="@string/preview"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_9ssp" />
+            </LinearLayout>
+        </GridLayout>
+
+        <!-- Lock Screen Themes -->
+        <TextView
+            android:id="@+id/tvThemes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/lock_screen_themes"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/glSecurityTools" />
+
+        <TextView
+            android:id="@+id/tvSeeAllThemes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/see_all"
+            android:textColor="@color/blue_primary"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="@id/tvThemes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvThemes" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@id/tvThemes">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Theme 1 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_140sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_12sdp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/ocean"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/onboard_one" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:text="@string/ocean"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_8ssp" />
+
+                    <ImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@android:drawable/checkbox_on_background"
+                        app:tint="@color/blue_primary" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Theme 2 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_140sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_12sdp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/onboard_two" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Theme 3 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_140sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_12sdp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/onboard_three" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

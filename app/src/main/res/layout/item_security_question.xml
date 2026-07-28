@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_42sdp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/imgRadio"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        android:src="@drawable/ic_question_radio_off" />
+
+    <TextView
+        android:id="@+id/tvQuestion"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_question_bottom_border"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_vertical"
+        android:textColor="#273247"
+        android:textSize="@dimen/_10ssp"
+        tools:text="What was the name of your primary school?" />
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="bg_color">#F5F9FC</color>
+    <color name="blue_primary">#3D8BFF</color>
+    <color name="blue_light">#EAF2FF</color>
+    <color name="text_dark">#1A1A1A</color>
+    <color name="text_gray">#7A7A7A</color>
+    <color name="premium_gold">#FFB800</color>
+    <color name="pin_key_text">#142242</color>
+</resources>
