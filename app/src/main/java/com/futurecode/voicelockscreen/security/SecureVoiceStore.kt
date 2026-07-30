@@ -21,6 +21,7 @@ object SecureVoiceStore {
     private const val KEY_DISPLAY_PHRASE = "voice_display_phrase"
     private const val GCM_TAG_LENGTH = 128
 
+
     fun savePhrase(context: Context, phrase: String) {
         val normalizedPhrase = VoiceSetupFragment.normalizePhrase(phrase)
         val cipher = Cipher.getInstance(TRANSFORMATION)
