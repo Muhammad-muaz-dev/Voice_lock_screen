@@ -1,6 +1,5 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
-import android.content.Context
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -19,18 +18,22 @@ import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPinLockBinding
+import com.futurecode.voicelockscreen.security.SecurePinStore
+import com.futurecode.voicelockscreen.service.LockMonitorService
 
 class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBinding::inflate) {
 
 
     private val enteredPin = StringBuilder()
     private var pinLength = DEFAULT_PIN_LENGTH
+    private var firstPin: String? = null
+    private var isConfirmingPin = false
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        pinLength = loadPinLength()
+        pinLength = SecurePinStore.getPinLength(requireContext())
         setupKeypad()
         renderPinMode()
 
@@ -41,12 +44,14 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         binding.tvTogglePinLength.setOnClickListener {
             pinLength = if (pinLength == 4) 6 else 4
             enteredPin.clear()
+            firstPin = null
+            isConfirmingPin = false
             renderPinMode()
         }
 
         binding.btnConfirm.setOnClickListener {
             if (enteredPin.length == pinLength) {
-                savePin()
+                handlePinCompleted()
             } else {
                 Toast.makeText(requireContext(), R.string.pin_incomplete, Toast.LENGTH_SHORT).show()
             }
@@ -122,7 +127,13 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
     }
 
     private fun renderPinMode() {
-        binding.tvPinHint.text = getString(R.string.pin_hint, pinLength)
+        binding.tvCreatePin.text = getString(
+            if (isConfirmingPin) R.string.confirm_your_pin else R.string.create_your_pin
+        )
+        binding.tvPinHint.text = getString(
+            if (isConfirmingPin) R.string.pin_confirm_hint else R.string.pin_hint,
+            pinLength
+        )
         binding.tvTogglePinLength.text = getString(R.string.use_digit_pin, if (pinLength == 4) 6 else 4)
         setupDots()
         updateDots()
@@ -156,24 +167,29 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         )
     }
 
-    private fun savePin() {
-        requireContext()
-            .getSharedPreferences(PIN_PREFS, Context.MODE_PRIVATE)
-            .edit()
-            .putString(KEY_PIN, enteredPin.toString())
-            .putInt(KEY_PIN_LENGTH, pinLength)
-            .apply()
+    private fun handlePinCompleted() {
+        val pin = enteredPin.toString()
+        if (!isConfirmingPin) {
+            firstPin = pin
+            isConfirmingPin = true
+            enteredPin.clear()
+            renderPinMode()
+            return
+        }
 
+        if (pin != firstPin) {
+            Toast.makeText(requireContext(), R.string.pin_mismatch, Toast.LENGTH_SHORT).show()
+            firstPin = null
+            isConfirmingPin = false
+            enteredPin.clear()
+            renderPinMode()
+            return
+        }
+
+        SecurePinStore.savePin(requireContext(), pin)
+        LockMonitorService.startIfNeeded(requireContext())
         Toast.makeText(requireContext(), R.string.pin_saved, Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
-    }
-
-    private fun loadPinLength(): Int {
-        return requireContext()
-            .getSharedPreferences(PIN_PREFS, Context.MODE_PRIVATE)
-            .getInt(KEY_PIN_LENGTH, DEFAULT_PIN_LENGTH)
-            .coerceIn(4, 6)
-            .let { if (it == 6) 6 else 4 }
     }
 
     private val Int.dp: Int
@@ -181,8 +197,5 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
 
     companion object {
         private const val DEFAULT_PIN_LENGTH = 4
-        private const val PIN_PREFS = "pin_lock_prefs"
-        private const val KEY_PIN = "pin"
-        private const val KEY_PIN_LENGTH = "pin_length"
     }
 }

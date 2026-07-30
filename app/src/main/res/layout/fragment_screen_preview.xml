@@ -4,16 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_lock_preview_wallpaper"
+    android:background="#050611"
     tools:context=".ui.afterlogin.ScreenPreviewFragment">
 
+    <ImageView
+        android:id="@+id/imgWallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/lock_preview_wallpaper"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#33000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvStatusTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_28sdp"
-        android:layout_marginTop="@dimen/_14sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_28sdp"
         android:fontFamily="@font/poppins_semibold"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/_14ssp"
@@ -23,10 +43,10 @@
 
     <View
         android:id="@+id/topCircle"
-        android:layout_width="@dimen/_44sdp"
-        android:layout_height="@dimen/_44sdp"
-        android:layout_marginTop="@dimen/_14sdp"
-        android:layout_marginEnd="@dimen/_22sdp"
+        android:layout_width="@dimen/_42sdp"
+        android:layout_height="@dimen/_42sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_24sdp"
         android:background="@drawable/bg_preview_top_circle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,16 +54,16 @@
     <LinearLayout
         android:id="@+id/timeCard"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="@dimen/_102sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_86sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
         android:background="@drawable/bg_preview_time_card"
         android:gravity="center"
-        android:padding="@dimen/_12sdp"
         android:orientation="vertical"
-        android:layout_margin="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topCircle"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvMainTime"
@@ -52,7 +72,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:includeFontPadding="false"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/_35ssp"
+            android:textSize="@dimen/_45ssp"
             tools:text="17:07" />
 
         <TextView
@@ -62,14 +82,14 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:fontFamily="@font/poppins_regular"
             android:textColor="#D5D0D7"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_14ssp"
             tools:text="Mon, 20 Jul" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvGreeting"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_34sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:background="@drawable/bg_preview_greeting"
         android:fontFamily="@font/poppins_semibold"
@@ -78,7 +98,7 @@
         android:paddingEnd="@dimen/_22sdp"
         android:text="@string/good_afternoon"
         android:textColor="#FFFFFF"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timeCard" />
@@ -89,21 +109,25 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_82sdp"
+        android:layout_marginBottom="@dimen/_78sdp"
         android:background="@drawable/bg_preview_unlock_panel"
         android:paddingStart="@dimen/_22sdp"
         android:paddingEnd="@dimen/_22sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.52"
-        app:layout_constraintTop_toBottomOf="@+id/tvGreeting"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHeight_percent="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1">
 
         <FrameLayout
             android:id="@+id/micRings"
-            android:layout_width="@dimen/_176sdp"
-            android:layout_height="@dimen/_176sdp"
-            android:layout_marginTop="@dimen/_42sdp"
+            android:layout_width="@dimen/_142sdp"
+            android:layout_height="@dimen/_142sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -114,20 +138,20 @@
                 android:background="@drawable/bg_preview_ring_outer" />
 
             <View
-                android:layout_width="@dimen/_138sdp"
-                android:layout_height="@dimen/_138sdp"
+                android:layout_width="@dimen/_116sdp"
+                android:layout_height="@dimen/_116sdp"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_preview_ring_middle" />
 
             <View
-                android:layout_width="@dimen/_102sdp"
-                android:layout_height="@dimen/_102sdp"
+                android:layout_width="@dimen/_86sdp"
+                android:layout_height="@dimen/_86sdp"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_preview_mic_circle" />
 
             <ImageView
-                android:layout_width="@dimen/_54sdp"
-                android:layout_height="@dimen/_54sdp"
+                android:layout_width="@dimen/_46sdp"
+                android:layout_height="@dimen/_46sdp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_preview_mic_white" />
         </FrameLayout>
@@ -140,7 +164,7 @@
             android:gravity="center"
             android:text="@string/tap_microphone"
             android:textColor="#B8B7C2"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintBottom_toTopOf="@id/divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -150,7 +174,7 @@
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/_18sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:background="#313346"
             app:layout_constraintBottom_toTopOf="@id/methodsRow"
             app:layout_constraintEnd_toEndOf="parent"
@@ -159,18 +183,29 @@
         <LinearLayout
             android:id="@+id/methodsRow"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_106sdp"
-            android:layout_marginBottom="@dimen/_24sdp"
+            android:layout_height="@dimen/_88sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <include android:id="@+id/methodPin" layout="@layout/item_preview_method" />
-            <include android:id="@+id/methodPattern" layout="@layout/item_preview_method" />
-            <include android:id="@+id/methodVoice" layout="@layout/item_preview_method" />
-            <include android:id="@+id/methodFingerprint" layout="@layout/item_preview_method" />
+            <include
+                android:id="@+id/methodPin"
+                layout="@layout/item_preview_method" />
+
+            <include
+                android:id="@+id/methodPattern"
+                layout="@layout/item_preview_method" />
+
+            <include
+                android:id="@+id/methodVoice"
+                layout="@layout/item_preview_method" />
+
+            <include
+                android:id="@+id/methodFingerprint"
+                layout="@layout/item_preview_method" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -179,7 +214,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_56sdp"
-        android:layout_marginBottom="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_26sdp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/settings"
         android:textColor="#A9A7B3"
@@ -202,7 +237,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_48sdp"
-        android:layout_marginBottom="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_26sdp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/security"
         android:textColor="#A9A7B3"

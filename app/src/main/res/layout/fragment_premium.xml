@@ -1,14 +1,309 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.afterlogin.PremiumFragment">
+    android:background="@drawable/ic_premium_back">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Close Button -->
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:background="@drawable/bg_circle_white"
+        android:contentDescription="@string/back"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_close_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/clBottom"
+        app:layout_constraintTop_toBottomOf="@id/ivClose">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_20sdp">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvTitleMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/voice_lock"
+                android:textColor="#2D3142"
+                android:textSize="@dimen/_28ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTitlePremium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/premium_title"
+                android:textColor="#3D8BFF"
+                android:textSize="@dimen/_32ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleMain" />
+
+            <!-- Choose Plan Section -->
+            <TextView
+                android:id="@+id/tvChoosePlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/choose_your_plan"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitlePremium" />
+
+            <!-- Weekly Plan -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clWeekly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/bg_plan_unselected"
+                android:padding="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@id/tvChoosePlan">
+
+                <TextView
+                    android:id="@+id/tvWeeklyTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/weekly"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvWeeklyDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seven_day_access"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvWeeklyTitle" />
+
+                <TextView
+                    android:id="@+id/tvWeeklyPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/weekly_price"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/per_week"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvWeeklyPrice" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Monthly Plan -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMonthly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/bg_plan_unselected"
+                android:padding="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@id/clWeekly">
+
+                <TextView
+                    android:id="@+id/tvMonthlyTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/monthly"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvMonthlyDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/thirty_day_access"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvMonthlyTitle" />
+
+                <TextView
+                    android:id="@+id/tvMonthlyPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/monthly_price"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/per_month"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvMonthlyPrice" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Yearly Plan (Selected) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clYearly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/bg_plan_selected"
+                android:padding="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@id/clMonthly">
+
+                <TextView
+                    android:id="@+id/tvBestValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_best_value"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:paddingVertical="@dimen/_2sdp"
+                    android:text="@string/best_value"
+                    android:textColor="#3D8BFF"
+                    android:textSize="@dimen/_7ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="-10dp"
+                    android:translationY="-5dp" />
+
+                <TextView
+                    android:id="@+id/tvYearlyTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/yearly"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvYearlyDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yearly_save"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvYearlyTitle" />
+
+                <TextView
+                    android:id="@+id/tvYearlyPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/yearly_price"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/per_year"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvYearlyPrice" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color"
+        android:paddingBottom="@dimen/_20sdp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPurchase"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/bg_onboarding_button"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/get_vpn_plus"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnPurchase">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_check_small"
+                android:drawablePadding="@dimen/_4sdp"
+                android:text="@string/cancel_anytime"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/_9ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                app:drawableStartCompat="@drawable/ic_privacy_blue"
+                android:drawablePadding="@dimen/_4sdp"
+                app:drawableTint="@color/blue_primary"
+                android:text="@string/thirty_day_guarantee"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/_9ssp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

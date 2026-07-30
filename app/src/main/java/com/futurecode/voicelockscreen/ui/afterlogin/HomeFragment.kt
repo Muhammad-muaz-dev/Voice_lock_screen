@@ -1,10 +1,13 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.provider.Settings
 import android.view.View
-import android.view.ViewGroup
+import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
@@ -20,19 +23,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
         binding.voiceUnlock.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_voiceSetupFragment)
+            openFeatureWithPermission(
+                PermissionFragment.TARGET_VOICE,
+                R.id.action_homeFragment_to_voiceSetupFragment
+            )
         }
 
         binding.pinLock.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_pinLockFragment)
+            openFeatureWithPermission(
+                PermissionFragment.TARGET_PIN,
+                R.id.action_homeFragment_to_pinLockFragment
+            )
         }
 
         binding.patternLock.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_patternLockFragment)
+            openFeatureWithPermission(
+                PermissionFragment.TARGET_PATTERN,
+                R.id.action_homeFragment_to_patternLockFragment
+            )
         }
 
         binding.fingerLock.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_fingerprintLockFragment)
+            openFeatureWithPermission(
+                PermissionFragment.TARGET_FINGERPRINT,
+                R.id.action_homeFragment_to_fingerprintLockFragment
+            )
         }
 
         binding.preview.setOnClickListener {
@@ -44,7 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
         binding.tvSeeAllThemes.setOnClickListener {
-
+         findNavController().navigate(R.id.action_homeFragment_to_seeAllthemesFragment)
         }
 
         binding.ivPremium.setOnClickListener {
@@ -55,5 +70,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.ivMic.setOnClickListener {
 
         }
+    }
+
+    private fun openFeatureWithPermission(target: String, @IdRes directActionId: Int) {
+        if (hasRequiredPermissions()) {
+            findNavController().navigate(directActionId)
+            return
+        }
+
+        findNavController().navigate(
+            R.id.action_homeFragment_to_permissionFragment,
+            Bundle().apply {
+                putString(PermissionFragment.ARG_TARGET, target)
+            }
+        )
+    }
+
+    private fun hasRequiredPermissions(): Boolean {
+        return hasPermission(Manifest.permission.RECORD_AUDIO) &&
+            hasPermission(Manifest.permission.READ_PHONE_STATE) &&
+            hasOverlayPermission()
+    }
+
+    private fun hasPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun hasOverlayPermission(): Boolean {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(requireContext())
     }
 }

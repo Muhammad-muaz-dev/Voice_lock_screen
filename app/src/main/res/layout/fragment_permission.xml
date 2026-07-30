@@ -306,8 +306,8 @@
                     <ImageView
                         android:layout_width="@dimen/_18sdp"
                         android:layout_height="@dimen/_18sdp"
-                        android:contentDescription="@string/display_over_other_apps"
-                        android:src="@drawable/ic_display_over"
+                        android:contentDescription="@string/microphone_access"
+                        android:src="@drawable/ic_mic_blue"
                         app:layout_constraintBottom_toBottomOf="@id/ivIconOverlayContainer"
                         app:layout_constraintEnd_toEndOf="@id/ivIconOverlayContainer"
                         app:layout_constraintStart_toStartOf="@id/ivIconOverlayContainer"
@@ -320,7 +320,7 @@
                         android:layout_marginStart="@dimen/_12sdp"
                         android:layout_marginEnd="@dimen/_8sdp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="@string/display_over_other_apps"
+                        android:text="@string/microphone_access"
                         android:textColor="@color/text_dark"
                         android:textSize="@dimen/_11ssp"
                         app:layout_constraintEnd_toStartOf="@id/swOverlay"
@@ -330,7 +330,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/display_over_desc"
+                        android:text="@string/microphone_desc"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_9ssp"
                         app:layout_constraintEnd_toEndOf="@id/tvOverlayTitle"

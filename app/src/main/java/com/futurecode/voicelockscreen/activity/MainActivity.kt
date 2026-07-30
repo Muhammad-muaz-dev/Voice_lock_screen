@@ -1,6 +1,7 @@
 package com.futurecode.voicelockscreen.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.databinding.ActivityMainBinding
+import com.futurecode.voicelockscreen.utils.setDarkStatusBarWithWhiteIcons
 
 class MainActivity : BaseActivity() {
     private var navController: NavController? = null
@@ -19,7 +21,9 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        // Option A: Custom Dark Color Pass karein (Matching your screenshot)
+        val darkBackgroundColor = Color.parseColor("#0B141A") // Ya aapka dark theme color
+        window.setDarkStatusBarWithWhiteIcons(darkBackgroundColor)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
         navController = navHostFragment!!.navController
 

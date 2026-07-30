@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_bottom_sheet"
     android:orientation="vertical"
     android:paddingStart="@dimen/_18sdp"
@@ -45,7 +46,7 @@
         tools:itemCount="8"
         tools:listitem="@layout/item_security_question" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnConfirmQuestion"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_48sdp"
@@ -57,4 +58,6 @@
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/_12ssp" />
+
+
 </LinearLayout>

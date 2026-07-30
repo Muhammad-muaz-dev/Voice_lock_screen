@@ -17,8 +17,8 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="sans-serif-black"
             android:text="@string/voice_lock_screen"
             android:textColor="@color/text_dark"
@@ -68,7 +68,7 @@
             android:id="@+id/clMainCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/bg_main_card"
             android:padding="@dimen/_20sdp"
@@ -78,12 +78,11 @@
                 android:id="@+id/ivMic"
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
-                android:background="@drawable/bg_circle_white"
+                android:layout_margin="@dimen/_1sdp"
                 android:contentDescription="@string/app_name"
                 android:elevation="@dimen/_8sdp"
-                android:padding="@dimen/_15sdp"
-                android:layout_margin="@dimen/_1sdp"
-                android:src="@drawable/ic_mic_blue"
+                android:padding="@dimen/_7sdp"
+                android:src="@drawable/ic_mic_record"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -166,34 +165,6 @@
                     app:layout_constraintStart_toStartOf="@id/tvUnlockTitle"
                     app:layout_constraintTop_toBottomOf="@id/tvUnlockTitle" />
 
-<!--                <com.google.android.material.materialswitch.MaterialSwitch-->
-<!--                    android:id="@+id/swUnlock"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:checked="true"-->
-<!--                    android:minWidth="@dimen/_48sdp"-->
-<!--                    android:minHeight="@dimen/_24sdp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    android:thumb="@drawable/selector_permission_thumb"-->
-<!--                    app:trackTint="@drawable/selector_permission_track"-->
-<!--                    />-->
-
-
-<!--                <com.google.android.material.materialswitch.MaterialSwitch-->
-<!--                    android:id="@+id/swUnlock"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:checked="true"-->
-<!--                    android:minWidth="@dimen/_48sdp"-->
-<!--                    android:minHeight="@dimen/_24sdp"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent-->
-<!--                    app:thumbTint="@drawable/selector_permission_thumb"-->
-<!--                    app:trackTint="@drawable/selector_permission_track" />-->
-
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/swUnlock"
                     android:layout_width="wrap_content"
@@ -206,8 +177,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:thumbTint="@drawable/selector_permission_thumb"
                     app:trackTint="@drawable/selector_permission_track" />
-
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -272,16 +241,6 @@
                     app:layout_constraintStart_toStartOf="@id/tvLockTitle"
                     app:layout_constraintTop_toBottomOf="@id/tvLockTitle" />
 
-<!--                <androidx.appcompat.widget.SwitchCompat-->
-<!--                    android:id="@+id/swLock"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-
-
                 <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/swLock"
                     android:layout_width="wrap_content"
@@ -296,7 +255,6 @@
                     app:trackTint="@drawable/selector_permission_track" />
 
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -306,7 +264,7 @@
             android:id="@+id/flAdContainer"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_80sdp"
-            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:background="@drawable/bg_main_card"
             app:layout_constraintTop_toBottomOf="@id/clMainCard">
@@ -340,8 +298,8 @@
             android:id="@+id/tvSecurityTools"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="sans-serif-black"
             android:text="@string/security_tools"
             android:textColor="@color/text_dark"
@@ -366,7 +324,7 @@
             android:id="@+id/glSecurityTools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:columnCount="3"
             app:layout_constraintTop_toBottomOf="@id/tvSecurityTools">
@@ -537,8 +495,8 @@
             android:id="@+id/tvThemes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="sans-serif-black"
             android:text="@string/lock_screen_themes"
             android:textColor="@color/text_dark"
@@ -564,7 +522,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:clipToPadding="false"
-            android:paddingHorizontal="@dimen/_15sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
             android:scrollbars="none"
             app:layout_constraintTop_toBottomOf="@id/tvThemes">
 

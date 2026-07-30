@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_6sdp"
+    app:cardCornerRadius="@dimen/_12sdp"
+    app:cardElevation="0dp">
+
+    <ImageView
+        android:id="@+id/ivTheme"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_220sdp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/onboard_one"
+        android:contentDescription="@string/app_name" />
+
+</androidx.cardview.widget.CardView>

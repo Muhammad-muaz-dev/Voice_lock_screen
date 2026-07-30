@@ -12,7 +12,7 @@
         android:layout_width="@dimen/_32sdp"
         android:layout_height="@dimen/_32sdp"
         android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_18sdp"
         android:background="@drawable/bg_pin_back"
         android:contentDescription="@string/back"
         android:padding="@dimen/_8sdp"
@@ -33,281 +33,309 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/btnBack" />
 
-    <LinearLayout
-        android:id="@+id/progressContainer"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentScroll"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="false"
+        android:paddingBottom="@dimen/_16sdp"
+        app:layout_constraintBottom_toTopOf="@id/actionContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnBack">
 
-        <TextView
-            android:id="@+id/tvStepOne"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
-            android:background="@drawable/bg_voice_step_active"
-            android:fontFamily="@font/poppins_semibold"
-            android:gravity="center"
-            android:text="1"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/_8ssp" />
-
-        <TextView
-            android:id="@+id/tvRecordLabel"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_7sdp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/record_voice"
-            android:textColor="#1E9BFF"
-            android:textSize="@dimen/_8ssp" />
+            android:paddingBottom="@dimen/_16sdp">
 
-        <View
-            android:layout_width="@dimen/_72sdp"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:background="#1E88FF" />
+            <LinearLayout
+                android:id="@+id/progressContainer"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tvStepTwo"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
-            android:background="@drawable/bg_voice_step_inactive"
-            android:fontFamily="@font/poppins_semibold"
-            android:gravity="center"
-            android:text="2"
-            android:textColor="#8EA0B7"
-            android:textSize="@dimen/_8ssp" />
+                <TextView
+                    android:id="@+id/tvStepOne"
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    android:background="@drawable/bg_voice_step_active"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/_8ssp" />
 
-        <TextView
-            android:id="@+id/tvConfirmLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_7sdp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/confirm_voice"
-            android:textColor="#8EA0B7"
-            android:textSize="@dimen/_8ssp" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tvRecordLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/record_voice"
+                    android:textColor="#1E9BFF"
+                    android:textSize="@dimen/_8ssp" />
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:fontFamily="@font/poppins_semibold"
-        android:gravity="center"
-        android:text="@string/create_voice_password"
-        android:textColor="#28C7F4"
-        android:textSize="@dimen/_17ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressContainer" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:layout_weight="1"
+                    android:background="#1E88FF" />
 
-    <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_36sdp"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:layout_marginEnd="@dimen/_36sdp"
-        android:fontFamily="@font/poppins_regular"
-        android:gravity="center"
-        android:lineSpacingExtra="@dimen/_2sdp"
-        android:text="@string/voice_password_hint"
-        android:textColor="#63718A"
-        android:textSize="@dimen/_10ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+                <TextView
+                    android:id="@+id/tvStepTwo"
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    android:background="@drawable/bg_voice_step_inactive"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="#8EA0B7"
+                    android:textSize="@dimen/_8ssp" />
+
+                <TextView
+                    android:id="@+id/tvConfirmLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/confirm_voice"
+                    android:textColor="#8EA0B7"
+                    android:textSize="@dimen/_8ssp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_24sdp"
+                android:fontFamily="@font/poppins_semibold"
+                android:gravity="center"
+                android:text="@string/create_voice_password"
+                android:textColor="#28C7F4"
+                android:textSize="@dimen/_17ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progressContainer" />
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_36sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_36sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/_2sdp"
+                android:text="@string/voice_password_hint"
+                android:textColor="#63718A"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+            <LinearLayout
+                android:id="@+id/adBanner"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/bg_dashed_ad"
+                android:orientation="vertical"
+                android:padding="@dimen/_9sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/ad"
+                    android:textColor="#B7C7D9"
+                    android:textSize="@dimen/_8ssp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_ad_inner"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:text="@string/ad_banner"
+                    android:textColor="#D0DAE8"
+                    android:textSize="@dimen/_9ssp" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/recordCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/bg_voice_card"
+                android:minHeight="@dimen/_250sdp"
+                android:padding="@dimen/_16sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/adBanner">
+
+                <TextView
+                    android:id="@+id/tvRecorded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_22sdp"
+                    android:background="@drawable/bg_recorded_badge"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/recorded_successfully"
+                    android:textColor="#11AD74"
+                    android:textSize="@dimen/_8ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="0:04"
+                    android:textColor="#142242"
+                    android:textSize="@dimen/_24ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btnRecord"
+                    android:layout_width="@dimen/_64sdp"
+                    android:layout_height="@dimen/_64sdp"
+                    android:layout_marginTop="@dimen/_42sdp"
+                    android:background="@drawable/bg_record_circle"
+                    android:contentDescription="@string/record_voice"
+                    android:padding="@dimen/_19sdp"
+                    android:src="@drawable/ic_pin_check"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTapHint"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:text="@string/tap_to_record_again"
+                    android:textColor="#9AA8BC"
+                    android:textSize="@dimen/_8ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnRecord" />
+
+                <TextView
+                    android:id="@+id/tvWave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:letterSpacing="0.15"
+                    android:text="||||||||||||"
+                    android:textColor="#22AFFF"
+                    android:textSize="@dimen/_25ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTapHint" />
+
+                <LinearLayout
+                    android:id="@+id/phraseBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:background="@drawable/bg_detected_phrase"
+                    android:minHeight="@dimen/_66sdp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvWave">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/detected_phrase"
+                        android:textColor="#91A2B7"
+                        android:textSize="@dimen/_7ssp" />
+
+                    <TextView
+                        android:id="@+id/tvPhrase"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/default_voice_phrase"
+                        android:textColor="#172238"
+                        android:textSize="@dimen/_9ssp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/adBanner"
+        android:id="@+id/actionContainer"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_72sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/bg_dashed_ad"
+        android:layout_height="wrap_content"
+        android:background="#F4F9FD"
         android:orientation="vertical"
-        android:padding="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_regular"
-            android:text="@string/ad"
-            android:textColor="#B7C7D9"
-            android:textSize="@dimen/_8ssp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_ad_inner"
-            android:fontFamily="@font/poppins_regular"
-            android:gravity="center"
-            android:text="@string/ad_banner"
-            android:textColor="#D0DAE8"
-            android:textSize="@dimen/_9ssp" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/recordCard"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_270sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/bg_voice_card"
-        android:padding="@dimen/_16sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/adBanner">
-
-        <TextView
-            android:id="@+id/tvRecorded"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_22sdp"
-            android:background="@drawable/bg_recorded_badge"
-            android:fontFamily="@font/poppins_semibold"
-            android:gravity="center"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:text="@string/recorded_successfully"
-            android:textColor="#11AD74"
-            android:textSize="@dimen/_8ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvTimer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="0:04"
-            android:textColor="#142242"
-            android:textSize="@dimen/_24ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/btnRecord"
-            android:layout_width="@dimen/_68sdp"
-            android:layout_height="@dimen/_68sdp"
-            android:layout_marginTop="@dimen/_44sdp"
-            android:background="@drawable/bg_record_circle"
-            android:contentDescription="@string/record_voice"
-            android:padding="@dimen/_20sdp"
-            android:src="@drawable/ic_pin_check"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvTapHint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="@string/tap_to_record_again"
-            android:textColor="#9AA8BC"
-            android:textSize="@dimen/_8ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnRecord" />
-
-        <TextView
-            android:id="@+id/tvWave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:letterSpacing="0.15"
-            android:text="||||||||||||"
-            android:textColor="#22AFFF"
-            android:textSize="@dimen/_28ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTapHint" />
-
-        <LinearLayout
-            android:id="@+id/phraseBox"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_70sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:background="@drawable/bg_detected_phrase"
-            android:orientation="vertical"
-            android:padding="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvWave">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="@string/detected_phrase"
-                android:textColor="#91A2B7"
-                android:textSize="@dimen/_7ssp" />
-
-            <TextView
-                android:id="@+id/tvPhrase"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="@string/default_voice_phrase"
-                android:textColor="#172238"
-                android:textSize="@dimen/_9ssp" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnRecordAgain"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_44sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/bg_outline_button"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/record_again"
-        android:textAllCaps="false"
-        android:textColor="#2480FF"
-        android:textSize="@dimen/_11ssp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toTopOf="@id/btnContinue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnContinue"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_44sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_24sdp"
-        android:background="@drawable/bg_onboarding_button"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/continue_text"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="@dimen/_11ssp"
-        app:backgroundTint="@null"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_18sdp"
+        android:paddingTop="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRecordAgain"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_44sdp"
+            android:background="@drawable/bg_outline_button"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/record_again"
+            android:textAllCaps="false"
+            android:textColor="#2480FF"
+            android:textSize="@dimen/_11ssp"
+            app:backgroundTint="@null" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_onboarding_button"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/continue_text"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_11ssp"
+            app:backgroundTint="@null" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

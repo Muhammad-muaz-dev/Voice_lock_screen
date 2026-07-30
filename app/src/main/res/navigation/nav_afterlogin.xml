@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_homeFragment_to_premiumFragment"
             app:destination="@id/premiumFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllthemesFragment"
+            app:destination="@id/seeAllthemesFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -84,4 +87,8 @@
         android:name="com.futurecode.voicelockscreen.ui.afterlogin.PremiumFragment"
         android:label="fragment_premium"
         tools:layout="@layout/fragment_premium" />
+    <fragment
+        android:id="@+id/seeAllthemesFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.SeeAllthemesFragment"
+        android:label="SeeAllthemesFragment" />
 </navigation>
