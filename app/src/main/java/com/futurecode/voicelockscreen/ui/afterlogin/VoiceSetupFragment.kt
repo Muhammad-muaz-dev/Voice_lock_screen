@@ -1,6 +1,5 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognitionListener
@@ -12,7 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentVoiceSetupBinding
-import com.futurecode.voicelockscreen.service.LockMonitorService
+import com.futurecode.voicelockscreen.security.SecureVoiceStore
+import com.futurecode.voicelockscreen.service.LockService
 import java.util.Locale
 
 class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoiceSetupBinding::inflate) {
@@ -32,7 +32,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         binding.btnRecordAgain.setOnClickListener { startRecording() }
         binding.btnContinue.setOnClickListener {
             if (saveVoicePhrase()) {
-                LockMonitorService.startIfNeeded(requireContext())
+                LockService.startIfNeeded(requireContext())
                 Toast.makeText(requireContext(), R.string.voice_saved, Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_voiceSetupFragment_to_securityQuestionFragment)
             }
@@ -145,21 +145,12 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
             return false
         }
 
-        requireContext()
-            .getSharedPreferences(VOICE_PREFS, Context.MODE_PRIVATE)
-            .edit()
-            .putString(KEY_VOICE_PHRASE, recognizedPhrase)
-            .putString(KEY_VOICE_PHRASE_NORMALIZED, normalizePhrase(recognizedPhrase))
-            .putBoolean(KEY_VOICE_RECORDED, true)
-            .apply()
+        SecureVoiceStore.savePhrase(requireContext(), recognizedPhrase)
         return true
     }
 
     private fun loadSavedPhrase(): String {
-        return requireContext()
-            .getSharedPreferences(VOICE_PREFS, Context.MODE_PRIVATE)
-            .getString(KEY_VOICE_PHRASE, "")
-            .orEmpty()
+        return SecureVoiceStore.getDisplayPhrase(requireContext())
     }
 
     private fun stopRecognizer() {

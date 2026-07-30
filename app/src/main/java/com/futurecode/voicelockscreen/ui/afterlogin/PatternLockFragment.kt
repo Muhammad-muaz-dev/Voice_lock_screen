@@ -8,7 +8,7 @@ import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPatternLockBinding
 import com.futurecode.voicelockscreen.security.SecurePatternStore
-import com.futurecode.voicelockscreen.service.LockMonitorService
+import com.futurecode.voicelockscreen.service.LockService
 class PatternLockFragment : BaseFragment<FragmentPatternLockBinding>(FragmentPatternLockBinding::inflate) {
 
     private var firstPattern: String? = null
@@ -47,7 +47,7 @@ class PatternLockFragment : BaseFragment<FragmentPatternLockBinding>(FragmentPat
 
         if (sequence == firstPattern) {
             SecurePatternStore.savePattern(requireContext(), sequence)
-            LockMonitorService.startIfNeeded(requireContext())
+            LockService.startIfNeeded(requireContext())
             binding.tvPatternStatus.text = getString(R.string.pattern_saved)
             Toast.makeText(requireContext(), R.string.pattern_saved, Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()

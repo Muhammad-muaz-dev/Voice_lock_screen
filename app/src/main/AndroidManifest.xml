@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!-- Normal Permissions -->
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <!-- Foreground Service Permissions -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -22,8 +22,8 @@
     <!-- Runtime Permissions -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
-    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
 
     <application
@@ -41,6 +41,16 @@
             android:exported="false"
             android:launchMode="singleTop" />
         <activity
+            android:name=".activity.LockScreenActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:noHistory="false"
+            android:showWhenLocked="true"
+            android:taskAffinity="${applicationId}.lock"
+            android:theme="@style/Theme.VoiceLockScreen"
+            android:turnScreenOn="true" />
+        <activity
             android:name=".activity.MainActivity"
             android:exported="true" >
             <intent-filter>
@@ -55,18 +65,9 @@
             android:value="ca-app-pub-6055884359644589~4105665492" />
 
         <receiver
-            android:name=".receiver.PhoneUnlockReceiver"
+            android:name=".receiver.BootReceiver"
             android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name=".receiver.BootCompletedReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
@@ -75,13 +76,13 @@
         </receiver>
 
         <service
-            android:name=".service.LockMonitorService"
+            android:name=".service.LockService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="specialUse">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="listens_for_phone_unlock_to_show_enabled_app_lock" />
+                android:value="listens_for_screen_on_to_show_voice_lock_screen" />
         </service>
     </application>
 

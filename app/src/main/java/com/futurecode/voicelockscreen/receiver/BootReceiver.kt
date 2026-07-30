@@ -4,16 +4,17 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.futurecode.voicelockscreen.security.AppLockState
-import com.futurecode.voicelockscreen.service.LockMonitorService
+import com.futurecode.voicelockscreen.service.LockService
 
-class BootCompletedReceiver : BroadcastReceiver() {
+class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val isBootEvent = intent.action == Intent.ACTION_BOOT_COMPLETED ||
+        val shouldStart = intent.action == Intent.ACTION_BOOT_COMPLETED ||
             intent.action == Intent.ACTION_LOCKED_BOOT_COMPLETED ||
-            intent.action == Intent.ACTION_MY_PACKAGE_REPLACED
-        if (!isBootEvent) return
+            intent.action == Intent.ACTION_MY_PACKAGE_REPLACED ||
+            intent.action == Intent.ACTION_PACKAGE_REPLACED
+        if (!shouldStart) return
         if (!AppLockState.hasAnyLockEnabled(context)) return
 
-        LockMonitorService.startIfNeeded(context)
+        LockService.startIfNeeded(context)
     }
 }

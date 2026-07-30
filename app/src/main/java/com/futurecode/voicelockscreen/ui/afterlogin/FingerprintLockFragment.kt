@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentFingerprintLockBinding
-import com.futurecode.voicelockscreen.service.LockMonitorService
+import com.futurecode.voicelockscreen.service.LockService
 
 class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(FragmentFingerprintLockBinding::inflate) {
 
@@ -48,7 +48,7 @@ class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(Fra
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     saveFingerprintEnabled()
-                    LockMonitorService.startIfNeeded(requireContext())
+                    LockService.startIfNeeded(requireContext())
                     showStatus(R.string.fingerprint_enabled)
                     Toast.makeText(requireContext(), R.string.fingerprint_enabled, Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()

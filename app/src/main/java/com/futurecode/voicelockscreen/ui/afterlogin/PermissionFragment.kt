@@ -1,12 +1,9 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPermissionBinding
+import com.futurecode.voicelockscreen.utils.LockPermissionHelper
 
 class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermissionBinding::inflate) {
 
@@ -26,10 +24,23 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
             navigateToTarget()
         } else if (hasRuntimePermissions() && !hasOverlayPermission()) {
             requestOverlayPermission()
+        } else if (hasRuntimePermissions() && hasOverlayPermission() && !hasBatteryOptimizationPermission()) {
+            requestBatteryOptimizationPermission()
         }
     }
 
     private val overlayPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        updatePermissionStatus()
+        if (hasRequiredPermissions()) {
+            navigateToTarget()
+        } else if (hasRuntimePermissions() && hasOverlayPermission() && !hasBatteryOptimizationPermission()) {
+            requestBatteryOptimizationPermission()
+        }
+    }
+
+    private val batteryOptimizationLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
         updatePermissionStatus()
@@ -54,6 +65,7 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
                 hasRequiredPermissions() -> navigateToTarget()
                 !hasRuntimePermissions() -> requestRequiredPermissions()
                 !hasOverlayPermission() -> requestOverlayPermission()
+                !hasBatteryOptimizationPermission() -> requestBatteryOptimizationPermission()
             }
         }
 
@@ -93,12 +105,11 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
     private fun requestOverlayPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
 
-        overlayPermissionLauncher.launch(
-            Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:${requireContext().packageName}")
-            )
-        )
+        overlayPermissionLauncher.launch(LockPermissionHelper.overlaySettingsIntent(requireContext()))
+    }
+
+    private fun requestBatteryOptimizationPermission() {
+        batteryOptimizationLauncher.launch(LockPermissionHelper.batteryOptimizationIntent(requireContext()))
     }
 
     private fun updatePermissionStatus() {
@@ -117,7 +128,8 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
         binding.btnContinue.alpha = if (hasRequiredPermissions()) 1f else 0.85f
     }
 
-    private fun hasRequiredPermissions(): Boolean = hasRuntimePermissions() && hasOverlayPermission()
+    private fun hasRequiredPermissions(): Boolean =
+        hasRuntimePermissions() && hasOverlayPermission() && hasBatteryOptimizationPermission()
 
     private fun hasRuntimePermissions(): Boolean = hasPhonePermission() && hasMicrophonePermission()
 
@@ -126,7 +138,11 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
     private fun hasMicrophonePermission(): Boolean = hasPermission(Manifest.permission.RECORD_AUDIO)
 
     private fun hasOverlayPermission(): Boolean {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(requireContext())
+        return LockPermissionHelper.hasOverlayPermission(requireContext())
+    }
+
+    private fun hasBatteryOptimizationPermission(): Boolean {
+        return LockPermissionHelper.isIgnoringBatteryOptimizations(requireContext())
     }
 
     private fun hasPermission(permission: String): Boolean {

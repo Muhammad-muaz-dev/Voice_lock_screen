@@ -1,13 +1,16 @@
 package com.futurecode.voicelockscreen.utils
 
+import android.content.Context
 import android.os.Build
 import android.view.View
 import android.view.Window
 import android.view.WindowInsetsController
 import androidx.annotation.ColorInt
 import androidx.core.view.WindowCompat
+import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.MyApplication
 import com.google.gson.Gson
+import java.util.Calendar
 
 
 //fun getNotificationListFromPrefs(): List<NotificationModel> {
@@ -68,4 +71,14 @@ fun Window.setDarkStatusBarWithWhiteIcons(@ColorInt backgroundColor: Int) {
 }
 
 
+fun Context.getTimeBasedGreetingRes(): String {
+    val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+    val stringResId = when (hour) {
+        in 5..11 -> R.string.good_morning
+        in 12..16 -> R.string.good_afternoon
+        in 17..20 -> R.string.good_evening
+        else -> R.string.good_night
+    }
+    return getString(stringResId)
+}
 

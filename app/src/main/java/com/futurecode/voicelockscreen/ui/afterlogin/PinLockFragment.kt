@@ -19,7 +19,7 @@ import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPinLockBinding
 import com.futurecode.voicelockscreen.security.SecurePinStore
-import com.futurecode.voicelockscreen.service.LockMonitorService
+import com.futurecode.voicelockscreen.service.LockService
 
 class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBinding::inflate) {
 
@@ -187,7 +187,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         }
 
         SecurePinStore.savePin(requireContext(), pin)
-        LockMonitorService.startIfNeeded(requireContext())
+        LockService.startIfNeeded(requireContext())
         Toast.makeText(requireContext(), R.string.pin_saved, Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
     }

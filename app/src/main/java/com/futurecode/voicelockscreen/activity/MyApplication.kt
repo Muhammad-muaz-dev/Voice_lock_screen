@@ -2,17 +2,13 @@ package com.futurecode.voicelockscreen.activity
 
 import android.app.Activity
 import android.app.Application
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import com.facebook.ads.AudienceNetworkAds
 import com.futurecode.voicelockscreen.db.PrefManager
-import com.futurecode.voicelockscreen.receiver.PhoneUnlockReceiver
-import com.futurecode.voicelockscreen.service.LockMonitorService
+import com.futurecode.voicelockscreen.service.LockService
 import com.google.android.gms.ads.MobileAds
 import java.util.Locale
 
@@ -24,7 +20,6 @@ class MyApplication : Application() {
     // var appOpenHelper: AppOpenHelperNew? = null
    // private lateinit var networkMonitor: NetworkMonitor
     private var currentActivity: Activity? = null
-    private val phoneUnlockReceiver = PhoneUnlockReceiver()
 
     // private lateinit var analytics: FirebaseAnalytics
 
@@ -41,8 +36,7 @@ class MyApplication : Application() {
         // 1. Setup Activity Tracker FIRST
         // This is required because NetworkMonitor needs getCurrentActivity() to show the dialog
         setupActivityTracker()
-        registerPhoneUnlockReceiver()
-        LockMonitorService.startIfNeeded(this)
+        LockService.startIfNeeded(this)
 
         // 2. Initialize and Start Network Monitoring
 //        networkMonitor = NetworkMonitor(this)
@@ -76,15 +70,6 @@ class MyApplication : Application() {
     }
 
     fun getCurrentActivity(): Activity? = currentActivity
-
-    private fun registerPhoneUnlockReceiver() {
-        ContextCompat.registerReceiver(
-            this,
-            phoneUnlockReceiver,
-            IntentFilter(Intent.ACTION_USER_PRESENT),
-            ContextCompat.RECEIVER_EXPORTED
-        )
-    }
 
     private fun initializeADS() {
         AudienceNetworkAds.initialize(this)

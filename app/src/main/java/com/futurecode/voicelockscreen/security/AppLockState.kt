@@ -3,7 +3,6 @@ package com.futurecode.voicelockscreen.security
 import android.content.Context
 import com.futurecode.voicelockscreen.ui.afterlogin.FingerprintLockFragment
 import com.futurecode.voicelockscreen.ui.afterlogin.ScreenPreviewFragment
-import com.futurecode.voicelockscreen.ui.afterlogin.VoiceSetupFragment
 
 object AppLockState {
     private const val PREFS = "lock_session_prefs"
@@ -12,7 +11,7 @@ object AppLockState {
     fun hasAnyLockEnabled(context: Context): Boolean {
         return SecurePinStore.hasPin(context) ||
             SecurePatternStore.hasPattern(context) ||
-            hasSavedVoicePhrase(context) ||
+            SecureVoiceStore.hasPhrase(context) ||
             isFingerprintEnabled(context)
     }
 
@@ -49,14 +48,6 @@ object AppLockState {
                 .apply()
         }
         return requested
-    }
-
-    private fun hasSavedVoicePhrase(context: Context): Boolean {
-        return context
-            .getSharedPreferences(VoiceSetupFragment.VOICE_PREFS, Context.MODE_PRIVATE)
-            .getString(VoiceSetupFragment.KEY_VOICE_PHRASE_NORMALIZED, "")
-            .orEmpty()
-            .isNotBlank()
     }
 
     private fun isFingerprintEnabled(context: Context): Boolean {

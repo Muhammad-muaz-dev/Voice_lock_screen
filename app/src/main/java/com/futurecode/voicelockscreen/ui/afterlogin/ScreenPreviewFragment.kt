@@ -29,13 +29,15 @@ import com.futurecode.voicelockscreen.databinding.FragmentScreenPreviewBinding
 import com.futurecode.voicelockscreen.security.AppLockState
 import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.security.SecurePatternStore
+import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.ui.custom.PatternLockView
+import com.futurecode.voicelockscreen.utils.getTimeBasedGreetingRes
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(FragmentScreenPreviewBinding::inflate) {
 
-
+    //tvGreeting
     private val methods = listOf(
         PreviewMethod("PIN", R.drawable.ic_pin_lock),
         PreviewMethod("Pattern", R.drawable.ic_pattern_lock),
@@ -47,17 +49,18 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
     private var previousStatusBarColor: Int = Color.TRANSPARENT
     private var previousNavigationBarColor: Int = Color.TRANSPARENT
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         enterPreviewMode()
         bindDateTime()
         bindMethods()
         updateSelectedMethod()
+
         binding.micRings.setOnClickListener {
             openSelectedUnlockMethod()
         }
+
+        binding.tvGreeting.text=requireContext().getTimeBasedGreetingRes()
     }
 
     override fun onDestroyView() {
@@ -314,12 +317,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
     }
 
     private fun startVoiceUnlock() {
-        val savedPhrase = requireContext()
-            .getSharedPreferences(VoiceSetupFragment.VOICE_PREFS, Context.MODE_PRIVATE)
-            .getString(VoiceSetupFragment.KEY_VOICE_PHRASE_NORMALIZED, "")
-            .orEmpty()
-
-        if (savedPhrase.isBlank()) {
+        if (!SecureVoiceStore.hasPhrase(requireContext())) {
             Toast.makeText(requireContext(), R.string.save_voice_first, Toast.LENGTH_SHORT).show()
             return
         }
@@ -352,9 +350,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
                         ?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                         ?.firstOrNull()
                         .orEmpty()
-                    val normalizedSpoken = VoiceSetupFragment.normalizePhrase(spoken)
-
-                    if (normalizedSpoken == savedPhrase) {
+                    if (SecureVoiceStore.verifyPhrase(requireContext(), spoken)) {
                         binding.tvSpeakHint.text = getString(R.string.voice_unlocked)
                         Toast.makeText(requireContext(), R.string.voice_unlocked, Toast.LENGTH_SHORT).show()
                         unlockAndClose()
