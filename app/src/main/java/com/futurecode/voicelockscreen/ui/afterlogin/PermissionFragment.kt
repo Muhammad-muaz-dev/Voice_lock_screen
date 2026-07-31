@@ -129,7 +129,9 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
     }
 
     private fun hasRequiredPermissions(): Boolean =
-        hasRuntimePermissions() && hasOverlayPermission() && hasBatteryOptimizationPermission()
+        hasRuntimePermissions() &&
+            hasOverlayPermission() &&
+            hasBatteryOptimizationPermission()
 
     private fun hasRuntimePermissions(): Boolean = hasPhonePermission() && hasMicrophonePermission()
 

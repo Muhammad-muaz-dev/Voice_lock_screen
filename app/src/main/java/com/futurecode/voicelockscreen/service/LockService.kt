@@ -2,6 +2,8 @@ package com.futurecode.voicelockscreen.service
 
 import android.app.Notification
 import android.app.NotificationChannel
+import android.app.AlarmManager
+import android.app.ActivityOptions
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -9,19 +11,26 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ServiceInfo
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.SystemClock
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.app.ServiceCompat
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.HomeActivity
 import com.futurecode.voicelockscreen.activity.LockScreenActivity
+import com.futurecode.voicelockscreen.receiver.BootReceiver
 import com.futurecode.voicelockscreen.security.AppLockState
+import com.futurecode.voicelockscreen.utils.LockPermissionHelper
 
 class LockService : Service() {
     private val mainHandler = Handler(Looper.getMainLooper())
+    private lateinit var lockOverlayWindow: LockOverlayWindow
     private val screenStateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
@@ -39,12 +48,13 @@ class LockService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        lockOverlayWindow = LockOverlayWindow(this)
         registerScreenStateReceiver()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createNotificationChannel()
-        startForeground(NOTIFICATION_ID, buildNotification())
+        startAsForeground()
 
         if (!AppLockState.hasAnyLockEnabled(this)) {
             stopSelf()
@@ -59,8 +69,16 @@ class LockService : Service() {
     }
 
     override fun onDestroy() {
+        if (::lockOverlayWindow.isInitialized) {
+            lockOverlayWindow.dismiss()
+        }
         runCatching { unregisterReceiver(screenStateReceiver) }
         super.onDestroy()
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        scheduleServiceRestart()
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -82,9 +100,27 @@ class LockService : Service() {
         if (!AppLockState.hasAnyLockEnabled(this)) return
         if (AppLockState.isUnlockedThisSession(this)) return
 
-        runCatching {
-            startActivity(LockScreenActivity.newIntent(this))
+        if (shouldUseOverlayFirst()) {
+            lockOverlayWindow.show()
+            return
         }
+
+        val launched = runCatching {
+            startActivity(LockScreenActivity.newIntent(this))
+        }.isSuccess
+
+        if (!launched || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            showFullScreenLockNotification()
+        }
+    }
+
+    private fun startAsForeground() {
+        val serviceType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+        } else {
+            0
+        }
+        ServiceCompat.startForeground(this, NOTIFICATION_ID, buildNotification(), serviceType)
     }
 
     private fun buildNotification(): Notification {
@@ -106,20 +142,94 @@ class LockService : Service() {
             .build()
     }
 
+    private fun showFullScreenLockNotification() {
+        val fullScreenIntent = PendingIntent.getActivity(
+            this,
+            FULL_SCREEN_REQUEST_CODE,
+            LockScreenActivity.newIntent(this),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            pendingIntentActivityOptions()
+        )
+
+        val notification = NotificationCompat.Builder(this, LOCK_ALERT_CHANNEL_ID)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(getString(R.string.lock_monitor_running))
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setOngoing(true)
+            .setAutoCancel(false)
+            .setFullScreenIntent(fullScreenIntent, true)
+            .setContentIntent(fullScreenIntent)
+            .build()
+
+        getSystemService(NotificationManager::class.java)
+            .notify(LOCK_ALERT_NOTIFICATION_ID, notification)
+    }
+
+    private fun shouldUseOverlayFirst(): Boolean {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE &&
+            LockPermissionHelper.hasOverlayPermission(this)
+    }
+
+    private fun pendingIntentActivityOptions(): Bundle? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            ActivityOptions.makeBasic().apply {
+                pendingIntentCreatorBackgroundActivityStartMode =
+                    ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+            }.toBundle()
+        } else {
+            null
+        }
+    }
+
+    private fun scheduleServiceRestart() {
+        if (!AppLockState.hasAnyLockEnabled(this)) return
+
+        val restartIntent = Intent(this, BootReceiver::class.java).apply {
+            action = BootReceiver.ACTION_RESTART_LOCK_SERVICE
+        }
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            RESTART_REQUEST_CODE,
+            restartIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val triggerAt = SystemClock.elapsedRealtime() + RESTART_DELAY_MS
+        val alarmManager = getSystemService(AlarmManager::class.java)
+        alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pendingIntent)
+    }
+
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
-        val channel = NotificationChannel(
+        val monitorChannel = NotificationChannel(
             CHANNEL_ID,
             getString(R.string.lock_monitor_channel),
             NotificationManager.IMPORTANCE_LOW
         )
-        getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
+        val alertChannel = NotificationChannel(
+            LOCK_ALERT_CHANNEL_ID,
+            getString(R.string.lock_monitor_channel),
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply {
+            lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+        }
+        getSystemService(NotificationManager::class.java).apply {
+            createNotificationChannel(monitorChannel)
+            createNotificationChannel(alertChannel)
+        }
     }
 
     companion object {
         private const val CHANNEL_ID = "lock_monitor_channel"
+        private const val LOCK_ALERT_CHANNEL_ID = "lock_alert_channel"
         private const val NOTIFICATION_ID = 1002
+        const val LOCK_ALERT_NOTIFICATION_ID = 1003
+        private const val FULL_SCREEN_REQUEST_CODE = 301
+        private const val RESTART_REQUEST_CODE = 302
+        private const val RESTART_DELAY_MS = 1000L
         private const val SCREEN_ON_LAUNCH_DELAY_MS = 250L
         const val ACTION_SHOW_LOCK_SCREEN = "com.futurecode.voicelockscreen.SHOW_LOCK_SCREEN"
 

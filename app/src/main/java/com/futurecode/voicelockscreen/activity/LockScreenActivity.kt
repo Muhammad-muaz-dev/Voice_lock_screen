@@ -1,5 +1,6 @@
 package com.futurecode.voicelockscreen.activity
 
+import android.app.NotificationManager
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
@@ -31,6 +32,7 @@ import com.futurecode.voicelockscreen.security.AppLockState
 import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
+import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.ui.afterlogin.FingerprintLockFragment
 import com.futurecode.voicelockscreen.ui.custom.PatternLockView
 import java.text.SimpleDateFormat
@@ -43,6 +45,7 @@ class LockScreenActivity : BaseActivity() {
     private var speechRecognizer: SpeechRecognizer? = null
     private var fallbackOverlay: FrameLayout? = null
     private var isUnlocking = false
+    private var didStartVoiceForCurrentResume = false
 
     private val methods = listOf(
         PreviewMethod("PIN", R.drawable.ic_pin_lock),
@@ -54,6 +57,8 @@ class LockScreenActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         configureLockWindow()
         super.onCreate(savedInstanceState)
+        getSystemService(NotificationManager::class.java)
+            .cancel(LockService.LOCK_ALERT_NOTIFICATION_ID)
         binding = FragmentScreenPreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -61,7 +66,19 @@ class LockScreenActivity : BaseActivity() {
         bindMethods()
         updateSelectedMethod()
         binding.micRings.setOnClickListener { openSelectedUnlockMethod() }
-        binding.root.post { startVoiceUnlock() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!didStartVoiceForCurrentResume && fallbackOverlay == null && !isUnlocking) {
+            didStartVoiceForCurrentResume = true
+            binding.root.post { startVoiceUnlock() }
+        }
+    }
+
+    override fun onPause() {
+        didStartVoiceForCurrentResume = false
+        super.onPause()
     }
 
     override fun onDestroy() {

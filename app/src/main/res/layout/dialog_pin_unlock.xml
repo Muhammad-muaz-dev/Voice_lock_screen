@@ -31,17 +31,60 @@
         android:columnCount="3"
         android:rowCount="4">
 
-        <Button android:id="@+id/btnOne" style="@style/PinKeyButton" android:text="1" />
-        <Button android:id="@+id/btnTwo" style="@style/PinKeyButton" android:text="2" />
-        <Button android:id="@+id/btnThree" style="@style/PinKeyButton" android:text="3" />
-        <Button android:id="@+id/btnFour" style="@style/PinKeyButton" android:text="4" />
-        <Button android:id="@+id/btnFive" style="@style/PinKeyButton" android:text="5" />
-        <Button android:id="@+id/btnSix" style="@style/PinKeyButton" android:text="6" />
-        <Button android:id="@+id/btnSeven" style="@style/PinKeyButton" android:text="7" />
-        <Button android:id="@+id/btnEight" style="@style/PinKeyButton" android:text="8" />
-        <Button android:id="@+id/btnNine" style="@style/PinKeyButton" android:text="9" />
-        <Button android:id="@+id/btnBackspace" style="@style/PinKeyButton" android:text="⌫" />
-        <Button android:id="@+id/btnZero" style="@style/PinKeyButton" android:text="0" />
+        <Button
+            android:id="@+id/btnOne"
+            style="@style/PinKeyButton"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/btnTwo"
+            style="@style/PinKeyButton"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/btnThree"
+            style="@style/PinKeyButton"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/btnFour"
+            style="@style/PinKeyButton"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/btnFive"
+            style="@style/PinKeyButton"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/btnSix"
+            style="@style/PinKeyButton"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/btnSeven"
+            style="@style/PinKeyButton"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/btnEight"
+            style="@style/PinKeyButton"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/btnNine"
+            style="@style/PinKeyButton"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/btnBackspace"
+            style="@style/PinKeyButton"
+            android:text="⌫" />
+
+        <Button
+            android:id="@+id/btnZero"
+            style="@style/PinKeyButton"
+            android:text="0" />
 
         <ImageButton
             android:id="@+id/btnConfirm"

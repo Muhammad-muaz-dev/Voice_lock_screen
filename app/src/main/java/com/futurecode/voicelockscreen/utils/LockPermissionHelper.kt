@@ -1,6 +1,7 @@
 package com.futurecode.voicelockscreen.utils
 
 import android.Manifest
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -49,6 +50,21 @@ object LockPermissionHelper {
     fun appNotificationSettingsIntent(context: Context): Intent {
         return Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
             putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+        }
+    }
+
+    fun hasFullScreenIntentPermission(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) return true
+        return context.getSystemService(NotificationManager::class.java).canUseFullScreenIntent()
+    }
+
+    fun fullScreenIntentSettingsIntent(context: Context): Intent {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT).apply {
+                data = Uri.parse("package:${context.packageName}")
+            }
+        } else {
+            appNotificationSettingsIntent(context)
         }
     }
 }
