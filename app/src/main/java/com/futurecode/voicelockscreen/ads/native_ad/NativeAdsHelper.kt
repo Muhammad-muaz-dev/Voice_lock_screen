@@ -37,7 +37,9 @@ class NativeAdsHelper(private val activity: Activity) {
             placeholder.visibility = View.VISIBLE
 
             val network = NativeAdsLogic.getCurrentAdNetwork(activity)
-            Log.d("TAG_NATIVE", "network: $network")
+
+            Log.d("ADSSTATUS", "${myPreferenceHelper.adsOff}")
+            Log.d("ADS_NETWORD", "$network")
 
             when (network) {
                 "Admob" -> showAdmobNative(nativeBannerAdView, mainLayout, placeholder, nativeLayoutRes)

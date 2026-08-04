@@ -35,6 +35,7 @@ import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.ui.afterlogin.FingerprintLockFragment
 import com.futurecode.voicelockscreen.ui.custom.PatternLockView
+import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -62,6 +63,7 @@ class LockScreenActivity : BaseActivity() {
         binding = FragmentScreenPreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.imgWallpaper.setImageResource(ThemeWallpaperStore.getSelectedWallpaperRes(this))
         bindDateTime()
         bindMethods()
         updateSelectedMethod()

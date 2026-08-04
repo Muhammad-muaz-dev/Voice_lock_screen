@@ -24,23 +24,10 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
             navigateToTarget()
         } else if (hasRuntimePermissions() && !hasOverlayPermission()) {
             requestOverlayPermission()
-        } else if (hasRuntimePermissions() && hasOverlayPermission() && !hasBatteryOptimizationPermission()) {
-            requestBatteryOptimizationPermission()
         }
     }
 
     private val overlayPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        updatePermissionStatus()
-        if (hasRequiredPermissions()) {
-            navigateToTarget()
-        } else if (hasRuntimePermissions() && hasOverlayPermission() && !hasBatteryOptimizationPermission()) {
-            requestBatteryOptimizationPermission()
-        }
-    }
-
-    private val batteryOptimizationLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
         updatePermissionStatus()
@@ -65,7 +52,6 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
                 hasRequiredPermissions() -> navigateToTarget()
                 !hasRuntimePermissions() -> requestRequiredPermissions()
                 !hasOverlayPermission() -> requestOverlayPermission()
-                !hasBatteryOptimizationPermission() -> requestBatteryOptimizationPermission()
             }
         }
 
@@ -108,10 +94,6 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
         overlayPermissionLauncher.launch(LockPermissionHelper.overlaySettingsIntent(requireContext()))
     }
 
-    private fun requestBatteryOptimizationPermission() {
-        batteryOptimizationLauncher.launch(LockPermissionHelper.batteryOptimizationIntent(requireContext()))
-    }
-
     private fun updatePermissionStatus() {
         val phoneGranted = hasPhonePermission()
         val microphoneGranted = hasMicrophonePermission()
@@ -130,8 +112,7 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
 
     private fun hasRequiredPermissions(): Boolean =
         hasRuntimePermissions() &&
-            hasOverlayPermission() &&
-            hasBatteryOptimizationPermission()
+            hasOverlayPermission()
 
     private fun hasRuntimePermissions(): Boolean = hasPhonePermission() && hasMicrophonePermission()
 
@@ -143,15 +124,16 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
         return LockPermissionHelper.hasOverlayPermission(requireContext())
     }
 
-    private fun hasBatteryOptimizationPermission(): Boolean {
-        return LockPermissionHelper.isIgnoringBatteryOptimizations(requireContext())
-    }
-
     private fun hasPermission(permission: String): Boolean {
         return ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun navigateToTarget() {
+        if (target == TARGET_HOME) {
+            findNavController().popBackStack()
+            return
+        }
+
         val destination = when (target) {
             TARGET_PIN -> R.id.pinLockFragment
             TARGET_PATTERN -> R.id.patternLockFragment
@@ -173,6 +155,7 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
         const val TARGET_PIN = "pin"
         const val TARGET_PATTERN = "pattern"
         const val TARGET_FINGERPRINT = "fingerprint"
+        const val TARGET_HOME = "home"
         private const val REQUIRED_PERMISSION_COUNT = 2
     }
 }

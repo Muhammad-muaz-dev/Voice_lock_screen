@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_voice_card"
+    android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/_20sdp">
+    android:padding="@dimen/_16sdp">
 
+    <!-- Title -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,84 +17,133 @@
         android:textColor="#142242"
         android:textSize="@dimen/_18ssp" />
 
+    <!-- Dynamic PIN Dots Container -->
     <LinearLayout
         android:id="@+id/pinDotsContainer"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_height="@dimen/_28sdp"
+        android:layout_marginTop="@dimen/_12sdp"
         android:gravity="center"
         android:orientation="horizontal" />
 
+    <!-- Responsive Keypad Grid -->
     <GridLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12sdp"
+        android:alignmentMode="alignBounds"
         android:columnCount="3"
-        android:rowCount="4">
+        android:useDefaultMargins="false">
 
         <Button
             android:id="@+id/btnOne"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="1" />
 
         <Button
             android:id="@+id/btnTwo"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="2" />
 
         <Button
             android:id="@+id/btnThree"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="3" />
 
         <Button
             android:id="@+id/btnFour"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="4" />
 
         <Button
             android:id="@+id/btnFive"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="5" />
 
         <Button
             android:id="@+id/btnSix"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="6" />
 
         <Button
             android:id="@+id/btnSeven"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="7" />
 
         <Button
             android:id="@+id/btnEight"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="8" />
 
         <Button
             android:id="@+id/btnNine"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="9" />
 
         <Button
             android:id="@+id/btnBackspace"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="⌫" />
 
         <Button
             android:id="@+id/btnZero"
             style="@style/PinKeyButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:text="0" />
 
         <ImageButton
             android:id="@+id/btnConfirm"
-            android:layout_width="@dimen/_67sdp"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_columnWeight="1"
             android:background="@drawable/bg_pin_confirm"
             android:contentDescription="@string/confirm_pin"
-            android:padding="@dimen/_15sdp"
+            android:padding="@dimen/_12sdp"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_pin_check" />
     </GridLayout>
 </LinearLayout>

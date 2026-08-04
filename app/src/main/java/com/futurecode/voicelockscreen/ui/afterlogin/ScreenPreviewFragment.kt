@@ -31,6 +31,7 @@ import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.ui.custom.PatternLockView
+import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import com.futurecode.voicelockscreen.utils.getTimeBasedGreetingRes
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -52,6 +53,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         enterPreviewMode()
+        binding.imgWallpaper.setImageResource(ThemeWallpaperStore.getSelectedWallpaperRes(requireContext()))
         bindDateTime()
         bindMethods()
         updateSelectedMethod()

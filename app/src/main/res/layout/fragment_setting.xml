@@ -333,6 +333,16 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
+
+        <include
+            android:id="@+id/native_ads_3"
+            layout="@layout/native_ads_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@+id/llGeneralSettings"
+            />
+
         <!-- Other Section -->
         <TextView
             android:id="@+id/tvOtherLabel"
@@ -345,7 +355,7 @@
             android:textSize="@dimen/_10ssp"
             android:fontFamily="sans-serif-medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llGeneralSettings" />
+            app:layout_constraintTop_toBottomOf="@id/native_ads_3" />
 
         <LinearLayout
             android:id="@+id/llOtherSettings"

@@ -3,12 +3,15 @@ package com.futurecode.voicelockscreen.security
 import android.content.Context
 import com.futurecode.voicelockscreen.ui.afterlogin.FingerprintLockFragment
 import com.futurecode.voicelockscreen.ui.afterlogin.ScreenPreviewFragment
+import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 
 object AppLockState {
     private const val PREFS = "lock_session_prefs"
     private const val KEY_LOCK_REQUESTED_AFTER_PHONE_UNLOCK = "lock_requested_after_phone_unlock"
 
     fun hasAnyLockEnabled(context: Context): Boolean {
+        if (!VoiceLockSwitchStore.isUnlockEffective(context)) return false
+
         return SecurePinStore.hasPin(context) ||
             SecurePatternStore.hasPattern(context) ||
             SecureVoiceStore.hasPhrase(context) ||

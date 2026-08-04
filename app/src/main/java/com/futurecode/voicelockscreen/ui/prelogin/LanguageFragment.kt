@@ -3,17 +3,15 @@ package com.futurecode.voicelockscreen.ui.prelogin
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.MyApplication
+import com.futurecode.voicelockscreen.adapter.LanguageAdapter
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentLanguageBinding
-import com.futurecode.voicelockscreen.databinding.ItemLanguageBinding
+import com.futurecode.voicelockscreen.model.LanguageOption
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
 
@@ -37,12 +35,12 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         super.onViewCreated(view, savedInstanceState)
 
         selectedLanguageCode = MyApplication.app.prefManager.selectedLanguage.ifBlank { "en" }
-        languageAdapter = LanguageAdapter(selectedLanguageCode) { language ->
+        languageAdapter = LanguageAdapter(requireActivity(), buildLanguageItems(languages), selectedLanguageCode) { language ->
             selectLanguage(language)
         }
 
         binding.rvLanguages.adapter = languageAdapter
-        languageAdapter.submitList(languages)
+        languageAdapter.submitList(buildLanguageItems(languages))
 
         binding.etSearchLanguage.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
@@ -56,7 +54,11 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
 
         binding.btnContinue.setOnClickListener {
             MyApplication.applyLanguage(selectedLanguageCode)
-            findNavController().navigate(R.id.action_languageFragment_to_onBoardingFragment)
+            if (arguments?.getBoolean(ARG_RETURN_TO_SETTINGS, false) == true) {
+                findNavController().popBackStack()
+            } else {
+                findNavController().navigate(R.id.action_languageFragment_to_onBoardingFragment)
+            }
         }
     }
 
@@ -77,69 +79,31 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             }
         }
 
-        languageAdapter.submitList(filteredLanguages)
+        languageAdapter.submitList(buildLanguageItems(filteredLanguages))
         binding.tvEmptyLanguages.isVisible = filteredLanguages.isEmpty()
     }
 
-    private data class LanguageOption(
-        val code: String,
-        val name: String,
-        val nativeName: String
-    )
+    private fun buildLanguageItems(source: List<LanguageOption>): List<Any> {
+        if (source.isEmpty()) return emptyList()
 
-    private class LanguageAdapter(
-        private var selectedLanguageCode: String,
-        private val onLanguageClick: (LanguageOption) -> Unit
-    ) : RecyclerView.Adapter<LanguageAdapter.LanguageViewHolder>() {
-
-        private val languages = mutableListOf<LanguageOption>()
-
-        fun submitList(newLanguages: List<LanguageOption>) {
-            languages.clear()
-            languages.addAll(newLanguages)
-            notifyDataSetChanged()
-        }
-
-        fun updateSelection(languageCode: String) {
-            val previousIndex = languages.indexOfFirst { it.code == selectedLanguageCode }
-            val selectedIndex = languages.indexOfFirst { it.code == languageCode }
-            selectedLanguageCode = languageCode
-
-            if (previousIndex >= 0) notifyItemChanged(previousIndex)
-            if (selectedIndex >= 0) notifyItemChanged(selectedIndex)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LanguageViewHolder {
-            val inflater = LayoutInflater.from(parent.context)
-            val binding = ItemLanguageBinding.inflate(inflater, parent, false)
-            return LanguageViewHolder(binding)
-        }
-
-        override fun onBindViewHolder(holder: LanguageViewHolder, position: Int) {
-            holder.bind(languages[position], languages[position].code == selectedLanguageCode, onLanguageClick)
-        }
-
-        override fun getItemCount(): Int = languages.size
-
-        private class LanguageViewHolder(
-            private val binding: ItemLanguageBinding
-        ) : RecyclerView.ViewHolder(binding.root) {
-
-            fun bind(
-                language: LanguageOption,
-                isSelected: Boolean,
-                onLanguageClick: (LanguageOption) -> Unit
-            ) {
-                binding.tvLanguageName.text = language.name
-                binding.tvLanguageNativeName.text = language.nativeName
-                binding.languageContainer.setBackgroundResource(
-                    if (isSelected) R.drawable.bg_language_item_selected else R.drawable.bg_language_item
-                )
-                binding.imgLanguageSelected.setImageResource(
-                    if (isSelected) R.drawable.ic_language_selected else R.drawable.ic_language_unselected
-                )
-                binding.root.setOnClickListener { onLanguageClick(language) }
+        val items = mutableListOf<Any>()
+        source.forEachIndexed { index, language ->
+            items.add(language)
+            if (index == AD_INSERT_AFTER_INDEX) {
+                items.add(AD_UNIT)
             }
         }
+        if (source.size <= AD_INSERT_AFTER_INDEX) {
+            items.add(AD_UNIT)
+        }
+        return items
+    }
+
+
+
+    companion object {
+        const val ARG_RETURN_TO_SETTINGS = "return_to_settings"
+        const val AD_UNIT = "AD_UNIT"
+        private const val AD_INSERT_AFTER_INDEX = 1
     }
 }

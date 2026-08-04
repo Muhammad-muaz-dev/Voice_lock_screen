@@ -7,6 +7,7 @@
     <string name="lock_monitor_running">Lock screen protection is active</string>
     <string name="secure_smart">Secure &amp; Smart</string>
     <string name="voice_lock_is_off">Voice Lock is Off</string>
+    <string name="voice_lock_is_on">Voice Lock is On</string>
     <string name="unlock_with_voice">Unlock with Voice</string>
     <string name="say_unlock_now">Say \'Unlock now\' to open your phone</string>
     <string name="lock_with_voice">Lock with Voice</string>
@@ -68,6 +69,11 @@
     <string name="help_us_improve">Help us improve the app</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="read_our_privacy">Read our privacy policy</string>
+    <string name="share_app_message">Try %1$s: %2$s</string>
+    <string name="feedback_email_subject">%1$s Feedback</string>
+    <string name="privacy_policy_unavailable">Privacy policy is not available</string>
+    <string name="system_lock_settings_unavailable">Unable to open system lock settings</string>
+    <string name="no_app_found">No app found to open this</string>
 
     <!-- Permissions Screen -->
     <string name="permissions_required">Permissions Required</string>

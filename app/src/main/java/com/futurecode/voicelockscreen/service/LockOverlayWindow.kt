@@ -24,6 +24,7 @@ import com.futurecode.voicelockscreen.security.AppLockState
 import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.ui.custom.PatternLockView
+import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -60,6 +61,7 @@ class LockOverlayWindow(private val context: Context) {
         binding = overlayBinding
         windowManager.addView(overlayRoot, layoutParams())
 
+        overlayBinding.imgWallpaper.setImageResource(ThemeWallpaperStore.getSelectedWallpaperRes(context))
         bindDateTime(overlayBinding)
         bindMethods(overlayBinding)
         updateSelectedMethod(overlayBinding)

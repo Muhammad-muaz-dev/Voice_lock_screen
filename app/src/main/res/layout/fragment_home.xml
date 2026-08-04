@@ -316,6 +316,7 @@
             android:text="@string/see_all"
             android:textColor="@color/blue_primary"
             android:textSize="@dimen/_10ssp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/tvSecurityTools"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvSecurityTools" />
@@ -533,9 +534,12 @@
 
                 <!-- Theme 1 -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardThemeOne"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_140sdp"
                     android:layout_margin="@dimen/_5sdp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardCornerRadius="@dimen/_12sdp"
                     app:cardElevation="0dp">
 
@@ -544,7 +548,7 @@
                         android:layout_height="match_parent"
                         android:contentDescription="@string/ocean"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/onboard_one" />
+                        android:src="@drawable/theme_one" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -556,6 +560,7 @@
                         android:textSize="@dimen/_8ssp" />
 
                     <ImageView
+                        android:id="@+id/ivThemeOneSelected"
                         android:layout_width="@dimen/_16sdp"
                         android:layout_height="@dimen/_16sdp"
                         android:layout_gravity="bottom|end"
@@ -567,9 +572,12 @@
 
                 <!-- Theme 2 -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardThemeTwo"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_140sdp"
                     android:layout_margin="@dimen/_5sdp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardCornerRadius="@dimen/_12sdp"
                     app:cardElevation="0dp">
 
@@ -578,14 +586,28 @@
                         android:layout_height="match_parent"
                         android:contentDescription="@string/app_name"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/onboard_two" />
+                        android:src="@drawable/theme_two" />
+
+                    <ImageView
+                        android:id="@+id/ivThemeTwoSelected"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@android:drawable/checkbox_on_background"
+                        android:visibility="gone"
+                        app:tint="@color/blue_primary" />
                 </androidx.cardview.widget.CardView>
 
                 <!-- Theme 3 -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardThemeThree"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_140sdp"
                     android:layout_margin="@dimen/_5sdp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardCornerRadius="@dimen/_12sdp"
                     app:cardElevation="0dp">
 
@@ -594,7 +616,18 @@
                         android:layout_height="match_parent"
                         android:contentDescription="@string/app_name"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/onboard_three" />
+                        android:src="@drawable/theme_three" />
+
+                    <ImageView
+                        android:id="@+id/ivThemeThreeSelected"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@android:drawable/checkbox_on_background"
+                        android:visibility="gone"
+                        app:tint="@color/blue_primary" />
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>

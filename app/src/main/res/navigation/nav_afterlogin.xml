@@ -44,6 +44,11 @@
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
     <fragment
+        android:id="@+id/languageFragment"
+        android:name="com.futurecode.voicelockscreen.ui.prelogin.LanguageFragment"
+        android:label="fragment_language"
+        tools:layout="@layout/fragment_language" />
+    <fragment
         android:id="@+id/fingerprintLockFragment"
         android:name="com.futurecode.voicelockscreen.ui.afterlogin.FingerprintLockFragment"
         android:label="fragment_fingerprint_lock"
