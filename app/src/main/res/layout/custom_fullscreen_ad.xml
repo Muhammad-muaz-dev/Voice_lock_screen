@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_25sdp"
-            android:text="Ad"
+            android:text="@string/ad"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
 
@@ -42,7 +42,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/_25sdp"
-            android:text="5"
+            android:text="@string/digit_five"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
 

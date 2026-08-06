@@ -20,16 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 class SecurityQuestionFragment : BaseFragment<FragmentSecurityQuestionBinding>(FragmentSecurityQuestionBinding::inflate) {
 
 
-    private val questions = listOf(
-        "What was the name of your primary school?",
-        "What is the name of your first pet?",
-        "What was the name of the street you grew up on?",
-        "What is your mother's maiden name?",
-        "What city were you born in?",
-        "What was the make of your first car?",
-        "What is the name of your oldest sibling?",
-        "What was your childhood nickname?"
-    )
+    private val questions by lazy { resources.getStringArray(R.array.security_questions).toList() }
     private var selectedQuestion: String? = null
 
 

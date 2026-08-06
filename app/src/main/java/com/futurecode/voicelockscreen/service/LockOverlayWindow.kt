@@ -25,6 +25,7 @@ import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.ui.custom.PatternLockView
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
+import com.futurecode.voicelockscreen.utils.VoiceLockPattern
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -39,10 +40,10 @@ class LockOverlayWindow(private val context: Context) {
     private var isUnlocking = false
 
     private val methods = listOf(
-        PreviewMethod("PIN", R.drawable.ic_pin_lock),
-        PreviewMethod("Pattern", R.drawable.ic_pattern_lock),
-        PreviewMethod("Voice", R.drawable.ic_mic_blue),
-        PreviewMethod("Fingerprint", R.drawable.ic_fingerprint_lock)
+        PreviewMethod(R.string.pin, R.drawable.ic_pin_lock),
+        PreviewMethod(R.string.pattern, R.drawable.ic_pattern_lock),
+        PreviewMethod(R.string.voice, R.drawable.ic_mic_blue),
+        PreviewMethod(R.string.fingerprint, R.drawable.ic_fingerprint_lock)
     )
 
     fun show() {
@@ -88,7 +89,7 @@ class LockOverlayWindow(private val context: Context) {
             val method = methods[index]
             val container = child as LinearLayout
             container.findViewById<ImageView>(R.id.imgMethod).setImageResource(method.iconRes)
-            container.findViewById<TextView>(R.id.tvMethod).text = method.title
+            container.findViewById<TextView>(R.id.tvMethod).setText(method.titleRes)
             container.setOnClickListener {
                 selectedMethod = index
                 updateSelectedMethod(binding)
@@ -114,9 +115,9 @@ class LockOverlayWindow(private val context: Context) {
         }
         binding.tvSpeakHint.text = when (selectedMethod) {
             PIN_INDEX -> context.getString(R.string.pin_unlock)
-            PATTERN_INDEX -> "Draw your pattern to unlock"
+            PATTERN_INDEX -> context.getString(R.string.draw_pattern_to_unlock)
             VOICE_INDEX -> context.getString(R.string.tap_microphone)
-            else -> "Touch fingerprint sensor"
+            else -> context.getString(R.string.touch_fingerprint_sensor)
         }
     }
 
@@ -205,7 +206,7 @@ class LockOverlayWindow(private val context: Context) {
         }
 
         val fallback = addFallbackView(R.layout.dialog_pattern_unlock)
-        val patternView = fallback.findViewById<PatternLockView>(R.id.patternView)
+        val patternView = fallback.findViewById<VoiceLockPattern>(R.id.patternView)
         val status = fallback.findViewById<TextView>(R.id.tvPatternStatus)
         patternView.onPatternComplete = patternComplete@{ sequence ->
             if (isUnlocking) return@patternComplete
@@ -286,7 +287,7 @@ class LockOverlayWindow(private val context: Context) {
         get() = (this * context.resources.displayMetrics.density).toInt()
 
     private data class PreviewMethod(
-        val title: String,
+        val titleRes: Int,
         val iconRes: Int
     )
 

@@ -20,7 +20,7 @@
             android:id="@+id/ad_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ads"
+            android:text="@string/ads"
             android:textStyle="bold"
             android:textSize="12sp"
             android:paddingHorizontal="6dp"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Install" />
+            android:text="@string/install" />
 
     </LinearLayout>
 

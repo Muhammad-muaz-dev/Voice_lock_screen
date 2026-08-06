@@ -80,7 +80,7 @@ class AdMobNative(
         // Set data
         headlineView.text = nativeAd.headline
         bodyView.text = nativeAd.body ?: ""
-        ctaView.text = nativeAd.callToAction ?: "Install"
+        ctaView.text = nativeAd.callToAction ?: context.getString(R.string.install)
 
         bodyView.visibility = if (nativeAd.body == null) View.GONE else View.VISIBLE
         ctaView.visibility = if (nativeAd.callToAction == null) View.GONE else View.VISIBLE

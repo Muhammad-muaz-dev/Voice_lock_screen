@@ -13,9 +13,7 @@ import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPermissionBinding
 import com.futurecode.voicelockscreen.utils.LockPermissionHelper
-
 class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermissionBinding::inflate) {
-
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {

@@ -40,7 +40,7 @@ class SeeAllthemesFragment : BaseFragment<FragmentSeeAllthemesBinding>(FragmentS
                 selectedTheme.imageResId
             )
             themeAdapter.setSelectedTheme(selectedTheme.id)
-            Toast.makeText(requireContext(), "Theme applied", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.theme_applied, Toast.LENGTH_SHORT).show()
         }
 
         // 3. Configure RecyclerView with 2-column Grid

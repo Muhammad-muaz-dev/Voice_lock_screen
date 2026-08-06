@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="🚀 Upgrade Diwali Bundle"
+        android:text="@string/promo_upgrade_diwali_bundle"
         android:textColor="@android:color/white"
         android:textSize="@dimen/_27sdp"
         android:textStyle="normal" />
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="LIMITED TIME OFFER"
+            android:text="@string/limited_time_offer"
             android:textColor="@color/splash_accent_green"
             android:textSize="@dimen/_14sdp" />
 
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:gravity="center"
-            android:text="(01:30)"
+            android:text="@string/promo_initial_countdown"
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp" />
 
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
         android:gravity="center"
-        android:text="BLUE FLAME DRA"
+        android:text="@string/promo_blue_flame_dra"
         android:textColor="#05ebfc"
         android:textSize="@dimen/_22sdp"
         android:textStyle="normal" />
@@ -73,7 +73,7 @@
         android:gravity="center"
         android:lineSpacingExtra="@dimen/_1sdp"
         android:textColor="#FDD835"
-        android:text="Claim your reward now! 🔥 Don't miss out!"
+        android:text="@string/claim_reward_now"
         android:textSize="@dimen/_13sdp" />
 
     <ImageView
@@ -91,7 +91,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/bg_onboarding_button"
-        android:text="Upgrade"
+        android:text="@string/upgrade"
         app:backgroundTint="@null"
         android:textColor="@android:color/white"
         android:textSize="@dimen/_15sdp" />
@@ -103,7 +103,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_30sdp"
         android:gravity="center"
-        android:text="Maybe Later"
+        android:text="@string/maybe_later"
         android:textColor="@android:color/white"
         android:textSize="@dimen/_11sdp" />
 </LinearLayout>

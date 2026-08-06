@@ -97,17 +97,17 @@
         app:layout_constraintTop_toBottomOf="@id/pinDotsContainer"
         app:layout_constraintWidth_max="@dimen/_294sdp">
 
-        <Button android:id="@+id/btnOne" style="@style/PinKeyButton" android:text="1" />
-        <Button android:id="@+id/btnTwo" style="@style/PinKeyButton" android:text="2\nABC" />
-        <Button android:id="@+id/btnThree" style="@style/PinKeyButton" android:text="3\nDEF" />
-        <Button android:id="@+id/btnFour" style="@style/PinKeyButton" android:text="4\nGHI" />
-        <Button android:id="@+id/btnFive" style="@style/PinKeyButton" android:text="5\nJKL" />
-        <Button android:id="@+id/btnSix" style="@style/PinKeyButton" android:text="6\nMNO" />
-        <Button android:id="@+id/btnSeven" style="@style/PinKeyButton" android:text="7\nPQRS" />
-        <Button android:id="@+id/btnEight" style="@style/PinKeyButton" android:text="8\nTUV" />
-        <Button android:id="@+id/btnNine" style="@style/PinKeyButton" android:text="9\nWXYZ" />
+        <Button android:id="@+id/btnOne" style="@style/PinKeyButton" android:text="@string/keypad_one" />
+        <Button android:id="@+id/btnTwo" style="@style/PinKeyButton" android:text="@string/keypad_two" />
+        <Button android:id="@+id/btnThree" style="@style/PinKeyButton" android:text="@string/keypad_three" />
+        <Button android:id="@+id/btnFour" style="@style/PinKeyButton" android:text="@string/keypad_four" />
+        <Button android:id="@+id/btnFive" style="@style/PinKeyButton" android:text="@string/keypad_five" />
+        <Button android:id="@+id/btnSix" style="@style/PinKeyButton" android:text="@string/keypad_six" />
+        <Button android:id="@+id/btnSeven" style="@style/PinKeyButton" android:text="@string/keypad_seven" />
+        <Button android:id="@+id/btnEight" style="@style/PinKeyButton" android:text="@string/keypad_eight" />
+        <Button android:id="@+id/btnNine" style="@style/PinKeyButton" android:text="@string/keypad_nine" />
         <Space style="@style/PinKeyButton" android:background="@android:color/transparent" />
-        <Button android:id="@+id/btnZero" style="@style/PinKeyButton" android:text="0" />
+        <Button android:id="@+id/btnZero" style="@style/PinKeyButton" android:text="@string/digit_zero" />
 
         <ImageButton
         android:id="@+id/btnConfirm"

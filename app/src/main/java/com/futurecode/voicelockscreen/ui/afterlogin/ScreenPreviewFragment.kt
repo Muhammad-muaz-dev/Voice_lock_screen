@@ -40,10 +40,10 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
 
     //tvGreeting
     private val methods = listOf(
-        PreviewMethod("PIN", R.drawable.ic_pin_lock),
-        PreviewMethod("Pattern", R.drawable.ic_pattern_lock),
-        PreviewMethod("Voice", R.drawable.ic_mic_blue),
-        PreviewMethod("Fingerprint", R.drawable.ic_fingerprint_lock)
+        PreviewMethod(R.string.pin, R.drawable.ic_pin_lock),
+        PreviewMethod(R.string.pattern, R.drawable.ic_pattern_lock),
+        PreviewMethod(R.string.voice, R.drawable.ic_mic_blue),
+        PreviewMethod(R.string.fingerprint, R.drawable.ic_fingerprint_lock)
     )
     private var selectedMethod = 2
     private var speechRecognizer: SpeechRecognizer? = null
@@ -109,7 +109,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
             val icon = container.findViewById<ImageView>(R.id.imgMethod)
             val label = container.findViewById<TextView>(R.id.tvMethod)
             icon.setImageResource(method.iconRes)
-            label.text = method.title
+            label.setText(method.titleRes)
             container.setOnClickListener {
                 selectedMethod = index
                 updateSelectedMethod()
@@ -149,9 +149,9 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
 
         binding.tvSpeakHint.text = when (selectedMethod) {
             0 -> getString(R.string.pin_unlock)
-            1 -> "Draw your pattern to unlock"
+            1 -> getString(R.string.draw_pattern_to_unlock)
             2 -> getString(R.string.tap_microphone)
-            else -> "Touch fingerprint sensor"
+            else -> getString(R.string.touch_fingerprint_sensor)
         }
     }
 
@@ -399,7 +399,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
     }
 
     private data class PreviewMethod(
-        val title: String,
+        val titleRes: Int,
         val iconRes: Int
     )
 

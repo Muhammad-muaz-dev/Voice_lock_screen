@@ -15,18 +15,7 @@ import com.futurecode.voicelockscreen.model.LanguageOption
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
 
-    private val languages = listOf(
-        LanguageOption("en", "English (US)", "English"),
-        LanguageOption("es", "Spanish", "Español"),
-        LanguageOption("fr", "French", "Français"),
-        LanguageOption("de", "German", "Deutsch"),
-        LanguageOption("ja", "Japanese", "日本語"),
-        LanguageOption("hi", "Hindi", "हिन्दी"),
-        LanguageOption("pt", "Portuguese", "Português"),
-        LanguageOption("ru", "Russian", "Русский"),
-        LanguageOption("zh", "Chinese", "中文"),
-        LanguageOption("ar", "Arabic", "العربية")
-    )
+    private lateinit var languages: List<LanguageOption>
 
     private lateinit var languageAdapter: LanguageAdapter
     private var selectedLanguageCode = "en"
@@ -34,6 +23,18 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        languages = listOf(
+            LanguageOption("en", getString(R.string.language_english_us), getString(R.string.language_english_native)),
+            LanguageOption("es", getString(R.string.language_spanish), getString(R.string.language_spanish_native)),
+            LanguageOption("fr", getString(R.string.language_french), getString(R.string.language_french_native)),
+            LanguageOption("de", getString(R.string.language_german), getString(R.string.language_german_native)),
+            LanguageOption("ja", getString(R.string.language_japanese), getString(R.string.language_japanese_native)),
+            LanguageOption("hi", getString(R.string.language_hindi), getString(R.string.language_hindi_native)),
+            LanguageOption("pt", getString(R.string.language_portuguese), getString(R.string.language_portuguese_native)),
+            LanguageOption("ru", getString(R.string.language_russian), getString(R.string.language_russian_native)),
+            LanguageOption("zh", getString(R.string.language_chinese), getString(R.string.language_chinese_native)),
+            LanguageOption("ar", getString(R.string.language_arabic), getString(R.string.language_arabic_native))
+        )
         selectedLanguageCode = MyApplication.app.prefManager.selectedLanguage.ifBlank { "en" }
         languageAdapter = LanguageAdapter(requireActivity(), buildLanguageItems(languages), selectedLanguageCode) { language ->
             selectLanguage(language)

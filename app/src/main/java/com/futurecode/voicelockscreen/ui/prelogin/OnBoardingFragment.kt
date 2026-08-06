@@ -23,23 +23,25 @@ import com.futurecode.voicelockscreen.model.OnBoardingPage
 
 class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(FragmentOnBoardingBinding::inflate) {
 
-    private val pages = listOf(
-        OnBoardingPage(
-            imageRes = R.drawable.onboard_one,
-            title = "Command With\nYour Voice",
-            description = "Unlock your phone using\nadvanced AI Voice recognition"
-        ),
-        OnBoardingPage(
-            imageRes = R.drawable.onboard_two,
-            title = "Smart Voice\nRecognition",
-            description = "Your unique voice keeps\nyour phone secure"
-        ),
-        OnBoardingPage(
-            imageRes = R.drawable.onboard_three,
-            title = "All-In-One\nProtection",
-            description = "Multiple Lock Options for Stronger\nEveryday Phone Security"
+    private val pages by lazy {
+        listOf(
+            OnBoardingPage(
+                imageRes = R.drawable.onboard_one,
+                title = getString(R.string.onboarding_command_title),
+                description = getString(R.string.onboarding_command_description)
+            ),
+            OnBoardingPage(
+                imageRes = R.drawable.onboard_two,
+                title = getString(R.string.onboarding_recognition_title),
+                description = getString(R.string.onboarding_recognition_description)
+            ),
+            OnBoardingPage(
+                imageRes = R.drawable.onboard_three,
+                title = getString(R.string.onboarding_protection_title),
+                description = getString(R.string.onboarding_protection_description)
+            )
         )
-    )
+    }
 
     private lateinit var onboardingAdapter: OnBoardingAdapter
     private var mixedPagerItems = listOf<AdPagerItem<OnBoardingPage>>()

@@ -72,7 +72,7 @@ object InAppUtils {
                     override fun onTick(millisUntilFinished: Long) {
                         val minutes = (millisUntilFinished / 1000) / 60
                         val seconds = (millisUntilFinished / 1000) % 60
-                        bind.tvTimer.text = "(${String.format("%02d:%02d", minutes, seconds)})"
+                        bind.tvTimer.text = activity.getString(R.string.promo_countdown, minutes, seconds)
                     }
 
                     override fun onFinish() {
@@ -118,42 +118,42 @@ object InAppUtils {
     fun getPromoList(index: Int): PromoData {
         val promoList = listOf(
             PromoData(
-                title = "🚀 Upgrade Diwali Bundle",
-                description = "BLUE FLAME DRA",
-                button = "Upgrade Now",
+                title = MyApplication.app.getString(R.string.promo_upgrade_diwali_bundle),
+                description = MyApplication.app.getString(R.string.promo_blue_flame_dra),
+                button = MyApplication.app.getString(R.string.upgrade_now),
                 image = R.drawable.inapp1
             ),
 
             PromoData(
-                title = "🚀 Upgrade Diwali Bundle",
-                description = "WALL - NINJA'S ARSE",
-                button = "Upgrade Now",
+                title = MyApplication.app.getString(R.string.promo_upgrade_diwali_bundle),
+                description = MyApplication.app.getString(R.string.promo_wall_ninja),
+                button = MyApplication.app.getString(R.string.upgrade_now),
                 image = R.drawable.inapp1
             ),
 
             PromoData(
-                title = "🚀 Upgrade Diwali Bundle",
-                description = "ETERNAL ESSENCE BUNDLE",
-                button = "Upgrade Now",
+                title = MyApplication.app.getString(R.string.promo_upgrade_diwali_bundle),
+                description = MyApplication.app.getString(R.string.promo_eternal_essence),
+                button = MyApplication.app.getString(R.string.upgrade_now),
                 image = R.drawable.inapp1
             ),
 
             PromoData(
-                title = "🚀 Upgrade Diwali Bundle",
-                description = "Avenger Bundle",
-                button = "Upgrade Now",
+                title = MyApplication.app.getString(R.string.promo_upgrade_diwali_bundle),
+                description = MyApplication.app.getString(R.string.promo_avenger),
+                button = MyApplication.app.getString(R.string.upgrade_now),
                 image = R.drawable.inapp1
             ),
             PromoData(
-                title = "🚀 Upgrade Diwali Bundle",
-                description = "Trouble Bundle",
-                button = "Upgrade Now",
+                title = MyApplication.app.getString(R.string.promo_upgrade_diwali_bundle),
+                description = MyApplication.app.getString(R.string.promo_trouble),
+                button = MyApplication.app.getString(R.string.upgrade_now),
                 image = R.drawable.inapp1
             ),
             PromoData(
-                title = "🚀 Upgrade Diwali Bundle",
-                description = "Malachite Ninja Bun",
-                button = "Upgrade Now",
+                title = MyApplication.app.getString(R.string.promo_upgrade_diwali_bundle),
+                description = MyApplication.app.getString(R.string.promo_malachite_ninja),
+                button = MyApplication.app.getString(R.string.upgrade_now),
                 image = R.drawable.inapp1
             )
         )

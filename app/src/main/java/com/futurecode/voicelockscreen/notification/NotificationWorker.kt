@@ -18,6 +18,7 @@ import androidx.work.WorkerParameters
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.MyApplication
 import java.util.concurrent.TimeUnit
 
@@ -57,7 +58,7 @@ class NotificationWorker(appContext: Context, params: WorkerParameters) :
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Recover Deleted Message Local Notifications",
+                applicationContext.getString(R.string.local_notification_channel),
                 NotificationManager.IMPORTANCE_HIGH
             )
             manager.createNotificationChannel(channel)

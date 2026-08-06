@@ -182,4 +182,110 @@
     <!-- Theme Screen -->
     <string name="theme">Theme</string>
     <string name="loading">Loading</string>
+
+    <!-- Shared UI labels and values -->
+    <string name="pin">PIN</string>
+    <string name="voice">Voice</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="draw_pattern_to_unlock">Draw your pattern to unlock</string>
+    <string name="touch_fingerprint_sensor">Touch fingerprint sensor</string>
+    <string name="theme_applied">Theme applied</string>
+    <string name="no_browser_found">No browser found</string>
+    <string name="install">Install</string>
+    <string name="learn_more">LEARN MORE</string>
+    <string name="close_symbol" translatable="false">X</string>
+    <string name="backspace_symbol" translatable="false">⌫</string>
+    <string name="timer_four_seconds" translatable="false">0:04</string>
+    <string name="timer_zero" translatable="false">0:00</string>
+    <string name="audio_waveform" translatable="false">||||||||||||</string>
+    <string name="promo_countdown" translatable="false">(%1$02d:%2$02d)</string>
+
+    <!-- Numeric keypad -->
+    <string name="digit_zero" translatable="false">0</string>
+    <string name="digit_one" translatable="false">1</string>
+    <string name="digit_two" translatable="false">2</string>
+    <string name="digit_three" translatable="false">3</string>
+    <string name="digit_four" translatable="false">4</string>
+    <string name="digit_five" translatable="false">5</string>
+    <string name="digit_six" translatable="false">6</string>
+    <string name="digit_seven" translatable="false">7</string>
+    <string name="digit_eight" translatable="false">8</string>
+    <string name="digit_nine" translatable="false">9</string>
+    <string name="keypad_one" translatable="false">1\n  </string>
+    <string name="keypad_two" translatable="false">2\nABC</string>
+    <string name="keypad_three" translatable="false">3\nDEF</string>
+    <string name="keypad_four" translatable="false">4\nGHI</string>
+    <string name="keypad_five" translatable="false">5\nJKL</string>
+    <string name="keypad_six" translatable="false">6\nMNO</string>
+    <string name="keypad_seven" translatable="false">7\nPQRS</string>
+    <string name="keypad_eight" translatable="false">8\nTUV</string>
+    <string name="keypad_nine" translatable="false">9\nWXYZ</string>
+
+    <!-- Language names -->
+    <string name="language_english_us">English (US)</string>
+    <string name="language_english_native">English</string>
+    <string name="language_spanish">Spanish</string>
+    <string name="language_spanish_native">Español</string>
+    <string name="language_french">French</string>
+    <string name="language_french_native">Français</string>
+    <string name="language_german">German</string>
+    <string name="language_german_native">Deutsch</string>
+    <string name="language_japanese">Japanese</string>
+    <string name="language_japanese_native">日本語</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_hindi_native">हिन्दी</string>
+    <string name="language_portuguese">Portuguese</string>
+    <string name="language_portuguese_native">Português</string>
+    <string name="language_russian">Russian</string>
+    <string name="language_russian_native">Русский</string>
+    <string name="language_chinese">Chinese</string>
+    <string name="language_chinese_native">中文</string>
+    <string name="language_arabic">Arabic</string>
+    <string name="language_arabic_native">العربية</string>
+
+    <!-- Security questions -->
+    <string-array name="security_questions">
+        <item>What was the name of your primary school?</item>
+        <item>What is the name of your first pet?</item>
+        <item>What was the name of the street you grew up on?</item>
+        <item>What is your mother\'s maiden name?</item>
+        <item>What city were you born in?</item>
+        <item>What was the make of your first car?</item>
+        <item>What is the name of your oldest sibling?</item>
+        <item>What was your childhood nickname?</item>
+    </string-array>
+
+    <!-- Advertising and promotional UI -->
+    <string name="ads">Ads</string>
+    <string name="unlock_pro_features_key">unlock_pro_features</string>
+    <string name="unlock_pro_features_desc_placeholder">Unlock pro features desc</string>
+    <string name="not_now">Not now</string>
+    <string name="watch_ad">Watch ad</string>
+    <string name="promo_upgrade_diwali_bundle">🚀 Upgrade Diwali Bundle</string>
+    <string name="limited_time_offer">LIMITED TIME OFFER</string>
+    <string name="promo_initial_countdown" translatable="false">(01:30)</string>
+    <string name="promo_blue_flame_dra">BLUE FLAME DRA</string>
+    <string name="claim_reward_now">Claim your reward now! 🔥 Don\'t miss out!</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="maybe_later">Maybe Later</string>
+    <string name="quiz_trivia">Quiz Trivia</string>
+    <string name="quiz_trivia_description">Answer Questions &amp; earn rbx coins</string>
+    <string name="promo_wall_ninja">WALL - NINJA\'S ARSE</string>
+    <string name="promo_eternal_essence">ETERNAL ESSENCE BUNDLE</string>
+    <string name="promo_avenger">Avenger Bundle</string>
+    <string name="promo_trouble">Trouble Bundle</string>
+    <string name="promo_malachite_ninja">Malachite Ninja Bun</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_command_title">Command With\nYour Voice</string>
+    <string name="onboarding_command_description">Unlock your phone using\nadvanced AI Voice recognition</string>
+    <string name="onboarding_recognition_title">Smart Voice\nRecognition</string>
+    <string name="onboarding_recognition_description">Your unique voice keeps\nyour phone secure</string>
+    <string name="onboarding_protection_title">All-In-One\nProtection</string>
+    <string name="onboarding_protection_description">Multiple Lock Options for Stronger\nEveryday Phone Security</string>
+
+    <!-- Miscellaneous system-facing text -->
+    <string name="just_now">just now</string>
+    <string name="hours_short">%1$d hr</string>
+    <string name="local_notification_channel">Recover Deleted Message Local Notifications</string>
 </resources>

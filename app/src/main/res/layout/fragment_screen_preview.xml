@@ -42,7 +42,23 @@
         android:textSize="@dimen/_14ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="9:41" />
+        tools:text="9:41"
+        android:visibility="visible"/>
+
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/bg_circle_white"
+        android:contentDescription="@string/back"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_back_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
     <!-- Top Circle -->
     <View

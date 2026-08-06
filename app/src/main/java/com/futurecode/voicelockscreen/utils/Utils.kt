@@ -83,10 +83,10 @@ object Utils {
     fun formatTimestampToHours(timestamp: Long): String {
         val diffMinutes = (System.currentTimeMillis() - timestamp) / (1000 * 60)
         return when {
-            diffMinutes < 60 -> "just now"
+            diffMinutes < 60 -> MyApplication.app.getString(R.string.just_now)
             else -> {
                 val hours = diffMinutes / 60
-                if (hours == 1L) "1 hr" else "$hours hr"
+                MyApplication.app.getString(R.string.hours_short, hours)
             }
         }
     }
@@ -119,7 +119,7 @@ object Utils {
         try {
             activity.startActivity(intent)
         } catch (ex: Exception) {
-            Toast.makeText(activity, "No browser found", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, R.string.no_browser_found, Toast.LENGTH_LONG).show()
         }
     }
 

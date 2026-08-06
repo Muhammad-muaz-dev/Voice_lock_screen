@@ -110,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:background="@drawable/bg_main_card"
+                android:background="@drawable/bg_premium_card"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/_16sdp"

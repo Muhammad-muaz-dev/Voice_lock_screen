@@ -68,7 +68,7 @@ class ExistingNativeAdPageLoader(
 
         binding.adHeadline.text = nativeAd.headline.orEmpty()
         binding.adBody.text = nativeAd.body.orEmpty()
-        binding.adCallToAction.text = nativeAd.callToAction ?: "LEARN MORE"
+        binding.adCallToAction.text = nativeAd.callToAction ?: activity.getString(R.string.learn_more)
 
         val icon = nativeAd.icon?.drawable
         if (icon != null) {
@@ -98,9 +98,9 @@ class ExistingNativeAdPageLoader(
         binding.ivFallbackMedia.visibility = View.VISIBLE
         binding.adCallToAction.visibility = View.VISIBLE
 
-        binding.adHeadline.text = "Quiz Trivia"
-        binding.adBody.text = "Answer Questions & earn rbx coins"
-        binding.adCallToAction.text = "LEARN MORE"
+        binding.adHeadline.setText(R.string.quiz_trivia)
+        binding.adBody.setText(R.string.quiz_trivia_description)
+        binding.adCallToAction.setText(R.string.learn_more)
         binding.adIcon.setImageResource(R.drawable.app_logo)
 
         Glide.with(activity)

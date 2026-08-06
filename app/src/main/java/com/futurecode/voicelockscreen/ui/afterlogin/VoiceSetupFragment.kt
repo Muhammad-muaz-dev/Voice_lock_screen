@@ -67,7 +67,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
                 override fun onBufferReceived(buffer: ByteArray?) = Unit
                 override fun onEndOfSpeech() {
                     isListening = false
-                    binding.tvTimer.text = "0:04"
+                    binding.tvTimer.setText(R.string.timer_four_seconds)
                 }
 
                 override fun onError(error: Int) {
@@ -109,7 +109,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
 
     private fun renderListeningState() {
         binding.tvRecorded.text = getString(R.string.recording_listening)
-        binding.tvTimer.text = "0:00"
+        binding.tvTimer.setText(R.string.timer_zero)
         binding.tvPhrase.text = getString(R.string.speak_secret_phrase)
         binding.tvTapHint.text = getString(R.string.speak_secret_phrase)
         binding.btnContinue.isEnabled = false
@@ -123,7 +123,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         }
 
         binding.tvRecorded.text = getString(R.string.recorded_successfully)
-        binding.tvTimer.text = "0:04"
+        binding.tvTimer.setText(R.string.timer_four_seconds)
         binding.tvPhrase.text = recognizedPhrase
         binding.tvTapHint.text = getString(R.string.tap_to_record_again)
         binding.btnContinue.isEnabled = true
@@ -132,7 +132,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
 
     private fun renderEmptyState() {
         binding.tvRecorded.text = getString(R.string.record_voice)
-        binding.tvTimer.text = "0:00"
+        binding.tvTimer.setText(R.string.timer_zero)
         binding.tvPhrase.text = ""
         binding.tvTapHint.text = getString(R.string.speak_secret_phrase)
         binding.btnContinue.isEnabled = false

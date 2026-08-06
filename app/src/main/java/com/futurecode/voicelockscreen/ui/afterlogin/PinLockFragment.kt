@@ -67,16 +67,16 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
 
     private fun setupKeypad() {
         val digitButtons = mapOf(
-            binding.btnOne to "1\n  ",
-            binding.btnTwo to "2\nABC",
-            binding.btnThree to "3\nDEF",
-            binding.btnFour to "4\nGHI",
-            binding.btnFive to "5\nJKL",
-            binding.btnSix to "6\nMNO",
-            binding.btnSeven to "7\nPQRS",
-            binding.btnEight to "8\nTUV",
-            binding.btnNine to "9\nWXYZ",
-            binding.btnZero to "0"
+            binding.btnOne to getString(R.string.keypad_one),
+            binding.btnTwo to getString(R.string.keypad_two),
+            binding.btnThree to getString(R.string.keypad_three),
+            binding.btnFour to getString(R.string.keypad_four),
+            binding.btnFive to getString(R.string.keypad_five),
+            binding.btnSix to getString(R.string.keypad_six),
+            binding.btnSeven to getString(R.string.keypad_seven),
+            binding.btnEight to getString(R.string.keypad_eight),
+            binding.btnNine to getString(R.string.keypad_nine),
+            binding.btnZero to getString(R.string.digit_zero)
         )
 
         digitButtons.forEach { (button, label) ->

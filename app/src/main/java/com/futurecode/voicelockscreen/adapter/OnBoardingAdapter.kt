@@ -220,11 +220,11 @@ class OnBoardingAdapter(
 
     private fun bindNormalAdControls(holder: NativeAdViewHolder) {
         holder.binding.tvAdStatus.isVisible = true
-        holder.binding.tvAdStatus.text = "ADVERTISEMENT"
+        holder.binding.tvAdStatus.setText(R.string.advertisement)
         holder.binding.btnAdNext.isVisible = true
         holder.binding.btnAdNext.isEnabled = true
         holder.binding.btnAdNext.alpha = ENABLED_ALPHA
-        holder.binding.btnAdNext.text = "X"
+        holder.binding.btnAdNext.setText(R.string.close_symbol)
         holder.binding.btnAdNext.setOnClickListener {
             val position = holder.bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) onAdAdvanceRequested(position)
@@ -233,7 +233,7 @@ class OnBoardingAdapter(
 
     private fun bindTimerAdControls(holder: NativeAdViewHolder, item: AdPagerItem.NativeAd) {
         holder.binding.tvAdStatus.isVisible = true
-        holder.binding.tvAdStatus.text = "ADVERTISEMENT"
+        holder.binding.tvAdStatus.setText(R.string.advertisement)
         setTimerLockedState(holder, item.unlockDurationMs)
         holder.binding.btnAdNext.setOnClickListener {
             val position = holder.bindingAdapterPosition
@@ -263,16 +263,16 @@ class OnBoardingAdapter(
             pageKey = item.pageKey,
             durationMs = item.unlockDurationMs,
             onTick = { seconds ->
-                holder.binding.tvAdStatus.text = "ADVERTISEMENT"
+                holder.binding.tvAdStatus.setText(R.string.advertisement)
                 holder.binding.btnAdNext.isVisible = true
                 holder.binding.btnAdNext.isEnabled = false
                 holder.binding.btnAdNext.alpha = ENABLED_ALPHA
                 holder.binding.btnAdNext.text = seconds.toString()
             },
             onUnlocked = {
-                holder.binding.tvAdStatus.text = "ADVERTISEMENT"
+                holder.binding.tvAdStatus.setText(R.string.advertisement)
                 holder.binding.btnAdNext.isVisible = true
-                holder.binding.btnAdNext.text = "X"
+                holder.binding.btnAdNext.setText(R.string.close_symbol)
                 holder.binding.btnAdNext.isEnabled = true
                 holder.binding.btnAdNext.alpha = ENABLED_ALPHA
             }
@@ -290,7 +290,7 @@ class OnBoardingAdapter(
     }
 
     private fun setTimerLockedState(holder: NativeAdViewHolder, durationMs: Long) {
-        holder.binding.tvAdStatus.text = "ADVERTISEMENT"
+        holder.binding.tvAdStatus.setText(R.string.advertisement)
         holder.binding.btnAdNext.isVisible = true
         holder.binding.btnAdNext.isEnabled = false
         holder.binding.btnAdNext.alpha = DISABLED_ALPHA

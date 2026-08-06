@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_voice_card"
+    android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/_20sdp">
@@ -26,9 +25,17 @@
         android:textColor="@color/text_gray"
         android:textSize="@dimen/_10ssp" />
 
-    <com.futurecode.voicelockscreen.ui.custom.PatternLockView
-        android:id="@+id/patternView"
-        android:layout_width="@dimen/_230sdp"
-        android:layout_height="@dimen/_230sdp"
-        android:layout_marginTop="@dimen/_12sdp" />
+<!--    <com.futurecode.voicelockscreen.ui.custom.PatternLockView-->
+<!--        android:id="@+id/patternView"-->
+<!--        android:layout_width="@dimen/_230sdp"-->
+<!--        android:layout_height="@dimen/_230sdp"-->
+<!--        android:layout_marginTop="@dimen/_12sdp" />-->
+
+        <com.futurecode.voicelockscreen.utils.VoiceLockPattern
+            android:id="@+id/patternView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_12sdp" />
+
+
 </LinearLayout>

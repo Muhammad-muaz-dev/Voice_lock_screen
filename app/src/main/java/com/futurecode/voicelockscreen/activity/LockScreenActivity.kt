@@ -34,8 +34,8 @@ import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.ui.afterlogin.FingerprintLockFragment
-import com.futurecode.voicelockscreen.ui.custom.PatternLockView
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
+import com.futurecode.voicelockscreen.utils.VoiceLockPattern
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -49,10 +49,10 @@ class LockScreenActivity : BaseActivity() {
     private var didStartVoiceForCurrentResume = false
 
     private val methods = listOf(
-        PreviewMethod("PIN", R.drawable.ic_pin_lock),
-        PreviewMethod("Pattern", R.drawable.ic_pattern_lock),
-        PreviewMethod("Voice", R.drawable.ic_mic_blue),
-        PreviewMethod("Fingerprint", R.drawable.ic_fingerprint_lock)
+        PreviewMethod(R.string.pin, R.drawable.ic_pin_lock),
+        PreviewMethod(R.string.pattern, R.drawable.ic_pattern_lock),
+        PreviewMethod(R.string.voice, R.drawable.ic_mic_blue),
+        PreviewMethod(R.string.fingerprint, R.drawable.ic_fingerprint_lock)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +68,10 @@ class LockScreenActivity : BaseActivity() {
         bindMethods()
         updateSelectedMethod()
         binding.micRings.setOnClickListener { openSelectedUnlockMethod() }
+
+        binding.ivBack.setOnClickListener {
+
+        }
     }
 
     override fun onResume() {
@@ -132,7 +136,7 @@ class LockScreenActivity : BaseActivity() {
             val method = methods[index]
             val container = child as LinearLayout
             container.findViewById<ImageView>(R.id.imgMethod).setImageResource(method.iconRes)
-            container.findViewById<TextView>(R.id.tvMethod).text = method.title
+            container.findViewById<TextView>(R.id.tvMethod).setText(method.titleRes)
             container.setOnClickListener {
                 selectedMethod = index
                 updateSelectedMethod()
@@ -164,13 +168,23 @@ class LockScreenActivity : BaseActivity() {
 
         binding.tvSpeakHint.text = when (selectedMethod) {
             PIN_INDEX -> getString(R.string.pin_unlock)
-            PATTERN_INDEX -> "Draw your pattern to unlock"
+            PATTERN_INDEX -> getString(R.string.draw_pattern_to_unlock)
             VOICE_INDEX -> getString(R.string.tap_microphone)
-            else -> "Touch fingerprint sensor"
+            else -> getString(R.string.touch_fingerprint_sensor)
         }
     }
 
     private fun openSelectedUnlockMethod() {
+        binding.tvGreeting.visibility= View.GONE
+        binding.timeCard.visibility= View.GONE
+        binding.unlockPanel.visibility= View.GONE
+        binding.tvSettings.visibility= View.GONE
+        binding.tvSecurity.visibility= View.GONE
+        binding.homeIndicator.visibility= View.GONE
+        binding.tvStatusTime.visibility= View.GONE
+        binding.topCircle.visibility= View.GONE
+
+
         when (selectedMethod) {
             PIN_INDEX -> showPinUnlockDialog()
             PATTERN_INDEX -> showPatternUnlockDialog()
@@ -318,14 +332,19 @@ class LockScreenActivity : BaseActivity() {
     }
 
     private fun showPatternUnlockDialog() {
+
         if (!SecurePatternStore.hasPattern(this)) {
             Toast.makeText(this, R.string.pattern_setup_required, Toast.LENGTH_SHORT).show()
             return
         }
 
         val dialogView = showFallbackOverlay(R.layout.dialog_pattern_unlock)
-        val patternView = dialogView.findViewById<PatternLockView>(R.id.patternView)
+        val patternView = dialogView.findViewById<VoiceLockPattern>(R.id.patternView)
         val status = dialogView.findViewById<TextView>(R.id.tvPatternStatus)
+
+
+      //  binding.imgWallpaper.setImageResource(ThemeWallpaperStore.getSelectedWallpaperRes(this))
+
 
         patternView.onPatternComplete = patternComplete@{ sequence ->
             if (isUnlocking) return@patternComplete
@@ -441,7 +460,7 @@ class LockScreenActivity : BaseActivity() {
         get() = (this * resources.displayMetrics.density).toInt()
 
     private data class PreviewMethod(
-        val title: String,
+        val titleRes: Int,
         val iconRes: Int
     )
 
