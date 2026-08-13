@@ -1,2 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Voice Lock Screen</string>
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
+    <string name="voice_lock_screen">Bloqueo de pantalla por voz</string>
+    <string name="lock_monitor_channel">Monitor de bloqueo</string>
+    <string name="lock_monitor_running">La protección de pantalla está activa</string>
+    <string name="secure_smart">Seguro y inteligente</string>
+    <string name="voice_lock_is_off">Bloqueo por voz desactivado</string>
+    <string name="voice_lock_is_on">Bloqueo por voz activado</string>
+    <string name="unlock_with_voice">Desbloquear con voz</string>
+    <string name="say_unlock_now">Di \'Desbloquear ahora\' para abrir tu teléfono</string>
+    <string name="lock_with_voice">Bloquear con voz</string>
+    <string name="say_lock_my_phone">Di \'Bloquear mi teléfono\' para asegurarlo</string>
+    <string name="advertisement">PUBLICIDAD</string>
+    <string name="ad_banner">Banner publicitario</string>
+    <string name="security_tools">Herramientas de seguridad</string>
+    <string name="see_all">Ver todo</string>
+    <string name="voice_unlock">Desbloqueo por voz</string>
+    <string name="pin_lock">Bloqueo por PIN</string>
+    <string name="pattern_lock">Bloqueo por patrón</string>
+    <string name="fingerprint_lock">Bloqueo por huella</string>
+    <string name="preview">Vista previa</string>
+    <string name="lock_screen_themes">Temas de pantalla de bloqueo</string>
+    <string name="ocean">Océano</string>
+
+    <string name="secure_your_phone_with_your_voice">Protege tu teléfono con tu voz</string>
+    <string name="setting_up_vice_security">Configurando seguridad de voz.......</string>
+    <string name="select_language">Seleccionar idioma</string>
+    <string name="search_language">Buscar idioma...</string>
+    <string name="suggested">Sugerido</string>
+    <string name="no_language_found">No se encontró el idioma</string>
+    <string name="continue_text">Continuar</string>
+    <string name="next">Siguiente</string>
+    <string name="get_started">Empezar</string>
+    <string name="back">Atrás</string>
+    <string name="pin_code">Código PIN</string>
+    <string name="create_your_pin">Crea tu PIN</string>
+    <string name="pin_hint">Ingresa un PIN de %1$d dígitos para proteger tus aplicaciones.</string>
+    <string name="use_digit_pin">Usar un PIN de %1$d dígitos</string>
+    <string name="confirm_pin">Confirmar PIN</string>
+    <string name="pin_saved">PIN guardado</string>
+    <string name="pin_incomplete">Ingresa tu PIN completo</string>
+    <string name="confirm_your_pin">Confirma tu PIN</string>
+    <string name="pin_confirm_hint">Reingresa tu PIN de %1$d dígitos para confirmar.</string>
+    <string name="pin_mismatch">El PIN no coincide. Inténtalo de nuevo.</string>
+    <string name="pin_unlock">Ingresa el PIN para desbloquear</string>
+    <string name="pin_unlocked">PIN correcto. Desbloqueado.</string>
+    <string name="pin_wrong">PIN incorrecto. Inténtalo de nuevo.</string>
+    <string name="pin_setup_required">Configura tu PIN primero</string>
+
+    <!-- Settings Screen -->
+    <string name="setting">Ajustes</string>
+    <string name="premium">PREMIUM</string>
+    <string name="upgrade_to_premium">Actualizar a Premium</string>
+    <string name="premium_desc">Desbloquea todas las funciones — sin límites, sin anuncios.</string>
+    <string name="upgrade_now">Actualizar ahora</string>
+    <string name="general_settings">AJUSTES GENERALES</string>
+    <string name="change_language">Cambiar idioma</string>
+    <string name="select_preferred_language">Selecciona tu idioma preferido</string>
+    <string name="change_security_question">Cambiar pregunta de seguridad</string>
+    <string name="update_account_recovery">Actualiza tu pregunta de recuperación de cuenta</string>
+    <string name="disable_system_lock">Desactivar bloqueo del sistema</string>
+    <string name="avoid_multiple_lock">Evita múltiples pantallas de bloqueo</string>
+    <string name="other">OTROS</string>
+    <string name="share_app">Compartir aplicación</string>
+    <string name="share_with_friends">Comparte esta app con amigos</string>
+    <string name="feedback">Comentarios</string>
+    <string name="help_us_improve">Ayúdanos a mejorar la aplicación</string>
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="read_our_privacy">Lee nuestra política de privacidad</string>
+    <string name="share_app_message">Prueba %1$s: %2$s</string>
+    <string name="feedback_email_subject">Comentarios sobre %1$s</string>
+    <string name="privacy_policy_unavailable">La política de privacidad no está disponible</string>
+    <string name="system_lock_settings_unavailable">No se pueden abrir los ajustes de bloqueo del sistema</string>
+    <string name="no_app_found">No se encontró ninguna app para abrir esto</string>
+
+    <!-- Permissions Screen -->
+    <string name="permissions_required">Permisos requeridos</string>
+    <string name="allow_required_permissions">Permitir permisos requeridos</string>
+    <string name="permissions_desc">Habilita estos permisos para que el bloqueo por voz funcione correctamente.</string>
+    <string name="phone_call_access">Acceso a llamadas telefónicas</string>
+    <string name="phone_call_desc">Ayuda a detectar llamadas y mantener el bloqueo por voz funcionando.</string>
+    <string name="display_over_other_apps">Mostrar sobre otras aplicaciones</string>
+    <string name="display_over_desc">Muestra la pantalla de bloqueo por voz sobre otras apps.</string>
+    <string name="microphone_access">Acceso al micrófono</string>
+    <string name="microphone_desc">Requerido para grabar y reconocer tu comando de voz.</string>
+    <string name="privacy_protected">Tu privacidad está protegida</string>
+    <string name="privacy_desc">Solo usamos estos permisos para las funciones de bloqueo por voz.</string>
+    <string name="permissions_enabled_count">%1$d de %2$d permisos habilitados</string>
+
+    <!-- Fingerprint Lock Screen -->
+    <string name="enable_fingerprint_unlock">Habilitar desbloqueo por huella</string>
+    <string name="use_fingerprint_desc">Usa tu huella dactilar para asegurar tu dispositivo.</string>
+    <string name="enable_fingerprint">Habilitar huella</string>
+    <string name="fingerprint_prompt_title">Autenticación por huella</string>
+    <string name="fingerprint_prompt_subtitle">Toca el sensor de huellas para continuar</string>
+    <string name="fingerprint_not_supported">El desbloqueo por huella no es compatible en este dispositivo</string>
+    <string name="fingerprint_hardware_unavailable">El hardware de huella no está disponible</string>
+    <string name="fingerprint_none_enrolled">No hay huellas registradas. Añade una en los ajustes del dispositivo.</string>
+    <string name="fingerprint_enabled">Huella habilitada</string>
+    <string name="fingerprint_unlocked">Huella reconocida. Desbloqueado.</string>
+    <string name="fingerprint_failed">Error de huella. Inténtalo de nuevo.</string>
+    <string name="fingerprint_setup_required">Habilita la huella primero</string>
+    <string name="voice_setup">Configuración de voz</string>
+    <string name="record_voice">Grabar voz</string>
+    <string name="confirm_voice">Confirmar voz</string>
+    <string name="create_voice_password">Crea tu contraseña de voz</string>
+    <string name="voice_password_hint">Di una frase única que recuerdes y que uses para desbloquear tu pantalla.</string>
+    <string name="ad">ANUNCIO</string>
+    <string name="recorded_successfully">Grabado con éxito</string>
+    <string name="tap_to_record_again">Toca para grabar de nuevo</string>
+    <string name="detected_phrase">FRASE DETECTADA</string>
+    <string name="default_voice_phrase">"hola hola hola hola hola hola hola"</string>
+    <string name="record_again">Grabar de nuevo</string>
+    <string name="recording_listening">Escuchando...</string>
+    <string name="speak_secret_phrase">Di tu frase secreta</string>
+    <string name="voice_saved">Frase de voz guardada</string>
+    <string name="voice_not_detected">No se pudo detectar voz. Inténtalo de nuevo.</string>
+    <string name="speech_not_available">El reconocimiento de voz no está disponible en este dispositivo</string>
+    <string name="save_voice_first">Graba y guarda tu frase de voz primero</string>
+    <string name="voice_unlocked">Voz coincidente. Desbloqueado.</string>
+    <string name="voice_try_again">La voz no coincide. Inténtalo de nuevo.</string>
+    <string name="listening_unlock">Escuchando tu voz...</string>
+    <string name="setup_security_question">Configurar pregunta de seguridad</string>
+    <string name="security_question_hint">Elige una pregunta y respuesta para recuperar tu contraseña de voz si la olvidas.</string>
+    <string name="security_question_label">• PREGUNTA DE SEGURIDAD</string>
+    <string name="choose_security_question">Elige una pregunta de seguridad</string>
+    <string name="your_answer">• TU RESPUESTA</string>
+    <string name="enter_your_answer">Ingresa tu respuesta</string>
+    <string name="answer_help">Usa una respuesta que recuerdes pero que otros no puedan adivinar fácilmente.</string>
+    <string name="ad_320">Publicidad · 320 × 50</string>
+    <string name="save_finish">Guardar y finalizar</string>
+    <string name="pick_security_question">Seleccionar pregunta de seguridad</string>
+    <string name="select_one_question">Selecciona una pregunta para proteger tu cuenta</string>
+    <string name="confirm_question">Confirmar pregunta</string>
+    <string name="security_saved">Pregunta de seguridad guardada</string>
+    <string name="choose_question_error">Elige una pregunta de seguridad</string>
+    <string name="answer_required">Ingresa tu respuesta</string>
+    <string name="good_afternoon">☀️ ¡Buenas tardes!</string>
+    <string name="good_evening">Buenas noches</string>
+    <string name="good_night">Buenas noches</string>
+    <string name="good_morning">Buenos días</string>
+    <string name="tap_microphone">Toca el micrófono y habla</string>
+    <string name="settings">Ajustes</string>
+    <string name="security">Seguridad</string>
+
+    <!-- Premium Screen -->
+    <string name="voice_lock">Bloqueo de voz</string>
+    <string name="premium_title">Premium</string>
+    <string name="choose_your_plan">ELIGE TU PLAN</string>
+    <string name="weekly">Semanal</string>
+    <string name="seven_day_access">Acceso de 7 días</string>
+    <string name="weekly_price">₹920.00</string>
+    <string name="per_week">por semana</string>
+    <string name="monthly">Mensual</string>
+    <string name="thirty_day_access">Acceso de 30 días</string>
+    <string name="monthly_price">₹1,150.00</string>
+    <string name="per_month">por mes</string>
+    <string name="yearly">Anual</string>
+    <string name="yearly_save">Ahorra 49% · Mejor oferta</string>
+    <string name="yearly_price">₹7,100.00</string>
+    <string name="per_year">por año</string>
+    <string name="best_value">Mejor valor</string>
+    <string name="get_vpn_plus">Obtener VPN Plus</string>
+    <string name="cancel_anytime">Cancela en cualquier momento</string>
+    <string name="thirty_day_guarantee">Garantía de 30 días</string>
+
+    <!-- Pattern Screen -->
+    <string name="pattern">Patrón</string>
+    <string name="create_your_pattern">Crea tu patrón</string>
+    <string name="pattern_hint">Conecta al menos 4 puntos para proteger tus apps</string>
+    <string name="confirm_your_pattern">Confirma tu patrón</string>
+    <string name="pattern_confirm_hint">Dibuja el mismo patrón de nuevo para confirmar</string>
+    <string name="pattern_too_short">Conecta al menos 4 puntos</string>
+    <string name="pattern_mismatch">El patrón no coincide. Inténtalo de nuevo.</string>
+    <string name="pattern_saved">Patrón guardado</string>
+    <string name="pattern_setup_required">Configura tu patrón primero</string>
+    <string name="pattern_unlocked">Patrón correcto. Desbloqueado.</string>
+    <string name="pattern_wrong">Patrón incorrecto. Inténtalo de nuevo.</string>
+
+    <!-- Theme Screen -->
+    <string name="theme">Tema</string>
+    <string name="loading">Cargando...</string>
+
+    <!-- Shared UI labels and values -->
+    <string name="pin">PIN</string>
+    <string name="voice">Voz</string>
+    <string name="fingerprint">Huella</string>
+    <string name="draw_pattern_to_unlock">Dibuja tu patrón para desbloquear</string>
+    <string name="touch_fingerprint_sensor">Toca el sensor de huella</string>
+    <string name="theme_applied">Tema aplicado</string>
+    <string name="no_browser_found">No se encontró ningún navegador</string>
+    <string name="install">Instalar</string>
+    <string name="learn_more">MÁS INFORMACIÓN</string>
+
+    <!-- Language names -->
+    <string name="language_english_us">Inglés (EE. UU.)</string>
+    <string name="language_english_native">English</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_spanish_native">Español</string>
+    <string name="language_french">Francés</string>
+    <string name="language_french_native">Français</string>
+    <string name="language_german">Alemán</string>
+    <string name="language_german_native">Deutsch</string>
+    <string name="language_japanese">Japonés</string>
+    <string name="language_japanese_native">日本語</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_hindi_native">हिन्दी</string>
+    <string name="language_portuguese">Portugués</string>
+    <string name="language_portuguese_native">Português</string>
+    <string name="language_russian">Ruso</string>
+    <string name="language_russian_native">Русский</string>
+    <string name="language_chinese">Chino</string>
+    <string name="language_chinese_native">中文</string>
+    <string name="language_arabic">Árabe</string>
+    <string name="language_arabic_native">العربية</string>
+
+    <!-- Security questions -->
+    <string-array name="security_questions">
+        <item>¿Cuál era el nombre de tu escuela primaria?</item>
+        <item>¿Cuál es el nombre de tu primera mascota?</item>
+        <item>¿Cuál era el nombre de la calle en la que creciste?</item>
+        <item>¿Cuál es el apellido de soltera de tu madre?</item>
+        <item>¿En qué ciudad naciste?</item>
+        <item>¿Cuál era la marca de tu primer coche?</item>
+        <item>¿Cuál es el nombre de tu hermano/a mayor?</item>
+        <item>¿Cuál era tu apodo de la infancia?</item>
+    </string-array>
+
+    <!-- Advertising and promotional UI -->
+    <string name="ads">Anuncios</string>
+    <string name="unlock_pro_features_key">Desbloquear funciones Pro</string>
+    <string name="unlock_pro_features_desc_placeholder">Descripción de funciones pro</string>
+    <string name="not_now">Ahora no</string>
+    <string name="watch_ad">Ver anuncio</string>
+    <string name="promo_upgrade_diwali_bundle">🚀 Paquete Upgrade Diwali</string>
+    <string name="limited_time_offer">OFERTA POR TIEMPO LIMITADO</string>
+    <string name="promo_blue_flame_dra">BLUE FLAME DRA</string>
+    <string name="claim_reward_now">¡Reclama tu recompensa ahora! 🔥 ¡No te lo pierdas!</string>
+    <string name="upgrade">Actualizar</string>
+    <string name="maybe_later">Quizás más tarde</string>
+    <string name="quiz_trivia">Trivia de preguntas</string>
+    <string name="quiz_trivia_description">Responde preguntas y gana rbx coins</string>
+    <string name="promo_wall_ninja">WALL - NINJA\'S ARSE</string>
+    <string name="promo_eternal_essence">PAQUETE ETERNAL ESSENCE</string>
+    <string name="promo_avenger">Paquete Avenger</string>
+    <string name="promo_trouble">Paquete Trouble</string>
+    <string name="promo_malachite_ninja">Paquete Malachite Ninja</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_command_title">Controla con\ntu voz</string>
+    <string name="onboarding_command_description">Desbloquea tu teléfono usando\nreconocimiento de voz por IA avanzado</string>
+    <string name="onboarding_recognition_title">Reconocimiento de voz\ninteligente</string>
+    <string name="onboarding_recognition_description">Tu voz única mantiene\ntu teléfono seguro</string>
+    <string name="onboarding_protection_title">Protección\ntodo en uno</string>
+    <string name="onboarding_protection_description">Múltiples opciones de bloqueo para una seguridad cotidiana más fuerte</string>
+
+    <!-- Miscellaneous system-facing text -->
+    <string name="just_now">justo ahora</string>
+    <string name="hours_short">%1$d h</string>
+    <string name="local_notification_channel">Notificaciones locales de mensajes eliminados recuperados</string>
+</resources>

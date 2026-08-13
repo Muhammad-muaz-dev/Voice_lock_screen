@@ -100,6 +100,13 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         return items
     }
 
+    override fun onDestroyView() {
+        if (::languageAdapter.isInitialized) {
+            languageAdapter.release()
+        }
+        super.onDestroyView()
+    }
+
 
 
     companion object {

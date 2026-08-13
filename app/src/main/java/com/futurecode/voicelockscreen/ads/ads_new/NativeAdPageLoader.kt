@@ -4,4 +4,6 @@ import com.futurecode.voicelockscreen.databinding.ItemOnboardingNativeAdBinding
 
 interface NativeAdPageLoader {
     fun load(binding: ItemOnboardingNativeAdBinding)
+
+    fun destroy() = Unit
 }

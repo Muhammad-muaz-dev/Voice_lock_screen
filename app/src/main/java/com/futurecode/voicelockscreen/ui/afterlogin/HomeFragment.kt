@@ -1,10 +1,17 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.ads.AdInterface
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallFullScreenAdsHelper
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallNativeAdsHelper
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallNativeBannerAdsHelper
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentHomeBinding
 import com.futurecode.voicelockscreen.service.LockService
@@ -13,11 +20,29 @@ import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
+    private var nativeAdsHelper: AdWaterfallNativeAdsHelper? = null
+    private var fullScreenAdsHelper: AdWaterfallFullScreenAdsHelper? = null
+    private var nativeBanner: AdWaterfallNativeBannerAdsHelper? = null
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        nativeAdsHelper= AdWaterfallNativeAdsHelper(requireActivity())
+        fullScreenAdsHelper= AdWaterfallFullScreenAdsHelper(requireActivity())
+        nativeBanner= AdWaterfallNativeBannerAdsHelper(requireActivity())
+
+        loadNativeBannerAds()
+
+        Log.d("TAG", "onViewCreated: ${prefManager.applovinMrec}")
+
+
         binding.ivSettings.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
+            AdWaterfallFullScreenAdsHelper(requireActivity()).showInterstitialAds(false, object : AdInterface {
+                override fun finished() {
+                    findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
+                }
+            })
         }
 
         binding.voiceUnlock.setOnClickListener {
@@ -190,4 +215,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         return VoiceLockSwitchStore.hasRequiredPermissions(requireContext())
     }
 
+
+    fun loadNativeBannerAds() {
+
+        activity?.let { currentActivity ->
+            if (nativeBanner == null) {
+                nativeBanner = AdWaterfallNativeBannerAdsHelper(currentActivity)
+            }
+            nativeBanner?.showNativeBAnnerAd(
+                nativeBannerAdView = binding.nativeAds3.frame,
+                mainLayout = binding.nativeAds3.mainLayout,
+                placeholder = binding.nativeAds3.placeholder
+            )
+        }
+
+    }
 }

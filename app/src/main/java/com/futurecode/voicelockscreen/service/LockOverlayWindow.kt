@@ -228,7 +228,7 @@ class LockOverlayWindow(private val context: Context) {
         overlayRoot.findViewWithTag<View>(FALLBACK_TAG)?.let { overlayRoot.removeView(it) }
         val dim = FrameLayout(themedContext).apply {
             tag = FALLBACK_TAG
-            setBackgroundColor(0x99000000.toInt())
+            setBackgroundColor(ContextCompat.getColor(context, R.color.bg_color))
             isClickable = true
             isFocusable = true
         }
@@ -237,13 +237,10 @@ class LockOverlayWindow(private val context: Context) {
             fallback,
             FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                Gravity.CENTER
-            ).apply {
-                leftMargin = 28.dp
-                rightMargin = 28.dp
-            }
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
         )
+        dim.addView(createFallbackBackButton())
         overlayRoot.addView(
             dim,
             FrameLayout.LayoutParams(
@@ -252,6 +249,26 @@ class LockOverlayWindow(private val context: Context) {
             )
         )
         return fallback
+    }
+
+    private fun createFallbackBackButton(): ImageView {
+        return ImageView(themedContext).apply {
+            setBackgroundResource(R.drawable.bg_circle_white)
+            setImageResource(R.drawable.ic_back_blue)
+            contentDescription = context.getString(R.string.back)
+            setPadding(11.dp, 11.dp, 11.dp, 11.dp)
+            elevation = 8.dp.toFloat()
+            setOnClickListener { removeFallbackView() }
+            layoutParams = FrameLayout.LayoutParams(42.dp, 42.dp, Gravity.TOP or Gravity.START).apply {
+                marginStart = 20.dp
+                topMargin = 20.dp
+            }
+        }
+    }
+
+    private fun removeFallbackView() {
+        val overlayRoot = root ?: return
+        overlayRoot.findViewWithTag<View>(FALLBACK_TAG)?.let { overlayRoot.removeView(it) }
     }
 
     private fun openLockActivity() {

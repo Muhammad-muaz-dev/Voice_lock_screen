@@ -46,7 +46,39 @@ data class Ads(
     @SerializedName("native_ads_flow")
     val nativeAdsFlow: List<String?>?,
     @SerializedName("native_banner_ads_flow")
-    val nativeBannerAdsFlow: List<String?>?
+    val nativeBannerAdsFlow: List<String?>?,
+
+
+
+    //changes
+    @SerializedName("applovin_app_open")
+    var applovin_app_open: String?,
+    @SerializedName("applovin_banner")
+    var applovin_banner: String?,
+    @SerializedName("applovin_interstitial")
+    var applovin_interstitial: String?,
+    @SerializedName("applovin_mrec")
+    var applovin_mrec: String?,
+    @SerializedName("applovin_reward")
+    var applovin_reward: String?,
+    var app_open_ads_flow: List<String> = listOf("Applovin"),
+    var banner_ads_flow:List<String> = listOf("Applovin"),
+    var interstitial_ads_flow:List<String> = listOf("Applovin"),
+    var mrec_ads_flow:List<String> = listOf("Applovin"),
+    var reward_ads_flow: List<String> = listOf("Applovin"),
+    var ad_network_index: Int=0,
+    var native_ad_network_index: Int=0,
+    var native_banner_ad_network_index: Int=0,
+    var ad_show_counter:Int=0,
+    var click_count: Int=0,
+    var custom_urls: List<String> = emptyList(),
+    var ad_frequency: Int=1,
+    var ad_flow: List<String> =listOf("Admob"),
+    var native_ad_flow: List<String> =listOf("Admob"),
+    var native_banner_ad_flow: List<String> =listOf("Admob"),
+
+
+
 )
 
 @Keep

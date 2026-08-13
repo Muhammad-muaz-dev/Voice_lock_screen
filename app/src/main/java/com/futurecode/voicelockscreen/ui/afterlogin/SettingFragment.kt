@@ -4,28 +4,33 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.ads.AdInterface
 import com.futurecode.voicelockscreen.ads.interstitial_ad.FullScreenAdsHelper
 import com.futurecode.voicelockscreen.ads.native_ad.NativeAdsHelper
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallFullScreenAdsHelper
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallNativeAdsHelper
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentSettingBinding
 import com.futurecode.voicelockscreen.db.PrefManager
 import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.ui.prelogin.LanguageFragment
+import com.futurecode.voicelockscreen.utils.Utils.setAdClickListener
 import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
 
-    private var nativeAdsHelper: NativeAdsHelper? = null
-    private var fullScreenAdsHelper: FullScreenAdsHelper? = null
+    private var nativeAdsHelper: AdWaterfallNativeAdsHelper? = null
+    private var fullScreenAdsHelper: AdWaterfallFullScreenAdsHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        nativeAdsHelper = NativeAdsHelper(requireActivity())
-        fullScreenAdsHelper = FullScreenAdsHelper(requireActivity())
+        nativeAdsHelper = AdWaterfallNativeAdsHelper(requireActivity())
+        fullScreenAdsHelper = AdWaterfallFullScreenAdsHelper(requireActivity())
         binding.ivBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -34,6 +39,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         binding.btnUpgrade.setOnClickListener {
             findNavController().navigate(R.id.premiumFragment)
         }
+
+
 
         binding.clChangeLanguage.setOnClickListener {
             findNavController().navigate(
@@ -44,8 +51,16 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
             )
         }
 
-        binding.clSecurityQuestion.setOnClickListener {
-            findNavController().navigate(R.id.securityQuestionFragment)
+//        binding.clSecurityQuestion.setOnClickListener {
+//            findNavController().navigate(R.id.securityQuestionFragment)
+//        }
+
+        binding.clSecurityQuestion.setAdClickListener(activity=requireActivity(), isShowEveryTime = true) {
+            AdWaterfallFullScreenAdsHelper(requireActivity()).showInterstitialAds(false, object : AdInterface {
+                override fun finished() {
+                    findNavController().navigate(R.id.securityQuestionFragment)
+                }
+            })
         }
 
         binding.clDisableLock.setOnClickListener {
@@ -123,7 +138,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     fun loadNativeAds() {
         activity?.let { currentActivity ->
             if (nativeAdsHelper == null) {
-                nativeAdsHelper = NativeAdsHelper(currentActivity)
+                nativeAdsHelper = AdWaterfallNativeAdsHelper(currentActivity)
             }
             nativeAdsHelper?.showNativeAd(
                 nativeBannerAdView = binding.nativeAds3.frame,

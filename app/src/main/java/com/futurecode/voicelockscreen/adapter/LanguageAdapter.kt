@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.futurecode.voicelockscreen.R
-import com.futurecode.voicelockscreen.ads.native_ad.NativeAdsHelper
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallNativeAdsHelper
 import com.futurecode.voicelockscreen.databinding.ItemLanguageBinding
 import com.futurecode.voicelockscreen.databinding.ItemNativeAdsAdapterBinding
 import com.futurecode.voicelockscreen.model.LanguageOption
@@ -21,6 +21,8 @@ class LanguageAdapter(
     private var selectedLanguageCode: String,
     private val onLanguageClick: (LanguageOption) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val nativeAdsHelper = AdWaterfallNativeAdsHelper(activity)
 
     override fun getItemViewType(position: Int): Int {
         val item = list[position]
@@ -68,6 +70,10 @@ class LanguageAdapter(
         if (selectedIndex >= 0) notifyItemChanged(selectedIndex)
     }
 
+    fun release() {
+        nativeAdsHelper.destroy()
+    }
+
     class LanguageViewHolder(
         private val binding: ItemLanguageBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -93,11 +99,10 @@ class LanguageAdapter(
         private val binding: ItemNativeAdsAdapterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindAd() {
-            NativeAdsHelper(activity).showNativeAd(
+            nativeAdsHelper.showNativeAd(
                 binding.frameLayout,
                 binding.relativeLayout,
-                binding.placeholder,
-                R.layout.item_native_ad_language
+                binding.placeholder
             )
         }
     }

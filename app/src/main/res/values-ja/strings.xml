@@ -1,4 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Voice Lock Screen</string>
+    <string name="hello_blank_fragment">こんにちはブランクフラグメント</string>
+    <string name="voice_lock_screen">ボイス画面ロック</string>
+    <string name="lock_monitor_channel">ロックモニター</string>
+    <string name="lock_monitor_running">ロック画面保護が有効です</string>
+    <string name="secure_smart">安全＆スマート</string>
+    <string name="voice_lock_is_off">ボイスロックはオフです</string>
+    <string name="voice_lock_is_on">ボイスロックはオンです</string>
+    <string name="unlock_with_voice">音声で解除</string>
+    <string name="say_unlock_now">「今すぐ解除」と言ってスマートフォンを開きます</string>
+    <string name="lock_with_voice">音声でロック</string>
+    <string name="say_lock_my_phone">「スマホをロック」と言って保護します</string>
+    <string name="advertisement">広告</string>
+    <string name="ad_banner">バナー広告</string>
+    <string name="security_tools">セキュリティツール</string>
+    <string name="see_all">すべて見る</string>
+    <string name="voice_unlock">音声解除</string>
+    <string name="pin_lock">PINコードロック</string>
+    <string name="pattern_lock">パターンロック</string>
+    <string name="fingerprint_lock">指紋ロック</string>
+    <string name="preview">プレビュー</string>
+    <string name="lock_screen_themes">ロック画面のテーマ</string>
+    <string name="ocean">オーシャン</string>
 
+    <string name="secure_your_phone_with_your_voice">声でスマートフォンを保護</string>
+    <string name="setting_up_vice_security">音声セキュリティを設定中.......</string>
+    <string name="select_language">言語を選択</string>
+    <string name="search_language">言語を検索...</string>
+    <string name="suggested">おすすめ</string>
+    <string name="no_language_found">言語が見つかりません</string>
+    <string name="continue_text">次へ進む</string>
+    <string name="next">次へ</string>
+    <string name="get_started">始める</string>
+    <string name="back">戻る</string>
+    <string name="pin_code">PINコード</string>
+    <string name="create_your_pin">PINコードを作成</string>
+    <string name="pin_hint">%1$d桁のPINコードを入力してアプリを保護します。</string>
+    <string name="use_digit_pin">%1$d桁のPINコードを使用</string>
+    <string name="confirm_pin">PINコードの確認</string>
+    <string name="pin_saved">PINコードを保存しました</string>
+    <string name="pin_incomplete">正確なPINコードを入力してください</string>
+    <string name="confirm_your_pin">PINコードを再確認</string>
+    <string name="pin_confirm_hint">確認のため、もう一度%1$d桁のPINコードを入力してください。</string>
+    <string name="pin_mismatch">PINコードが一致しません。やり直してください。</string>
+    <string name="pin_unlock">解除するにはPINコードを入力してください</string>
+    <string name="pin_unlocked">PINコードが一致しました。解除されました。</string>
+    <string name="pin_wrong">PINコードが違います。やり直してください。</string>
+    <string name="pin_setup_required">最初にPINコードを設定してください</string>
+
+    <!-- Settings Screen -->
+    <string name="setting">設定</string>
+    <string name="premium">プレミアム</string>
+    <string name="upgrade_to_premium">プレミアムにアップグレード</string>
+    <string name="premium_desc">アプリの全機能を解放 — 制限なし、広告なし。</string>
+    <string name="upgrade_now">今すぐアップグレード</string>
+    <string name="general_settings">一般設定</string>
+    <string name="change_language">言語を変更</string>
+    <string name="select_preferred_language">お好みの言語を選択してください</string>
+    <string name="change_security_question">秘密の質問を変更</string>
+    <string name="update_account_recovery">アカウント復旧用の質問を更新します</string>
+    <string name="disable_system_lock">システムロックを無効化</string>
+    <string name="avoid_multiple_lock">複数のロック画面が重複しないようにします</string>
+    <string name="other">その他</string>
+    <string name="share_app">アプリを共有</string>
+    <string name="share_with_friends">友達にこのアプリを共有する</string>
+    <string name="feedback">フィードバック</string>
+    <string name="help_us_improve">アプリの改善にご協力ください</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="read_our_privacy">プライバシーポリシーを読む</string>
+    <string name="share_app_message">%1$s を試す: %2$s</string>
+    <string name="feedback_email_subject">%1$s フィードバック</string>
+    <string name="privacy_policy_unavailable">プライバシーポリシーは利用できません</string>
+    <string name="system_lock_settings_unavailable">システムロック設定を開けません</string>
+    <string name="no_app_found">これを開くアプリが見つかりません</string>
+
+    <!-- Permissions Screen -->
+    <string name="permissions_required">必要な権限</string>
+    <string name="allow_required_permissions">必要な権限を許可</string>
+    <string name="permissions_desc">ボイス画面ロックが正常に動作するように、これらの権限を有効にしてください。</string>
+    <string name="phone_call_access">通話へのアクセス</string>
+    <string name="phone_call_desc">着信を検知し、ボイスロックが正しく動作するのを助けます。</string>
+    <string name="display_over_other_apps">他のアプリの上に重ねて表示</string>
+    <string name="display_over_desc">他のアプリの上にボイスロック画面を表示します。</string>
+    <string name="microphone_access">マイクへのアクセス</string>
+    <string name="microphone_desc">音声コマンドの録音と認識に必要です。</string>
+    <string name="privacy_protected">プライバシーは保護されています</string>
+    <string name="privacy_desc">これらの権限はボイスロック画面機能にのみ使用されます。</string>
+    <string name="permissions_enabled_count">%1$d / %2$d の権限が許可されています</string>
+
+    <!-- Fingerprint Lock Screen -->
+    <string name="enable_fingerprint_unlock">指紋認証解除を有効にする</string>
+    <string name="use_fingerprint_desc">指紋を使用して端末を保護します。</string>
+    <string name="enable_fingerprint">指紋を有効化</string>
+    <string name="fingerprint_prompt_title">指紋認証</string>
+    <string name="fingerprint_prompt_subtitle">続行するには指紋センサーに触れてください</string>
+    <string name="fingerprint_not_supported">この端末は指紋認証に対応していません</string>
+    <string name="fingerprint_hardware_unavailable">指紋認証ハードウェアが利用できません</string>
+    <string name="fingerprint_none_enrolled">指紋が登録されていません。端末の設定から追加してください。</string>
+    <string name="fingerprint_enabled">指紋認証が有効化されました</string>
+    <string name="fingerprint_unlocked">指紋が一致しました。解除されました。</string>
+    <string name="fingerprint_failed">指紋認証に失敗しました。やり直してください。</string>
+    <string name="fingerprint_setup_required">最初に指紋認証を有効にしてください</string>
+    <string name="voice_setup">音声設定</string>
+    <string name="record_voice">声を録音</string>
+    <string name="confirm_voice">声を確認</string>
+    <string name="create_voice_password">音声パスワードを作成</string>
+    <string name="voice_password_hint">ロック解除時に使用する、覚えやすい独自のフレーズを話してください。</string>
+    <string name="ad">広告</string>
+    <string name="recorded_successfully">正常に録音されました</string>
+    <string name="tap_to_record_again">タップして再録音</string>
+    <string name="detected_phrase">検出されたフレーズ</string>
+    <string name="default_voice_phrase">"ハロー ハロー ハロー ハロー ハロー"</string>
+    <string name="record_again">もう一度録音</string>
+    <string name="recording_listening">聞き取り中...</string>
+    <string name="speak_secret_phrase">秘密のフレーズを話してください</string>
+    <string name="voice_saved">フレーズを保存しました</string>
+    <string name="voice_not_detected">音声を検出できませんでした。やり直してください。</string>
+    <string name="speech_not_available">この端末では音声認識が利用できません</string>
+    <string name="save_voice_first">最初にフレーズを録音して保存してください</string>
+    <string name="voice_unlocked">声が一致しました。解除されました。</string>
+    <string name="voice_try_again">声が一致しませんでした。やり直してください。</string>
+    <string name="listening_unlock">あなたの声を待っています...</string>
+    <string name="setup_security_question">秘密の質問を設定</string>
+    <string name="security_question_hint">質問と回答を設定しておくと、忘れた際に復旧できます。</string>
+    <string name="security_question_label">• 秘密の質問</string>
+    <string name="choose_security_question">秘密の質問を選択</string>
+    <string name="your_answer">• あなたの回答</string>
+    <string name="enter_your_answer">回答を入力してください</string>
+    <string name="answer_help">自分だけが分かる覚えやすい回答を入力してください。</string>
+    <string name="ad_320">広告 · 320 × 50</string>
+    <string name="save_finish">保存して完了</string>
+    <string name="pick_security_question">秘密の質問を選択</string>
+    <string name="select_one_question">アカウント保護のために質問を一つ選択してください</string>
+    <string name="confirm_question">質問を確定</string>
+    <string name="security_saved">秘密の質問を保存しました</string>
+    <string name="choose_question_error">秘密の質問を選択してください</string>
+    <string name="answer_required">回答を入力してください</string>
+    <string name="good_afternoon">☀️ こんにちは！</string>
+    <string name="good_evening">こんばんは</string>
+    <string name="good_night">おやすみなさい</string>
+    <string name="good_morning">おはようございます</string>
+    <string name="tap_microphone">マイクをタップして話してください</string>
+    <string name="settings">設定</string>
+    <string name="security">セキュリティ</string>
+
+    <!-- Premium Screen -->
+    <string name="voice_lock">ボイスロック</string>
+    <string name="premium_title">プレミアム</string>
+    <string name="choose_your_plan">プランを選択</string>
+    <string name="weekly">週間</string>
+    <string name="seven_day_access">7日間利用可能</string>
+    <string name="weekly_price">₹920.00</string>
+    <string name="per_week">/ 週間</string>
+    <string name="monthly">月間</string>
+    <string name="thirty_day_access">30日間利用可能</string>
+    <string name="monthly_price">₹1,150.00</string>
+    <string name="per_month">/ 月</string>
+    <string name="yearly">年間</string>
+    <string name="yearly_save">49%オフ · 一番お得</string>
+    <string name="yearly_price">₹7,100.00</string>
+    <string name="per_year">/ 年</string>
+    <string name="best_value">一番人気</string>
+    <string name="get_vpn_plus">VPN Plusを取得</string>
+    <string name="cancel_anytime">いつでもキャンセル可能</string>
+    <string name="thirty_day_guarantee">30日間返金保証</string>
+
+    <!-- Pattern Screen -->
+    <string name="pattern">パターン</string>
+    <string name="create_your_pattern">パターンを作成</string>
+    <string name="pattern_hint">アプリを保護するために4つ以上の点を結んでください</string>
+    <string name="confirm_your_pattern">パターンを確認</string>
+    <string name="pattern_confirm_hint">確認のため、もう一度同じパターンを描いてください</string>
+    <string name="pattern_too_short">4つ以上の点を結んでください</string>
+    <string name="pattern_mismatch">パターンが一致しません。やり直してください。</string>
+    <string name="pattern_saved">パターンを保存しました</string>
+    <string name="pattern_setup_required">最初にパターンを設定してください</string>
+    <string name="pattern_unlocked">パターンが一致しました。解除されました。</string>
+    <string name="pattern_wrong">パターンが間違っています。やり直してください。</string>
+
+    <!-- Theme Screen -->
+    <string name="theme">テーマ</string>
+    <string name="loading">読み込み中...</string>
+
+    <!-- Shared UI labels and values -->
+    <string name="pin">PINコード</string>
+    <string name="voice">音声</string>
+    <string name="fingerprint">指紋</string>
+    <string name="draw_pattern_to_unlock">解除するにはパターンを描いてください</string>
+    <string name="touch_fingerprint_sensor">指紋センサーに触れてください</string>
+    <string name="theme_applied">テーマが適用されました</string>
+    <string name="no_browser_found">ブラウザが見つかりません</string>
+    <string name="install">インストール</string>
+    <string name="learn_more">詳細を見る</string>
+
+    <!-- Language names -->
+    <string name="language_english_us">英語 (US)</string>
+    <string name="language_english_native">English</string>
+    <string name="language_spanish">スペイン語</string>
+    <string name="language_spanish_native">Español</string>
+    <string name="language_french">フランス語</string>
+    <string name="language_french_native">Français</string>
+    <string name="language_german">ドイツ語</string>
+    <string name="language_german_native">Deutsch</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_japanese_native">日本語</string>
+    <string name="language_hindi">ヒンディー語</string>
+    <string name="language_hindi_native">हिन्दी</string>
+    <string name="language_portuguese">ポルトガル語</string>
+    <string name="language_portuguese_native">Português</string>
+    <string name="language_russian">ロシア語</string>
+    <string name="language_russian_native">Русский</string>
+    <string name="language_chinese">中国語</string>
+    <string name="language_chinese_native">中文</string>
+    <string name="language_arabic">アラビア語</string>
+    <string name="language_arabic_native">العربية</string>
+
+    <!-- Security questions -->
+    <string-array name="security_questions">
+        <item>通っていた小学校の名前は？</item>
+        <item>最初に飼ったペットの名前は？</item>
+        <item>育った町の通りの名前は？</item>
+        <item>母親の旧姓は？</item>
+        <item>生まれた都市は？</item>
+        <item>最初に乗った車のメーカーは？</item>
+        <item>一番上の兄弟/姉妹の名前は？</item>
+        <item>子供頃のあだ名は？</item>
+    </string-array>
+
+    <!-- Advertising and promotional UI -->
+    <string name="ads">広告</string>
+    <string name="unlock_pro_features_key">Pro機能を解放</string>
+    <string name="unlock_pro_features_desc_placeholder">Pro機能の説明</string>
+    <string name="not_now">後で</string>
+    <string name="watch_ad">広告を見る</string>
+    <string name="promo_upgrade_diwali_bundle">🚀 アップグレード・ディワリバンドル</string>
+    <string name="limited_time_offer">期間限定オファー</string>
+    <string name="promo_blue_flame_dra">BLUE FLAME DRA</string>
+    <string name="claim_reward_now">今すぐ特典を獲得！ 🔥 お見逃しなく！</string>
+    <string name="upgrade">アップグレード</string>
+    <string name="maybe_later">後で検討する</string>
+    <string name="quiz_trivia">クイズトリビア</string>
+    <string name="quiz_trivia_description">質問に答えてrbxコインを獲得</string>
+    <string name="promo_wall_ninja">WALL - NINJA\'S ARSE</string>
+    <string name="promo_eternal_essence">ETERNAL ESSENCE バンドル</string>
+    <string name="promo_avenger">Avenger バンドル</string>
+    <string name="promo_trouble">Trouble バンドル</string>
+    <string name="promo_malachite_ninja">Malachite Ninja バンドル</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_command_title">声で\n操作する</string>
+    <string name="onboarding_command_description">高度なAI音声認識で\nスマホのロックを解除</string>
+    <string name="onboarding_recognition_title">スマートな\n音声認識</string>
+    <string name="onboarding_recognition_description">あなた独自の声で\nスマホの安全を守ります</string>
+    <string name="onboarding_protection_title">オールインワン\nプロテクション</string>
+    <string name="onboarding_protection_description">複数のロックオプションで毎日のスマホのセキュリティを強化</string>
+
+    <!-- Miscellaneous system-facing text -->
+    <string name="just_now">たった今</string>
+    <string name="hours_short">%1$d 時間</string>
+    <string name="local_notification_channel">削除されたメッセージの復元 ローカル通知</string>
 </resources>

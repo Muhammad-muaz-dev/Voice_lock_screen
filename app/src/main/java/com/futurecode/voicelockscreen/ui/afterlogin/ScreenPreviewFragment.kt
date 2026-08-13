@@ -7,14 +7,16 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -30,8 +32,8 @@ import com.futurecode.voicelockscreen.security.AppLockState
 import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
-import com.futurecode.voicelockscreen.ui.custom.PatternLockView
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
+import com.futurecode.voicelockscreen.utils.VoiceLockPattern
 import com.futurecode.voicelockscreen.utils.getTimeBasedGreetingRes
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -47,6 +49,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
     )
     private var selectedMethod = 2
     private var speechRecognizer: SpeechRecognizer? = null
+    private var fallbackOverlay: FrameLayout? = null
     private var previousStatusBarColor: Int = Color.TRANSPARENT
     private var previousNavigationBarColor: Int = Color.TRANSPARENT
 
@@ -57,6 +60,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
         bindDateTime()
         bindMethods()
         updateSelectedMethod()
+        setupBackNavigation()
 
         binding.micRings.setOnClickListener {
             openSelectedUnlockMethod()
@@ -66,6 +70,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
     }
 
     override fun onDestroyView() {
+        removeFallbackOverlay()
         stopRecognizer()
         exitPreviewMode()
         super.onDestroyView()
@@ -213,7 +218,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
 
         val pinLength = SecurePinStore.getPinLength(requireContext())
         val enteredPin = StringBuilder()
-        val dialogView = layoutInflater.inflate(R.layout.dialog_pin_unlock, null)
+        val dialogView = showFallbackOverlay(R.layout.dialog_pin_unlock)
         val dots = dialogView.findViewById<LinearLayout>(R.id.pinDotsContainer)
         val buttons = listOf(
             R.id.btnOne to "1",
@@ -229,10 +234,6 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
         )
 
         setupPinDialogDots(dots, pinLength, enteredPin.length)
-        val dialog = AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
-
         buttons.forEach { (id, digit) ->
             dialogView.findViewById<View>(id).setOnClickListener {
                 if (enteredPin.length < pinLength) {
@@ -258,7 +259,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
             if (SecurePinStore.verifyPin(requireContext(), enteredPin.toString())) {
                 binding.tvSpeakHint.text = getString(R.string.pin_unlocked)
                 Toast.makeText(requireContext(), R.string.pin_unlocked, Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
+                removeFallbackOverlay()
                 unlockAndClose()
             } else {
                 enteredPin.clear()
@@ -268,8 +269,6 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
             }
         }
 
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.show()
     }
 
     private fun setupPinDialogDots(container: LinearLayout, pinLength: Int, enteredLength: Int) {
@@ -293,18 +292,15 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
             return
         }
 
-        val dialogView = layoutInflater.inflate(R.layout.dialog_pattern_unlock, null)
-        val patternView = dialogView.findViewById<PatternLockView>(R.id.patternView)
+        val dialogView = showFallbackOverlay(R.layout.dialog_pattern_unlock)
+        val patternView = dialogView.findViewById<VoiceLockPattern>(R.id.patternView)
         val status = dialogView.findViewById<TextView>(R.id.tvPatternStatus)
-        val dialog = AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
 
         patternView.onPatternComplete = { sequence ->
             if (SecurePatternStore.verifyPattern(requireContext(), sequence)) {
                 binding.tvSpeakHint.text = getString(R.string.pattern_unlocked)
                 Toast.makeText(requireContext(), R.string.pattern_unlocked, Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
+                removeFallbackOverlay()
                 unlockAndClose()
             } else {
                 status.text = getString(R.string.pattern_wrong)
@@ -314,8 +310,68 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
             }
         }
 
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.show()
+    }
+
+    private fun showFallbackOverlay(layoutRes: Int): View {
+        removeFallbackOverlay()
+        val overlay = FrameLayout(requireContext()).apply {
+            setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_color))
+            isClickable = true
+            isFocusable = true
+        }
+        val fallbackView = layoutInflater.inflate(layoutRes, overlay, false)
+        overlay.addView(
+            fallbackView,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
+        overlay.addView(createFallbackBackButton())
+        binding.root.addView(
+            overlay,
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
+        fallbackOverlay = overlay
+        return fallbackView
+    }
+
+    private fun createFallbackBackButton(): ImageView {
+        return ImageView(requireContext()).apply {
+            setBackgroundResource(R.drawable.bg_circle_white)
+            setImageResource(R.drawable.ic_back_blue)
+            contentDescription = getString(R.string.back)
+            setPadding(11.dp, 11.dp, 11.dp, 11.dp)
+            elevation = 8.dp.toFloat()
+            setOnClickListener { removeFallbackOverlay() }
+            layoutParams = FrameLayout.LayoutParams(42.dp, 42.dp, Gravity.TOP or Gravity.START).apply {
+                marginStart = 20.dp
+                topMargin = 20.dp
+            }
+        }
+    }
+
+    private fun setupBackNavigation() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (fallbackOverlay != null) {
+                    removeFallbackOverlay()
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
+    }
+
+    private fun removeFallbackOverlay() {
+        fallbackOverlay?.let { overlay ->
+            (overlay.parent as? ViewGroup)?.removeView(overlay)
+        }
+        fallbackOverlay = null
     }
 
     private fun startVoiceUnlock() {

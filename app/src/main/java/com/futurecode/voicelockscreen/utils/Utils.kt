@@ -25,6 +25,7 @@ import com.futurecode.voicelockscreen.activity.MyApplication
 import com.futurecode.voicelockscreen.ads.AdInterface
 import com.futurecode.voicelockscreen.ads.interstitial_ad.FullScreenAdsHelper
 import com.futurecode.voicelockscreen.ads.reward.RewardAdsHelper
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallFullScreenAdsHelper
 import com.futurecode.voicelockscreen.databinding.DialogPremiumAdBinding
 import com.futurecode.voicelockscreen.db.PrefManager
 
@@ -146,13 +147,13 @@ object Utils {
 
     fun View.setAdClickListener(
         activity: Activity,
-        adsHelper: FullScreenAdsHelper,
         isShowEveryTime: Boolean = false,
         onFinished: () -> Unit
     ) {
         setOnClickListener {
             ProgressBarUtils.showProgressDialog(activity)
-            adsHelper.showInterstitialAds(isShowEveryTime, object : AdInterface {
+            AdWaterfallFullScreenAdsHelper(activity).showInterstitialAds(isShowEveryTime, object :
+                AdInterface {
                 override fun finished() {
                     ProgressBarUtils.hideProgressDialog()
                     onFinished()

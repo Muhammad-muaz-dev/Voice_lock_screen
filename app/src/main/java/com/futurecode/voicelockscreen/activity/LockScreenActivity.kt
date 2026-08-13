@@ -19,6 +19,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -68,10 +69,7 @@ class LockScreenActivity : BaseActivity() {
         bindMethods()
         updateSelectedMethod()
         binding.micRings.setOnClickListener { openSelectedUnlockMethod() }
-
-        binding.ivBack.setOnClickListener {
-
-        }
+        setupBackNavigation()
     }
 
     override fun onResume() {
@@ -91,10 +89,6 @@ class LockScreenActivity : BaseActivity() {
         removeFallbackOverlay()
         stopRecognizer()
         super.onDestroy()
-    }
-
-    override fun onBackPressed() {
-        Toast.makeText(this, R.string.voice_try_again, Toast.LENGTH_SHORT).show()
     }
 
     private fun configureLockWindow() {
@@ -175,16 +169,6 @@ class LockScreenActivity : BaseActivity() {
     }
 
     private fun openSelectedUnlockMethod() {
-        binding.tvGreeting.visibility= View.GONE
-        binding.timeCard.visibility= View.GONE
-        binding.unlockPanel.visibility= View.GONE
-        binding.tvSettings.visibility= View.GONE
-        binding.tvSecurity.visibility= View.GONE
-        binding.homeIndicator.visibility= View.GONE
-        binding.tvStatusTime.visibility= View.GONE
-        binding.topCircle.visibility= View.GONE
-
-
         when (selectedMethod) {
             PIN_INDEX -> showPinUnlockDialog()
             PATTERN_INDEX -> showPatternUnlockDialog()
@@ -363,7 +347,7 @@ class LockScreenActivity : BaseActivity() {
     private fun showFallbackOverlay(layoutRes: Int): View {
         removeFallbackOverlay()
         val overlay = FrameLayout(this).apply {
-            setBackgroundColor(0x99000000.toInt())
+            setBackgroundColor(ContextCompat.getColor(this@LockScreenActivity, R.color.bg_color))
             isClickable = true
             isFocusable = true
         }
@@ -372,13 +356,10 @@ class LockScreenActivity : BaseActivity() {
             fallbackView,
             FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                Gravity.CENTER
-            ).apply {
-                leftMargin = 28.dp
-                rightMargin = 28.dp
-            }
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
         )
+        overlay.addView(createFallbackBackButton())
         addContentView(
             overlay,
             ViewGroup.LayoutParams(
@@ -388,6 +369,38 @@ class LockScreenActivity : BaseActivity() {
         )
         fallbackOverlay = overlay
         return fallbackView
+    }
+
+    private fun createFallbackBackButton(): ImageView {
+        return ImageView(this).apply {
+            setBackgroundResource(R.drawable.bg_circle_white)
+            setImageResource(R.drawable.ic_back_blue)
+            contentDescription = getString(R.string.back)
+            setPadding(11.dp, 11.dp, 11.dp, 11.dp)
+            elevation = 8.dp.toFloat()
+            setOnClickListener { closeFallbackScreen() }
+            layoutParams = FrameLayout.LayoutParams(42.dp, 42.dp, Gravity.TOP or Gravity.START).apply {
+                marginStart = 20.dp
+                topMargin = 20.dp
+            }
+        }
+    }
+
+    private fun setupBackNavigation() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (fallbackOverlay != null) {
+                    closeFallbackScreen()
+                } else {
+                    Toast.makeText(this@LockScreenActivity, R.string.voice_try_again, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun closeFallbackScreen() {
+        removeFallbackOverlay()
+        updateSelectedMethod()
     }
 
     private fun removeFallbackOverlay() {

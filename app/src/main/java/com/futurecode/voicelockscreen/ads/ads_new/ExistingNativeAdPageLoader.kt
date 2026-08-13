@@ -1,6 +1,5 @@
 package com.futurecode.voicelockscreen.ads.ads_new
 
-
 import android.app.Activity
 import android.view.View
 import com.bumptech.glide.Glide
@@ -8,8 +7,6 @@ import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.MyApplication
 import com.futurecode.voicelockscreen.databinding.ItemOnboardingNativeAdBinding
 import com.futurecode.voicelockscreen.utils.Utils
-
-
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
@@ -68,7 +65,7 @@ class ExistingNativeAdPageLoader(
 
         binding.adHeadline.text = nativeAd.headline.orEmpty()
         binding.adBody.text = nativeAd.body.orEmpty()
-        binding.adCallToAction.text = nativeAd.callToAction ?: activity.getString(R.string.learn_more)
+        binding.adCallToAction.text = nativeAd.callToAction ?: "LEARN MORE"
 
         val icon = nativeAd.icon?.drawable
         if (icon != null) {
@@ -98,9 +95,9 @@ class ExistingNativeAdPageLoader(
         binding.ivFallbackMedia.visibility = View.VISIBLE
         binding.adCallToAction.visibility = View.VISIBLE
 
-        binding.adHeadline.setText(R.string.quiz_trivia)
-        binding.adBody.setText(R.string.quiz_trivia_description)
-        binding.adCallToAction.setText(R.string.learn_more)
+        binding.adHeadline.text = "Quiz Trivia"
+        binding.adBody.text = "Answer Questions & earn rbx coins"
+        binding.adCallToAction.text = "LEARN MORE"
         binding.adIcon.setImageResource(R.drawable.app_logo)
 
         Glide.with(activity)

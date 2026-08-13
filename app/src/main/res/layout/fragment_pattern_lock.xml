@@ -39,7 +39,7 @@
         android:id="@+id/tvCreatePattern"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:fontFamily="sans-serif-black"
         android:text="@string/create_your_pattern"
         android:textColor="@color/text_dark"
@@ -105,6 +105,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cvPattern"
-        tools:text="Pattern saved" />
+        android:text="@string/pattern_saved" />
+
+
+    <include
+        android:id="@+id/native_ads_3"
+        layout="@layout/native_ads_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tvPatternStatus"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallFullScreenAdsHelper
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallNativeAdsHelper
+import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallNativeBannerAdsHelper
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentVoiceSetupBinding
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
@@ -21,10 +24,21 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
     private var recognizedPhrase: String = ""
     private var isListening = false
 
+
+    private var nativeAdsHelper: AdWaterfallNativeAdsHelper? = null
+    private var fullScreenAdsHelper: AdWaterfallFullScreenAdsHelper? = null
+    private var nativeBanner: AdWaterfallNativeBannerAdsHelper? = null
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        nativeAdsHelper= AdWaterfallNativeAdsHelper(requireActivity())
+        fullScreenAdsHelper= AdWaterfallFullScreenAdsHelper(requireActivity())
+        nativeBanner= AdWaterfallNativeBannerAdsHelper(requireActivity())
 
         recognizedPhrase = loadSavedPhrase()
+        loadNativeBannerAds()
+
         renderRecordedState()
 
         binding.btnBack.setOnClickListener { findNavController().popBackStack() }
@@ -180,6 +194,19 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
                 .replace(Regex("[^a-z0-9 ]"), " ")
                 .replace(Regex("\\s+"), " ")
                 .trim()
+        }
+    }
+
+    fun loadNativeBannerAds() {
+        activity?.let { currentActivity ->
+            if (nativeBanner == null) {
+                nativeBanner = AdWaterfallNativeBannerAdsHelper(currentActivity)
+            }
+            nativeBanner?.showNativeBAnnerAd(
+                nativeBannerAdView = binding.nativeAds3.frame,
+                mainLayout = binding.nativeAds3.mainLayout,
+                placeholder = binding.nativeAds3.placeholder
+            )
         }
     }
 }

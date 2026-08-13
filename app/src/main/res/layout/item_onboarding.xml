@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imgOnBoarding"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_350sdp"
+        android:layout_height="@dimen/_330sdp"
         android:layout_marginTop="@dimen/_14sdp"
         android:adjustViewBounds="true"
         android:contentDescription="@null"
@@ -20,7 +20,7 @@
         app:layout_constraintHeight_max="@dimen/_390sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="@dimen/_330sdp"
+        app:layout_constraintWidth_max="@dimen/_310sdp"
         tools:src="@drawable/onboard_one" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_24sdp"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/poppins_bold"
         android:gravity="center"
         android:includeFontPadding="false"
         android:lineSpacingExtra="@dimen/_2sdp"

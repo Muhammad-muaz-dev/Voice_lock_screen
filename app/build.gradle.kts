@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -41,12 +43,14 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
+    implementation(libs.firebase.crashlytics)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -96,11 +100,15 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:5.0.7")
     annotationProcessor ("com.github.bumptech.glide:compiler:5.0.7")
 
-
     // firebase analytics
-//    implementation("com.google.firebase:firebase-analytics")
-//    implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
 
-
+    // AppLovin MAX SDK
+    implementation("com.applovin:applovin-sdk:13.6.3")
+    //mediatiaion
+    implementation("com.applovin.mediation:google-adapter:25.4.0.0")
+    implementation("com.applovin.mediation:facebook-adapter:6.21.0.0")
+    implementation("com.google.ads.mediation:facebook:6.21.0.1")
 
 }

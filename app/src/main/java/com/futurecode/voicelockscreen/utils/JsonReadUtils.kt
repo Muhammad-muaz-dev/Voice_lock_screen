@@ -2,8 +2,10 @@ package com.futurecode.voicelockscreen.utils
 
 import android.content.Context
 import android.util.Log
+import com.futurecode.voicelockscreen.BuildConfig
 import com.futurecode.voicelockscreen.activity.MyApplication
 import com.futurecode.voicelockscreen.api.NetworkModule.apiService
+import com.futurecode.voicelockscreen.db.PrefManager
 import com.futurecode.voicelockscreen.model.CommonAdsModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -17,8 +19,8 @@ object JsonReadUtils {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-              //  val FOLDER_NAME = BuildConfig.APPLICATION_ID
-                val FOLDER_NAME = "com.futurecode.ghostfinderradardetector"
+                val FOLDER_NAME = BuildConfig.APPLICATION_ID
+                //val FOLDER_NAME = "com.futurecode.ghostfinderradardetector"
                 Log.d("FOLDER_NAME", "FOLDER_NAME: $FOLDER_NAME")
                 val APP_KEY = "MpAEWpiXPcJYuZNcEZXqlXdQWJuEEd"
                 val response = apiService.getJson(
@@ -52,6 +54,13 @@ object JsonReadUtils {
                             prefManager.contactUs = it.appSettings?.contactUs ?: ""
                             prefManager.privacyPolicy = it.appSettings?.privacyPolicy ?: ""
                             prefManager.notificationUrl = it.appSettings?.notificationUrl ?: ""
+
+
+                            prefManager.applovin_app_open=it.ads?.applovin_app_open?:""
+                            prefManager.appLovinBanner=it.ads?.applovin_banner?:""
+                            prefManager.applovinInterstitial=it.ads?.applovin_interstitial?:""
+                            prefManager.applovinMrec=it.ads?.applovin_mrec?:""
+                            prefManager.applovinReward=it.ads?.applovin_reward?:""
 
                             prefManager.customUrls = Gson().toJson(
                                 it.ads?.customUrl?.filterNotNull() ?: emptyList<String>()

@@ -24,7 +24,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     protected val bindingOrNull: VB?
         get() = _binding
 
-   // protected val prefManager: PrefManager by lazy { MyApplication.app.prefManager }
+    protected val prefManager: PrefManager by lazy { MyApplication.app.prefManager }
 
     var distanceUnit = "km"
     var waterUnit = "ml"

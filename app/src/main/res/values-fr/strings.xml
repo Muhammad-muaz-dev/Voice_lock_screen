@@ -1,2 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Voice Lock Screen</string>
+    <string name="hello_blank_fragment">Bonjour fragment vierge</string>
+    <string name="voice_lock_screen">Verrouillage de l\'écran vocal</string>
+    <string name="lock_monitor_channel">Moniteur de verrouillage</string>
+    <string name="lock_monitor_running">La protection de l\'écran de verrouillage est active</string>
+    <string name="secure_smart">Sécurisé &amp; Intelligent</string>
+    <string name="voice_lock_is_off">Verrouillage vocal désactivé</string>
+    <string name="voice_lock_is_on">Verrouillage vocal activé</string>
+    <string name="unlock_with_voice">Déverrouiller avec la voix</string>
+    <string name="say_unlock_now">Dites \'Déverrouiller maintenant\' pour ouvrir votre téléphone</string>
+    <string name="lock_with_voice">Verrouiller avec la voix</string>
+    <string name="say_lock_my_phone">Dites \'Verrouiller mon téléphone\' pour le sécuriser</string>
+    <string name="advertisement">PUBLICITÉ</string>
+    <string name="ad_banner">Bannière publicitaire</string>
+    <string name="security_tools">Outils de sécurité</string>
+    <string name="see_all">Voir tout</string>
+    <string name="voice_unlock">Déverrouillage vocal</string>
+    <string name="pin_lock">Verrouillage par Code PIN</string>
+    <string name="pattern_lock">Verrouillage par Schéma</string>
+    <string name="fingerprint_lock">Verrouillage par Empreinte</string>
+    <string name="preview">Aperçu</string>
+    <string name="lock_screen_themes">Thèmes d\'écran de verrouillage</string>
+    <string name="ocean">Océan</string>
+
+    <string name="secure_your_phone_with_your_voice">Sécurisez votre téléphone avec votre voix</string>
+    <string name="setting_up_vice_security">Configuration de la sécurité vocale.......</string>
+    <string name="select_language">Sélectionner la langue</string>
+    <string name="search_language">Rechercher une langue...</string>
+    <string name="suggested">Suggéré</string>
+    <string name="no_language_found">Aucune langue trouvée</string>
+    <string name="continue_text">Continuer</string>
+    <string name="next">Suivant</string>
+    <string name="get_started">Commencer</string>
+    <string name="back">Retour</string>
+    <string name="pin_code">Code PIN</string>
+    <string name="create_your_pin">Créez votre code PIN</string>
+    <string name="pin_hint">Entrez un code PIN à %1$d chiffres pour protéger vos applications.</string>
+    <string name="use_digit_pin">Utiliser un code PIN à %1$d chiffres</string>
+    <string name="confirm_pin">Confirmer le code PIN</string>
+    <string name="pin_saved">Code PIN enregistré</string>
+    <string name="pin_incomplete">Entrez votre code PIN complet</string>
+    <string name="confirm_your_pin">Confirmez votre code PIN</string>
+    <string name="pin_confirm_hint">Entrez à nouveau votre code PIN à %1$d chiffres pour confirmer.</string>
+    <string name="pin_mismatch">Le code PIN ne correspond pas. Réessayez.</string>
+    <string name="pin_unlock">Entrez le code PIN pour déverrouiller</string>
+    <string name="pin_unlocked">Code PIN correct. Déverrouillé.</string>
+    <string name="pin_wrong">Mauvais code PIN. Réessayez.</string>
+    <string name="pin_setup_required">Configurez d\'abord votre code PIN</string>
+
+    <!-- Settings Screen -->
+    <string name="setting">Paramètres</string>
+    <string name="premium">PREMIUM</string>
+    <string name="upgrade_to_premium">Passer à la version Premium</string>
+    <string name="premium_desc">Débloquez toutes les fonctionnalités — sans limites, sans publicité.</string>
+    <string name="upgrade_now">Mettre à niveau maintenant</string>
+    <string name="general_settings">PARAMÈTRES GÉNÉRAUX</string>
+    <string name="change_language">Changer de langue</string>
+    <string name="select_preferred_language">Sélectionnez votre langue préférée</string>
+    <string name="change_security_question">Changer la question de sécurité</string>
+    <string name="update_account_recovery">Mettez à jour votre question de récupération</string>
+    <string name="disable_system_lock">Désactiver le verrouillage système</string>
+    <string name="avoid_multiple_lock">Éviter les écrans de verrouillage multiples</string>
+    <string name="other">AUTRES</string>
+    <string name="share_app">Partager l\'application</string>
+    <string name="share_with_friends">Partagez cette application avec vos amis</string>
+    <string name="feedback">Commentaires</string>
+    <string name="help_us_improve">Aidez-nous à améliorer l\'application</string>
+    <string name="privacy_policy">Politique de confidentialité</string>
+    <string name="read_our_privacy">Lisez notre politique de confidentialité</string>
+    <string name="share_app_message">Essayez %1$s : %2$s</string>
+    <string name="feedback_email_subject">Avis sur %1$s</string>
+    <string name="privacy_policy_unavailable">La politique de confidentialité n\'est pas disponible</string>
+    <string name="system_lock_settings_unavailable">Impossible d\'ouvrir les paramètres de verrouillage système</string>
+    <string name="no_app_found">Aucune application trouvée pour ouvrir ceci</string>
+
+    <!-- Permissions Screen -->
+    <string name="permissions_required">Autorisations requises</string>
+    <string name="allow_required_permissions">Accorder les autorisations requises</string>
+    <string name="permissions_desc">Activez ces autorisations pour que le verrouillage vocal fonctionne correctement.</string>
+    <string name="phone_call_access">Accès aux appels téléphoniques</string>
+    <string name="phone_call_desc">Aide à détecter les appels et à maintenir le verrouillage vocal actif.</string>
+    <string name="display_over_other_apps">Afficher par-dessus d\'autres applications</string>
+    <string name="display_over_desc">Affiche l\'écran de verrouillage vocal au-dessus d\'autres apps.</string>
+    <string name="microphone_access">Accès au micro</string>
+    <string name="microphone_desc">Requis pour enregistrer et reconnaître votre commande vocale.</string>
+    <string name="privacy_protected">Votre vie privée est protégée</string>
+    <string name="privacy_desc">Nous n\'utilisons ces autorisations que pour les fonctionnalités de la chaîne vocale.</string>
+    <string name="permissions_enabled_count">%1$d sur %2$d autorisations activées</string>
+
+    <!-- Fingerprint Lock Screen -->
+    <string name="enable_fingerprint_unlock">Activer le déverrouillage par empreinte</string>
+    <string name="use_fingerprint_desc">Utilisez votre empreinte digitale pour sécuriser votre appareil.</string>
+    <string name="enable_fingerprint">Activer l\'empreinte</string>
+    <string name="fingerprint_prompt_title">Authentification par empreinte</string>
+    <string name="fingerprint_prompt_subtitle">Touchez le capteur d\'empreintes pour continuer</string>
+    <string name="fingerprint_not_supported">L\'empreinte digitale n\'est pas prise en charge sur cet appareil</string>
+    <string name="fingerprint_hardware_unavailable">Le capteur d\'empreintes digitales est indisponible</string>
+    <string name="fingerprint_none_enrolled">Aucune empreinte enregistrée. Ajoutez-en une dans les paramètres.</string>
+    <string name="fingerprint_enabled">Empreinte activée</string>
+    <string name="fingerprint_unlocked">Empreinte reconnue. Déverrouillé.</string>
+    <string name="fingerprint_failed">Échec de l\'empreinte. Réessayez.</string>
+    <string name="fingerprint_setup_required">Activez d\'abord l\'empreinte digitale</string>
+    <string name="voice_setup">Configuration vocale</string>
+    <string name="record_voice">Enregistrer la voix</string>
+    <string name="confirm_voice">Confirmer la voix</string>
+    <string name="create_voice_password">Créez votre mot de passe vocal</string>
+    <string name="voice_password_hint">Dites une phrase unique dont vous vous souviendrez pour déverrouiller l\'écran.</string>
+    <string name="ad">PUB</string>
+    <string name="recorded_successfully">Enregistré avec succès</string>
+    <string name="tap_to_record_again">Appuyez pour enregistrer à nouveau</string>
+    <string name="detected_phrase">PHRASE DÉTECTÉE</string>
+    <string name="default_voice_phrase">"bonjour bonjour bonjour bonjour bonjour"</string>
+    <string name="record_again">Réenregistrer</string>
+    <string name="recording_listening">Écoute en cours...</string>
+    <string name="speak_secret_phrase">Prononcez votre phrase secrète</string>
+    <string name="voice_saved">Phrase vocale enregistrée</string>
+    <string name="voice_not_detected">Impossible de détecter la parole. Réessayez.</string>
+    <string name="speech_not_available">La reconnaissance vocale n\'est pas disponible sur cet appareil</string>
+    <string name="save_voice_first">Enregistrez d\'abord votre phrase vocale</string>
+    <string name="voice_unlocked">Voix reconnue. Déverrouillé.</string>
+    <string name="voice_try_again">La voix ne correspond pas. Réessayez.</string>
+    <string name="listening_unlock">À l\'écoute de votre voix...</string>
+    <string name="setup_security_question">Définir une question de sécurité</string>
+    <string name="security_question_hint">Choisissez une question et une réponse pour vous aider à récupérer votre mot de passe vocal.</string>
+    <string name="security_question_label">• QUESTION DE SÉCURITÉ</string>
+    <string name="choose_security_question">Choisissez une question de sécurité</string>
+    <string name="your_answer">• VOTRE RÉPONSE</string>
+    <string name="enter_your_answer">Entrez votre réponse</string>
+    <string name="answer_help">Utilisez une réponse facile à retenir pour vous mais difficile à deviner pour les autres.</string>
+    <string name="ad_320">Publicité · 320 × 50</string>
+    <string name="save_finish">Enregistrer &amp; Terminer</string>
+    <string name="pick_security_question">Choisir une question de sécurité</string>
+    <string name="select_one_question">Sélectionnez une question pour protéger votre compte</string>
+    <string name="confirm_question">Confirmer la question</string>
+    <string name="security_saved">Question de sécurité enregistrée</string>
+    <string name="choose_question_error">Choisissez une question de sécurité</string>
+    <string name="answer_required">Entrez votre réponse</string>
+    <string name="good_afternoon">☀️ Bon après-midi !</string>
+    <string name="good_evening">Bonsoir</string>
+    <string name="good_night">Bonne nuit</string>
+    <string name="good_morning">Bonjour</string>
+    <string name="tap_microphone">Appuyez sur le microphone et parlez</string>
+    <string name="settings">Paramètres</string>
+    <string name="security">Sécurité</string>
+
+    <!-- Premium Screen -->
+    <string name="voice_lock">Verrouillage vocal</string>
+    <string name="premium_title">Premium</string>
+    <string name="choose_your_plan">CHOISISSEZ VOTRE FORFAIT</string>
+    <string name="weekly">Hebdomadaire</string>
+    <string name="seven_day_access">Accès 7 jours</string>
+    <string name="weekly_price">₹920.00</string>
+    <string name="per_week">par semaine</string>
+    <string name="monthly">Mensuel</string>
+    <string name="thirty_day_access">Accès 30 jours</string>
+    <string name="monthly_price">₹1,150.00</string>
+    <string name="per_month">par mois</string>
+    <string name="yearly">Annuel</string>
+    <string name="yearly_save">Économisez 49% · Meilleure offre</string>
+    <string name="yearly_price">₹7,100.00</string>
+    <string name="per_year">par an</string>
+    <string name="best_value">Meilleur rapport qualité/prix</string>
+    <string name="get_vpn_plus">Obtenir VPN Plus</string>
+    <string name="cancel_anytime">Annulez à tout moment</string>
+    <string name="thirty_day_guarantee">Garantie de 30 jours</string>
+
+    <!-- Pattern Screen -->
+    <string name="pattern">Schéma</string>
+    <string name="create_your_pattern">Créez votre schéma</string>
+    <string name="pattern_hint">Reliez au moins 4 points pour protéger vos applications</string>
+    <string name="confirm_your_pattern">Confirmez votre schéma</string>
+    <string name="pattern_confirm_hint">Dessinez à nouveau le même schéma pour confirmer</string>
+    <string name="pattern_too_short">Reliez au moins 4 points</string>
+    <string name="pattern_mismatch">Le schéma ne correspond pas. Réessayez.</string>
+    <string name="pattern_saved">Schéma enregistré</string>
+    <string name="pattern_setup_required">Configurez d\'abord votre schéma</string>
+    <string name="pattern_unlocked">Schéma correct. Déverrouillé.</string>
+    <string name="pattern_wrong">Mauvais schéma. Réessayez.</string>
+
+    <!-- Theme Screen -->
+    <string name="theme">Thème</string>
+    <string name="loading">Chargement...</string>
+
+    <!-- Shared UI labels and values -->
+    <string name="pin">Code PIN</string>
+    <string name="voice">Voix</string>
+    <string name="fingerprint">Empreinte</string>
+    <string name="draw_pattern_to_unlock">Dessinez votre schéma pour déverrouiller</string>
+    <string name="touch_fingerprint_sensor">Touchez le capteur d\'empreinte</string>
+    <string name="theme_applied">Thème appliqué</string>
+    <string name="no_browser_found">Aucun navigateur trouvé</string>
+    <string name="install">Installer</string>
+    <string name="learn_more">EN SAVOIR PLUS</string>
+
+    <!-- Language names -->
+    <string name="language_english_us">Anglais (US)</string>
+    <string name="language_english_native">English</string>
+    <string name="language_spanish">Espagnol</string>
+    <string name="language_spanish_native">Español</string>
+    <string name="language_french">Français</string>
+    <string name="language_french_native">Français</string>
+    <string name="language_german">Allemand</string>
+    <string name="language_german_native">Deutsch</string>
+    <string name="language_japanese">Japonais</string>
+    <string name="language_japanese_native">日本語</string>
+    <string name="language_hindi">Hindi</string>
+    <string name="language_hindi_native">हिन्दी</string>
+    <string name="language_portuguese">Portugais</string>
+    <string name="language_portuguese_native">Português</string>
+    <string name="language_russian">Russe</string>
+    <string name="language_russian_native">Русский</string>
+    <string name="language_chinese">Chinois</string>
+    <string name="language_chinese_native">中文</string>
+    <string name="language_arabic">Arabe</string>
+    <string name="language_arabic_native">العربية</string>
+
+    <!-- Security questions -->
+    <string-array name="security_questions">
+        <item>Quel était le nom de votre école primaire ?</item>
+        <item>Quel est le nom de votre premier animal de compagnie ?</item>
+        <item>Quel était le nom de la rue où vous avez grandi ?</item>
+        <item>Quel est le nom de jeune fille de votre mère ?</item>
+        <item>Dans quelle ville êtes-vous né(e) ?</item>
+        <item>Quelle était la marque de votre première voiture ?</item>
+        <item>Quel est le prénom de votre aîné(e) ?</item>
+        <item>Quel était votre surnom d\'enfance ?</item>
+    </string-array>
+
+    <!-- Advertising and promotional UI -->
+    <string name="ads">Annonces</string>
+    <string name="unlock_pro_features_key">Débloquer les fonctionnalités Pro</string>
+    <string name="unlock_pro_features_desc_placeholder">Description des fonctionnalités pro</string>
+    <string name="not_now">Pas maintenant</string>
+    <string name="watch_ad">Regarder la pub</string>
+    <string name="promo_upgrade_diwali_bundle">🚀 Pack Upgrade Diwali</string>
+    <string name="limited_time_offer">OFFRE À DURÉE LIMITÉE</string>
+    <string name="promo_blue_flame_dra">BLUE FLAME DRA</string>
+    <string name="claim_reward_now">RÉCLAMEZ VOTRE RÉCOMPENSE ! 🔥 Ne manquez pas ça !</string>
+    <string name="upgrade">Mettre à niveau</string>
+    <string name="maybe_later">Peut-être plus tard</string>
+    <string name="quiz_trivia">Quiz Trivia</string>
+    <string name="quiz_trivia_description">Répondez aux questions &amp; gagnez des pièces rbx</string>
+    <string name="promo_wall_ninja">WALL - NINJA\'S ARSE</string>
+    <string name="promo_eternal_essence">PACK ETERNAL ESSENCE</string>
+    <string name="promo_avenger">Pack Avenger</string>
+    <string name="promo_trouble">Pack Trouble</string>
+    <string name="promo_malachite_ninja">Pack Malachite Ninja</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_command_title">Commandez avec\nvotre voix</string>
+    <string name="onboarding_command_description">Déverrouillez votre téléphone grâce à\nla reconnaissance vocale IA avancée</string>
+    <string name="onboarding_recognition_title">Reconnaissance vocale\nintelligente</string>
+    <string name="onboarding_recognition_description">Votre voix unique garantit la sécurité\nde votre téléphone</string>
+    <string name="onboarding_protection_title">Protection\ntout-en-un</string>
+    <string name="onboarding_protection_description">Plusieurs options de verrouillage pour une sécurité renforcée au quotidien</string>
+
+    <!-- Miscellaneous system-facing text -->
+    <string name="just_now">à l\'instant</string>
+    <string name="hours_short">%1$d h</string>
+    <string name="local_notification_channel">Notifications locales de récupération des messages supprimés</string>
+</resources>
