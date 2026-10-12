@@ -55,7 +55,7 @@ open class BaseDialog(
      * val dialog = BaseDialog(requireActivity())
      * dialog.bind(DialogSaveResultBinding.inflate(layoutInflater)) {
      *     tvTitle.text = "Save Result"
-     *     btnConfirm.setAdClickListener(requireActivity(), fullScreenAdsHelper) { dialog.dismiss() }
+     *     btnConfirm.setOnClickListener { dialog.dismiss() }
      * }
      * dialog.show()
      */

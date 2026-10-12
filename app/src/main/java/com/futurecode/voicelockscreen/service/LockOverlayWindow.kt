@@ -62,8 +62,9 @@ class LockOverlayWindow(private val context: Context) {
         binding = overlayBinding
         windowManager.addView(overlayRoot, layoutParams())
 
-        overlayBinding.imgWallpaper.setImageResource(ThemeWallpaperStore.getSelectedWallpaperRes(context))
+        ThemeWallpaperStore.applyTo(overlayBinding.imgWallpaper, context)
         bindDateTime(overlayBinding)
+        ThemeWallpaperStore.applyContent(overlayBinding, context)
         bindMethods(overlayBinding)
         updateSelectedMethod(overlayBinding)
         overlayBinding.micRings.setOnClickListener { openSelectedMethod() }
@@ -316,3 +317,4 @@ class LockOverlayWindow(private val context: Context) {
         private const val FALLBACK_TAG = "lock_fallback"
     }
 }
+

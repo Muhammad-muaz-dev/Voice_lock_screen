@@ -12,7 +12,7 @@ object VoiceLockSwitchStore {
 
     fun isUnlockEnabled(context: Context): Boolean {
         return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-            .getBoolean(KEY_UNLOCK_ENABLED, true)
+            .getBoolean(KEY_UNLOCK_ENABLED, false)
     }
 
     fun setUnlockEnabled(context: Context, enabled: Boolean) {
@@ -24,7 +24,7 @@ object VoiceLockSwitchStore {
 
     fun isLockEnabled(context: Context): Boolean {
         return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-            .getBoolean(KEY_LOCK_ENABLED, true)
+            .getBoolean(KEY_LOCK_ENABLED, false)
     }
 
     fun setLockEnabled(context: Context, enabled: Boolean) {
@@ -35,11 +35,11 @@ object VoiceLockSwitchStore {
     }
 
     fun isUnlockEffective(context: Context): Boolean {
-        return isUnlockEnabled(context) && hasRequiredPermissions(context)
+        return isUnlockEnabled(context) && hasRequiredPermissions(context) && com.futurecode.voicelockscreen.security.SecureVoiceStore.hasPhrase(context)
     }
 
     fun isLockEffective(context: Context): Boolean {
-        return isLockEnabled(context) && hasRequiredPermissions(context)
+        return isLockEnabled(context) && hasRequiredPermissions(context) && com.futurecode.voicelockscreen.security.SecureVoiceStore.hasPhrase(context)
     }
 
     fun hasRequiredPermissions(context: Context): Boolean {

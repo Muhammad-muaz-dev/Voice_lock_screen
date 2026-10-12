@@ -49,8 +49,4 @@ abstract class BaseFragment<VB : ViewBinding>(
         super.onDestroyView()
         _binding = null
     }
-
-    protected fun showAds(flNative: FrameLayout) {
-        if (!isAdded) return
-    }
 }

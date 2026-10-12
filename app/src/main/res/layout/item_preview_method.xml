@@ -1,30 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="0dp"
-    android:layout_height="@dimen/_82sdp"
-    android:layout_marginStart="@dimen/_3sdp"
-    android:layout_marginEnd="@dimen/_3sdp"
-    android:layout_weight="1"
-    android:background="@drawable/bg_preview_method"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/_6sdp">
-
-    <ImageView
-        android:id="@+id/imgMethod"
-        android:layout_width="@dimen/_34sdp"
-        android:layout_height="@dimen/_34sdp"
-        android:background="@drawable/bg_preview_method_icon"
-        android:padding="@dimen/_8sdp" />
-
-    <TextView
-        android:id="@+id/tvMethod"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:fontFamily="@font/poppins_semibold"
-        android:gravity="center"
-        android:maxLines="1"
-        android:textColor="#FFFFFF"
-        android:textSize="@dimen/_8ssp" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="0dp" android:layout_height="82dp" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginEnd="@dimen/spacing_lg" android:layout_weight="1" android:background="@drawable/bg_preview_method" android:gravity="center" android:orientation="vertical" android:padding="@dimen/spacing_xs">
+    <ImageView android:id="@+id/imgMethod" android:layout_width="34dp" android:layout_height="34dp" android:background="@drawable/bg_preview_method_icon" android:padding="@dimen/spacing_sm" />
+    <TextView android:id="@+id/tvMethod" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xs" android:fontFamily="@font/sora_bold" android:gravity="center" android:maxLines="1" android:textColor="@color/textPrimary" android:textSize="@dimen/text_caption" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
 </LinearLayout>

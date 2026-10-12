@@ -19,12 +19,35 @@ object ThemeWallpaperStore {
     private const val KEY_WALLPAPER_NAME = "selected_wallpaper_name"
 
     fun saveSelectedTheme(context: Context, themeId: Int, @DrawableRes wallpaperRes: Int) {
+        VoiceLockFeatureStore.saveCustomThemeUri(context, null)
+        VoiceLockFeatureStore.setShowClockAndQuote(context, true)
         val wallpaperName = context.resources.getResourceEntryName(wallpaperRes)
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             .edit()
             .putInt(KEY_THEME_ID, themeId)
             .putString(KEY_WALLPAPER_NAME, wallpaperName)
             .apply()
+    }
+
+    fun applyTo(image: android.widget.ImageView, context: Context) {
+        val uri = VoiceLockFeatureStore.customThemeUri(context)
+        if (uri != null) {
+            val loaded = runCatching { image.setImageURI(uri); image.drawable != null }.getOrDefault(false)
+            if (loaded) return
+        }
+        image.setImageResource(getSelectedWallpaperRes(context))
+    }
+
+    fun applyContent(binding: com.futurecode.voicelockscreen.databinding.FragmentScreenPreviewBinding, context: Context) {
+        binding.tvQuote.text = VoiceLockFeatureStore.lockQuote(context)
+        binding.tvGreeting.text = context.getTimeBasedGreetingRes()
+        val show = VoiceLockFeatureStore.showClockAndQuote(context)
+        binding.timeCard.visibility = if (show) android.view.View.VISIBLE else android.view.View.GONE
+        binding.quoteCard.visibility = if (show) android.view.View.VISIBLE else android.view.View.GONE
+        binding.tvGreeting.visibility = if (show) android.view.View.VISIBLE else android.view.View.GONE
+        binding.tvStatusTime.visibility = android.view.View.GONE
+        binding.tvLastNote.text = VoiceLockFeatureStore.notes(context).firstOrNull()?.title
+            ?: context.getString(R.string.record_first_note)
     }
 
     fun getSelectedThemeId(context: Context): Int {

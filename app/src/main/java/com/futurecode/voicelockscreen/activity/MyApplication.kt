@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
-import com.facebook.ads.AudienceNetworkAds
 import com.futurecode.voicelockscreen.db.PrefManager
 import com.futurecode.voicelockscreen.service.LockService
-import com.google.android.gms.ads.MobileAds
 import java.util.Locale
 
 
@@ -43,10 +41,6 @@ class MyApplication : Application() {
 //        networkMonitor.startMonitoring()
 
         // 3. General Initializations
-        // JsonReadUtils.fetchJsonData(this)
-        initializeADS()
-
-
     }
 
     private fun setupActivityTracker() {
@@ -71,16 +65,7 @@ class MyApplication : Application() {
 
     fun getCurrentActivity(): Activity? = currentActivity
 
-    private fun initializeADS() {
-        AudienceNetworkAds.initialize(this)
-        MobileAds.initialize(this) {
 
-        }
-
-        if (!prefManager.adsOff) {
-           // appOpenHelper = AppOpenHelperNew(this)
-        }
-    }
 
     override fun onTerminate() {
         super.onTerminate()

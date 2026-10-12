@@ -18,7 +18,11 @@ object SecurePinStore {
     private const val KEY_PIN_CIPHER = "pin_cipher"
     private const val KEY_PIN_IV = "pin_iv"
     private const val KEY_PIN_LENGTH = "pin_length"
+    private const val KEY_ATTEMPTS = "fail_attempts"
+    private const val KEY_LOCKOUT_TIME = "lockout_timestamp"
     private const val GCM_TAG_LENGTH = 128
+    private const val MAX_ATTEMPTS = 5
+    private const val LOCKOUT_DURATION_MS = 30 * 60 * 1000L // 30 minutes
 
     fun savePin(context: Context, pin: String) {
         val cipher = Cipher.getInstance(TRANSFORMATION)
@@ -30,12 +34,40 @@ object SecurePinStore {
             .putString(KEY_PIN_CIPHER, Base64.encodeToString(encryptedPin, Base64.NO_WRAP))
             .putString(KEY_PIN_IV, Base64.encodeToString(cipher.iv, Base64.NO_WRAP))
             .putInt(KEY_PIN_LENGTH, pin.length)
+            .putInt(KEY_ATTEMPTS, 0)
+            .putLong(KEY_LOCKOUT_TIME, 0L)
             .apply()
     }
 
     fun verifyPin(context: Context, pin: String): Boolean {
+        val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+
+        // Check if locked out
+        val lockoutTime = prefs.getLong(KEY_LOCKOUT_TIME, 0L)
+        if (lockoutTime > 0 && System.currentTimeMillis() < lockoutTime) {
+            return false
+        }
+
         val savedPin = decryptPin(context) ?: return false
-        return savedPin == pin
+        val isCorrect = savedPin == pin
+
+        if (isCorrect) {
+            prefs.edit().putInt(KEY_ATTEMPTS, 0).putLong(KEY_LOCKOUT_TIME, 0L).apply()
+        } else {
+            val attempts = prefs.getInt(KEY_ATTEMPTS, 0) + 1
+            val editor = prefs.edit().putInt(KEY_ATTEMPTS, attempts)
+            if (attempts >= MAX_ATTEMPTS) {
+                editor.putLong(KEY_LOCKOUT_TIME, System.currentTimeMillis() + LOCKOUT_DURATION_MS)
+            }
+            editor.apply()
+        }
+        return isCorrect
+    }
+
+    fun getLockoutRemainingTime(context: Context): Long {
+        val lockoutTime = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            .getLong(KEY_LOCKOUT_TIME, 0L)
+        return (lockoutTime - System.currentTimeMillis()).coerceAtLeast(0L)
     }
 
     fun hasPin(context: Context): Boolean {

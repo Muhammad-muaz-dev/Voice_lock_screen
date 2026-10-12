@@ -33,6 +33,7 @@ import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
+import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 import com.futurecode.voicelockscreen.utils.VoiceLockPattern
 import com.futurecode.voicelockscreen.utils.getTimeBasedGreetingRes
 import java.text.SimpleDateFormat
@@ -56,7 +57,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         enterPreviewMode()
-        binding.imgWallpaper.setImageResource(ThemeWallpaperStore.getSelectedWallpaperRes(requireContext()))
+        ThemeWallpaperStore.applyTo(binding.imgWallpaper, requireContext())
         bindDateTime()
         bindMethods()
         updateSelectedMethod()
@@ -66,7 +67,8 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
             openSelectedUnlockMethod()
         }
 
-        binding.tvGreeting.text=requireContext().getTimeBasedGreetingRes()
+        ThemeWallpaperStore.applyContent(binding, requireContext())
+        binding.tvSpeakHint.setText(R.string.listening_unlock_hint)
     }
 
     override fun onDestroyView() {
@@ -468,3 +470,4 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
         const val KEY_UNLOCKED_THIS_SESSION = "unlocked_this_session"
     }
 }
+

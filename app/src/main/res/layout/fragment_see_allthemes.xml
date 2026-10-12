@@ -1,50 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
-
-    <!-- Toolbar -->
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="@dimen/_32sdp"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:padding="@dimen/_6sdp"
-        android:src="@drawable/ic_back_blue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/black" />
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/theme"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_18ssp"
-        app:layout_constraintBottom_toBottomOf="@id/ivBack"
-        app:layout_constraintStart_toEndOf="@+id/ivBack"
-        android:paddingStart="@dimen/_10sdp"
-        app:layout_constraintTop_toTopOf="@id/ivBack" />
-
-    <!-- Themes Grid -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvThemes"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:clipToPadding="false"
-        android:paddingHorizontal="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_16sdp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:spanCount="2"
-        tools:listitem="@layout/item_theme" />
-
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/screen_bg_dark">
+    <ImageView android:id="@+id/ivBack" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_lg" android:padding="@dimen/spacing_xs" android:src="@drawable/ic_back_blue" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:tint="@color/primaryLight" />
+    <TextView android:id="@+id/tvTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_semibold" android:text="@string/theme" android:textColor="@color/text_white" android:textSize="@dimen/text_titleL" app:layout_constraintBottom_toBottomOf="@id/ivBack" app:layout_constraintStart_toEndOf="@+id/ivBack" android:paddingStart="@dimen/spacing_sm" app:layout_constraintTop_toTopOf="@id/ivBack" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvThemes" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="@dimen/spacing_lg" android:clipToPadding="false" android:paddingHorizontal="@dimen/spacing_lg" android:paddingBottom="@dimen/spacing_lg" app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@id/btnUpload" app:spanCount="2" tools:listitem="@layout/item_theme" />
+    <TextView android:id="@+id/btnUpload" android:layout_width="0dp" android:layout_height="50dp" android:layout_margin="16dp" android:text="@string/upload_picture" android:textColor="@color/textPrimary" android:textSize="@dimen/text_buttonL" android:fontFamily="@font/sora_bold" android:gravity="center" android:background="@drawable/bg_cta_gradient" app:layout_constraintTop_toBottomOf="@id/ivBack" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

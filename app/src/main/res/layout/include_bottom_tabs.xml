@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/bottomNavContainer" android:layout_width="match_parent" android:layout_height="84dp" android:background="@drawable/bg_bottom_nav_bar" android:gravity="center_vertical" android:orientation="horizontal">
+    <LinearLayout android:id="@+id/tabVoiceLock" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+        <FrameLayout android:id="@+id/tabVoiceLockIcon" android:layout_width="66dp" android:layout_height="33dp">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:contentDescription="@string/tab_voice_lock" android:src="@drawable/ic_lock_outline" />
+        </FrameLayout>
+        <TextView android:id="@+id/tabVoiceLockLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/tab_voice_lock" android:textColor="@color/text_muted_sub" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_semibold" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/tabThemes" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+        <FrameLayout android:id="@+id/tabThemesIcon" android:layout_width="66dp" android:layout_height="33dp">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:contentDescription="@string/tab_themes" android:src="@drawable/ic_nav_themes" />
+        </FrameLayout>
+        <TextView android:id="@+id/tabThemesLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/tab_themes" android:textColor="@color/text_muted_sub" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_semibold" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/tabVoiceNote" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+        <FrameLayout android:id="@+id/tabVoiceNoteIcon" android:layout_width="66dp" android:layout_height="33dp">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:contentDescription="@string/tab_voice_note" android:src="@drawable/ic_nav_voicenote" />
+        </FrameLayout>
+        <TextView android:id="@+id/tabVoiceNoteLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/tab_voice_note" android:textColor="@color/text_muted_sub" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_semibold" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+    </LinearLayout>
+</LinearLayout>

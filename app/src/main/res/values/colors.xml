@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Midnight Violet Design System Tokens -->
+    <color name="screen_bg_dark">#0B1020</color>
+    <color name="card_bg_dark">#151B33</color>
+    <color name="card_stroke_dark">#232B4A</color>
+    <color name="brand_purple">#5B3DF5</color>
+    <color name="gradient_purple_end">#7B2FD6</color>
+    <color name="sub_pill_lock_bg">#0F1428</color>
+    <color name="bottom_nav_bg">#11172B</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_muted_sub">#A3A9C2</color>
+
+    <color name="accent_camera_bg">#6D4AFF</color>
+    <color name="accent_pin_bg">#0E8FA8</color>
+    <color name="accent_pattern_bg">#D6336C</color>
+    <color name="accent_fingerprint_bg">#C2570C</color>
+    <color name="divider_unlock_translucent">#4DFFFFFF</color>
+
+    <!-- Additional Palette Tokens -->
+    <color name="primaryStart">#5B3DF5</color>
+    <color name="primaryEnd">#7B2FD6</color>
+    <color name="primaryLight">#8B73FF</color>
+    <color name="primarySoft">#C4B5FF</color>
+    <color name="primarySelected">#7C5CFF</color>
+
+    <color name="bg">#0B1020</color>
+    <color name="surface">#151B33</color>
+    <color name="surfaceElevated">#18203F</color>
+    <color name="surfaceSunken">#10162C</color>
+    <color name="field">#131A36</color>
+    <color name="surfaceTint">#1B2146</color>
+    <color name="surfaceTint2">#2A2F5A</color>
+    <color name="surfaceDisabled">#1A2040</color>
+    <color name="navBar">#11172B</color>
+
+    <color name="border">#232B4A</color>
+    <color name="borderStrong">#3B3F8F</color>
+    <color name="outline">#3B4272</color>
+    <color name="radioRing">#5D6591</color>
+
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#A3A9C2</color>
+    <color name="textPlaceholder">#8089AD</color>
+    <color name="textDisabled">#6B7399</color>
+
+    <color name="accentCyan">#22D3EE</color>
+    <color name="accentGold">#FBBF24</color>
+    <color name="success">#15803D</color>
+    <color name="error">#F87171</color>
+    <color name="danger">#D92D3A</color>
+    <color name="successSoft">#86EFAC</color>
+    <color name="errorSoft">#FCA5A5</color>
+    <color name="scrim">#9E05070F</color>
+
+    <!-- Legacy Compatibility Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bg_color">#F5F9FC</color>
@@ -13,4 +67,12 @@
     <color name="g2">#24508C</color>
     <color name="brand_cyan">#00EAF4</color>
 
+    <color name="icon_muted">#8089AD</color>
+    <color name="chip_bg_dark">#151B33</color>
+    <color name="outline_purple">#5B3DF5</color>
+    <color name="radio_unselected">#5D6591</color>
+    <color name="sub_pill_unlock_translucent">#2AFFFFFF</color>
+    <color name="switch_track_lock">#2A3050</color>
+    <color name="switch_track_unlock_translucent">#4DFFFFFF</color>
+    <color name="text_purple">#8B73FF</color>
 </resources>

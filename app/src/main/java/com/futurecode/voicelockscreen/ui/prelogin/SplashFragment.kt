@@ -22,22 +22,20 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // API hit karenge, aur response milne par hi direct navigate karwayenge
-        JsonReadUtils.fetchJsonData(requireContext()) {
-            if (isAdded) {
-                //(activity as? MainActivity)?.goToMain()
-                navigation()
-            }
-        }
-
-
+        JsonReadUtils.fetchJsonData(requireContext()) { }
+        navigation()
     }
 
      fun navigation(){
 
-         lifecycleScope.launch {
-             delay(4000)
-             findNavController().navigate(R.id.action_splashFragment_to_languageFragment)
+         viewLifecycleOwner.lifecycleScope.launch {
+             delay(1200)
+             if (prefManager.isOnboardingDone) {
+                 startActivity(Intent(requireContext(), HomeActivity::class.java))
+                 requireActivity().finish()
+             } else {
+                 findNavController().navigate(R.id.action_splashFragment_to_languageFragment)
+             }
 //             val intent = Intent(requireContext(), HomeActivity::class.java).apply {
 //                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 //             }

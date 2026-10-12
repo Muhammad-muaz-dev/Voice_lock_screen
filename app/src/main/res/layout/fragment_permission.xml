@@ -1,414 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_color"
-    tools:context=".ui.afterlogin.PermissionFragment">
-
-    <!-- Header -->
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="@dimen/_36sdp"
-        android:layout_height="@dimen/_36sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:background="@drawable/bg_circle_white"
-        android:contentDescription="@string/back"
-        android:padding="@dimen/_10sdp"
-        android:src="@drawable/ic_back_blue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/permissions_required"
-        android:textColor="@color/text_dark"
-        android:textSize="@dimen/_18ssp"
-        app:layout_constraintBottom_toBottomOf="@id/ivBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ivBack" />
-
-    <!-- Bottom Action Area (placed here so ScrollView can be constrained to its top) -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingBottom="@dimen/_20sdp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:id="@+id/llStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tvEnabledCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/permissions_enabled_count"
-                android:textColor="@color/text_gray"
-                android:textSize="@dimen/_10ssp"
-                tools:text="0 of 2 permissions enabled" />
-
-            <View
-                android:layout_width="@dimen/_6sdp"
-                android:layout_height="@dimen/_6sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:background="@drawable/bg_indicator_active" />
-
-            <View
-                android:layout_width="@dimen/_6sdp"
-                android:layout_height="@dimen/_6sdp"
-                android:layout_marginStart="@dimen/_4sdp"
-                android:background="@drawable/bg_indicator_inactive" />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/screen_bg_dark" tools:context=".ui.afterlogin.PermissionFragment">
+    <ImageView android:id="@+id/ivBack" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_xl" android:background="@drawable/bg_circle_white" android:contentDescription="@string/back" android:padding="@dimen/spacing_sm" android:src="@drawable/ic_back_blue" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    <TextView android:id="@+id/tvTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/permissions_required" android:textColor="@color/text_dark" android:textSize="@dimen/text_titleM" app:layout_constraintBottom_toBottomOf="@id/ivBack" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="@id/ivBack" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
+    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/clBottom" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@color/screen_bg_dark" android:paddingBottom="@dimen/spacing_xl" app:layout_constraintBottom_toBottomOf="parent">
+        <LinearLayout android:id="@+id/llStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:gravity="center" android:orientation="horizontal" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+            <TextView android:id="@+id/tvEnabledCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/permissions_enabled_count" android:textColor="@color/text_gray" android:textSize="@dimen/text_caption" tools:text="0 of 2 permissions enabled" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+            <View android:layout_width="6dp" android:layout_height="6dp" android:layout_marginStart="@dimen/spacing_lg" android:background="@drawable/bg_indicator_active" />
+            <View android:layout_width="6dp" android:layout_height="6dp" android:layout_marginStart="@dimen/spacing_lg" android:background="@drawable/bg_indicator_inactive" />
         </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnContinue"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_48sdp"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:background="@drawable/bg_onboarding_button"
-            android:backgroundTint="#E5EBF2"
-            android:drawableStart="@drawable/ic_arrow_forward"
-            android:drawablePadding="@dimen/_8sdp"
-            android:gravity="center"
-            android:paddingStart="@dimen/_100sdp"
-            android:paddingEnd="@dimen/_20sdp"
-            android:text="@string/continue_text"
-            android:textAllCaps="false"
-            android:textColor="#A0A8B5"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintTop_toBottomOf="@id/llStatus" />
-
+        <androidx.appcompat.widget.AppCompatButton android:id="@+id/btnContinue" android:layout_width="match_parent" android:layout_height="48dp" android:layout_marginHorizontal="@dimen/spacing_xl" android:layout_marginTop="@dimen/spacing_md" android:background="@drawable/bg_onboarding_button" android:backgroundTint="@color/surface" android:drawableStart="@drawable/ic_arrow_forward" android:drawablePadding="8dp" android:gravity="center" android:paddingStart="@dimen/spacing_max" android:paddingEnd="@dimen/spacing_xl" android:text="@string/continue_text" android:textAllCaps="false" android:textColor="@color/textSecondary" android:textSize="@dimen/_12ssp" app:layout_constraintTop_toBottomOf="@id/llStatus" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/clBottom"
-        app:layout_constraintTop_toBottomOf="@id/ivBack">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/_20sdp">
-
-            <!-- Ad Placeholder -->
-            <FrameLayout
-                android:id="@+id/flAdContainer"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_80sdp"
-                android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_main_card"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|start"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:text="@string/advertisement"
-                    android:textColor="@color/text_gray"
-                    android:textSize="@dimen/_8ssp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/_12sdp"
-                    android:background="@color/blue_light" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/ad_banner"
-                    android:textColor="@color/text_gray"
-                    android:textSize="@dimen/_12ssp" />
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="0dp" android:fillViewport="true" app:layout_constraintBottom_toTopOf="@id/clBottom" app:layout_constraintTop_toBottomOf="@id/ivBack">
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingBottom="@dimen/spacing_xl">
+            <FrameLayout android:id="@+id/flAdContainer" android:layout_width="match_parent" android:layout_height="80dp" android:layout_marginHorizontal="@dimen/spacing_xl" android:layout_marginTop="@dimen/spacing_lg" android:background="@drawable/bg_main_card" app:layout_constraintTop_toTopOf="parent">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="top|start" android:layout_margin="@dimen/spacing_sm" android:text="@string/advertisement" android:textColor="@color/text_gray" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="@dimen/spacing_md" android:background="@color/blue_light" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="@string/ad_banner" android:textColor="@color/text_gray" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
             </FrameLayout>
-
-            <!-- Main Permission Card -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clMainCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_main_card"
-                android:padding="@dimen/_20sdp"
-                app:layout_constraintTop_toBottomOf="@id/flAdContainer">
-
-                <ImageView
-                    android:id="@+id/ivShield"
-                    android:layout_width="@dimen/_60sdp"
-                    android:layout_height="@dimen/_60sdp"
-                    android:background="@drawable/bg_shield_gradient"
-                    android:contentDescription="@string/app_name"
-                    android:padding="@dimen/_12sdp"
-                    android:src="@drawable/ic_shield_white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvMainTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:fontFamily="sans-serif-black"
-                    android:text="@string/allow_required_permissions"
-                    android:textColor="@color/text_dark"
-                    android:textSize="@dimen/_16ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivShield" />
-
-                <TextView
-                    android:id="@+id/tvMainDesc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:gravity="center"
-                    android:text="@string/permissions_desc"
-                    android:textColor="@color/text_gray"
-                    android:textSize="@dimen/_10ssp"
-                    app:layout_constraintTop_toBottomOf="@id/tvMainTitle" />
-
+            <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/clMainCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="@dimen/spacing_xl" android:layout_marginTop="@dimen/spacing_lg" android:background="@drawable/bg_main_card" android:padding="@dimen/spacing_xl" app:layout_constraintTop_toBottomOf="@id/flAdContainer">
+                <ImageView android:id="@+id/ivShield" android:layout_width="60dp" android:layout_height="60dp" android:background="@drawable/bg_shield_gradient" android:contentDescription="@string/app_name" android:padding="@dimen/spacing_md" android:src="@drawable/ic_shield_white" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+                <TextView android:id="@+id/tvMainTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_lg" android:fontFamily="@font/sora_regular" android:text="@string/allow_required_permissions" android:textColor="@color/text_dark" android:textSize="@dimen/text_titleS" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/ivShield" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
+                <TextView android:id="@+id/tvMainDesc" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_sm" android:gravity="center" android:text="@string/permissions_desc" android:textColor="@color/text_gray" android:textSize="@dimen/text_caption" app:layout_constraintTop_toBottomOf="@id/tvMainTitle" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Permission List -->
-            <LinearLayout
-                android:id="@+id/llPermissions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_main_card"
-                android:orientation="vertical"
-                android:padding="@dimen/_12sdp"
-                app:layout_constraintTop_toBottomOf="@id/clMainCard">
-
-                <!-- Phone Call Permission -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clPhonePermission"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="@dimen/_8sdp">
-
-                    <View
-                        android:id="@+id/ivIconPhoneContainer"
-                        android:layout_width="@dimen/_36sdp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:background="@drawable/bg_icon_container"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:contentDescription="@string/phone_call_access"
-                        android:src="@drawable/ic_phone"
-                        app:layout_constraintBottom_toBottomOf="@id/ivIconPhoneContainer"
-                        app:layout_constraintEnd_toEndOf="@id/ivIconPhoneContainer"
-                        app:layout_constraintStart_toStartOf="@id/ivIconPhoneContainer"
-                        app:layout_constraintTop_toTopOf="@id/ivIconPhoneContainer" />
-
-                    <TextView
-                        android:id="@+id/tvPhoneTitle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="@string/phone_call_access"
-                        android:textColor="@color/text_dark"
-                        android:textSize="@dimen/_11ssp"
-                        app:layout_constraintEnd_toStartOf="@id/swPhone"
-                        app:layout_constraintStart_toEndOf="@id/ivIconPhoneContainer"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/phone_call_desc"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/_9ssp"
-                        app:layout_constraintEnd_toEndOf="@id/tvPhoneTitle"
-                        app:layout_constraintStart_toStartOf="@id/tvPhoneTitle"
-                        app:layout_constraintTop_toBottomOf="@id/tvPhoneTitle" />
-
-<!--                    <androidx.appcompat.widget.SwitchCompat-->
-<!--                        android:id="@+id/swPhone"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
-
-
-
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/swPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:minWidth="@dimen/_48sdp"
-                        android:minHeight="@dimen/_24sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:thumbTint="@drawable/selector_permission_thumb"
-                        app:trackTint="@drawable/selector_permission_track" />
-
-
+            <LinearLayout android:id="@+id/llPermissions" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="@dimen/spacing_xl" android:layout_marginTop="@dimen/spacing_lg" android:background="@drawable/bg_main_card" android:orientation="vertical" android:padding="@dimen/spacing_md" app:layout_constraintTop_toBottomOf="@id/clMainCard">
+                <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/clPhonePermission" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="@dimen/spacing_sm">
+                    <View android:id="@+id/ivIconPhoneContainer" android:layout_width="36dp" android:layout_height="36dp" android:background="@drawable/bg_icon_container" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView android:layout_width="18dp" android:layout_height="18dp" android:contentDescription="@string/phone_call_access" android:src="@drawable/ic_phone" app:layout_constraintBottom_toBottomOf="@id/ivIconPhoneContainer" app:layout_constraintEnd_toEndOf="@id/ivIconPhoneContainer" app:layout_constraintStart_toStartOf="@id/ivIconPhoneContainer" app:layout_constraintTop_toTopOf="@id/ivIconPhoneContainer" />
+                    <TextView android:id="@+id/tvPhoneTitle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginEnd="@dimen/spacing_lg" android:fontFamily="@font/sora_medium" android:text="@string/phone_call_access" android:textColor="@color/text_dark" android:textSize="@dimen/text_caption" app:layout_constraintEnd_toStartOf="@id/swPhone" app:layout_constraintStart_toEndOf="@id/ivIconPhoneContainer" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/phone_call_desc" android:textColor="@color/text_gray" android:textSize="@dimen/text_caption" app:layout_constraintEnd_toEndOf="@id/tvPhoneTitle" app:layout_constraintStart_toStartOf="@id/tvPhoneTitle" app:layout_constraintTop_toBottomOf="@id/tvPhoneTitle" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+                    <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/swPhone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:minWidth="48dp" android:minHeight="24dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" app:thumbTint="@drawable/selector_permission_thumb" app:trackTint="@drawable/selector_permission_track" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="@dimen/_4sdp"
-                    android:background="#F0F0F0" />
-
-                <!-- Overlay Permission -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clOverlayPermission"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="@dimen/_8sdp">
-
-                    <View
-                        android:id="@+id/ivIconOverlayContainer"
-                        android:layout_width="@dimen/_36sdp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:background="@drawable/bg_icon_container"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:contentDescription="@string/microphone_access"
-                        android:src="@drawable/ic_mic_blue"
-                        app:layout_constraintBottom_toBottomOf="@id/ivIconOverlayContainer"
-                        app:layout_constraintEnd_toEndOf="@id/ivIconOverlayContainer"
-                        app:layout_constraintStart_toStartOf="@id/ivIconOverlayContainer"
-                        app:layout_constraintTop_toTopOf="@id/ivIconOverlayContainer" />
-
-                    <TextView
-                        android:id="@+id/tvOverlayTitle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="@string/microphone_access"
-                        android:textColor="@color/text_dark"
-                        android:textSize="@dimen/_11ssp"
-                        app:layout_constraintEnd_toStartOf="@id/swOverlay"
-                        app:layout_constraintStart_toEndOf="@id/ivIconOverlayContainer"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/microphone_desc"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/_9ssp"
-                        app:layout_constraintEnd_toEndOf="@id/tvOverlayTitle"
-                        app:layout_constraintStart_toStartOf="@id/tvOverlayTitle"
-                        app:layout_constraintTop_toBottomOf="@id/tvOverlayTitle" />
-
-<!--                    <androidx.appcompat.widget.SwitchCompat-->
-<!--                        android:id="@+id/swOverlay"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
-
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/swOverlay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:minWidth="@dimen/_48sdp"
-                        android:minHeight="@dimen/_24sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:thumbTint="@drawable/selector_permission_thumb"
-                        app:trackTint="@drawable/selector_permission_track" />
-
-
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="@dimen/spacing_xs" android:background="@color/border" />
+                <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/clOverlayPermission" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="@dimen/spacing_sm">
+                    <View android:id="@+id/ivIconOverlayContainer" android:layout_width="36dp" android:layout_height="36dp" android:background="@drawable/bg_icon_container" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView android:layout_width="18dp" android:layout_height="18dp" android:contentDescription="@string/microphone_access" android:src="@drawable/ic_mic_blue" app:layout_constraintBottom_toBottomOf="@id/ivIconOverlayContainer" app:layout_constraintEnd_toEndOf="@id/ivIconOverlayContainer" app:layout_constraintStart_toStartOf="@id/ivIconOverlayContainer" app:layout_constraintTop_toTopOf="@id/ivIconOverlayContainer" />
+                    <TextView android:id="@+id/tvOverlayTitle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginEnd="@dimen/spacing_lg" android:fontFamily="@font/sora_medium" android:text="@string/microphone_access" android:textColor="@color/text_dark" android:textSize="@dimen/text_caption" app:layout_constraintEnd_toStartOf="@id/swOverlay" app:layout_constraintStart_toEndOf="@id/ivIconOverlayContainer" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/microphone_desc" android:textColor="@color/text_gray" android:textSize="@dimen/text_caption" app:layout_constraintEnd_toEndOf="@id/tvOverlayTitle" app:layout_constraintStart_toStartOf="@id/tvOverlayTitle" app:layout_constraintTop_toBottomOf="@id/tvOverlayTitle" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+                    <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/swOverlay" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:minWidth="48dp" android:minHeight="24dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" app:thumbTint="@drawable/selector_permission_thumb" app:trackTint="@drawable/selector_permission_track" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
-
-            <!-- Privacy Card -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_privacy_card"
-                android:padding="@dimen/_12sdp"
-                app:layout_constraintTop_toBottomOf="@id/llPermissions">
-
-                <ImageView
-                    android:id="@+id/ivPrivacyIcon"
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
-                    android:contentDescription="@string/privacy_protected"
-                    android:src="@drawable/ic_privacy_green"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvPrivacyTitleLabel"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/privacy_protected"
-                    android:textColor="#2E7D32"
-                    android:textSize="@dimen/_10ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ivPrivacyIcon"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/privacy_desc"
-                    android:textColor="#4CAF50"
-                    android:textSize="@dimen/_8ssp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvPrivacyTitleLabel"
-                    app:layout_constraintTop_toBottomOf="@id/tvPrivacyTitleLabel" />
-
+            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="@dimen/spacing_xl" android:layout_marginTop="@dimen/spacing_lg" android:background="@drawable/bg_privacy_card" android:padding="@dimen/spacing_md" app:layout_constraintTop_toBottomOf="@id/llPermissions">
+                <ImageView android:id="@+id/ivPrivacyIcon" android:layout_width="32dp" android:layout_height="32dp" android:contentDescription="@string/privacy_protected" android:src="@drawable/ic_privacy_green" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+                <TextView android:id="@+id/tvPrivacyTitleLabel" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:fontFamily="@font/sora_medium" android:text="@string/privacy_protected" android:textColor="@color/textSecondary" android:textSize="@dimen/text_caption" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/ivPrivacyIcon" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/privacy_desc" android:textColor="@color/textSecondary" android:textSize="@dimen/text_caption" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="@id/tvPrivacyTitleLabel" app:layout_constraintTop_toBottomOf="@id/tvPrivacyTitleLabel" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

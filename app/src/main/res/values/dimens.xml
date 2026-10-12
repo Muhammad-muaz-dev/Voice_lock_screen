@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing Tokens -->
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">12dp</dimen>
+    <dimen name="spacing_lg">16dp</dimen>
+    <dimen name="spacing_xl">20dp</dimen>
+    <dimen name="spacing_xxl">24dp</dimen>
+    <dimen name="spacing_xxxl">32dp</dimen>
+    <dimen name="spacing_huge">40dp</dimen>
+    <dimen name="spacing_max">48dp</dimen>
+
+    <!-- Radius Tokens -->
+    <dimen name="radius_xs">8dp</dimen>
+    <dimen name="radius_sm">12dp</dimen>
+    <dimen name="radius_md">16dp</dimen>
+    <dimen name="radius_lg">20dp</dimen>
+    <dimen name="radius_xl">24dp</dimen>
+    <dimen name="radius_xxl">28dp</dimen>
+    <dimen name="radius_hero">32dp</dimen>
+
+    <!-- Typography Scale (Size/LineHeight) -->
+    <!-- Note: Line height is handled via lineSpacingExtra or custom fonts in styles -->
+    <dimen name="text_clock">36sp</dimen>
+    <dimen name="text_displayNumber">44sp</dimen>
+    <dimen name="text_display">34sp</dimen>
+    <dimen name="text_headline">28sp</dimen>
+    <dimen name="text_titleXL">22sp</dimen>
+    <dimen name="text_titleL">20sp</dimen>
+    <dimen name="text_titleM">18sp</dimen>
+    <dimen name="text_titleS">16sp</dimen>
+    <dimen name="text_bodyL">15sp</dimen>
+    <dimen name="text_bodyM">14sp</dimen>
+    <dimen name="text_bodyS">13sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_overline">11sp</dimen>
+    <dimen name="text_buttonL">16sp</dimen>
+    <dimen name="text_buttonS">14sp</dimen>
+</resources>

@@ -1,137 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F4F9FD"
-    tools:context=".ui.afterlogin.PinLockFragment">
-
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginStart="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:background="@drawable/bg_pin_back"
-        android:contentDescription="@string/back"
-        android:padding="@dimen/_8sdp"
-        android:src="@drawable/ic_pin_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvToolbarTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/pin_code"
-        android:textColor="#1B2538"
-        android:textSize="@dimen/_15ssp"
-        app:layout_constraintBottom_toBottomOf="@id/btnBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btnBack" />
-
-    <TextView
-        android:id="@+id/tvCreatePin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:gravity="center"
-        android:text="@string/create_your_pin"
-        android:textColor="#142242"
-        android:textSize="@dimen/_21ssp"
-        app:layout_constraintBottom_toTopOf="@id/tvPinHint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvToolbarTitle"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/tvPinHint"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:fontFamily="@font/poppins_regular"
-        android:gravity="center"
-        android:textColor="#5D6F8F"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintBottom_toTopOf="@id/pinDotsContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCreatePin"
-        tools:text="Enter a 4-digit PIN to protect your apps." />
-
-    <LinearLayout
-        android:id="@+id/pinDotsContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_22sdp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/keypadCard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPinHint" />
-
-    <GridLayout
-        android:id="@+id/keypadCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/bg_pin_keypad_card"
-        android:columnCount="3"
-        android:paddingStart="@dimen/_14sdp"
-        android:paddingTop="@dimen/_14sdp"
-        android:paddingEnd="@dimen/_14sdp"
-        android:paddingBottom="@dimen/_14sdp"
-        android:rowCount="4"
-        app:layout_constraintBottom_toTopOf="@id/tvTogglePinLength"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pinDotsContainer"
-        app:layout_constraintWidth_max="@dimen/_294sdp">
-
-        <Button android:id="@+id/btnOne" style="@style/PinKeyButton" android:text="@string/keypad_one" />
-        <Button android:id="@+id/btnTwo" style="@style/PinKeyButton" android:text="@string/keypad_two" />
-        <Button android:id="@+id/btnThree" style="@style/PinKeyButton" android:text="@string/keypad_three" />
-        <Button android:id="@+id/btnFour" style="@style/PinKeyButton" android:text="@string/keypad_four" />
-        <Button android:id="@+id/btnFive" style="@style/PinKeyButton" android:text="@string/keypad_five" />
-        <Button android:id="@+id/btnSix" style="@style/PinKeyButton" android:text="@string/keypad_six" />
-        <Button android:id="@+id/btnSeven" style="@style/PinKeyButton" android:text="@string/keypad_seven" />
-        <Button android:id="@+id/btnEight" style="@style/PinKeyButton" android:text="@string/keypad_eight" />
-        <Button android:id="@+id/btnNine" style="@style/PinKeyButton" android:text="@string/keypad_nine" />
-        <Space style="@style/PinKeyButton" android:background="@android:color/transparent" />
-        <Button android:id="@+id/btnZero" style="@style/PinKeyButton" android:text="@string/digit_zero" />
-
-        <ImageButton
-        android:id="@+id/btnConfirm"
-            android:layout_width="@dimen/_67sdp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/bg_pin_confirm_disabled"
-            android:contentDescription="@string/confirm_pin"
-            android:padding="@dimen/_15sdp"
-            android:src="@drawable/ic_pin_check" />
-    </GridLayout>
-
-    <TextView
-        android:id="@+id/tvTogglePinLength"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_36sdp"
-        android:fontFamily="@font/poppins_semibold"
-        android:padding="@dimen/_8sdp"
-        android:textColor="#2475FF"
-        android:textSize="@dimen/_10ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Use a 6-digit PIN" />
-
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg" android:fitsSystemWindows="true" tools:context=".ui.afterlogin.PinLockFragment">
+    <ImageButton android:id="@+id/btnBack" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_lg" android:background="@drawable/bg_header_circle_dark" android:contentDescription="@string/back" android:padding="@dimen/spacing_sm" android:src="@drawable/ic_pin_back" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:tint="@color/textPrimary" />
+    <TextView android:id="@+id/tvToolbarTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/pin_code" android:textColor="@color/textPrimary" android:textSize="@dimen/text_titleL" android:textStyle="bold" app:layout_constraintBottom_toBottomOf="@id/btnBack" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="@id/btnBack" android:letterSpacing="0" android:lineHeight="28sp" app:lineHeight="28sp" />
+    <TextView android:id="@+id/tvCreatePin" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xxl" android:fontFamily="@font/sora_regular" android:gravity="center" android:text="@string/create_your_pin" android:textColor="@color/textPrimary" android:textSize="@dimen/text_titleL" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvToolbarTitle" android:letterSpacing="0" android:lineHeight="28sp" app:lineHeight="28sp" />
+    <TextView android:id="@+id/tvPinHint" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_sm" android:layout_marginEnd="@dimen/spacing_lg" android:fontFamily="@font/sora_regular" android:gravity="center" android:textColor="@color/textSecondary" android:textSize="@dimen/text_bodyS" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvCreatePin" tools:text="Enter a 4-digit PIN to protect your apps." android:letterSpacing="0" android:lineHeight="20sp" app:lineHeight="20sp" />
+    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/pinDotsContainer" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xxl" app:layout_constraintBottom_toTopOf="@id/keypadCard" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvPinHint">
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.card.MaterialCardView android:id="@+id/keypadCard" style="@style/Widget.VoiceLock.Card" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xxl" app:layout_constraintBottom_toTopOf="@id/tvTogglePinLength" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/pinDotsContainer">
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="@dimen/spacing_lg">
+            <Button android:id="@+id/btnOne" style="@style/PinKeyButton" android:text="@string/keypad_one" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <Button android:id="@+id/btnTwo" style="@style/PinKeyButton" android:text="@string/keypad_two" app:layout_constraintStart_toEndOf="@id/btnOne" app:layout_constraintTop_toTopOf="parent" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <Button android:id="@+id/btnThree" style="@style/PinKeyButton" android:text="@string/keypad_three" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/btnTwo" app:layout_constraintTop_toTopOf="parent" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <Button android:id="@+id/btnFour" style="@style/PinKeyButton" android:text="@string/keypad_four" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/btnOne" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <Button android:id="@+id/btnFive" style="@style/PinKeyButton" android:text="@string/keypad_five" app:layout_constraintStart_toEndOf="@id/btnFour" app:layout_constraintTop_toBottomOf="@id/btnOne" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <Button android:id="@+id/btnSix" style="@style/PinKeyButton" android:text="@string/keypad_six" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/btnFive" app:layout_constraintTop_toBottomOf="@id/btnOne" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <Button android:id="@+id/btnSeven" style="@style/PinKeyButton" android:text="@string/keypad_seven" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/btnFour" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <Button android:id="@+id/btnEight" style="@style/PinKeyButton" android:text="@string/keypad_eight" app:layout_constraintStart_toEndOf="@id/btnSeven" app:layout_constraintTop_toBottomOf="@id/btnFour" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <Button android:id="@+id/btnNine" style="@style/PinKeyButton" android:text="@string/keypad_nine" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/btnEight" app:layout_constraintTop_toBottomOf="@id/btnFour" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <View android:id="@+id/spaceZero" android:layout_width="0dp" android:layout_height="0dp" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/btnSeven" />
+            <Button android:id="@+id/btnZero" style="@style/PinKeyButton" android:text="@string/digit_zero" app:layout_constraintStart_toEndOf="@id/spaceZero" app:layout_constraintTop_toBottomOf="@id/btnSeven" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:layout_height="wrap_content" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+            <ImageButton android:id="@+id/btnConfirm" android:layout_width="57dp" android:layout_height="57dp" android:background="@drawable/bg_pin_confirm_disabled" android:contentDescription="@string/confirm_pin" android:padding="@dimen/spacing_md" android:src="@drawable/ic_pin_check" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/btnZero" app:layout_constraintTop_toBottomOf="@id/btnSeven" app:tint="@color/textPrimary" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <TextView android:id="@+id/tvTogglePinLength" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/spacing_xxxl" android:fontFamily="@font/sora_regular" android:padding="@dimen/spacing_sm" android:textColor="@color/primaryStart" android:textSize="@dimen/text_caption" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" tools:text="Use a 6-digit PIN" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

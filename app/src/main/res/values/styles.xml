@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Button Style -->
+    <style name="Widget.VoiceLock.Button.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_height">50dp</item>
+        <item name="cornerRadius">100dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/sora</item>
+        <item name="android:textSize">@dimen/text_buttonL</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <!-- Standard Card Style -->
+    <style name="Widget.VoiceLock.Card" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="cardCornerRadius">@dimen/radius_xl</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/border</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
     <style name="PinKeyButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:layout_width">@dimen/_67sdp</item>
         <item name="android:layout_height">@dimen/_46sdp</item>
         <item name="android:layout_margin">@dimen/_5sdp</item>
         <item name="android:background">@drawable/bg_pin_key</item>
-        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:fontFamily">@font/sora</item>
         <item name="android:gravity">center</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:lineSpacingExtra">0dp</item>
         <item name="android:padding">0dp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/pin_key_text</item>
-        <item name="android:textSize">@dimen/_15ssp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">@dimen/text_bodyL</item>
         <item name="backgroundTint">@null</item>
-        <item name="cornerRadius">@dimen/_9sdp</item>
+        <item name="cornerRadius">@dimen/radius_sm</item>
         <item name="android:minLines">2</item>
-
     </style>
 </resources>

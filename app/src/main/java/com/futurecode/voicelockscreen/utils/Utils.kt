@@ -17,20 +17,13 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.NumberPicker
 import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.MyApplication
-import com.futurecode.voicelockscreen.ads.AdInterface
-import com.futurecode.voicelockscreen.ads.interstitial_ad.FullScreenAdsHelper
-import com.futurecode.voicelockscreen.ads.reward.RewardAdsHelper
-import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallFullScreenAdsHelper
-import com.futurecode.voicelockscreen.databinding.DialogPremiumAdBinding
 import com.futurecode.voicelockscreen.db.PrefManager
 
 import com.futurecode.voicelockscreen.model.Promo
-import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.gson.Gson
 import org.json.JSONArray
 import java.lang.reflect.Field
@@ -101,15 +94,7 @@ object Utils {
     }
 
     fun openCustomChrome(activity: Activity, url: String) {
-        try {
-            val customIntent = CustomTabsIntent.Builder()
-            customIntent.setToolbarColor(ContextCompat.getColor(activity, R.color.black))
-            val customTabsIntent = customIntent.build()
-            customTabsIntent.intent.setPackage("com.android.chrome")
-            customTabsIntent.launchUrl(activity, Uri.parse(url))
-        } catch (e: Exception) {
-            openBrowser(activity, url)
-        }
+        openBrowser(activity, url)
     }
 
     fun openBrowser(activity: Activity, url: String) {
@@ -143,24 +128,6 @@ object Utils {
         }
     }
 
-
-
-    fun View.setAdClickListener(
-        activity: Activity,
-        isShowEveryTime: Boolean = false,
-        onFinished: () -> Unit
-    ) {
-        setOnClickListener {
-            ProgressBarUtils.showProgressDialog(activity)
-            AdWaterfallFullScreenAdsHelper(activity).showInterstitialAds(isShowEveryTime, object :
-                AdInterface {
-                override fun finished() {
-                    ProgressBarUtils.hideProgressDialog()
-                    onFinished()
-                }
-            })
-        }
-    }
 
 
     /**
@@ -200,64 +167,5 @@ object Utils {
             e.printStackTrace()
             emptyList()
         }
-    }
-
-
-
-    // ====================================================================
-// 👑 1. FIXED EXTENSION FUNCTION: Correctly mapping the interface anonymous layers
-// ====================================================================
-    fun Fragment.showRewardAdDialog(
-        onRewardEarned: () -> Unit,
-        onRewardNotEarned: () -> Unit = {}
-    ) {
-        if (!isAdded || view == null) {
-            onRewardNotEarned()
-            return
-        }
-
-        val dialog = BaseDialog(requireActivity(), R.style.TransparentDialog)
-        val binding = DialogPremiumAdBinding.inflate(LayoutInflater.from(requireContext()))
-        dialog.setCancelable(false)
-        dialog.bind(binding) {
-            btnYes.setOnClickListener {
-                dialog.dismiss()
-
-                // Variable to track tracking token inside the full lifecycle pipeline scope securely
-                var isRewardEarnedInSession = false
-
-                // ✅ FIXED SYNC: Instantiating the explicit RewardAdInterface signature expected by helper
-                RewardAdsHelper(requireActivity()).showRewardAds(object : RewardAdsHelper.RewardAdInterface {
-                    override fun onAdShown() {
-                        Log.d("RewardDialog", "Ad presentation verified successfully.")
-                    }
-
-                    override fun onUserEarnedReward(rewardItem: RewardItem) {
-                        // Flips verification lock safely to true when user fully finishes watch conditions
-                        isRewardEarnedInSession = true
-                    }
-
-                    override fun onAdClosed() {
-                        // Triggers the respective final callback only after ad window screen dismisses completely
-                        if (isRewardEarnedInSession && view != null) {
-                            onRewardEarned()
-                        } else {
-                            onRewardNotEarned()
-                        }
-                    }
-
-                    override fun onAdFailed(error: String) {
-                        Log.e("RewardDialog", "Ad execution processing dropped: $error")
-                        onRewardNotEarned()
-                    }
-                })
-            }
-
-            btnNo.setOnClickListener {
-                dialog.dismiss()
-                onRewardNotEarned()
-            }
-        }
-        dialog.show()
     }
 }

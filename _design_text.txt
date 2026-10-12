@@ -1,0 +1,415 @@
+Voice Lock: full app flow
+1 First launch
+2 Home
+3 Voice setup
+4 Security
+5 Backups
+6 Lock screen
+7 Camera
+8 Themes
+9 Voice Note
+10 Settings
+First time opening the app
+Home screen
+Setting up the voice password
+Security question and permissions
+Extra ways to unlock
+The lock screen
+Open Camera by voice
+Themes tab
+Voice Note tab
+10
+Settings
+Language
+Continue
+EN
+English
+US
+English (United States)
+UK
+English (United Kingdom)
+AU
+English (Australia)
+CA
+English (Canada)
+ES
+Español
+FR
+Français
+HI
+हिन्दी
+AR
+العربية
+PT
+Português
+Lock and unlock with your voice
+Just say it. Your phone does the rest.
+Next
+Open your camera by voice
+Say it and your camera opens. No tapping needed.
+Notes you can just say
+Get Started
+Restore
+Get Voice Lock
+Try it free for [N] days
+Then [PRICE] a [PERIOD]. Cancel any time.
+Start free trial
+Voice Lock&nbsp;
+Best deal
+FREE
+[N] Days
+Monthly
+[PRICE]
+Yearly
+Save [XX]%
+Free for [N] days, then [PRICE] a [PERIOD].
+Hide option
+[PRICE] a year. Cancel any time.
+You’re in!
+Thanks for going Pro. Everything is unlocked.
+Unlimited notes
+Voice to text
+All themes
+No ads
+Let’s go
+That didn’t work
+Your payment didn’t go through.
+Cancel
+Try again
+Voice Lock
+Unlock Screen
+Status
+Off
+Say
+“Hey, unlock my screen”
+Lock Screen
+“Hey, lock my screen”
+Open Camera
+Use your voice
+PIN lock
+Use a number code
+Pattern lock
+Draw a pattern
+Fingerprint
+Use your finger
+On
+Want security alerts?
+We’ll tell you when someone tries to
+Not now
+Allow
+Are you sure you want
+Exit
+Stay
+Voice Setup
+How setup works
+Record your voice password
+Allow the microphone
+Pick the language you’ll speak
+Tap the mic and say your phrase
+Pick a security question
+Pick a question
+Type your answer
+Allow these so the app works
+Microphone Access
+So we can record your voice
+Phone Call Access
+So we can hear you and unlock your screen
+Display Over Other Apps
+Start Voice Setup
+Step 1: Voice Setup
+Choose your voice password
+Say your phrase
+Tap the mic and say a short
+Tap to Record
+You have 5 seconds.
+Say a phrase only you would say
+What you say will show up here
+Pick the language you’ll speak.
+You have
+Can we use your microphone?
+We need it to record
+hello…
+Listening…
+Go ahead, we’re listening
+Your Voice Key
+hello hello
+Record again
+Say it one more time
+Almost done, 2 of 2
+Say the same phrase again
+Microphone is off
+Turn it on in Settings so you
+Open Settings
+We didn’t hear anything
+We couldn’t hear you. Move closer to the
+Try Again
+Tap the mic and say it
+Pick your language
+Search languages
+Afrikaans
+Aghem
+Akan
+Amharic
+Arabic
+Assamese
+Asu
+Asturian
+Azerbaijani
+Basaa
+ar
+Apply
+xyz
+We couldn’t find that
+Try a different spelling.
+Step 2: Security question
+If you forget your password,
+What is your best friend’s name?
+Where were you born?
+What was your childhood nickname?
+In which city did you meet your spouse?
+In what city were you born?
+What was the name of your high school?
+What school did you attend for sixth
+What is your favorite movie?
+Pick another question
+Save
+?123
+Springfield
+We need a few permissions
+Without these, voice lock
+So we can hear you and unlock
+So the lock screen can show up
+You’re all set!
+Your voice is ready.
+Preview
+See how your lock screen looks
+Take a look
+Lock screen themes
+See All
+Ocean Indigo
+Neon Night
+Sunset Blaze
+ab
+Needs at least 3 characters.
+Add a backup way to unlock so
+Set pattern lock
+Connect at least 4 dots
+Draw it again to confirm
+Set PIN lock
+Choose a PIN
+Enter it again
+Tap to turn on
+Use your fingerprint to unlock
+Glad you like it!
+We’ll keep making it better.
+Rate us
+08:22
+Sun, 11 Oct
+Good morning!
+Every morning is a fresh start.
+Voice Note
+Your private voice diary
+Tap the mic and speak
+Sorry about that
+What went wrong?
+Voice wasn’t recognized
+App is slow
+Too many ads
+Other
+Send feedback
+Thanks!
+That really helps us.
+Close
+Say “Hey, unlock my screen”
+Got it. Unlocking…
+Didn’t catch that. Tap the mic and try again.
+Enter PIN
+Forgot PIN?
+Draw your pattern
+Forgot pattern?
+Touch the sensor
+Put your finger on the sensor to unlock
+How It Works
+Two quick steps to control
+STEP 1
+Tap to hear
+Wake up the camera
+Say “
+STEP 2
+Say a command
+Photo Mode
+Video Mode
+Camera Access
+So we can take photos and
+So camera controls can show
+Confirm Your Voice
+Recording 2/3
+Say the same phrase again.
+You’re All Set!
+Try it now. Say “
+Home
+Open Camera by Voice
+Take photos or record videos
+OFF
+Re-record my voice
+ON
+Say “Open Camera”
+Need a reminder? Tap the ?
+Got it
+AI Quote
+Make a quote
+Every day is a new chance to change your life
+Lock Screen Theme
+Pick a look for your lock screen.
+08:15
+Themes
+Write a quote, or pick a topic
+0/80
+Or pick a topic
+Passion
+Love and passion
+Growth
+Progress at work
+Vitality
+Health and
+Aspire
+Ideas and ambition
+Wisdom
+Learning and insight
+Courage
+Facing what
+Harmony
+Calm and balance
+Gratitude
+Being thankful
+Dreams
+Big dreams
+Hope
+Staying hopeful
+Every day is a new chance
+25/80
+Writing your quote…
+One second
+Topic: Growth
+Use on lock screen
+Not feeling it? Make another.
+Upload a picture
+Popular themes
+Emerald Forest
+Change picture
+This is how your lock screen will look.
+Show clock and quote
+Keep them on top of your picture
+Use this theme
+AI Voice Note
+No notes yet
+Record your first voice note.
+Record one
+New Note
+Pick the language you’ll speak so we
+00:00
+Start
+00:12
+Stop
+Note
+Meeting ideas
+Today · 8:30 AM · 0:42
+0:00 / 0:42
+Transcript
+Review last week’s numbers
+Plan the launch timeline and assign owners
+Hold a short check-in on Friday
+Share notes with the team afterwards
+Ideas for the Monday team meeting…
+Today · 8:30 AM
+0:42
+Shopping list
+Milk, eggs, bread and fruit…
+Yesterday
+0:18
+Reminder
+Call the dentist to book a visit…
+Mon
+0:09
+Trip plan
+Pack light, book the train early…
+Sun
+1:05
+You’ve used your
+Watch a short ad to keep going,
+00:07
+Go Premium
+Get every feature
+Upgrade
+General settings
+Change language
+Pick the app language
+Change security question
+Used if you forget your password
+Turn off system lock
+So you don’t have two locks
+Share the app
+Tell your friends
+Feedback
+Tell us what you think
+Privacy policy
+How we handle your data
+Rate the app
+Leave a review in the store
+You’re Premium
+Everything is unlocked
+Manage plan
+Try for free
+Pick yearly
+Payment goes through
+Payment fails
+Turn Unlock on
+Turn Lock on
+First time
+Press back
+Scroll down
+Tap the mic
+Don&#x27;t allow, or allow later in Settings
+Heard you
+Heard nothing, try again
+Tap the language
+Type to search
+Pick one
+Nothing matches
+Back with the new language
+Type answer
+Allow them
+Too short, fix it
+Tap Pattern lock
+Start drawing
+Let go
+Pattern saved
+Tap Pin lock
+4 digits
+PIN saved
+Tap Fingerprint
+Turned on
+View Now
+1 to 3 stars
+Voice matched
+Not recognized, try again
+Use another method
+Switch
+Recorded 3 times
+Next frame
+Home, then the feature
+Turn on
+Tap ? then OK
+AI Quote card
+Write it and pick a topic
+View Your Quote
+Done
+Make another
+Lock Screen Theme card
+Create Now
+Stop and save
+Can&#x27;t hear you, try again
+Back
+New note
+No free tries left
+After upgrading

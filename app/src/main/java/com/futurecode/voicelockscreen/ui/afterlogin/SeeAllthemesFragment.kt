@@ -24,6 +24,7 @@ class SeeAllthemesFragment : BaseFragment<FragmentSeeAllthemesBinding>(FragmentS
         }
 
         setupRecyclerView()
+        binding.btnUpload.setOnClickListener { findNavController().navigate(R.id.customThemeFragment) }
     }
 
     private fun setupRecyclerView() {

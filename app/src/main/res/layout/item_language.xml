@@ -1,57 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/languageContainer"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/_78sdp"
-    android:layout_marginBottom="@dimen/_14sdp"
-    android:background="@drawable/bg_language_item"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?attr/selectableItemBackground"
-    android:paddingStart="@dimen/_18sdp"
-    android:paddingEnd="@dimen/_18sdp">
-
-    <TextView
-        android:id="@+id/tvLanguageName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:fontFamily="@font/poppins_semibold"
-        android:maxLines="1"
-        android:textColor="#111827"
-        android:textSize="@dimen/_16ssp"
-        app:layout_constraintBottom_toTopOf="@id/tvLanguageNativeName"
-        app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="English (US)" />
-
-    <TextView
-        android:id="@+id/tvLanguageNativeName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:fontFamily="@font/poppins_regular"
-        android:maxLines="1"
-        android:textColor="#9AA0AA"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLanguageName"
-        tools:text="English" />
-
-    <ImageView
-        android:id="@+id/imgLanguageSelected"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_language_selected" />
-
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/languageContainer" android:layout_width="match_parent" android:layout_height="60dp" android:layout_marginBottom="@dimen/spacing_sm" android:background="@drawable/bg_row_language" android:clickable="true" android:focusable="true" android:paddingStart="@dimen/spacing_md" android:paddingEnd="@dimen/spacing_lg">
+    <TextView android:id="@+id/tvBadge" android:layout_width="36dp" android:layout_height="36dp" android:background="@drawable/bg_badge_gradient" android:fontFamily="@font/sora_bold" android:gravity="center" android:textColor="@color/text_white" android:textSize="@dimen/text_caption" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" tools:text="US" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+    <TextView android:id="@+id/tvLanguageName" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_md" android:ellipsize="end" android:fontFamily="@font/sora_bold" android:maxLines="1" android:textColor="@color/text_white" android:textSize="@dimen/text_titleS" app:layout_constraintBottom_toTopOf="@id/tvLanguageNativeName" app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected" app:layout_constraintStart_toEndOf="@id/tvBadge" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_chainStyle="packed" tools:text="English (United States)" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
+    <TextView android:id="@+id/tvLanguageNativeName" android:layout_width="0dp" android:layout_height="wrap_content" android:ellipsize="end" android:maxLines="1" android:textColor="@color/text_muted_sub" android:textSize="@dimen/text_caption" android:visibility="gone" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected" app:layout_constraintStart_toStartOf="@id/tvLanguageName" app:layout_constraintTop_toBottomOf="@id/tvLanguageName" tools:text="English" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+    <ImageView android:id="@+id/imgLanguageSelected" android:layout_width="26dp" android:layout_height="26dp" android:contentDescription="@null" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" tools:src="@drawable/bg_radio_selected" />
 </androidx.constraintlayout.widget.ConstraintLayout>

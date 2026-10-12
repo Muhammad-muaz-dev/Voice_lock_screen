@@ -1,0 +1,77 @@
+<resources>
+    <style parent="" name="Text.VoiceLock.displayNumber">
+        <item name="android:textSize">@dimen/text_displayNumber</item>
+        <item name="lineHeight">52sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.clock">
+        <item name="android:textSize">@dimen/text_clock</item>
+        <item name="lineHeight">44sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.display">
+        <item name="android:textSize">@dimen/text_display</item>
+        <item name="lineHeight">42sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.headline">
+        <item name="android:textSize">@dimen/text_headline</item>
+        <item name="lineHeight">36sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.titleXL">
+        <item name="android:textSize">@dimen/text_titleXL</item>
+        <item name="lineHeight">28sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.titleL">
+        <item name="android:textSize">@dimen/text_titleL</item>
+        <item name="lineHeight">28sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.titleM">
+        <item name="android:textSize">@dimen/text_titleM</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.titleS">
+        <item name="android:textSize">@dimen/text_titleS</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.bodyL">
+        <item name="android:textSize">@dimen/text_bodyL</item>
+        <item name="lineHeight">22sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.bodyM">
+        <item name="android:textSize">@dimen/text_bodyM</item>
+        <item name="lineHeight">20sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.bodyS">
+        <item name="android:textSize">@dimen/text_bodyS</item>
+        <item name="lineHeight">20sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.caption">
+        <item name="android:textSize">@dimen/text_caption</item>
+        <item name="lineHeight">16sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.overline">
+        <item name="android:textSize">@dimen/text_overline</item>
+        <item name="lineHeight">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.buttonL">
+        <item name="android:textSize">@dimen/text_buttonL</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style parent="" name="Text.VoiceLock.buttonS">
+        <item name="android:textSize">@dimen/text_buttonS</item>
+        <item name="lineHeight">20sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+</resources>

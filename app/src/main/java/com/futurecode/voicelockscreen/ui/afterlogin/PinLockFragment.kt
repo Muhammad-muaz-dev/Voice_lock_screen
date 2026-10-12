@@ -106,8 +106,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         val text = SpannableString(label)
         if (label.contains('\n')) {
             val letterStart = label.indexOf('\n') + 1
-            text.setSpan(RelativeSizeSpan(0.34f), letterStart, label.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            text.setSpan(AbsoluteSizeSpan(7, true), letterStart, label.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            text.setSpan(AbsoluteSizeSpan(resources.getDimensionPixelSize(R.dimen.text_caption)), letterStart, label.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         return text
     }

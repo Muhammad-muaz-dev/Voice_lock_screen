@@ -23,8 +23,7 @@ class HomeActivity : BaseActivity() { // Assumed mapping, adjust if you inherit 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Option A: Custom Dark Color Pass karein (Matching your screenshot)
-        val darkBackgroundColor = Color.parseColor("#0B141A") // Ya aapka dark theme color
+        val darkBackgroundColor = Color.parseColor("#0B1020")
         window.setDarkStatusBarWithWhiteIcons(darkBackgroundColor)
 
         // FIXED: Ab runtime binding safely initialized frame reference se fragment container fetch karega
@@ -35,6 +34,14 @@ class HomeActivity : BaseActivity() { // Assumed mapping, adjust if you inherit 
             AppLockState.requestLockAfterPhoneUnlock(this)
             binding.root.post {
                 showAppLockIfRequested()
+            }
+        }
+        if (intent.getBooleanExtra(EXTRA_SHOW_PREMIUM, false)) {
+            intent.removeExtra(EXTRA_SHOW_PREMIUM)
+            binding.root.post {
+                if (::navController.isInitialized) {
+                    navController.navigate(R.id.premiumFragment)
+                }
             }
         }
 
@@ -85,5 +92,6 @@ class HomeActivity : BaseActivity() { // Assumed mapping, adjust if you inherit 
 
     companion object {
         const val EXTRA_SHOW_LOCK_PREVIEW = "extra_show_lock_preview"
+        const val EXTRA_SHOW_PREMIUM = "extra_show_premium"
     }
 }

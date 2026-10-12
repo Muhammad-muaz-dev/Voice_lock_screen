@@ -1,162 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F4F9FD"
-    tools:context=".ui.afterlogin.SecurityQuestionFragment">
-
-    <include
-        android:id="@+id/header"
-        layout="@layout/include_voice_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:fontFamily="@font/poppins_semibold"
-        android:gravity="center"
-        android:text="@string/setup_security_question"
-        android:textColor="#28C7F4"
-        android:textSize="@dimen/_17ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header" />
-
-    <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_36sdp"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:layout_marginEnd="@dimen/_36sdp"
-        android:fontFamily="@font/poppins_regular"
-        android:gravity="center"
-        android:lineSpacingExtra="@dimen/_2sdp"
-        android:text="@string/security_question_hint"
-        android:textColor="#63718A"
-        android:textSize="@dimen/_10ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
-    <LinearLayout
-        android:id="@+id/questionCard"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_260sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_26sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/bg_voice_card"
-        android:orientation="vertical"
-        android:padding="@dimen/_18sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/security_question_label"
-            android:textColor="#172238"
-            android:textSize="@dimen/_10ssp" />
-
-        <TextView
-            android:id="@+id/tvQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/bg_dropdown_field"
-            android:drawableEnd="@drawable/ic_dropdown"
-            android:fontFamily="@font/poppins_regular"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/_12sdp"
-            android:paddingEnd="@dimen/_12sdp"
-            android:text="@string/choose_security_question"
-            android:textColor="#A3A9B3"
-            android:textSize="@dimen/_10ssp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:background="#EDF1F7" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/your_answer"
-            android:textColor="#172238"
-            android:textSize="@dimen/_10ssp" />
-
-        <EditText
-            android:id="@+id/etAnswer"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/bg_answer_field"
-            android:fontFamily="@font/poppins_regular"
-            android:hint="@string/enter_your_answer"
-            android:inputType="textCapSentences"
-            android:paddingStart="@dimen/_12sdp"
-            android:paddingEnd="@dimen/_12sdp"
-            android:textColor="#172238"
-            android:textColorHint="#B6BDC8"
-            android:textSize="@dimen/_10ssp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="@string/answer_help"
-            android:textColor="#667692"
-            android:textSize="@dimen/_8ssp" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/bg" android:paddingHorizontal="16dp" android:paddingBottom="16dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="56dp" android:gravity="center_vertical" android:orientation="horizontal">
+        <ImageButton android:id="@+id/btnBack" android:layout_width="44dp" android:layout_height="44dp" android:padding="12dp" android:background="@drawable/bg_header_circle_dark" android:src="@drawable/ic_pin_back" android:contentDescription="@string/back" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:fontFamily="@font/sora_semibold" android:textSize="@dimen/text_titleL" android:textColor="@color/textPrimary" android:text="@string/security_step_title" android:lineHeight="28sp" app:lineHeight="28sp" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/adSmall"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_56sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_22sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/bg_dashed_ad"
-        android:fontFamily="@font/poppins_regular"
-        android:gravity="center"
-        android:text="@string/ad_320"
-        android:textColor="#D0DAE8"
-        android:textSize="@dimen/_9ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questionCard" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSave"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_48sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_24sdp"
-        android:background="@drawable/bg_onboarding_button"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/save_finish"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="@dimen/_12ssp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingBottom="24dp">
+            <TextView android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xxl" android:text="@string/security_pick_title" android:textSize="@dimen/text_titleS" android:fontFamily="@font/sora_semibold" android:textColor="@color/textPrimary" android:lineHeight="24sp" app:lineHeight="24sp" />
+            <TextView android:id="@+id/tvSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/security_pick_body" android:textSize="@dimen/text_bodyS" android:fontFamily="@font/sora_regular" android:textColor="@color/textSecondary" android:lineHeight="20sp" app:lineHeight="20sp" />
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvQuestions" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:nestedScrollingEnabled="false" />
+            <LinearLayout android:id="@+id/answerCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+                <TextView android:id="@+id/btnAnother" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="@dimen/spacing_md" android:gravity="center" android:fontFamily="@font/sora_bold" android:textSize="@dimen/text_buttonL" android:textColor="@color/primarySoft" android:background="@drawable/bg_outline_button" android:text="@string/pick_another_question" android:clickable="true" android:focusable="true" android:lineHeight="24sp" app:lineHeight="24sp" />
+                <TextView android:id="@+id/tvQuestion" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xxl" android:text="@string/security_pick_title" android:textSize="@dimen/text_bodyL" android:fontFamily="@font/sora_regular" android:textColor="@color/textPrimary" android:lineHeight="22sp" app:lineHeight="22sp" />
+                <EditText android:id="@+id/etAnswer" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="58dp" android:layout_marginTop="12dp" android:background="@drawable/bg_answer_field" android:padding="16dp" android:fontFamily="@font/sora_medium" android:textSize="@dimen/text_bodyL" android:textColor="@color/textPrimary" android:textColorHint="@color/textPlaceholder" android:hint="@string/enter_your_answer" android:inputType="textCapSentences" android:maxLength="100" android:lineHeight="22sp" app:lineHeight="22sp" />
+                <TextView android:id="@+id/tvError" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/security_answer_short" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_regular" android:textColor="@color/errorSoft" android:lineHeight="16sp" app:lineHeight="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <TextView android:id="@+id/btnSave" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="@dimen/spacing_md" android:gravity="center" android:fontFamily="@font/sora_bold" android:textSize="@dimen/text_buttonL" android:textColor="@color/textPrimary" android:background="@drawable/bg_cta_gradient" android:text="@string/continue_text" android:clickable="true" android:focusable="true" android:lineHeight="24sp" app:lineHeight="24sp" />
+</LinearLayout>

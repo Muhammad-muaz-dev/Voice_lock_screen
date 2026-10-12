@@ -1,153 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/theme_three"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:id="@+id/mainLayout"
-    android:padding="@dimen/_16sdp">
-
-
-    <!-- Title -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:gravity="center"
-        android:text="@string/pin_unlock"
-        android:textColor="#142242"
-        android:textSize="@dimen/_18ssp" />
-
-    <!-- Dynamic PIN Dots Container -->
-    <LinearLayout
-        android:id="@+id/pinDotsContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_28sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:background="@android:color/transparent"
-        android:gravity="center"
-        android:orientation="horizontal" />
-
-    <!-- Responsive Keypad Grid -->
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:alignmentMode="alignBounds"
-        android:background="@android:color/transparent"
-        android:columnCount="3"
-        android:useDefaultMargins="false">
-
-        <Button
-            android:id="@+id/btnOne"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_one" />
-
-        <Button
-            android:id="@+id/btnTwo"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_two" />
-
-        <Button
-            android:id="@+id/btnThree"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_three" />
-
-        <Button
-            android:id="@+id/btnFour"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_four" />
-
-        <Button
-            android:id="@+id/btnFive"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_five" />
-
-        <Button
-            android:id="@+id/btnSix"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_six" />
-
-        <Button
-            android:id="@+id/btnSeven"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_seven" />
-
-        <Button
-            android:id="@+id/btnEight"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_eight" />
-
-        <Button
-            android:id="@+id/btnNine"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_nine" />
-
-        <Button
-            android:id="@+id/btnBackspace"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/backspace_symbol" />
-
-        <Button
-            android:id="@+id/btnZero"
-            style="@style/PinKeyButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:text="@string/digit_zero" />
-
-        <ImageButton
-            android:id="@+id/btnConfirm"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_46sdp"
-            android:layout_margin="@dimen/_4sdp"
-            android:layout_columnWeight="1"
-            android:background="@drawable/bg_pin_confirm"
-            android:contentDescription="@string/confirm_pin"
-            android:padding="@dimen/_12sdp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_pin_check" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/theme_three" android:gravity="center" android:orientation="vertical" android:id="@+id/mainLayout" android:padding="@dimen/spacing_lg">
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="@font/sora_bold" android:gravity="center" android:text="@string/pin_unlock" android:textColor="@color/textPrimary" android:textSize="@dimen/text_titleM" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
+    <LinearLayout android:id="@+id/pinDotsContainer" android:layout_width="wrap_content" android:layout_height="28dp" android:layout_marginTop="@dimen/spacing_md" android:background="@android:color/transparent" android:gravity="center" android:orientation="horizontal" />
+    <GridLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:alignmentMode="alignBounds" android:background="@android:color/transparent" android:columnCount="3" android:useDefaultMargins="false">
+        <Button android:id="@+id/btnOne" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_one" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnTwo" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_two" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnThree" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_three" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnFour" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_four" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnFive" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_five" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnSix" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_six" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnSeven" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_seven" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnEight" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_eight" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnNine" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_nine" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnBackspace" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/backspace_symbol" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <Button android:id="@+id/btnZero" style="@style/PinKeyButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:text="@string/digit_zero" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_titleL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_pin_key" android:lineHeight="28sp" app:lineHeight="28sp" android:minHeight="50dp" />
+        <ImageButton android:id="@+id/btnConfirm" android:layout_width="57dp" android:layout_height="57dp" android:layout_margin="@dimen/spacing_xs" android:layout_columnWeight="1" android:background="@drawable/bg_pin_confirm" android:contentDescription="@string/confirm_pin" android:padding="@dimen/spacing_md" android:scaleType="fitCenter" android:src="@drawable/ic_pin_check" />
     </GridLayout>
 </LinearLayout>

@@ -16,7 +16,6 @@ import com.futurecode.voicelockscreen.model.LanguageOption
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
 
     private lateinit var languages: List<LanguageOption>
-
     private lateinit var languageAdapter: LanguageAdapter
     private var selectedLanguageCode = "en"
 
@@ -36,12 +35,11 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             LanguageOption("ar", getString(R.string.language_arabic), getString(R.string.language_arabic_native))
         )
         selectedLanguageCode = MyApplication.app.prefManager.selectedLanguage.ifBlank { "en" }
-        languageAdapter = LanguageAdapter(requireActivity(), buildLanguageItems(languages), selectedLanguageCode) { language ->
+        languageAdapter = LanguageAdapter(languages, selectedLanguageCode) { language ->
             selectLanguage(language)
         }
 
         binding.rvLanguages.adapter = languageAdapter
-        languageAdapter.submitList(buildLanguageItems(languages))
 
         binding.etSearchLanguage.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
@@ -80,38 +78,11 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             }
         }
 
-        languageAdapter.submitList(buildLanguageItems(filteredLanguages))
+        languageAdapter.submitList(filteredLanguages)
         binding.tvEmptyLanguages.isVisible = filteredLanguages.isEmpty()
     }
 
-    private fun buildLanguageItems(source: List<LanguageOption>): List<Any> {
-        if (source.isEmpty()) return emptyList()
-
-        val items = mutableListOf<Any>()
-        source.forEachIndexed { index, language ->
-            items.add(language)
-            if (index == AD_INSERT_AFTER_INDEX) {
-                items.add(AD_UNIT)
-            }
-        }
-        if (source.size <= AD_INSERT_AFTER_INDEX) {
-            items.add(AD_UNIT)
-        }
-        return items
-    }
-
-    override fun onDestroyView() {
-        if (::languageAdapter.isInitialized) {
-            languageAdapter.release()
-        }
-        super.onDestroyView()
-    }
-
-
-
     companion object {
         const val ARG_RETURN_TO_SETTINGS = "return_to_settings"
-        const val AD_UNIT = "AD_UNIT"
-        private const val AD_INSERT_AFTER_INDEX = 1
     }
 }

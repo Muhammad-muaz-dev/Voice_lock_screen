@@ -1,307 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#050611"
-    tools:context=".ui.afterlogin.ScreenPreviewFragment">
-
-    <!-- Background Wallpaper -->
-    <ImageView
-        android:id="@+id/imgWallpaper"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        android:src="@drawable/lock_preview_wallpaper"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Dark Overlay View -->
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Top Status Time -->
-    <TextView
-        android:id="@+id/tvStatusTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_28sdp"
-        android:fontFamily="@font/poppins_semibold"
-        android:textColor="#FFFFFF"
-        android:textSize="@dimen/_14ssp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="9:41"
-        android:visibility="visible"/>
-
-
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="@dimen/_36sdp"
-        android:layout_height="@dimen/_36sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:background="@drawable/bg_circle_white"
-        android:contentDescription="@string/back"
-        android:padding="@dimen/_10sdp"
-        android:src="@drawable/ic_back_blue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-
-    <!-- Top Circle -->
-    <View
-        android:id="@+id/topCircle"
-        android:layout_width="@dimen/_42sdp"
-        android:layout_height="@dimen/_42sdp"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:background="@drawable/bg_preview_top_circle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <!-- Time Card -->
-    <LinearLayout
-        android:id="@+id/timeCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/bg_preview_time_card"
-        android:gravity="center"
-        android:minHeight="@dimen/_90sdp"
-        android:orientation="vertical"
-        android:paddingVertical="@dimen/_12sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topCircle"
-        >
-
-        <TextView
-            android:id="@+id/tvMainTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_extrabold"
-            android:includeFontPadding="false"
-            android:textColor="#FFFFFF"
-            android:letterSpacing="0.05"
-            android:textSize="@dimen/_35ssp"
-            tools:text="17:07" />
-
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="#D5D0D7"
-            android:textSize="@dimen/_12ssp"
-            tools:text="Mon, 20 Jul" />
-    </LinearLayout>
-
-    <!-- Greeting Badge -->
-    <TextView
-        android:id="@+id/tvGreeting"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_34sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/bg_preview_greeting"
-        android:fontFamily="@font/poppins_semibold"
-        android:gravity="center"
-        android:paddingStart="@dimen/_22sdp"
-        android:paddingEnd="@dimen/_22sdp"
-        android:text="@string/good_afternoon"
-        android:textColor="#FFFFFF"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timeCard" />
-
-    <!-- Main Unlock Card Panel -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/unlockPanel"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@drawable/bg_preview_unlock_panel"
-        android:paddingStart="@dimen/_16sdp"
-        android:paddingEnd="@dimen/_16sdp"
-        app:layout_constraintBottom_toTopOf="@id/homeIndicator"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.48"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvGreeting"
-        app:layout_constraintVertical_bias="0.5">
-
-        <!-- Mic Rings -->
-        <FrameLayout
-            android:id="@+id/micRings"
-            android:layout_width="@dimen/_140sdp"
-            android:layout_height="@dimen/_140sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_preview_ring_outer" />
-
-            <View
-                android:layout_width="@dimen/_116sdp"
-                android:layout_height="@dimen/_116sdp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_preview_ring_middle" />
-
-            <View
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_preview_ring_middle" />
-
-
-            <View
-                android:layout_width="@dimen/_78sdp"
-                android:layout_height="@dimen/_78sdp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_preview_mic_circle" />
-
-            <ImageView
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_preview_mic_white" />
-        </FrameLayout>
-
-        <!-- Speak Hint -->
-        <TextView
-            android:id="@+id/tvSpeakHint"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:fontFamily="@font/poppins_regular"
-            android:gravity="center"
-            android:text="@string/tap_microphone"
-            android:textColor="#B8B7C2"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintBottom_toTopOf="@id/divider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/micRings" />
-
-        <!-- Divider -->
-        <View
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:background="#313346"
-            app:layout_constraintBottom_toTopOf="@id/methodsRow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <!-- Methods Row -->
-        <LinearLayout
-            android:id="@+id/methodsRow"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_70sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <include
-                android:id="@+id/methodPin"
-                layout="@layout/item_preview_method"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/_2sdp"/>
-
-            <include
-                android:id="@+id/methodPattern"
-                layout="@layout/item_preview_method"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/_2sdp"/>
-
-            <include
-                android:id="@+id/methodVoice"
-                layout="@layout/item_preview_method"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/_2sdp"/>
-
-            <include
-                android:id="@+id/methodFingerprint"
-                layout="@layout/item_preview_method"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/_2sdp"/>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg" tools:context=".activity.LockScreenActivity">
+    <ImageView android:id="@+id/imgWallpaper" android:layout_width="0dp" android:layout_height="0dp" android:contentDescription="@null" android:scaleType="centerCrop" android:src="@drawable/lock_preview_wallpaper" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    <TextView android:id="@+id/tvStatusTime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_xxl" android:fontFamily="@font/sora_regular" android:textColor="@color/textPrimary" android:textSize="@dimen/text_caption" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" tools:text="9:41" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+    <com.google.android.material.card.MaterialCardView android:id="@+id/timeCard" style="@style/Widget.VoiceLock.Card" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_xxl" android:layout_marginEnd="@dimen/spacing_lg" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:orientation="vertical" android:padding="@dimen/spacing_lg">
+            <TextView android:id="@+id/tvMainTime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:textColor="@color/textPrimary" android:textSize="@dimen/text_clock" android:textStyle="bold" tools:text="17:07" android:letterSpacing="0" android:lineHeight="44sp" app:lineHeight="44sp" />
+            <TextView android:id="@+id/tvDate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xs" android:fontFamily="@font/sora_regular" android:textColor="@color/textSecondary" android:textSize="@dimen/text_bodyS" tools:text="Mon, 20 Jul" android:letterSpacing="0" android:lineHeight="20sp" app:lineHeight="20sp" />
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Bottom Settings Button -->
-    <TextView
-        android:id="@+id/tvSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/settings"
-        android:textColor="#A9A7B3"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintBottom_toBottomOf="@id/homeIndicator"
-        app:layout_constraintEnd_toStartOf="@id/homeIndicator"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/homeIndicator" />
-
-    <!-- Bottom Home Indicator -->
-    <View
-        android:id="@+id/homeIndicator"
-        android:layout_width="@dimen/_128sdp"
-        android:layout_height="@dimen/_4sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@drawable/bg_preview_home_indicator"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- Bottom Security Button -->
-    <TextView
-        android:id="@+id/tvSecurity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/security"
-        android:textColor="#A9A7B3"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintBottom_toBottomOf="@id/homeIndicator"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/homeIndicator"
-        app:layout_constraintTop_toTopOf="@id/homeIndicator" />
-
+    </com.google.android.material.card.MaterialCardView>
+    <TextView android:id="@+id/tvGreeting" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xxl" android:fontFamily="@font/sora_regular" android:textColor="@color/textPrimary" android:textSize="@dimen/text_titleS" android:textStyle="bold" android:text="@string/good_afternoon" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/timeCard" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
+    <com.google.android.material.card.MaterialCardView android:id="@+id/quoteCard" style="@style/Widget.VoiceLock.Card" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_lg" android:layout_marginEnd="@dimen/spacing_lg" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvGreeting">
+        <TextView android:id="@+id/tvQuote" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="@dimen/spacing_lg" android:fontFamily="@font/sora_regular" android:textColor="@color/textSecondary" android:textSize="@dimen/text_bodyM" android:textAlignment="center" tools:text="The best way to predict the future is to create it." android:letterSpacing="0" android:lineHeight="20sp" app:lineHeight="20sp" />
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView android:id="@+id/voiceNoteCard" style="@style/Widget.VoiceLock.Card" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_xxl" android:layout_marginEnd="@dimen/spacing_lg" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/quoteCard">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="@dimen/spacing_lg" android:gravity="center_vertical">
+            <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ic_nav_voicenote" app:tint="@color/primaryStart" />
+            <TextView android:id="@+id/tvLastNote" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_md" android:fontFamily="@font/sora_regular" android:textColor="@color/textPrimary" android:textSize="@dimen/text_bodyL" tools:text="Recent voice note..." android:letterSpacing="0" android:lineHeight="22sp" app:lineHeight="22sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <LinearLayout android:id="@+id/methodsRow" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xxl" android:gravity="center" android:orientation="horizontal" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/voiceNoteCard">
+        <include android:id="@+id/methodPin" layout="@layout/item_preview_method" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_margin="@dimen/spacing_xs" />
+        <include android:id="@+id/methodPattern" layout="@layout/item_preview_method" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_margin="@dimen/spacing_xs" />
+        <include android:id="@+id/methodVoice" layout="@layout/item_preview_method" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_margin="@dimen/spacing_xs" />
+        <include android:id="@+id/methodFingerprint" layout="@layout/item_preview_method" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_margin="@dimen/spacing_xs" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/micContainer" android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center" android:orientation="vertical" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="@dimen/spacing_xxxl">
+        <FrameLayout android:id="@+id/micRings" android:layout_width="57dp" android:layout_height="57dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground">
+            <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/bg_preview_ring_outer" />
+            <ImageView android:layout_width="32dp" android:layout_height="32dp" android:layout_gravity="center" android:src="@drawable/ic_preview_mic_white" />
+        </FrameLayout>
+        <TextView android:id="@+id/tvSpeakHint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_sm" android:fontFamily="@font/sora_regular" android:gravity="center" android:text="@string/tap_microphone" android:textColor="@color/textSecondary" android:textSize="@dimen/text_bodyS" android:letterSpacing="0" android:lineHeight="20sp" app:lineHeight="20sp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

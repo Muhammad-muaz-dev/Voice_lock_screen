@@ -19,7 +19,7 @@ class PrefManager(private val context: Context) {
         }
 
     var adsOff: Boolean
-        get() = sharedPref.getBoolean(AppConstants.ADS_OFF.name, false)
+        get() = isPro || sharedPref.getBoolean(AppConstants.ADS_OFF.name, false)
         set(value) {
             editor.putBoolean(AppConstants.ADS_OFF.name, value).apply()
         }

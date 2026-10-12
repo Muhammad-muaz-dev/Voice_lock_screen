@@ -9,35 +9,30 @@ import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
-import com.futurecode.voicelockscreen.ads.AdInterface
-import com.futurecode.voicelockscreen.ads.interstitial_ad.FullScreenAdsHelper
-import com.futurecode.voicelockscreen.ads.native_ad.NativeAdsHelper
-import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallFullScreenAdsHelper
-import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallNativeAdsHelper
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentSettingBinding
 import com.futurecode.voicelockscreen.db.PrefManager
 import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.ui.prelogin.LanguageFragment
-import com.futurecode.voicelockscreen.utils.Utils.setAdClickListener
 import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
 
-    private var nativeAdsHelper: AdWaterfallNativeAdsHelper? = null
-    private var fullScreenAdsHelper: AdWaterfallFullScreenAdsHelper? = null
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        nativeAdsHelper = AdWaterfallNativeAdsHelper(requireActivity())
-        fullScreenAdsHelper = AdWaterfallFullScreenAdsHelper(requireActivity())
         binding.ivBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        loadNativeAds()
+        if (prefManager.isPro) {
+            binding.tvUpgradeTitle.setText(R.string.youre_premium)
+            binding.tvPremiumDesc.setText(R.string.everything_unlocked)
+            binding.btnUpgrade.setText(R.string.manage_plan)
+        }
         binding.btnUpgrade.setOnClickListener {
-            findNavController().navigate(R.id.premiumFragment)
+            if (prefManager.isPro && !com.futurecode.voicelockscreen.BuildConfig.DEBUG) {
+                openIntent(Intent(Intent.ACTION_VIEW,Uri.parse("https://play.google.com/store/account/subscriptions")),getString(R.string.no_app_found))
+            } else findNavController().navigate(R.id.premiumFragment)
         }
 
 
@@ -55,12 +50,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
 //            findNavController().navigate(R.id.securityQuestionFragment)
 //        }
 
-        binding.clSecurityQuestion.setAdClickListener(activity=requireActivity(), isShowEveryTime = true) {
-            AdWaterfallFullScreenAdsHelper(requireActivity()).showInterstitialAds(false, object : AdInterface {
-                override fun finished() {
-                    findNavController().navigate(R.id.securityQuestionFragment)
-                }
-            })
+        binding.clSecurityQuestion.setOnClickListener {
+            findNavController().navigate(R.id.securityQuestionFragment, Bundle().apply { putBoolean("editing", true) })
         }
 
         binding.clDisableLock.setOnClickListener {
@@ -79,6 +70,9 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
 
         binding.clPrivacy.setOnClickListener {
             openPrivacyPolicy()
+        }
+        binding.btnRate.setOnClickListener {
+            openIntent(Intent(Intent.ACTION_VIEW,Uri.parse(playStoreUrl())),getString(R.string.no_app_found))
         }
     }
 
@@ -133,19 +127,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
 
     private fun playStoreUrl(): String {
         return "https://play.google.com/store/apps/details?id=${requireContext().packageName}"
-    }
-
-    fun loadNativeAds() {
-        activity?.let { currentActivity ->
-            if (nativeAdsHelper == null) {
-                nativeAdsHelper = AdWaterfallNativeAdsHelper(currentActivity)
-            }
-            nativeAdsHelper?.showNativeAd(
-                nativeBannerAdView = binding.nativeAds3.frame,
-                mainLayout = binding.nativeAds3.mainLayout,
-                placeholder = binding.nativeAds3.placeholder
-            )
-        }
     }
 
 }

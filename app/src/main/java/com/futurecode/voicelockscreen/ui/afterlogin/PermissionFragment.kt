@@ -133,6 +133,7 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
         }
 
         val destination = when (target) {
+            TARGET_COMPLETE -> R.id.setupCompleteFragment
             TARGET_PIN -> R.id.pinLockFragment
             TARGET_PATTERN -> R.id.patternLockFragment
             TARGET_FINGERPRINT -> R.id.fingerprintLockFragment
@@ -148,6 +149,7 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
     }
 
     companion object {
+        const val TARGET_COMPLETE = "complete"
         const val ARG_TARGET = "permission_target"
         const val TARGET_VOICE = "voice"
         const val TARGET_PIN = "pin"

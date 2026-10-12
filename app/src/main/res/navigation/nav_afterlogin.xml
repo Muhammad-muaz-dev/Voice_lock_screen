@@ -15,7 +15,7 @@
             app:destination="@id/settingFragment" />
         <action
             android:id="@+id/action_homeFragment_to_voiceSetupFragment"
-            app:destination="@id/voiceSetupFragment" />
+            app:destination="@id/voiceGuideFragment" />
         <action
             android:id="@+id/action_homeFragment_to_permissionFragment"
             app:destination="@id/permissionFragment" />
@@ -37,6 +37,15 @@
         <action
             android:id="@+id/action_homeFragment_to_seeAllthemesFragment"
             app:destination="@id/seeAllthemesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cameraVoiceFragment"
+            app:destination="@id/cameraVoiceFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_themesFragment"
+            app:destination="@id/themesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_voiceNoteFragment"
+            app:destination="@id/voiceNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -96,4 +105,26 @@
         android:id="@+id/seeAllthemesFragment"
         android:name="com.futurecode.voicelockscreen.ui.afterlogin.SeeAllthemesFragment"
         android:label="@string/lock_screen_themes" />
-</navigation>
+    <fragment
+        android:id="@+id/cameraVoiceFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.CameraVoiceFragment"
+        android:label="@string/open_camera_by_voice"
+        tools:layout="@layout/fragment_camera_voice" />
+    <fragment
+        android:id="@+id/themesFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.ThemesFragment"
+        android:label="@string/tab_themes"
+        tools:layout="@layout/fragment_themes" />
+    <fragment
+        android:id="@+id/aiQuoteFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.AiQuoteFragment"
+        android:label="@string/ai_quote"
+        tools:layout="@layout/fragment_ai_quote" />
+    <fragment
+        android:id="@+id/voiceNoteFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.VoiceNoteFragment"
+        android:label="@string/tab_voice_note"
+        tools:layout="@layout/fragment_voice_note" />
+<fragment android:id="@+id/voiceGuideFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.VoiceGuideFragment" android:label="@string/setup_guide_title" /><fragment android:id="@+id/setupCompleteFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.SetupCompleteFragment" android:label="@string/setup_done_title" /><fragment android:id="@+id/noteRecordFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.NoteRecordFragment" android:label="@string/note_new_title" /><fragment android:id="@+id/noteDetailFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.NoteDetailFragment" android:label="@string/note_detail_title" /><fragment android:id="@+id/customThemeFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.CustomThemeFragment" android:label="@string/lock_screen_themes" /></navigation>
+
+

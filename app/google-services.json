@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "191307118180",
+    "project_id": "voice-lock-screen-e894a",
+    "storage_bucket": "voice-lock-screen-e894a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191307118180:android:381f4b45271fcf63369171",
+        "android_client_info": {
+          "package_name": "com.futurecode.voicelockscreen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsDsEfxa-O72fNL12_6MuLBXH3vOlPx8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

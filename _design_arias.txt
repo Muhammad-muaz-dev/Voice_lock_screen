@@ -1,0 +1,221 @@
+Jump to a flow
+Zoom out
+Zoom in
+Flow map of the app
+Pick your language
+Intro 1: voice unlock
+Intro 2: camera by voice
+Intro 3: voice notes
+Go Pro
+Close
+Choose a plan
+Close
+Yearly plan picked
+Close
+You&#x27;re Pro now
+Close
+Payment didn&#x27;t work
+Close
+Home
+Go premium
+Settings
+Unlock Screen voice command, off
+Lock Screen voice command, off
+Unlock is on
+Go premium
+Settings
+Unlock Screen voice command, on
+Lock Screen voice command, off
+Both are on
+Go premium
+Settings
+Unlock Screen voice command, on
+Lock Screen voice command, on
+Ask for notifications
+Go premium
+Settings
+Unlock Screen voice command, on
+Lock Screen voice command, on
+Lock is on
+Go premium
+Settings
+Unlock Screen voice command, off
+Lock Screen voice command, on
+Leaving the app?
+Go premium
+Settings
+Unlock Screen voice command, on
+Lock Screen voice command, on
+Setup guide
+Back
+Setup guide, scrolled down
+Back
+Say your password
+Back
+Shield with check mark
+Tap to record
+Allow the microphone
+Back
+Tap to record
+Recording screen
+Back
+Tap to record
+Recording
+Back
+Stop recording
+Check what we heard
+Back
+Say it once more
+Back
+Shield with check mark
+Tap to record
+Microphone is blocked
+Back
+Tap to record
+We couldn&#x27;t hear you
+Back
+Tap to record
+Pick a language
+Close
+Searching languages
+Close
+Language picked
+Close
+No language found
+Close
+Choose a question
+Back
+Question picked
+Back
+Type your answer
+Back
+Answer typed
+Back
+Permissions
+Back
+Shield with a check mark
+Phone call access
+Display over other apps
+Permissions allowed
+Back
+Shield with a check mark
+Phone call access
+Display over other apps
+All done
+Close
+Answer too short
+Back
+Tip: add another way to unlock
+Close
+Make a pattern
+Back
+Drawing the pattern
+Back
+Draw it again
+Back
+All done, 2 methods left
+Close
+Make a PIN
+Back
+Enter the PIN again
+Back
+All done, 1 method left
+Close
+Turn on fingerprint
+Back
+All done, nothing left
+Close
+Rate the app
+Close
+Preview the lock screen
+Back
+Low rating, tell us why
+Close
+Thanks for the feedback
+Close
+Lock screen
+Listening
+Voice matches
+Voice wasn’t recognized
+Unlock with PIN
+Unlock with pattern
+Unlock with fingerprint
+How it works
+Back
+Camera permissions
+Back
+Shield with a check mark
+Permission off
+Permission on
+Permission on
+Say &quot;Open Camera&quot;
+Back
+Shield with check mark
+Tap to record
+You&#x27;re all set (1)
+Back
+Phone camera illustration
+You&#x27;re all set (2)
+Back
+Phone camera illustration
+Camera by voice, off
+Back
+Guide
+Camera voice control off
+Camera by voice, on
+Back
+Guide
+Camera voice control on
+Help tip
+Back
+Guide
+Camera voice control off
+Guide
+Themes tab
+Go premium
+Settings
+Voice Lock
+Themes
+Voice Note
+AI Quote
+Back
+Ready to make the quote
+Back
+Making the quote
+Back
+Your quote
+Back
+Lock screen theme
+Back
+Picture picked
+Back
+Voice Note, no notes yet
+Go premium
+Settings
+Voice Lock
+Themes
+Voice Note
+New note
+Back
+Recording a note
+Back
+Saved note
+Back
+Voice Note, with notes
+Go premium
+Settings
+Voice Lock
+Themes
+Voice Note
+Out of free tries
+Go premium
+Settings
+Voice Lock
+Themes
+Voice Note
+Can&#x27;t hear you
+Back
+Settings
+Back
+Settings, Pro user
+Back

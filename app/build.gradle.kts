@@ -24,7 +24,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -55,12 +56,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //facebook ads
-    implementation("com.facebook.android:audience-network-sdk:6.21.0")
-
-    //google ads
-    implementation("com.google.android.gms:play-services-ads:25.2.0")
-    implementation("com.google.ads.mediation:facebook:6.16.0.0")
     implementation("com.intuit.sdp:sdp-android:1.1.1")
     implementation("com.intuit.ssp:ssp-android:1.1.1")
     implementation("androidx.lifecycle:lifecycle-process:2.10.0")
@@ -104,11 +99,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
 
-    // AppLovin MAX SDK
-    implementation("com.applovin:applovin-sdk:13.6.3")
-    //mediatiaion
-    implementation("com.applovin.mediation:google-adapter:25.4.0.0")
-    implementation("com.applovin.mediation:facebook-adapter:6.21.0.0")
-    implementation("com.google.ads.mediation:facebook:6.21.0.1")
+
 
 }

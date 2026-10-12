@@ -1,55 +1,65 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
-import android.content.Intent
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
-import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
-import com.futurecode.voicelockscreen.ads.AdInterface
-import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallFullScreenAdsHelper
-import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallNativeAdsHelper
-import com.futurecode.voicelockscreen.ads.waterfall.AdWaterfallNativeBannerAdsHelper
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentHomeBinding
 import com.futurecode.voicelockscreen.service.LockService
-import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
+import com.futurecode.voicelockscreen.utils.DarkDialogs
+import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private var nativeAdsHelper: AdWaterfallNativeAdsHelper? = null
-    private var fullScreenAdsHelper: AdWaterfallFullScreenAdsHelper? = null
-    private var nativeBanner: AdWaterfallNativeBannerAdsHelper? = null
-
+    private val notificationPermission = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { VoiceLockFeatureStore.setNotifAsked(requireContext()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        nativeAdsHelper= AdWaterfallNativeAdsHelper(requireActivity())
-        fullScreenAdsHelper= AdWaterfallFullScreenAdsHelper(requireActivity())
-        nativeBanner= AdWaterfallNativeBannerAdsHelper(requireActivity())
-
-        loadNativeBannerAds()
-
-        Log.d("TAG", "onViewCreated: ${prefManager.applovinMrec}")
-
-
-        binding.ivSettings.setOnClickListener {
-            AdWaterfallFullScreenAdsHelper(requireActivity()).showInterstitialAds(false, object : AdInterface {
-                override fun finished() {
-                    findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    DarkDialogs.show(
+                        requireContext(),
+                        getString(R.string.exit_app_title),
+                        getString(R.string.exit_app_body),
+                        getString(R.string.stay),
+                        getString(R.string.exit),
+                        onPositive = { requireActivity().finish() }
+                    )
                 }
-            })
+            }
+        )
+
+        // Header Actions
+        binding.ivSettings.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
         }
 
-        binding.voiceUnlock.setOnClickListener {
-            openFeatureWithPermission(
-                PermissionFragment.TARGET_VOICE,
-                R.id.action_homeFragment_to_voiceSetupFragment
-            )
+        binding.ivPremium.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_premiumFragment)
+        }
+
+        // Voice Unlock Card Setup
+        binding.cardUnlock.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_voiceSetupFragment)
+        }
+
+        // 2x2 Grid Tools
+        binding.cardCamera.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_cameraVoiceFragment)
         }
 
         binding.pinLock.setOnClickListener {
@@ -72,50 +82,49 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 R.id.action_homeFragment_to_fingerprintLockFragment
             )
         }
+        binding.cardLock.setOnClickListener { findNavController().navigate(R.id.voiceGuideFragment) }
 
-        binding.preview.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_screenPreviewFragment)
+        // Bottom Navigation Tabs
+        binding.tabVoiceLock.setOnClickListener {
+            // Already on Voice Lock home
         }
 
-        binding.tvSeeAllTools.setOnClickListener {
-
+        binding.tabThemes.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_themesFragment)
         }
 
-        binding.tvSeeAllThemes.setOnClickListener {
-         findNavController().navigate(R.id.action_homeFragment_to_seeAllthemesFragment)
+        binding.tabVoiceNote.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_voiceNoteFragment)
         }
 
         bindVoiceLockSwitches()
-        bindThemeCards()
-
-        binding.ivPremium.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_premiumFragment)
-
-        }
-
-        binding.ivMic.setOnClickListener {
-
-        }
     }
 
     override fun onResume() {
         super.onResume()
         updateVoiceLockSwitches()
-        updateThemeSelection()
     }
 
     private fun bindVoiceLockSwitches() {
-        binding.swUnlock.setOnCheckedChangeListener { _, isChecked ->
-            handleUnlockSwitchChanged(isChecked)
+        binding.switchUnlock.setOnClickListener {
+            val newState = !VoiceLockSwitchStore.isUnlockEffective(requireContext())
+            handleUnlockSwitchChanged(newState)
         }
-        binding.swLock.setOnCheckedChangeListener { _, isChecked ->
-            handleLockSwitchChanged(isChecked)
+
+        binding.switchLock.setOnClickListener {
+            val newState = !VoiceLockSwitchStore.isLockEffective(requireContext())
+            handleLockSwitchChanged(newState)
         }
+
         updateVoiceLockSwitches()
     }
 
     private fun handleUnlockSwitchChanged(enabled: Boolean) {
         VoiceLockSwitchStore.setUnlockEnabled(requireContext(), enabled)
+        if (enabled && !com.futurecode.voicelockscreen.security.SecureVoiceStore.hasPhrase(requireContext())) {
+            findNavController().navigate(R.id.voiceGuideFragment)
+            return
+        }
         if (!enabled) {
             LockService.stop(requireContext())
             updateVoiceLockSwitches()
@@ -128,12 +137,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             return
         }
 
+        maybeAskNotifications()
         LockService.startIfNeeded(requireContext())
         updateVoiceLockSwitches()
     }
 
     private fun handleLockSwitchChanged(enabled: Boolean) {
         VoiceLockSwitchStore.setLockEnabled(requireContext(), enabled)
+        if (enabled && !com.futurecode.voicelockscreen.security.SecureVoiceStore.hasPhrase(requireContext())) {
+            findNavController().navigate(R.id.voiceGuideFragment)
+            return
+        }
         if (enabled && !hasRequiredPermissions()) {
             openPermissionScreenForHomeSwitch()
         }
@@ -143,21 +157,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun updateVoiceLockSwitches() {
         val unlockChecked = VoiceLockSwitchStore.isUnlockEffective(requireContext())
         val lockChecked = VoiceLockSwitchStore.isLockEffective(requireContext())
+        val shiftDistance = 26f * resources.displayMetrics.density
 
-        binding.swUnlock.setOnCheckedChangeListener(null)
-        binding.swLock.setOnCheckedChangeListener(null)
-        binding.swUnlock.isChecked = unlockChecked
-        binding.swLock.isChecked = lockChecked
-        binding.swUnlock.setOnCheckedChangeListener { _, isChecked ->
-            handleUnlockSwitchChanged(isChecked)
-        }
-        binding.swLock.setOnCheckedChangeListener { _, isChecked ->
-            handleLockSwitchChanged(isChecked)
+        // 1. Render Unlock Switch (60x34dp, knob 28x28dp)
+        if (unlockChecked) {
+            binding.switchUnlock.setBackgroundResource(R.drawable.bg_switch_track_unlock_active)
+            binding.knobUnlock.setBackgroundResource(R.drawable.bg_switch_thumb_white)
+            binding.knobUnlock.animate().translationX(shiftDistance).setDuration(200).start()
+            binding.tvUnlockStatus.setText(R.string.status_active)
+        } else {
+            binding.switchUnlock.setBackgroundResource(R.drawable.bg_switch_track_unlock)
+            binding.knobUnlock.setBackgroundResource(R.drawable.bg_switch_thumb_lock)
+            binding.knobUnlock.animate().translationX(0f).setDuration(200).start()
+            binding.tvUnlockStatus.setText(R.string.status_inactive)
         }
 
-        binding.tvVoiceLockStatus.text = getString(
-            if (unlockChecked || lockChecked) R.string.voice_lock_is_on else R.string.voice_lock_is_off
-        )
+        // 2. Render Lock Switch (60x34dp, knob 28x28dp)
+        if (lockChecked) {
+            binding.switchLock.setBackgroundResource(R.drawable.bg_switch_track_lock_active)
+            binding.knobLock.setBackgroundResource(R.drawable.bg_switch_thumb_white)
+            binding.knobLock.animate().translationX(shiftDistance).setDuration(200).start()
+            binding.tvLockStatus.setText(R.string.status_active)
+        } else {
+            binding.switchLock.setBackgroundResource(R.drawable.bg_switch_track_lock)
+            binding.knobLock.setBackgroundResource(R.drawable.bg_switch_thumb_lock)
+            binding.knobLock.animate().translationX(0f).setDuration(200).start()
+            binding.tvLockStatus.setText(R.string.status_inactive)
+        }
     }
 
     private fun openPermissionScreenForHomeSwitch() {
@@ -167,34 +193,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 putString(PermissionFragment.ARG_TARGET, PermissionFragment.TARGET_HOME)
             }
         )
-    }
-
-    private fun bindThemeCards() {
-        binding.cardThemeOne.setOnClickListener {
-            saveTheme(ThemeWallpaperStore.THEME_ONE_ID, R.drawable.theme_one)
-        }
-        binding.cardThemeTwo.setOnClickListener {
-            saveTheme(ThemeWallpaperStore.THEME_TWO_ID, R.drawable.theme_two)
-        }
-        binding.cardThemeThree.setOnClickListener {
-            saveTheme(ThemeWallpaperStore.THEME_THREE_ID, R.drawable.theme_three)
-        }
-        updateThemeSelection()
-    }
-
-    private fun saveTheme(themeId: Int, wallpaperRes: Int) {
-        ThemeWallpaperStore.saveSelectedTheme(requireContext(), themeId, wallpaperRes)
-        updateThemeSelection()
-    }
-
-    private fun updateThemeSelection() {
-        val selectedThemeId = ThemeWallpaperStore.getSelectedThemeId(requireContext())
-        binding.ivThemeOneSelected.visibility =
-            if (selectedThemeId == ThemeWallpaperStore.THEME_ONE_ID) View.VISIBLE else View.GONE
-        binding.ivThemeTwoSelected.visibility =
-            if (selectedThemeId == ThemeWallpaperStore.THEME_TWO_ID) View.VISIBLE else View.GONE
-        binding.ivThemeThreeSelected.visibility =
-            if (selectedThemeId == ThemeWallpaperStore.THEME_THREE_ID) View.VISIBLE else View.GONE
     }
 
     private fun openFeatureWithPermission(target: String, @IdRes directActionId: Int) {
@@ -215,19 +213,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         return VoiceLockSwitchStore.hasRequiredPermissions(requireContext())
     }
 
-
-    fun loadNativeBannerAds() {
-
-        activity?.let { currentActivity ->
-            if (nativeBanner == null) {
-                nativeBanner = AdWaterfallNativeBannerAdsHelper(currentActivity)
+    private fun maybeAskNotifications() {
+        if (VoiceLockFeatureStore.notesAsked(requireContext())) return
+        DarkDialogs.show(
+            requireContext(),
+            getString(R.string.want_security_alerts),
+            getString(R.string.security_alerts_body),
+            getString(R.string.not_now),
+            getString(R.string.allow),
+            onNegative = { VoiceLockFeatureStore.setNotifAsked(requireContext()) }
+        ) {
+            VoiceLockFeatureStore.setNotifAsked(requireContext())
+            if (Build.VERSION.SDK_INT >= 33 &&
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
-            nativeBanner?.showNativeBAnnerAd(
-                nativeBannerAdView = binding.nativeAds3.frame,
-                mainLayout = binding.nativeAds3.mainLayout,
-                placeholder = binding.nativeAds3.placeholder
-            )
         }
-
     }
 }
