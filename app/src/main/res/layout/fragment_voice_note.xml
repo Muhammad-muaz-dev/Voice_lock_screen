@@ -1,25 +1,244 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg" android:fitsSystemWindows="true" tools:context=".ui.afterlogin.VoiceNoteFragment">
-    <TextView android:id="@+id/tvTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_lg" android:fontFamily="@font/sora_semibold" android:text="@string/ai_voice_note" android:textColor="@color/textPrimary" android:textSize="@dimen/text_titleXL" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="28sp" app:lineHeight="28sp" />
-    <ImageButton android:id="@+id/ivPremium" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginEnd="@dimen/spacing_md" android:background="@drawable/bg_header_circle_dark" android:contentDescription="@string/upgrade_to_premium" android:padding="@dimen/spacing_sm" android:src="@drawable/ic_crown_simple" app:layout_constraintBottom_toBottomOf="@id/tvTitle" app:layout_constraintEnd_toStartOf="@id/ivSettings" app:layout_constraintTop_toTopOf="@id/tvTitle" app:tint="@color/accentGold" />
-    <ImageButton android:id="@+id/ivSettings" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginEnd="@dimen/spacing_lg" android:background="@drawable/bg_header_circle_dark" android:contentDescription="@string/setting" android:padding="@dimen/spacing_sm" android:src="@drawable/ic_settings_sliders" app:layout_constraintBottom_toBottomOf="@id/tvTitle" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="@id/tvTitle" app:tint="@color/textPrimary" />
-    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/emptyState" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="@dimen/spacing_huge" android:visibility="visible" app:layout_constraintBottom_toTopOf="@id/btnRecord" app:layout_constraintTop_toBottomOf="@id/tvTitle">
-        <TextView android:id="@+id/tvNoNotes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/no_notes_yet" android:textColor="@color/textPrimary" android:textSize="@dimen/text_titleM" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
-        <TextView android:id="@+id/tvRecordHint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_sm" android:fontFamily="@font/sora_regular" android:text="@string/record_first_note" android:textColor="@color/textSecondary" android:textSize="@dimen/text_bodyS" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvNoNotes" android:letterSpacing="0" android:lineHeight="20sp" app:lineHeight="20sp" />
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AI Voice Notes list: copy of the reference layout (ad slots removed). -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/vn_white"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.afterlogin.VoiceNoteFragment">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="@dimen/vn_dp_44"
+        android:layout_height="@dimen/vn_dp_44"
+        android:layout_marginStart="@dimen/vn_dp_8"
+        android:layout_marginTop="@dimen/vn_dp_8"
+        android:contentDescription="@null"
+        android:padding="@dimen/vn_dp_10"
+        android:src="@drawable/vn_ic_logo_voice_note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/VN.Headline_XSM_Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_10"
+        android:layout_marginEnd="@dimen/vn_dp_12"
+        android:text="@string/vn_ai_voice_note"
+        android:textColor="@color/vn_neutral01"
+        app:layout_constraintBottom_toBottomOf="@id/ivLogo"
+        app:layout_constraintEnd_toStartOf="@id/ivPremium"
+        app:layout_constraintStart_toEndOf="@id/ivLogo"
+        app:layout_constraintTop_toTopOf="@id/ivLogo" />
+
+    <ImageView
+        android:id="@+id/ivPremium"
+        android:layout_width="@dimen/vn_dp_36"
+        android:layout_height="@dimen/vn_dp_36"
+        android:layout_marginEnd="@dimen/vn_dp_8"
+        android:contentDescription="@string/upgrade_to_premium"
+        android:src="@drawable/vn_ic_iap"
+        app:layout_constraintBottom_toBottomOf="@id/ivSettings"
+        app:layout_constraintEnd_toStartOf="@id/ivSettings"
+        app:layout_constraintTop_toTopOf="@id/ivSettings" />
+
+    <ImageView
+        android:id="@+id/ivSettings"
+        android:layout_width="@dimen/vn_dp_36"
+        android:layout_height="@dimen/vn_dp_36"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:contentDescription="@string/setting"
+        android:src="@drawable/vn_ic_setting"
+        app:layout_constraintBottom_toBottomOf="@id/ivLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivLogo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/vn_dp_16"
+        android:paddingStart="@dimen/vn_dp_16"
+        android:paddingEnd="@dimen/vn_dp_16"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivLogo">
+
+        <View
+            android:id="@+id/frameCreateNew"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/vn_dp__16"
+            android:background="@drawable/vn_bg_radius_16_primary02"
+            app:layout_constraintBottom_toBottomOf="@id/tvDesc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            style="@style/VN.Text_LG_SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_16"
+            android:layout_marginTop="@dimen/vn_dp_16"
+            android:drawablePadding="@dimen/vn_dp_2"
+            android:gravity="center"
+            android:text="@string/vn_text_v"
+            android:textColor="@color/vn_white"
+            app:drawableEndCompat="@drawable/vn_ic_mic_white"
+            app:layout_constraintStart_toStartOf="@id/frameCreateNew"
+            app:layout_constraintTop_toTopOf="@id/frameCreateNew" />
+
+        <TextView
+            android:id="@+id/tvHeaderTitle2"
+            style="@style/VN.Text_LG_SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_2"
+            android:gravity="center"
+            android:text="@string/vn_text_ice_note"
+            android:textColor="@color/vn_white"
+            app:layout_constraintBottom_toBottomOf="@id/tvHeaderTitle"
+            app:layout_constraintStart_toEndOf="@id/tvHeaderTitle"
+            app:layout_constraintTop_toTopOf="@id/tvHeaderTitle" />
+
+        <TextView
+            android:id="@+id/tvDesc"
+            style="@style/VN.Text_SM_Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vn_dp_4"
+            android:layout_marginEnd="@dimen/vn_dp_33"
+            android:gravity="start"
+            android:text="@string/vn_voice_note_desc"
+            android:textColor="@color/vn_neutral10"
+            app:layout_constraintEnd_toStartOf="@id/tvCreateNew"
+            app:layout_constraintStart_toStartOf="@id/tvHeaderTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvHeaderTitle" />
+
+        <TextView
+            android:id="@+id/tvCreateNew"
+            style="@style/VN.Text_MD_Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/vn_dp_20"
+            android:background="@drawable/vn_bg_radius_1000_white"
+            android:paddingStart="@dimen/vn_dp_16"
+            android:paddingTop="@dimen/vn_dp_8"
+            android:paddingEnd="@dimen/vn_dp_16"
+            android:paddingBottom="@dimen/vn_dp_8"
+            android:text="@string/vn_create_new"
+            android:textColor="@color/vn_primary02"
+            app:layout_constraintBottom_toBottomOf="@id/frameCreateNew"
+            app:layout_constraintEnd_toEndOf="@id/frameCreateNew"
+            app:layout_constraintTop_toTopOf="@id/frameCreateNew" />
+
+        <TextView
+            android:id="@+id/tvMyNotes"
+            style="@style/VN.Text_LG_SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vn_dp_20"
+            android:drawablePadding="@dimen/vn_dp_8"
+            android:gravity="center"
+            android:text="@string/vn_my_notes"
+            android:textColor="@color/vn_neutral01"
+            app:drawableStartCompat="@drawable/vn_ic_note"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frameCreateNew" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvNotes"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/vn_dp_8"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/vn_dp_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMyNotes" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupNotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="frameCreateNew,tvHeaderTitle,tvHeaderTitle2,tvDesc,tvCreateNew,tvMyNotes,rvNotes" />
+
+        <ImageView
+            android:id="@+id/ivEmptyNote"
+            android:layout_width="@dimen/vn_dp_120"
+            android:layout_height="@dimen/vn_dp_125"
+            android:contentDescription="@null"
+            android:src="@drawable/vn_ic_empty_note"
+            app:layout_constraintBottom_toTopOf="@id/tvEmptyNote"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tvEmptyNote"
+            style="@style/VN.Text_MD_Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vn_dp_16"
+            android:text="@string/vn_no_voice_notes_yet"
+            android:textColor="@color/vn_neutral02"
+            app:layout_constraintBottom_toTopOf="@id/tvEmptyNoteDesc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivEmptyNote" />
+
+        <TextView
+            android:id="@+id/tvEmptyNoteDesc"
+            style="@style/VN.Text_SM_Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vn_dp_4"
+            android:text="@string/vn_empty_note_desc"
+            android:textColor="@color/vn_neutral05"
+            app:layout_constraintBottom_toTopOf="@id/tvCreateNow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEmptyNote" />
+
+        <TextView
+            android:id="@+id/tvCreateNow"
+            style="@style/VN.Text_MD_Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vn_dp_16"
+            android:background="@drawable/vn_bg_radius_1000_primary01"
+            android:paddingStart="@dimen/vn_dp_16"
+            android:paddingTop="@dimen/vn_dp_8"
+            android:paddingEnd="@dimen/vn_dp_16"
+            android:paddingBottom="@dimen/vn_dp_8"
+            android:text="@string/vn_create_now"
+            android:textColor="@color/vn_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEmptyNoteDesc" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="ivEmptyNote,tvEmptyNote,tvEmptyNoteDesc,tvCreateNow" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvNotes" android:layout_width="match_parent" android:layout_height="0dp" android:paddingHorizontal="@dimen/spacing_lg" android:visibility="gone" app:layout_constraintBottom_toTopOf="@id/btnRecord" app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-    <com.google.android.material.card.MaterialCardView android:id="@+id/recordCard" style="@style/Widget.VoiceLock.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_lg" android:visibility="gone" app:layout_constraintBottom_toTopOf="@id/btnRecord">
-        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="@dimen/spacing_lg">
-            <TextView android:id="@+id/tvTimer" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/timer_zero" android:textColor="@color/textPrimary" android:textSize="@dimen/text_titleL" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="28sp" app:lineHeight="28sp" />
-            <TextView android:id="@+id/tvLiveTranscript" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_sm" android:fontFamily="@font/sora_regular" android:textColor="@color/textSecondary" android:textSize="@dimen/text_bodyM" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvTimer" android:letterSpacing="0" android:lineHeight="20sp" app:lineHeight="20sp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.card.MaterialCardView android:id="@+id/paywallCard" style="@style/Widget.VoiceLock.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_lg" android:visibility="gone" app:layout_constraintBottom_toTopOf="@id/bottomNav">
-        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="@dimen/spacing_lg">
-            <TextView android:id="@+id/tvYouveUsedTries" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/youve_used_tries" android:textColor="@color/textPrimary" android:textSize="@dimen/text_bodyL" android:textStyle="bold" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="22sp" app:lineHeight="22sp" />
-            <TextView android:id="@+id/tvWatchAd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xs" android:fontFamily="@font/sora_regular" android:text="@string/watch_ad_continue" android:textColor="@color/textSecondary" android:textSize="@dimen/text_caption" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvYouveUsedTries" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-            <com.google.android.material.button.MaterialButton android:id="@+id/btnGoPremium" style="@style/Widget.VoiceLock.Button.Primary" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="@dimen/spacing_md" android:text="@string/go_premium" android:textAllCaps="false" app:layout_constraintTop_toBottomOf="@id/tvWatchAd" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_buttonL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_cta_gradient" android:lineHeight="24sp" app:lineHeight="24sp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.button.MaterialButton android:id="@+id/btnRecord" style="@style/Widget.VoiceLock.Button.Primary" android:layout_width="0dp" android:layout_height="50dp" android:layout_margin="@dimen/spacing_lg" android:text="@string/record_one" android:textAllCaps="false" app:layout_constraintBottom_toTopOf="@id/bottomNav" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_buttonL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_cta_gradient" android:lineHeight="24sp" app:lineHeight="24sp" />
-    <include android:id="@+id/bottomNav" layout="@layout/include_bottom_tabs" android:layout_width="match_parent" android:layout_height="84dp" app:layout_constraintBottom_toBottomOf="parent" />
+
+    <include
+        android:id="@+id/bottomNav"
+        layout="@layout/include_bottom_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

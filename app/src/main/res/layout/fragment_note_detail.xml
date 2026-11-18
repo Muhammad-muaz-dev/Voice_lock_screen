@@ -1,22 +1,417 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/bg" android:paddingHorizontal="16dp" android:paddingBottom="16dp">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="56dp" android:gravity="center_vertical" android:orientation="horizontal">
-        <ImageButton android:id="@+id/btnBack" android:layout_width="44dp" android:layout_height="44dp" android:padding="12dp" android:background="@drawable/bg_header_circle_dark" android:src="@drawable/ic_pin_back" android:contentDescription="@string/back" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:fontFamily="@font/sora_semibold" android:textSize="@dimen/text_titleL" android:textColor="@color/textPrimary" android:text="@string/note_detail_title" android:lineHeight="28sp" app:lineHeight="28sp" />
-    </LinearLayout>
-    <androidx.core.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingBottom="24dp">
-            <TextView android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/note_detail_title" android:textSize="@dimen/text_titleL" android:fontFamily="@font/sora_semibold" android:textColor="@color/textPrimary" android:lineHeight="28sp" app:lineHeight="28sp" />
-            <TextView android:id="@+id/tvMetadata" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/timer_zero" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_regular" android:textColor="@color/textSecondary" android:lineHeight="16sp" app:lineHeight="16sp" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:orientation="vertical" android:padding="16dp" android:background="@drawable/bg_card_dark">
-                <TextView android:id="@+id/tvTranscriptHeading" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/note_transcript" android:textSize="@dimen/text_titleS" android:fontFamily="@font/sora_semibold" android:textColor="@color/textPrimary" android:lineHeight="24sp" app:lineHeight="24sp" />
-                <TextView android:id="@+id/tvTranscript" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/voice_phrase_placeholder" android:textSize="@dimen/text_bodyL" android:fontFamily="@font/sora_regular" android:textColor="@color/textPrimary" android:lineHeight="22sp" app:lineHeight="22sp" />
-            </LinearLayout>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:orientation="vertical" android:padding="16dp" android:background="@drawable/bg_card_dark">
-                <TextView android:id="@+id/tvSummaryHeading" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/note_summary" android:textSize="@dimen/text_titleS" android:fontFamily="@font/sora_semibold" android:textColor="@color/textPrimary" android:lineHeight="24sp" app:lineHeight="24sp" />
-                <TextView android:id="@+id/tvSummary" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/voice_phrase_placeholder" android:textSize="@dimen/text_bodyM" android:fontFamily="@font/sora_regular" android:textColor="@color/textPrimary" android:lineHeight="20sp" app:lineHeight="20sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-    <TextView android:id="@+id/btnCopy" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="@dimen/spacing_md" android:gravity="center" android:fontFamily="@font/sora_bold" android:textSize="@dimen/text_buttonL" android:textColor="@color/primarySoft" android:background="@drawable/bg_outline_button" android:text="@string/note_copy" android:clickable="true" android:focusable="true" android:lineHeight="24sp" app:lineHeight="24sp" />
-    <TextView android:id="@+id/btnShare" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="@dimen/spacing_md" android:gravity="center" android:fontFamily="@font/sora_bold" android:textSize="@dimen/text_buttonL" android:textColor="@color/textPrimary" android:background="@drawable/bg_cta_gradient" android:text="@string/share" android:clickable="true" android:focusable="true" android:lineHeight="24sp" app:lineHeight="24sp" />
-</LinearLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Note detail: copy of the reference layout (ad slots removed). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/vn_primary09"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.afterlogin.NoteDetailFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/vn_dp_48"
+            android:layout_height="@dimen/vn_dp_48"
+            android:layout_marginStart="@dimen/vn_dp_4"
+            android:layout_marginTop="@dimen/vn_dp_8"
+            android:contentDescription="@string/vn_back"
+            android:padding="@dimen/vn_dp_12"
+            android:src="@drawable/vn_ic_arrow_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNoteName"
+            style="@style/VN.Title_Large"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_4"
+            android:layout_marginEnd="@dimen/vn_dp_4"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/vn_neutral01"
+            app:layout_constraintBottom_toBottomOf="@id/ivBack"
+            app:layout_constraintEnd_toStartOf="@id/barrierActions"
+            app:layout_constraintStart_toEndOf="@id/ivBack"
+            app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierActions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="ivOption,tvDone" />
+
+        <ImageView
+            android:id="@+id/ivOption"
+            android:layout_width="@dimen/vn_dp_48"
+            android:layout_height="@dimen/vn_dp_48"
+            android:layout_marginEnd="@dimen/vn_dp_4"
+            android:contentDescription="@string/vn_more_options"
+            android:padding="@dimen/vn_dp_4"
+            android:src="@drawable/vn_ic_option_circle"
+            app:layout_constraintBottom_toBottomOf="@id/ivBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+        <TextView
+            android:id="@+id/tvDone"
+            style="@style/VN.Text_MD_SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/vn_dp_4"
+            android:background="@drawable/vn_bg_radius_100_primary07"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/vn_dp_24"
+            android:paddingTop="@dimen/vn_dp_8"
+            android:paddingEnd="@dimen/vn_dp_24"
+            android:paddingBottom="@dimen/vn_dp_8"
+            android:text="@string/vn_done"
+            android:textColor="@color/vn_primary01"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/ivBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+        <HorizontalScrollView
+            android:id="@+id/tabsScroll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vn_dp_12"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivBack">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/vn_dp_20"
+                android:paddingEnd="@dimen/vn_dp_20">
+
+                <TextView
+                    android:id="@+id/tvTranscript"
+                    style="@style/VN.Text_MD_SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/vn_dp_24"
+                    android:paddingTop="@dimen/vn_dp_8"
+                    android:paddingEnd="@dimen/vn_dp_24"
+                    android:paddingBottom="@dimen/vn_dp_8"
+                    android:text="@string/vn_transcript"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvAISummary"
+                    style="@style/VN.Text_MD_SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vn_dp_12"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/vn_dp_24"
+                    android:paddingTop="@dimen/vn_dp_8"
+                    android:paddingEnd="@dimen/vn_dp_24"
+                    android:paddingBottom="@dimen/vn_dp_8"
+                    android:text="@string/vn_ai_summary"
+                    app:layout_constraintStart_toEndOf="@id/tvTranscript"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTranslate"
+                    style="@style/VN.Text_MD_SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vn_dp_12"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/vn_dp_24"
+                    android:paddingTop="@dimen/vn_dp_8"
+                    android:paddingEnd="@dimen/vn_dp_24"
+                    android:paddingBottom="@dimen/vn_dp_8"
+                    android:text="@string/vn_translate"
+                    app:layout_constraintStart_toEndOf="@id/tvAISummary"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvLanguageTranslate"
+                    style="@style/VN.Text_MD_SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vn_dp_4"
+                    android:background="@drawable/vn_bg_corner_100_primary_1"
+                    android:drawablePadding="@dimen/vn_dp_4"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/vn_dp_10"
+                    android:paddingTop="@dimen/vn_dp_4"
+                    android:paddingEnd="@dimen/vn_dp_10"
+                    android:paddingBottom="@dimen/vn_dp_4"
+                    android:textColor="@color/vn_white"
+                    android:visibility="gone"
+                    app:drawableStartCompat="@drawable/vn_ic_global"
+                    app:drawableTint="@color/vn_white"
+                    app:layout_constraintBottom_toBottomOf="@id/tvTranslate"
+                    app:layout_constraintStart_toEndOf="@id/tvTranslate"
+                    app:layout_constraintTop_toTopOf="@id/tvTranslate" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </HorizontalScrollView>
+
+        <ScrollView
+            android:id="@+id/contentScroll"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/vn_dp_16"
+            android:background="@drawable/vn_bg_corner_top_24_white"
+            android:elevation="@dimen/vn_dp_10"
+            android:fillViewport="true"
+            android:padding="@dimen/vn_dp_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabsScroll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Transcript page -->
+                <EditText
+                    android:id="@+id/etNote"
+                    style="@style/VN.Text_LG_Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:gravity="start|top"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:textColor="@color/vn_neutral01"
+                    android:textColorHint="@color/vn_neutral05"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="LabelFor" />
+
+                <!-- AI Summary page: empty state -->
+                <ImageView
+                    android:id="@+id/ivSummaryThumb"
+                    android:layout_width="@dimen/vn_dp_40"
+                    android:layout_height="@dimen/vn_dp_40"
+                    android:layout_marginTop="@dimen/vn_dp_36"
+                    android:contentDescription="@null"
+                    android:src="@drawable/vn_img_thumb_ai_summary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvGenerateSummary"
+                    style="@style/VN.Text_LG_SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/vn_dp_8"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/vn_generate_ai_summary"
+                    android:textColor="@color/vn_neutral02"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivSummaryThumb" />
+
+                <TextView
+                    android:id="@+id/tvSummarize"
+                    style="@style/VN.Text_MD_SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/vn_dp_24"
+                    android:background="@drawable/vn_bg_gradient_btn_summary"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/vn_dp_50"
+                    android:paddingTop="@dimen/vn_dp_14"
+                    android:paddingEnd="@dimen/vn_dp_50"
+                    android:paddingBottom="@dimen/vn_dp_14"
+                    android:text="@string/vn_summarize"
+                    android:textColor="@color/vn_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvGenerateSummary" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupSummaryEmpty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="ivSummaryThumb,tvGenerateSummary,tvSummarize" />
+
+                <!-- AI Summary page: result -->
+                <TextView
+                    android:id="@+id/tvSummaryContent"
+                    style="@style/VN.Text_LG_Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:includeFontPadding="false"
+                    android:padding="@dimen/vn_dp_16"
+                    android:textColor="@color/vn_neutral01"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvRegenerateSummary"
+                    style="@style/VN.Text_MD_SemiBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vn_dp_20"
+                    android:layout_marginTop="@dimen/vn_dp_24"
+                    android:layout_marginEnd="@dimen/vn_dp_20"
+                    android:layout_marginBottom="@dimen/vn_dp_6"
+                    android:background="@drawable/vn_bg_gradient_btn_summary"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingTop="@dimen/vn_dp_14"
+                    android:paddingBottom="@dimen/vn_dp_14"
+                    android:text="@string/vn_regenerate"
+                    android:textColor="@color/vn_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvSummaryContent" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupSummaryContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tvSummaryContent,tvRegenerateSummary" />
+
+                <!-- Translate page: empty state -->
+                <ImageView
+                    android:id="@+id/ivTranslateThumb"
+                    android:layout_width="@dimen/vn_dp_40"
+                    android:layout_height="@dimen/vn_dp_40"
+                    android:layout_marginTop="@dimen/vn_dp_10"
+                    android:contentDescription="@null"
+                    android:src="@drawable/vn_img_thumb_translate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTranslateHint"
+                    style="@style/VN.Text_MD_Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vn_dp_72"
+                    android:layout_marginTop="@dimen/vn_dp_16"
+                    android:layout_marginEnd="@dimen/vn_dp_72"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/vn_select_a_language_to_translate"
+                    android:textColor="@color/vn_neutral02"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivTranslateThumb" />
+
+                <TextView
+                    android:id="@+id/tvLanguage"
+                    style="@style/VN.Text_MD_Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vn_dp_86"
+                    android:layout_marginTop="@dimen/vn_dp_16"
+                    android:layout_marginEnd="@dimen/vn_dp_86"
+                    android:background="@drawable/vn_bg_radius_1000_stroke_primary01"
+                    android:drawablePadding="@dimen/vn_dp_8"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:padding="@dimen/vn_dp_8"
+                    android:textColor="@color/vn_neutral01"
+                    app:drawableEndCompat="@drawable/vn_ic_arrow_down"
+                    app:drawableStartCompat="@drawable/vn_ic_global"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTranslateHint" />
+
+                <TextView
+                    android:id="@+id/btnTranslate"
+                    style="@style/VN.Text_MD_SemiBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/vn_dp_24"
+                    android:background="@drawable/vn_bg_gradient_btn_summary"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingTop="@dimen/vn_dp_14"
+                    android:paddingBottom="@dimen/vn_dp_14"
+                    android:text="@string/vn_translate"
+                    android:textColor="@color/vn_white"
+                    app:layout_constraintEnd_toEndOf="@id/tvLanguage"
+                    app:layout_constraintStart_toStartOf="@id/tvLanguage"
+                    app:layout_constraintTop_toBottomOf="@id/tvLanguage" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/groupTranslateEmpty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="ivTranslateThumb,tvTranslateHint,tvLanguage,btnTranslate" />
+
+                <!-- Translate page: result -->
+                <TextView
+                    android:id="@+id/tvTranslateContent"
+                    style="@style/VN.Text_LG_Regular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:includeFontPadding="false"
+                    android:padding="@dimen/vn_dp_16"
+                    android:textColor="@color/vn_neutral01"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llLoadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/vn_black_70"
+        android:clickable="true"
+        android:elevation="@dimen/vn_dp_12"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressLoading"
+            android:layout_width="@dimen/vn_dp_50"
+            android:layout_height="@dimen/vn_dp_50"
+            android:indeterminate="true"
+            app:indicatorColor="@color/vn_white"
+            app:layout_constraintBottom_toTopOf="@id/tvLoading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tvLoading"
+            style="@style/VN.Text_LG_Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_24"
+            android:layout_marginTop="@dimen/vn_dp_12"
+            android:layout_marginEnd="@dimen/vn_dp_24"
+            android:gravity="center"
+            android:textColor="@color/vn_neutral09"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressLoading" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

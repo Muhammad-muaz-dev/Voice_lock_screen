@@ -11,7 +11,9 @@ data class VoiceNoteItem(
     val transcript: String,
     val summary: String,
     val createdAt: Long,
-    val durationSec: Int
+    val durationSec: Int,
+    val translation: String = "",
+    val translateLanguage: String = ""
 )
 
 object VoiceLockFeatureStore {
@@ -25,6 +27,8 @@ object VoiceLockFeatureStore {
     private const val KEY_TRIES = "voice_note_tries"
     private const val KEY_NOTIF_ASKED = "notif_asked"
     private const val DEFAULT_TRIES = 3
+    private const val KEY_SUMMARY_TIP = "voice_note_summary_tip_shown"
+    private const val KEY_TRANSLATE_LANGUAGE = "voice_note_translate_language"
 
     fun cameraPhrase(context: Context) =
         prefs(context).getString(KEY_CAMERA_PHRASE, "open camera").orEmpty()
@@ -90,7 +94,9 @@ object VoiceLockFeatureStore {
                 transcript = obj.getString("transcript"),
                 summary = obj.getString("summary"),
                 createdAt = obj.getLong("createdAt"),
-                durationSec = obj.optInt("durationSec")
+                durationSec = obj.optInt("durationSec"),
+                translation = obj.optString("translation", ""),
+                translateLanguage = obj.optString("translateLanguage", "")
             )
         }.sortedByDescending { it.createdAt }
     }
@@ -99,6 +105,30 @@ object VoiceLockFeatureStore {
         val list = notes(context).toMutableList()
         list.add(0, note)
         writeNotes(context, list)
+    }
+
+    fun note(context: Context, id: Long): VoiceNoteItem? = notes(context).firstOrNull { it.id == id }
+
+    fun updateNote(context: Context, note: VoiceNoteItem) {
+        val list = notes(context).map { if (it.id == note.id) note else it }
+        writeNotes(context, list)
+    }
+
+    fun deleteNote(context: Context, id: Long) {
+        writeNotes(context, notes(context).filterNot { it.id == id })
+    }
+
+    fun isSummaryTipShown(context: Context) = prefs(context).getBoolean(KEY_SUMMARY_TIP, false)
+
+    fun setSummaryTipShown(context: Context) {
+        prefs(context).edit().putBoolean(KEY_SUMMARY_TIP, true).apply()
+    }
+
+    fun translateLanguage(context: Context): String =
+        prefs(context).getString(KEY_TRANSLATE_LANGUAGE, "en").orEmpty().ifBlank { "en" }
+
+    fun saveTranslateLanguage(context: Context, tag: String) {
+        prefs(context).edit().putString(KEY_TRANSLATE_LANGUAGE, tag).apply()
     }
 
     fun quoteForTopic(topic: String): String {
@@ -141,6 +171,8 @@ object VoiceLockFeatureStore {
                     .put("summary", note.summary)
                     .put("createdAt", note.createdAt)
                     .put("durationSec", note.durationSec)
+                    .put("translation", note.translation)
+                    .put("translateLanguage", note.translateLanguage)
             )
         }
         prefs(context).edit().putString(KEY_NOTES, array.toString()).apply()

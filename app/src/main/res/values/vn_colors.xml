@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AI Voice Notes palette (reference layout, our violet colours). -->
+<resources>
+    <color name="vn_black_70">#b3000000</color>
+    <color name="vn_colorfae2">#fffee2e2</color>
+    <color name="vn_colorfff1f0">#fffef2f2</color>
+    <color name="vn_neutral01">#ff171829</color>
+    <color name="vn_neutral02">#ff363845</color>
+    <color name="vn_neutral03">#ff4c5061</color>
+    <color name="vn_neutral05">#ff74768a</color>
+    <color name="vn_neutral07">#ffb5b7c5</color>
+    <color name="vn_neutral08">#ffd1d3db</color>
+    <color name="vn_neutral09">#ffe6e8ef</color>
+    <color name="vn_neutral10">#fff7f8fc</color>
+    <color name="vn_primary01">#ff635bff</color>
+    <color name="vn_primary02">#ff5047e2</color>
+    <color name="vn_primary07">#ffdcdaff</color>
+    <color name="vn_primary08">#ffedecff</color>
+    <color name="vn_primary09">#fff6f5ff</color>
+    <color name="vn_warning">#ffef4444</color>
+    <color name="vn_white">#ffffffff</color>
+</resources>

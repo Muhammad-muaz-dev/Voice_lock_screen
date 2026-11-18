@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/vn_bg_floating_dialog"
+    android:paddingStart="@dimen/vn_dp_24"
+    android:paddingTop="@dimen/vn_dp_24"
+    android:paddingEnd="@dimen/vn_dp_24"
+    android:paddingBottom="@dimen/vn_dp_42">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/VN.Headline_XSM_Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vn_note_name"
+        android:textColor="@color/vn_neutral01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etName"
+        style="@style/VN.Text_MD_Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vn_dp_16"
+        android:background="@drawable/vn_bg_radius_12_stroke_neutral08"
+        android:hint="@string/vn_new_note"
+        android:importantForAutofill="no"
+        android:inputType="textCapSentences"
+        android:maxLength="100"
+        android:paddingStart="@dimen/vn_dp_12"
+        android:paddingTop="@dimen/vn_dp_16"
+        android:paddingEnd="@dimen/vn_dp_12"
+        android:paddingBottom="@dimen/vn_dp_16"
+        android:singleLine="true"
+        android:textColor="@color/vn_neutral01"
+        android:textColorHint="@color/vn_neutral05"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:ignore="LabelFor" />
+
+    <TextView
+        android:id="@+id/tvSave"
+        style="@style/VN.Text_MD_Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vn_dp_38"
+        android:background="@drawable/vn_bg_radius_100_primary01"
+        android:gravity="center"
+        android:paddingTop="@dimen/vn_dp_14"
+        android:paddingBottom="@dimen/vn_dp_14"
+        android:text="@string/vn_save"
+        android:textColor="@color/vn_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etName" />
+</androidx.constraintlayout.widget.ConstraintLayout>

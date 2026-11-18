@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:paddingTop="@dimen/vn_dp_50">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/vn_bg_bottom_sheet_dialog"
+        android:paddingBottom="@dimen/vn_dp_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textTitle"
+            style="@style/VN.Headline_XSM_Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_24"
+            android:layout_marginTop="@dimen/vn_dp_60"
+            android:layout_marginEnd="@dimen/vn_dp_24"
+            android:gravity="center"
+            android:text="@string/vn_delete_voice_note"
+            android:textColor="@color/vn_neutral01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDesc"
+            style="@style/VN.Text_MD_Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_24"
+            android:layout_marginTop="@dimen/vn_dp_8"
+            android:layout_marginEnd="@dimen/vn_dp_24"
+            android:gravity="center"
+            android:text="@string/vn_delete_voice_note_desc"
+            android:textColor="@color/vn_neutral05"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textTitle" />
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:paddingTop="@dimen/vn_dp_14"
+            android:paddingBottom="@dimen/vn_dp_14"
+            style="@style/VN.Text_MD_Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_24"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="@dimen/vn_dp_8"
+            android:background="@drawable/vn_bg_radius_100_neutral10"
+            android:gravity="center"
+            android:text="@string/vn_cancel"
+            android:textColor="@color/vn_neutral03"
+            app:layout_constraintEnd_toStartOf="@id/tvOK"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDesc" />
+
+        <TextView
+            android:id="@+id/tvOK"
+            android:paddingTop="@dimen/vn_dp_14"
+            android:paddingBottom="@dimen/vn_dp_14"
+            style="@style/VN.Text_MD_Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_8"
+            android:layout_marginEnd="@dimen/vn_dp_24"
+            android:background="@drawable/vn_bg_radius_1000_warning"
+            android:gravity="center"
+            android:text="@string/vn_delete"
+            android:textColor="@color/vn_white"
+            app:layout_constraintBottom_toBottomOf="@id/tvCancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvCancel"
+            app:layout_constraintTop_toTopOf="@id/tvCancel" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/ivThumb"
+        android:layout_width="@dimen/vn_dp_98"
+        android:layout_height="@dimen/vn_dp_98"
+        android:contentDescription="@null"
+        android:src="@drawable/vn_ic_delete_thumb"
+        android:translationY="@dimen/vn_dp_50"
+        android:translationZ="@dimen/vn_dp_10"
+        app:layout_constraintBottom_toTopOf="@id/cl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

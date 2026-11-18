@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/vn_bg_radius_16_white_stroke_neutral08"
+    android:elevation="@dimen/vn_dp_10"
+    android:padding="@dimen/vn_dp_8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llEdit"
+        android:layout_width="@dimen/vn_dp_156"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/vn_dp_16"
+        android:paddingTop="@dimen/vn_dp_12"
+        android:paddingEnd="@dimen/vn_dp_16"
+        android:paddingBottom="@dimen/vn_dp_12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="@dimen/vn_dp_20"
+            android:layout_height="@dimen/vn_dp_20"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/vn_ic_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvEdit"
+            style="@style/VN.Text_MD_Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_8"
+            android:includeFontPadding="false"
+            android:text="@string/vn_edit"
+            android:textColor="@color/vn_neutral01"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivEdit"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llDelete"
+        android:layout_width="@dimen/vn_dp_156"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingStart="@dimen/vn_dp_16"
+        android:paddingTop="@dimen/vn_dp_12"
+        android:paddingEnd="@dimen/vn_dp_16"
+        android:paddingBottom="@dimen/vn_dp_12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llEdit">
+
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="@dimen/vn_dp_20"
+            android:layout_height="@dimen/vn_dp_20"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/vn_ic_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDelete"
+            style="@style/VN.Text_MD_Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_8"
+            android:includeFontPadding="false"
+            android:text="@string/vn_delete"
+            android:textColor="@color/vn_warning"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivDelete"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

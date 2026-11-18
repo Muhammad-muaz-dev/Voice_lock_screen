@@ -1,4 +1,85 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/spacing_sm" android:background="@drawable/bg_card_compact" android:orientation="vertical" android:padding="@dimen/spacing_md">
-    <TextView android:id="@+id/tvNoteTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="@font/sora_bold" android:textColor="@color/text_white" android:textSize="@dimen/text_titleS" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
-    <TextView android:id="@+id/tvNoteSummary" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xs" android:textColor="@color/text_muted_sub" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:textSize="@dimen/text_bodyM" android:lineHeight="20sp" app:lineHeight="20sp" />
-</LinearLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/vn_bg_radius_12_stroke_neutral09"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="@dimen/vn_dp_8">
+
+    <ImageView
+        android:id="@+id/ivThumb"
+        android:layout_width="@dimen/vn_dp_66"
+        android:layout_height="@dimen/vn_dp_74"
+        android:background="@drawable/vn_bg_radius_8_primary09"
+        android:contentDescription="@null"
+        android:paddingStart="@dimen/vn_dp_8"
+        android:paddingTop="@dimen/vn_dp_12"
+        android:paddingEnd="@dimen/vn_dp_8"
+        android:paddingBottom="@dimen/vn_dp_12"
+        android:src="@drawable/vn_ic_thumb_note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowTexts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_8"
+        android:layout_marginEnd="@dimen/vn_dp_8"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="tvName,tvDate"
+        app:flow_verticalGap="@dimen/vn_dp_4"
+        app:flow_verticalStyle="packed"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivSummary"
+        app:layout_constraintStart_toEndOf="@id/ivThumb"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvName"
+        style="@style/VN.Text_LG_Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="1"
+        android:textColor="@color/vn_neutral01" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        style="@style/VN.Text_SM_Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textColor="@color/vn_neutral05" />
+
+    <ImageView
+        android:id="@+id/ivSummary"
+        android:layout_width="@dimen/vn_dp_28"
+        android:layout_height="@dimen/vn_dp_28"
+        android:layout_marginEnd="@dimen/vn_dp_4"
+        android:background="@drawable/vn_bg_radius_100_primary08"
+        android:contentDescription="@string/vn_ai_summary"
+        android:paddingStart="@dimen/vn_dp_7"
+        android:paddingTop="@dimen/vn_dp_4"
+        android:paddingEnd="@dimen/vn_dp_7"
+        android:paddingBottom="@dimen/vn_dp_4"
+        android:src="@drawable/vn_ic_ai_summary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivSetting"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivSetting"
+        android:layout_width="@dimen/vn_dp_28"
+        android:layout_height="@dimen/vn_dp_28"
+        android:background="@drawable/vn_bg_radius_100_neutral10"
+        android:contentDescription="@string/vn_more_options"
+        android:padding="@dimen/vn_dp_6"
+        android:src="@drawable/vn_ic_setting_note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

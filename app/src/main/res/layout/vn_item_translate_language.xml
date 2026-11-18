@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/vn_bg_language_item"
+    android:paddingStart="@dimen/vn_dp_20"
+    android:paddingTop="@dimen/vn_dp_12"
+    android:paddingEnd="@dimen/vn_dp_12"
+    android:paddingBottom="@dimen/vn_dp_12">
+
+    <TextView
+        android:id="@+id/tvLanguage"
+        style="@style/VN.Text_LG_Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/vn_neutral03"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivCheckBox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivCheckBox"
+        android:layout_width="@dimen/vn_dp_24"
+        android:layout_height="@dimen/vn_dp_24"
+        android:contentDescription="@null"
+        android:src="@drawable/vn_ic_check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

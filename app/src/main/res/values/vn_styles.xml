@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reference text roles for the AI Voice Notes screens (Be Vietnam Pro, width-scaled sizes). -->
+<resources>
+    <style name="VN" />
+
+    <style name="VN.Headline_XSM_Medium">
+        <item name="android:textSize">@dimen/vn_sp_20</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Title_Large">
+        <item name="android:textSize">@dimen/vn_sp_20</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Title_Small">
+        <item name="android:textSize">@dimen/vn_sp_14</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_LG_SemiBold">
+        <item name="android:textSize">@dimen/vn_sp_16</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_semibold</item>
+        <item name="fontFamily">@font/vn_bevietnampro_semibold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_LG_Medium">
+        <item name="android:textSize">@dimen/vn_sp_16</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_LG_Regular">
+        <item name="android:textSize">@dimen/vn_sp_16</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_regular</item>
+        <item name="fontFamily">@font/vn_bevietnampro_regular</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_MD_Medium">
+        <item name="android:textSize">@dimen/vn_sp_14</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_MD_SemiBold">
+        <item name="android:textSize">@dimen/vn_sp_14</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_semibold</item>
+        <item name="fontFamily">@font/vn_bevietnampro_semibold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_MD_Regular">
+        <item name="android:textSize">@dimen/vn_sp_14</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_regular</item>
+        <item name="fontFamily">@font/vn_bevietnampro_regular</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_SM_Regular">
+        <item name="android:textSize">@dimen/vn_sp_12</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_regular</item>
+        <item name="fontFamily">@font/vn_bevietnampro_regular</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_SM_Medium">
+        <item name="android:textSize">@dimen/vn_sp_12</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/vn_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/vn_fade_out</item>
+    </style>
+    <style name="VN.BottomSheet" parent="Theme.Material3.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/VN.BottomSheet.Modal</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:navigationBarColor">@color/vn_white</item>
+    </style>
+    <style name="VN.BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="shapeAppearance">@null</item>
+    </style>
+    <style name="VN.Dialog" parent="Theme.Material3.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/VN.DialogAnimation</item>
+    </style>
+</resources>

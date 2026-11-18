@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvTooltip"
+        style="@style/VN.Text_SM_Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/vn_bg_tooltip"
+        android:paddingStart="@dimen/vn_dp_12"
+        android:paddingTop="@dimen/vn_dp_8"
+        android:paddingEnd="@dimen/vn_dp_12"
+        android:paddingBottom="@dimen/vn_dp_8"
+        android:text="@string/vn_ai_summarizes_your_note_here"
+        android:textColor="@color/vn_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivArrow"
+        android:layout_width="@dimen/vn_dp_14"
+        android:layout_height="@dimen/vn_dp_7"
+        android:contentDescription="@null"
+        android:src="@drawable/vn_ic_tooltip_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTooltip" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,243 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/bg" android:paddingHorizontal="16dp" android:paddingBottom="16dp">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="56dp" android:gravity="center_vertical" android:orientation="horizontal">
-        <ImageButton android:id="@+id/btnBack" android:layout_width="44dp" android:layout_height="44dp" android:padding="12dp" android:background="@drawable/bg_header_circle_dark" android:src="@drawable/ic_pin_back" android:contentDescription="@string/back" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:fontFamily="@font/sora_semibold" android:textSize="@dimen/text_titleL" android:textColor="@color/textPrimary" android:text="@string/note_new_title" android:lineHeight="28sp" app:lineHeight="28sp" />
-    </LinearLayout>
-    <androidx.core.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingBottom="24dp">
-            <TextView android:id="@+id/btnLanguage" android:layout_width="wrap_content" android:layout_height="44dp" android:paddingHorizontal="24dp" android:gravity="center" android:text="English" android:textColor="@color/primarySoft" android:textSize="@dimen/text_buttonS" android:background="@drawable/bg_pill_outline" android:lineHeight="20sp" app:lineHeight="20sp" />
-            <TextView android:id="@+id/tvHint" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/note_language_hint" android:textSize="@dimen/text_bodyS" android:fontFamily="@font/sora_regular" android:textColor="@color/textSecondary" android:lineHeight="20sp" app:lineHeight="20sp" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:orientation="vertical" android:padding="16dp" android:background="@drawable/bg_card_dark">
-                <TextView android:id="@+id/tvTranscript" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/voice_phrase_placeholder" android:textSize="@dimen/text_bodyL" android:fontFamily="@font/sora_regular" android:textColor="@color/textPrimary" android:lineHeight="22sp" app:lineHeight="22sp" />
-                <TextView android:id="@+id/tvTimer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/timer_zero" android:textSize="@dimen/text_titleL" android:fontFamily="@font/sora_semibold" android:textColor="@color/textPrimary" android:lineHeight="28sp" app:lineHeight="28sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-    <TextView android:id="@+id/btnStart" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="@dimen/spacing_md" android:gravity="center" android:fontFamily="@font/sora_bold" android:textSize="@dimen/text_buttonL" android:textColor="@color/textPrimary" android:background="@drawable/bg_cta_gradient" android:text="@string/start" android:clickable="true" android:focusable="true" android:lineHeight="24sp" app:lineHeight="24sp" />
-</LinearLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- New Note / record screen: copy of the reference layout (ad slots removed). -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/vn_white"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.afterlogin.NoteRecordFragment">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="@dimen/vn_dp_36"
+        android:layout_height="@dimen/vn_dp_36"
+        android:layout_marginStart="@dimen/vn_dp_8"
+        android:layout_marginTop="@dimen/vn_dp_24"
+        android:contentDescription="@string/vn_back"
+        android:src="@drawable/vn_ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvName"
+        style="@style/VN.Headline_XSM_Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_8"
+        android:text="@string/vn_new_note"
+        android:textColor="@color/vn_neutral01"
+        app:layout_constraintBottom_toBottomOf="@id/ivBack"
+        app:layout_constraintStart_toEndOf="@id/ivBack"
+        app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+    <ImageView
+        android:id="@+id/ivEdit"
+        android:layout_width="@dimen/vn_dp_36"
+        android:layout_height="@dimen/vn_dp_36"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:background="@drawable/vn_bg_radius_1000_primary08"
+        android:contentDescription="@string/vn_edit"
+        android:padding="@dimen/vn_dp_8"
+        android:src="@drawable/vn_ic_edit"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+    <TextView
+        android:id="@+id/tvDone"
+        style="@style/VN.Text_MD_Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:background="@drawable/vn_bg_radius_1000_primary01"
+        android:paddingStart="@dimen/vn_dp_16"
+        android:paddingTop="@dimen/vn_dp_8"
+        android:paddingEnd="@dimen/vn_dp_16"
+        android:paddingBottom="@dimen/vn_dp_8"
+        android:text="@string/vn_done"
+        android:textColor="@color/vn_white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/vn_dp_16"
+        android:layout_marginTop="@dimen/vn_dp_16"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:layout_marginBottom="@dimen/vn_dp_58"
+        android:background="@drawable/vn_bg_radius_16_neutral10_for_create_note"
+        app:layout_constraintBottom_toTopOf="@id/tvRecordTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivBack">
+
+        <EditText
+            android:id="@+id/etRecorded"
+            style="@style/VN.Text_MD_Regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:enabled="false"
+            android:gravity="start|top"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine|textCapSentences"
+            android:paddingBottom="@dimen/vn_dp_16"
+            android:textColor="@color/vn_neutral01"
+            android:textColorHint="@color/vn_neutral05"
+            tools:ignore="LabelFor" />
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llChooseLanguage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_16"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:layout_marginBottom="@dimen/vn_dp_8"
+        android:background="@drawable/vn_bg_radius_1000_stroke_primary01"
+        app:layout_constraintBottom_toBottomOf="@id/scrollView"
+        app:layout_constraintEnd_toEndOf="@id/scrollView"
+        app:layout_constraintStart_toStartOf="@id/scrollView"
+        app:layout_constraintTop_toTopOf="@id/scrollView">
+
+        <ImageView
+            android:id="@+id/ivMicLanguage"
+            android:layout_width="@dimen/vn_dp_24"
+            android:layout_height="@dimen/vn_dp_24"
+            android:layout_marginEnd="@dimen/vn_dp_2"
+            android:contentDescription="@null"
+            android:src="@drawable/vn_ic_mic_language"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvSpeechLanguage"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSpeechLanguage"
+            style="@style/VN.Text_MD_Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/vn_neutral01"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivArrowLanguage"
+            app:layout_constraintStart_toEndOf="@id/ivMicLanguage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivArrowLanguage"
+            android:layout_width="@dimen/vn_dp_20"
+            android:layout_height="@dimen/vn_dp_20"
+            android:layout_marginEnd="@dimen/vn_dp_2"
+            android:contentDescription="@null"
+            android:src="@drawable/vn_ic_arrow_down"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvSpeechLanguage"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvChooseLanguageDesc"
+        style="@style/VN.Text_SM_Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_16"
+        android:layout_marginTop="@dimen/vn_dp_8"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:gravity="center"
+        android:text="@string/vn_choose_language_record_note_desc"
+        android:textColor="@color/vn_neutral05"
+        app:layout_constraintEnd_toEndOf="@id/scrollView"
+        app:layout_constraintStart_toStartOf="@id/scrollView"
+        app:layout_constraintTop_toBottomOf="@id/llChooseLanguage" />
+
+    <TextView
+        android:id="@+id/tvNoVoiceDetected"
+        style="@style/VN.Title_Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/vn_dp_2"
+        android:background="@drawable/vn_bg_radius_16_colorfff1f0"
+        android:paddingStart="@dimen/vn_dp_16"
+        android:paddingTop="@dimen/vn_dp_12"
+        android:paddingEnd="@dimen/vn_dp_16"
+        android:paddingBottom="@dimen/vn_dp_12"
+        android:text="@string/vn_cant_detect_your_voice"
+        android:textColor="@color/vn_warning"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/tvRecordTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRecordTime"
+        style="@style/VN.Text_MD_SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/vn_dp_12"
+        android:text="@string/vn_timer_zero"
+        android:textColor="@color/vn_neutral01"
+        app:layout_constraintBottom_toTopOf="@id/tvRecord"
+        app:layout_constraintEnd_toEndOf="@id/tvRecord"
+        app:layout_constraintStart_toStartOf="@id/tvRecord" />
+
+    <TextView
+        android:id="@+id/tvRecord"
+        style="@style/VN.Text_LG_SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/vn_dp_48"
+        android:background="@drawable/vn_bg_radius_1000_primary01"
+        android:paddingStart="@dimen/vn_dp_50"
+        android:paddingTop="@dimen/vn_dp_12"
+        android:paddingEnd="@dimen/vn_dp_50"
+        android:paddingBottom="@dimen/vn_dp_12"
+        android:text="@string/vn_start"
+        android:textColor="@color/vn_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvContinue"
+        style="@style/VN.Text_LG_SemiBold"
+        android:layout_width="@dimen/vn_dp_140"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_16"
+        android:layout_marginBottom="@dimen/vn_dp_48"
+        android:background="@drawable/vn_bg_radius_1000_primary08"
+        android:gravity="center"
+        android:paddingTop="@dimen/vn_dp_12"
+        android:paddingBottom="@dimen/vn_dp_12"
+        android:text="@string/vn_continue"
+        android:textColor="@color/vn_primary02"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSave"
+        style="@style/VN.Text_LG_SemiBold"
+        android:layout_width="@dimen/vn_dp_140"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:layout_marginBottom="@dimen/vn_dp_48"
+        android:background="@drawable/vn_bg_radius_1000_primary01"
+        android:gravity="center"
+        android:paddingTop="@dimen/vn_dp_12"
+        android:paddingBottom="@dimen/vn_dp_12"
+        android:text="@string/vn_save"
+        android:textColor="@color/vn_white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

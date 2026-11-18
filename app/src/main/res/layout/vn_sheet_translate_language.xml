@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/vn_bg_bottom_sheet_dialog"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="@dimen/vn_dp_36"
+        android:layout_height="@dimen/vn_dp_36"
+        android:layout_marginStart="@dimen/vn_dp_8"
+        android:layout_marginTop="@dimen/vn_dp_24"
+        android:contentDescription="@string/vn_close"
+        android:padding="@dimen/vn_dp_8"
+        android:src="@drawable/vn_ic_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/VN.Headline_XSM_Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_8"
+        android:text="@string/vn_choose_your_language"
+        android:textColor="@color/vn_neutral01"
+        app:layout_constraintBottom_toBottomOf="@id/ivClose"
+        app:layout_constraintStart_toEndOf="@id/ivClose"
+        app:layout_constraintTop_toTopOf="@id/ivClose" />
+
+    <EditText
+        android:id="@+id/etSearch"
+        style="@style/VN.Text_LG_Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_16"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:background="@drawable/vn_bg_radius_1000_stroke_neutral07"
+        android:drawablePadding="@dimen/vn_dp_8"
+        android:hint="@string/vn_search_languages"
+        android:imeOptions="actionSearch"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:padding="@dimen/vn_dp_12"
+        android:singleLine="true"
+        android:textColor="@color/vn_neutral03"
+        android:textColorHint="@color/vn_neutral05"
+        app:drawableStartCompat="@drawable/vn_ic_search"
+        app:drawableTint="@color/vn_neutral02"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivClose" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvLanguage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/vn_dp_16"
+        android:layout_marginTop="@dimen/vn_dp_12"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:layout_marginBottom="@dimen/vn_dp_8"
+        app:layout_constraintBottom_toTopOf="@id/tvApply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearch" />
+
+    <TextView
+        android:id="@+id/tvNoLanguage"
+        style="@style/VN.Text_LG_Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vn_no_languages_found"
+        android:textColor="@color/vn_neutral02"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/tvNoLanguageDesc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/rcvLanguage"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tvNoLanguageDesc"
+        style="@style/VN.Text_MD_Regular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vn_try_different_keyword"
+        android:textColor="@color/vn_neutral05"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/rcvLanguage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNoLanguage" />
+
+    <TextView
+        android:id="@+id/tvApply"
+        style="@style/VN.Text_LG_SemiBold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_16"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:layout_marginBottom="@dimen/vn_dp_42"
+        android:background="@drawable/vn_bg_gradient_btn_summary"
+        android:gravity="center"
+        android:paddingTop="@dimen/vn_dp_14"
+        android:paddingBottom="@dimen/vn_dp_14"
+        android:text="@string/vn_apply"
+        android:textColor="@color/vn_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
