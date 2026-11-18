@@ -73,7 +73,8 @@ class SecurityQuestionFragment : BaseFragment<FragmentSecurityQuestionBinding>(F
             val selected = items[position] == question
             holder.row.tvQuestion.text = items[position]
             holder.row.imgRadio.setImageResource(if (selected) R.drawable.ic_question_radio_on else R.drawable.ic_question_radio_off)
-            holder.row.root.setBackgroundResource(if (selected) R.drawable.bg_row_language_selected else R.drawable.bg_row_language)
+            // Light rows (reference style): neutral10 surface, violet stroke when picked.
+            holder.row.root.setBackgroundResource(if (selected) R.drawable.vn_bg_radius_16_stroke_primary01 else R.drawable.vn_bg_radius_16_neutral10)
             holder.row.root.setOnClickListener { select(items[position]) }
         }
     }

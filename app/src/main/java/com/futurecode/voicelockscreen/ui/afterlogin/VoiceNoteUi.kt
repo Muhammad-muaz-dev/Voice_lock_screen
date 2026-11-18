@@ -12,7 +12,14 @@ import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.NavOptions
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +30,12 @@ import com.futurecode.voicelockscreen.databinding.VnItemTranslateLanguageBinding
 import com.futurecode.voicelockscreen.databinding.VnSheetDeleteNoteBinding
 import com.futurecode.voicelockscreen.databinding.VnSheetMicAccessBinding
 import com.futurecode.voicelockscreen.databinding.VnSheetTranslateLanguageBinding
+import com.futurecode.voicelockscreen.databinding.VnSheetRateBinding
+import com.futurecode.voicelockscreen.databinding.VnSheetSpeechLanguageBinding
+import com.futurecode.voicelockscreen.databinding.VnItemSpeechLanguageBinding
 import com.futurecode.voicelockscreen.databinding.VnToastBinding
+import com.futurecode.voicelockscreen.utils.NoteTranslateLanguages
+import com.futurecode.voicelockscreen.utils.VoiceLanguagePicker
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.text.SimpleDateFormat
@@ -32,6 +44,28 @@ import java.util.Locale
 
 /** Shared pieces of the AI Voice Notes screens (reference copy). */
 object VoiceNoteUi {
+    /**
+     * The host activity paints white status-bar icons for the dark Home screen. These screens are light
+     * (as in the reference), so they switch to dark icons while visible and put the previous look back on leave.
+     */
+    fun lightStatusBar(fragment: Fragment) {
+        fragment.viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
+            private var previous: Boolean? = null
+            override fun onResume(owner: LifecycleOwner) {
+                val window = fragment.activity?.window ?: return
+                val controller = WindowCompat.getInsetsController(window, window.decorView)
+                if (previous == null) previous = controller.isAppearanceLightStatusBars
+                controller.isAppearanceLightStatusBars = true
+            }
+
+            override fun onPause(owner: LifecycleOwner) {
+                val window = fragment.activity?.window ?: return
+                previous?.let { WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = it }
+                previous = null
+            }
+        })
+    }
+
 
     /** Reference screen transition: 300 ms slide, pop slides back. */
     val slideNavOptions: NavOptions
@@ -68,24 +102,49 @@ object VoiceNoteUi {
     fun errorToast(context: Context, @StringRes message: Int) =
         toast(context, message, R.drawable.vn_ic_close_circle)
 
-    private fun transparentSheet(context: Context, root: View, fullScreen: Boolean = false): BottomSheetDialog {
+    /**
+     * Bottom sheet that hugs its content like the reference. The sheet itself is transparent and gets no
+     * system-bar padding (see VN.BottomSheet.Modal); the nav-bar inset is added once, to the white surface
+     * [inset], so the white runs behind the gesture bar instead of leaving a gap (edge-to-edge on Android 15+).
+     */
+    private fun transparentSheet(
+        context: Context,
+        root: View,
+        inset: View = root,
+        fullScreen: Boolean = false
+    ): BottomSheetDialog {
         val dialog = BottomSheetDialog(context, R.style.VN_BottomSheet)
         dialog.setContentView(root)
+        val basePadding = inset.paddingBottom
+        ViewCompat.setOnApplyWindowInsetsListener(inset) { v, insets ->
+            val nav = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            v.updatePadding(bottom = basePadding + nav)
+            insets
+        }
         dialog.setOnShowListener {
             val sheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             sheet?.setBackgroundResource(android.R.color.transparent)
             if (fullScreen && sheet != null) {
-                sheet.layoutParams = sheet.layoutParams.apply { height = ViewGroup.LayoutParams.MATCH_PARENT }
+                // Edge-to-edge: the sheet is placed below the status bar, so MATCH_PARENT would push the
+                // bottom (Apply button + its 42dp margin) under the screen edge. Size it to the space left.
+                val parent = sheet.parent as View
+                val top = ViewCompat.getRootWindowInsets(parent)
+                    ?.getInsets(WindowInsetsCompat.Type.statusBars())?.top ?: 0
+                val height = parent.height - top
+                sheet.layoutParams = sheet.layoutParams.apply {
+                    this.height = if (height > 0) height else ViewGroup.LayoutParams.MATCH_PARENT
+                }
             }
-            dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            ViewCompat.requestApplyInsets(inset)
             dialog.behavior.skipCollapsed = true
+            dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
         return dialog
     }
 
     fun showMicAccess(context: Context, onOk: () -> Unit, onCancel: () -> Unit = {}) {
         val binding = VnSheetMicAccessBinding.inflate(LayoutInflater.from(context))
-        val dialog = transparentSheet(context, binding.root)
+        val dialog = transparentSheet(context, binding.root, inset = binding.cl)
         binding.tvCancel.setOnClickListener { dialog.dismiss(); onCancel() }
         binding.tvOK.setOnClickListener { dialog.dismiss(); onOk() }
         dialog.show()
@@ -93,9 +152,18 @@ object VoiceNoteUi {
 
     fun showDeleteNote(context: Context, onDelete: () -> Unit) {
         val binding = VnSheetDeleteNoteBinding.inflate(LayoutInflater.from(context))
-        val dialog = transparentSheet(context, binding.root)
+        val dialog = transparentSheet(context, binding.root, inset = binding.cl)
         binding.tvCancel.setOnClickListener { dialog.dismiss() }
         binding.tvOK.setOnClickListener { dialog.dismiss(); onDelete() }
+        dialog.show()
+    }
+
+    /** "Did you enjoy using our app?" sheet from the reference Settings > Rate Us. */
+    fun showRate(context: Context, onNotReally: () -> Unit, onLoveIt: () -> Unit) {
+        val binding = VnSheetRateBinding.inflate(LayoutInflater.from(context))
+        val dialog = transparentSheet(context, binding.root)
+        binding.tvNotReally.setOnClickListener { dialog.dismiss(); onNotReally() }
+        binding.tvLoveIt.setOnClickListener { dialog.dismiss(); onLoveIt() }
         dialog.show()
     }
 
@@ -156,25 +224,24 @@ object VoiceNoteUi {
     fun languageLabel(tag: String): String =
         Locale.forLanguageTag(tag).getDisplayName(Locale.ENGLISH).ifBlank { tag }
 
-    /** Full-screen "Choose Your Language" sheet with search and Apply. */
+    /** Full-screen "Choose Your Language" sheet (translate target) with search and Apply. */
     fun showTranslateLanguages(context: Context, selectedTag: String, onApply: (String) -> Unit) {
         val binding = VnSheetTranslateLanguageBinding.inflate(LayoutInflater.from(context))
         val dialog = transparentSheet(context, binding.root, fullScreen = true)
-        val all = translateLanguages()
+        val all = NoteTranslateLanguages.options()
         var selected = selectedTag
-        val adapter = LanguageAdapter { tag -> selected = tag }
+        val adapter = LanguageAdapter(LanguageAdapter.Style.TRANSLATE) { tag -> selected = tag }
         adapter.submit(all, selected)
         binding.rcvLanguage.layoutManager = LinearLayoutManager(context)
         binding.rcvLanguage.addItemDecoration(SpaceDecoration(context.resources.getDimensionPixelSize(R.dimen.vn_dp_12)))
         binding.rcvLanguage.adapter = adapter
+        all.indexOfFirst { it.first.equals(selected, true) }.takeIf { it > 0 }?.let { binding.rcvLanguage.scrollToPosition(it) }
         binding.etSearch.doAfterTextChanged { text ->
             val query = text?.toString()?.trim().orEmpty()
             val filtered = all.filter { it.second.contains(query, ignoreCase = true) }
             adapter.submit(filtered, selected)
-            val empty = filtered.isEmpty()
-            binding.rcvLanguage.isVisible = !empty
-            binding.tvNoLanguage.isVisible = empty
-            binding.tvNoLanguageDesc.isVisible = empty
+            binding.rcvLanguage.isVisible = filtered.isNotEmpty()
+            binding.llEmpty.isVisible = filtered.isEmpty()
         }
         binding.ivClose.setOnClickListener { dialog.dismiss() }
         binding.tvApply.setOnClickListener {
@@ -184,24 +251,53 @@ object VoiceNoteUi {
         dialog.show()
     }
 
-    private fun translateLanguages(): List<Pair<String, String>> {
-        val tags = listOf(
-            "en", "af", "sq", "ar", "bn", "be", "bg", "ca", "zh", "hr", "cs", "da", "nl", "eo", "et", "fil",
-            "fi", "fr", "gl", "ka", "de", "el", "gu", "he", "hi", "hu", "is", "id", "ga", "it", "ja", "kn",
-            "ko", "lv", "lt", "mk", "ms", "mt", "mr", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es",
-            "sw", "sv", "ta", "te", "th", "tr", "uk", "ur", "vi", "cy"
-        )
-        val english = tags.first()
-        val rest = tags.drop(1).map { it to languageLabel(it) }.sortedBy { it.second }
-        return listOf(english to languageLabel(english)) + rest
+    /** Full-screen speech-language sheet from the reference record screens; picking a row applies it. */
+    fun showSpeechLanguages(context: Context, onSelected: () -> Unit) {
+        val binding = VnSheetSpeechLanguageBinding.inflate(LayoutInflater.from(context))
+        val dialog = transparentSheet(context, binding.root, fullScreen = true)
+        val all = speechLanguages()
+        val current = VoiceLanguagePicker.selected(context)
+        val selected = all.firstOrNull { it.first.equals(current, true) }?.first
+            ?: all.firstOrNull { Locale.forLanguageTag(it.first).language == Locale.forLanguageTag(current).language }?.first
+            ?: current
+        val adapter = LanguageAdapter(LanguageAdapter.Style.SPEECH) { tag ->
+            VoiceLanguagePicker.save(context, tag)
+            dialog.dismiss()
+            onSelected()
+        }
+        adapter.submit(all, selected)
+        binding.rcvLanguage.layoutManager = LinearLayoutManager(context)
+        binding.rcvLanguage.adapter = adapter
+        all.indexOfFirst { it.first.equals(selected, true) }.takeIf { it > 0 }?.let { binding.rcvLanguage.scrollToPosition(it) }
+        binding.etSearch.doAfterTextChanged { text ->
+            val query = text?.toString()?.trim().orEmpty()
+            adapter.submit(all.filter { it.second.contains(query, ignoreCase = true) }, selected)
+        }
+        binding.ivClose.setOnClickListener { dialog.dismiss() }
+        dialog.show()
     }
 
-    private class LanguageAdapter(private val onSelect: (String) -> Unit) :
+    private fun speechLanguages(): List<Pair<String, String>> {
+        val locales = Locale.getAvailableLocales()
+            .filter { it.language.isNotBlank() && it.variant.isBlank() && it.script.isBlank() }
+            .map { it.toLanguageTag() to it.getDisplayName(Locale.ENGLISH) }
+            .filter { it.second.isNotBlank() }
+            .distinctBy { it.second }
+            .sortedBy { it.second }
+        val english = locales.firstOrNull { it.first == "en-US" } ?: ("en-US" to Locale.US.getDisplayName(Locale.ENGLISH))
+        return listOf(english) + locales.filter { it.first != english.first }
+    }
+
+    /** Rows of both language sheets. The background is set from code, as in the reference, so its 16 dp padding applies. */
+    private class LanguageAdapter(private val style: Style, private val onSelect: (String) -> Unit) :
         RecyclerView.Adapter<LanguageAdapter.Holder>() {
+        enum class Style { TRANSLATE, SPEECH }
+
         private var items: List<Pair<String, String>> = emptyList()
         private var selected: String = ""
 
-        class Holder(val row: VnItemTranslateLanguageBinding) : RecyclerView.ViewHolder(row.root)
+        class Holder(val root: View, val label: android.widget.TextView, val check: android.widget.ImageView) :
+            RecyclerView.ViewHolder(root)
 
         fun submit(list: List<Pair<String, String>>, selectedTag: String) {
             items = list
@@ -210,18 +306,32 @@ object VoiceNoteUi {
             notifyDataSetChanged()
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            Holder(VnItemTranslateLanguageBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+            val inflater = LayoutInflater.from(parent.context)
+            return if (style == Style.TRANSLATE) {
+                val row = VnItemTranslateLanguageBinding.inflate(inflater, parent, false)
+                Holder(row.root, row.tvLanguage, row.ivCheckBox)
+            } else {
+                val row = VnItemSpeechLanguageBinding.inflate(inflater, parent, false)
+                Holder(row.root, row.tvLanguage, row.ivCheckBox)
+            }
+        }
 
         override fun getItemCount() = items.size
 
         override fun onBindViewHolder(holder: Holder, position: Int) {
             val (tag, label) = items[position]
             val isSelected = tag == selected
-            holder.row.tvLanguage.text = label
-            holder.row.root.isSelected = isSelected
-            holder.row.ivCheckBox.setImageResource(if (isSelected) R.drawable.vn_ic_checked else R.drawable.vn_ic_check)
-            holder.row.root.setOnClickListener {
+            holder.label.text = label
+            holder.check.setImageResource(if (isSelected) R.drawable.vn_ic_checked else R.drawable.vn_ic_check)
+            holder.root.setBackgroundResource(
+                if (isSelected) R.drawable.vn_bg_radius_16_stroke_primary01 else R.drawable.vn_bg_radius_16_neutral10
+            )
+            holder.root.setOnClickListener {
+                if (style == Style.SPEECH) {
+                    onSelect(tag)
+                    return@setOnClickListener
+                }
                 if (selected == tag) return@setOnClickListener
                 selected = tag
                 onSelect(tag)

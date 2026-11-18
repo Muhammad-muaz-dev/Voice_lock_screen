@@ -71,6 +71,14 @@ fun Window.setDarkStatusBarWithWhiteIcons(@ColorInt backgroundColor: Int) {
 }
 
 
+/** Light-scheme screens: light status bar background with dark icons. */
+fun Window.setLightStatusBarWithDarkIcons(@ColorInt backgroundColor: Int) {
+    statusBarColor = backgroundColor
+    WindowCompat.setDecorFitsSystemWindows(this, true)
+    WindowCompat.getInsetsController(this, decorView).isAppearanceLightStatusBars = true
+}
+
+
 fun Context.getTimeBasedGreetingRes(): String {
     val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     val stringResId = when (hour) {

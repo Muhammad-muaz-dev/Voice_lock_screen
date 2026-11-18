@@ -6,19 +6,22 @@ import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentThemesBinding
-import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
+import com.futurecode.voicelockscreen.utils.ThemePreviewBinder
 import com.futurecode.voicelockscreen.utils.bindBottomTabs
 
+/** Themes tab: AI Quote card + Lock Screen Theme card (reference layout, no ad slot). */
 class ThemesFragment : BaseFragment<FragmentThemesBinding>(FragmentThemesBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindBottomTabs(binding.bottomNav, 1)
-        binding.tvQuotePreview.text = VoiceLockFeatureStore.lockQuote(requireContext())
+        ThemePreviewBinder.applySampleQuoteGradient(binding.tvSampleQuote)
         binding.ivSettings.setOnClickListener { findNavController().navigate(R.id.settingFragment) }
         binding.ivPremium.setOnClickListener { findNavController().navigate(R.id.premiumFragment) }
-        binding.btnMakeQuote.setOnClickListener { findNavController().navigate(R.id.aiQuoteFragment) }
-        binding.cardQuote.setOnClickListener { findNavController().navigate(R.id.aiQuoteFragment) }
-        binding.btnPickTheme.setOnClickListener { findNavController().navigate(R.id.seeAllthemesFragment) }
-        binding.cardTheme.setOnClickListener { findNavController().navigate(R.id.seeAllthemesFragment) }
+        val openQuote = View.OnClickListener { findNavController().navigate(R.id.aiQuoteFragment, null, VoiceNoteUi.slideNavOptions) }
+        binding.cardAiQuote.setOnClickListener(openQuote)
+        binding.btnAiQuoteNext.setOnClickListener(openQuote)
+        val openThemes = View.OnClickListener { findNavController().navigate(R.id.seeAllthemesFragment, null, VoiceNoteUi.slideNavOptions) }
+        binding.cardLockScreenTheme.setOnClickListener(openThemes)
+        binding.btnLockThemeNext.setOnClickListener(openThemes)
     }
 }

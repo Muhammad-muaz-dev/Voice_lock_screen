@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/vn_white" android:layout_width="match_parent" android:layout_height="match_parent"
+ 
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView android:scrollbars="none" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1.0">
+        <LinearLayout android:orientation="vertical" android:paddingBottom="@dimen/vn_dp_16" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_8">
+                <androidx.appcompat.widget.AppCompatImageView android:id="@+id/ivBack" android:layout_width="@dimen/vn_dp_36" android:layout_height="@dimen/vn_dp_36" android:src="@drawable/vn_ic_back" android:layout_marginStart="@dimen/vn_dp_8" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Headline_XSM_Medium" android:textColor="@color/vn_neutral01" android:id="@+id/tvTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/vn_text_step_1" android:includeFontPadding="false" android:layout_marginStart="@dimen/vn_dp_12" />
+            </LinearLayout>
+            <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginLeft="@dimen/vn_dp_16" android:layout_marginTop="@dimen/vn_dp_12" android:layout_marginRight="@dimen/vn_dp_16" android:layout_marginHorizontal="@dimen/vn_dp_16"   android:visibility="gone"/>
+            <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1.0">
+                <androidx.appcompat.widget.AppCompatImageView android:layout_gravity="center_horizontal" android:id="@+id/ivStep" android:layout_width="@dimen/vn_dp_133" android:layout_height="@dimen/vn_dp_18" android:layout_marginTop="@dimen/vn_dp_16" android:src="@drawable/vn_ic_step_12" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Headline_XSM_Medium" android:textColor="@color/vn_neutral01" android:layout_gravity="center_horizontal" android:id="@+id/tvCreateYourVoicePassword" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_16" android:layout_marginBottom="@dimen/vn_dp_16" android:text="@string/vn_your_voice_key" android:layout_marginVertical="@dimen/vn_dp_16" />
+                <androidx.appcompat.widget.AppCompatImageView android:layout_gravity="center_horizontal" android:layout_width="@dimen/vn_dp_42" android:layout_height="@dimen/vn_dp_42" android:src="@drawable/vn_ic_person_voice" />
+                <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Headline_SM_Medium" android:textColor="@color/vn_neutral01" android:gravity="center" android:id="@+id/tvRecorded" android:background="@drawable/vn_bg_voice_result" android:padding="@dimen/vn_dp_16" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/vn_dp_16" android:layout_marginTop="@dimen/vn_dp_12" android:layout_marginRight="@dimen/vn_dp_16" android:minHeight="@dimen/vn_dp_138" android:layout_marginHorizontal="@dimen/vn_dp_16" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout android:orientation="vertical" android:id="@+id/footerActions" android:paddingLeft="@dimen/vn_dp_16" android:paddingTop="@dimen/vn_dp_12" android:paddingRight="@dimen/vn_dp_16" android:paddingBottom="@dimen/vn_dp_12" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingHorizontal="@dimen/vn_dp_16">
+        <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Text_LG_SemiBold" android:textColor="@color/vn_white" android:gravity="center" android:id="@+id/btnContinue" android:background="@drawable/vn_bg_radius_100_primary01" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/vn_text_continue" />
+        <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Text_LG_SemiBold" android:textColor="@color/vn_primary02" android:gravity="center" android:id="@+id/btnRecordAgain" android:background="@drawable/vn_bg_radius_100_primary08" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_12" android:text="@string/vn_text_record_again" />
+    </LinearLayout>
+    <Space android:layout_width="match_parent" android:layout_height="0dp"   android:visibility="gone"/>
+</LinearLayout>

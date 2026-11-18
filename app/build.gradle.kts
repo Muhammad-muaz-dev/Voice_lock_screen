@@ -90,6 +90,9 @@ dependencies {
 
     // Lottie dependency
     implementation("com.airbnb.android:lottie:6.4.1")
+    // On-device note translation (ML Kit)
+    implementation(libs.mlkit.translate)
+    implementation(libs.mlkit.language.id)
 
     //glide
     implementation ("com.github.bumptech.glide:glide:5.0.7")

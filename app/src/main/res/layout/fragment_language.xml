@@ -26,7 +26,7 @@
         android:layout_marginTop="@dimen/spacing_sm" android:padding="@dimen/spacing_md"
         android:background="@drawable/bg_language_continue" android:foreground="?attr/selectableItemBackground"
         android:clickable="true" android:focusable="true" android:gravity="center"
-        android:fontFamily="@font/sora_bold" android:text="@string/continue_text" android:textColor="@color/textPrimary"
+        android:fontFamily="@font/sora_bold" android:text="@string/continue_text" android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

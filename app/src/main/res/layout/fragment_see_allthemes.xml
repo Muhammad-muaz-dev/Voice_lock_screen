@@ -1,6 +1,50 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/screen_bg_dark">
-    <ImageView android:id="@+id/ivBack" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_lg" android:padding="@dimen/spacing_xs" android:src="@drawable/ic_back_blue" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:tint="@color/primaryLight" />
-    <TextView android:id="@+id/tvTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_semibold" android:text="@string/theme" android:textColor="@color/text_white" android:textSize="@dimen/text_titleL" app:layout_constraintBottom_toBottomOf="@id/ivBack" app:layout_constraintStart_toEndOf="@+id/ivBack" android:paddingStart="@dimen/spacing_sm" app:layout_constraintTop_toTopOf="@id/ivBack" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvThemes" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="@dimen/spacing_lg" android:clipToPadding="false" android:paddingHorizontal="@dimen/spacing_lg" android:paddingBottom="@dimen/spacing_lg" app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@id/btnUpload" app:spanCount="2" tools:listitem="@layout/item_theme" />
-    <TextView android:id="@+id/btnUpload" android:layout_width="0dp" android:layout_height="50dp" android:layout_margin="16dp" android:text="@string/upload_picture" android:textColor="@color/textPrimary" android:textSize="@dimen/text_buttonL" android:fontFamily="@font/sora_bold" android:gravity="center" android:background="@drawable/bg_cta_gradient" app:layout_constraintTop_toBottomOf="@id/ivBack" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Theme Screen Lock: copy of the reference fragment_all_theme (ad slots removed), light scheme. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/vn_white"
+    android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="@dimen/vn_dp_36"
+        android:layout_height="@dimen/vn_dp_36"
+        android:layout_marginStart="@dimen/vn_dp_12"
+        android:layout_marginTop="@dimen/vn_dp_8"
+        android:contentDescription="@string/back"
+        android:src="@drawable/vn_ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/VN.Headline_XSM_Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/vn_dp_12"
+        android:layout_marginEnd="@dimen/vn_dp_16"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:text="@string/vn_text_theme_screen_lock"
+        android:textColor="@color/vn_neutral01"
+        app:layout_constraintBottom_toBottomOf="@id/ivBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivBack"
+        app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvThemes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/vn_dp_16"
+        android:layout_marginTop="@dimen/vn_dp_12"
+        android:layout_marginBottom="@dimen/vn_dp_6"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivBack" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -55,6 +55,7 @@ class NoteRecordFragment : BaseFragment<FragmentNoteRecordBinding>(FragmentNoteR
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        VoiceNoteUi.lightStatusBar(this)
         binding.tvSpeechLanguage.text = VoiceLanguagePicker.label(requireContext())
         setupActions()
         render()
@@ -63,7 +64,7 @@ class NoteRecordFragment : BaseFragment<FragmentNoteRecordBinding>(FragmentNoteR
     private fun setupActions() {
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
         binding.llChooseLanguage.setOnClickListener {
-            VoiceLanguagePicker.show(requireContext()) {
+            VoiceNoteUi.showSpeechLanguages(requireContext()) {
                 bindingOrNull?.tvSpeechLanguage?.text = VoiceLanguagePicker.label(requireContext())
             }
         }

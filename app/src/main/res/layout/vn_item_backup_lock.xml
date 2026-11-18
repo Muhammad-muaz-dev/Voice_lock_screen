@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat android:gravity="center_horizontal" android:orientation="vertical" android:background="@drawable/vn_bg_radius_16_primary09" android:paddingLeft="@dimen/vn_dp_4" android:paddingTop="@dimen/vn_dp_12" android:paddingRight="@dimen/vn_dp_4" android:paddingBottom="@dimen/vn_dp_12" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/vn_dp_4" android:paddingHorizontal="@dimen/vn_dp_4" android:paddingVertical="@dimen/vn_dp_12"
+ 
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:background="@drawable/vn_bg_backup_lock_thumb" android:layout_width="@dimen/vn_dp_56" android:layout_height="@dimen/vn_dp_56">
+        <androidx.appcompat.widget.AppCompatImageView android:layout_gravity="center" android:id="@+id/ivThumb" android:layout_width="@dimen/vn_dp_28" android:layout_height="@dimen/vn_dp_28" />
+    </FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Text_SM_SemiBold" android:textColor="@color/vn_neutral01" android:gravity="center" android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_8" android:maxLines="2" />
+</androidx.appcompat.widget.LinearLayoutCompat>

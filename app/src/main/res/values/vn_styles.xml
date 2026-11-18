@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Reference text roles for the AI Voice Notes screens (Be Vietnam Pro, width-scaled sizes). -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="VN" />
 
     <style name="VN.Headline_XSM_Medium">
@@ -73,17 +73,28 @@
         <item name="android:windowEnterAnimation">@anim/vn_fade_in</item>
         <item name="android:windowExitAnimation">@anim/vn_fade_out</item>
     </style>
+    <!-- Light-only sheet theme: force-dark off, edge-to-edge handled once (nav inset goes on our white surface). -->
     <style name="VN.BottomSheet" parent="Theme.Material3.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/VN.BottomSheet.Modal</item>
         <item name="android:windowIsFloating">false</item>
-        <item name="android:navigationBarColor">@color/vn_white</item>
+        <item name="enableEdgeToEdge">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:textColorPrimary">@color/vn_neutral01</item>
+        <item name="android:textColor">@color/vn_neutral01</item>
     </style>
     <style name="VN.BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="shapeAppearance">@null</item>
+        <item name="paddingBottomSystemWindowInsets">false</item>
+        <item name="paddingLeftSystemWindowInsets">false</item>
+        <item name="paddingRightSystemWindowInsets">false</item>
+        <item name="paddingTopSystemWindowInsets">false</item>
     </style>
     <style name="VN.Dialog" parent="Theme.Material3.Light.Dialog">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@style/VN.DialogAnimation</item>

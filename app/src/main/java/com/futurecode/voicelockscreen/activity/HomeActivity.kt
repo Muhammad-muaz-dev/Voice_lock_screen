@@ -3,6 +3,7 @@ package com.futurecode.voicelockscreen.activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.futurecode.voicelockscreen.R
@@ -30,6 +31,12 @@ class HomeActivity : BaseActivity() { // Assumed mapping, adjust if you inherit 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+        // Home keeps its existing white-icon status bar; every other (light) screen gets dark icons.
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
+                destination.id != R.id.homeFragment && destination.id != R.id.screenPreviewFragment &&
+                destination.id != R.id.themePreviewFragment && destination.id != R.id.customThemeFragment
+        }
         if (intent.getBooleanExtra(EXTRA_SHOW_LOCK_PREVIEW, false)) {
             AppLockState.requestLockAfterPhoneUnlock(this)
             binding.root.post {

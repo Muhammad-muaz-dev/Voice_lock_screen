@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AI Quote list header: copy of the reference item_quote_input. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/VN.Text_LG_SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vn_dp_8"
+        android:includeFontPadding="false"
+        android:text="@string/vn_th_your_quote"
+        android:textColor="@color/vn_neutral01" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutInput"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/vn_dp_156"
+        android:layout_marginTop="@dimen/vn_dp_12"
+        android:background="@drawable/vn_bg_radius_24_neutral10"
+        android:paddingHorizontal="@dimen/vn_dp_18"
+        android:paddingTop="@dimen/vn_dp_20"
+        android:paddingBottom="@dimen/vn_dp_18">
+
+        <EditText
+            android:id="@+id/etQuote"
+            style="@style/VN.Text_LG_Regular"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@null"
+            android:gravity="start|top"
+            android:hint="@string/vn_th_enter_quote_hint"
+            android:importantForAutofill="no"
+            android:includeFontPadding="false"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="80"
+            android:minHeight="0dp"
+            android:padding="0dp"
+            android:textColor="@color/vn_neutral01"
+            android:textColorHint="@color/vn_neutral06"
+            app:layout_constraintBottom_toTopOf="@id/tvCounter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCounter"
+            style="@style/VN.Text_SM_Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/vn_th_quote_counter_default"
+            android:textColor="@color/vn_neutral02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        style="@style/VN.Text_LG_SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vn_dp_12"
+        android:text="@string/vn_th_suggest_topic"
+        android:textColor="@color/vn_neutral01" />
+</LinearLayout>

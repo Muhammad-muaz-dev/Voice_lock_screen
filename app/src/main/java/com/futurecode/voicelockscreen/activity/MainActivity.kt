@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.databinding.ActivityMainBinding
-import com.futurecode.voicelockscreen.utils.setDarkStatusBarWithWhiteIcons
+import com.futurecode.voicelockscreen.utils.setLightStatusBarWithDarkIcons
 
 class MainActivity : BaseActivity() {
     private var navController: NavController? = null
@@ -22,8 +22,8 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         // Option A: Custom Dark Color Pass karein (Matching your screenshot)
-        val darkBackgroundColor = Color.parseColor("#0B141A") // Ya aapka dark theme color
-        window.setDarkStatusBarWithWhiteIcons(darkBackgroundColor)
+        // App is light-only: splash, language and onboarding use the light status bar with dark icons.
+        window.setLightStatusBarWithDarkIcons(getColor(R.color.bg))
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
         navController = navHostFragment!!.navController
 

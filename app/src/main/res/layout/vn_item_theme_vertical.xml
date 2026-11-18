@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Theme grid cell: copy of the reference item_theme_vertical (no ad / premium badge). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivTheme"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/vn_dp_260"
+        android:background="@color/vn_neutral09"
+        android:contentDescription="@string/preview"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/VN.RoundedImage_12" />
+</FrameLayout>

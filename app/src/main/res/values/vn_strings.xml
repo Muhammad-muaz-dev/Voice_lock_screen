@@ -55,4 +55,7 @@
     <string name="vn_summary_failed">Couldn\'t create a summary. Please try again.</string>
     <string name="vn_text_copied">Text copied successfully</string>
     <string name="vn_speech_not_available">Speech recognition is not available on this device!</string>
+    <string name="vn_backup_pin">PIN</string>
+    <string name="vn_backup_pattern">Pattern</string>
+    <string name="vn_backup_fingerprint">Fingerprint</string>
 </resources>

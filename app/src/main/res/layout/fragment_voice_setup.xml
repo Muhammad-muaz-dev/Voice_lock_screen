@@ -1,28 +1,21 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/bg" android:paddingHorizontal="16dp" android:paddingBottom="16dp">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="56dp" android:gravity="center_vertical" android:orientation="horizontal">
-        <ImageButton android:id="@+id/btnBack" android:layout_width="44dp" android:layout_height="44dp" android:padding="12dp" android:background="@drawable/bg_header_circle_dark" android:src="@drawable/ic_pin_back" android:contentDescription="@string/back" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:fontFamily="@font/sora_semibold" android:textSize="@dimen/text_titleL" android:textColor="@color/textPrimary" android:text="@string/voice_step_title" android:lineHeight="28sp" app:lineHeight="28sp" />
-    </LinearLayout>
-    <androidx.core.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingBottom="24dp">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="40dp" android:layout_marginTop="24dp" android:orientation="horizontal" android:gravity="center">
-                <View android:layout_width="20dp" android:layout_height="20dp" android:background="@drawable/bg_voice_step_active" />
-                <View android:layout_width="48dp" android:layout_height="2dp" android:background="@color/primaryLight" />
-                <View android:layout_width="16dp" android:layout_height="16dp" android:background="@drawable/bg_voice_step_inactive" />
-            </LinearLayout>
-            <TextView android:id="@+id/tvTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xxl" android:text="@string/voice_record_title" android:textSize="@dimen/text_titleS" android:fontFamily="@font/sora_semibold" android:textColor="@color/textPrimary" android:lineHeight="24sp" app:lineHeight="24sp" />
-            <TextView android:id="@+id/tvSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/voice_record_description" android:textSize="@dimen/text_bodyS" android:fontFamily="@font/sora_regular" android:textColor="@color/textSecondary" android:lineHeight="20sp" app:lineHeight="20sp" />
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:orientation="vertical" android:padding="16dp" android:background="@drawable/bg_voice_card">
-                <TextView android:id="@+id/tvRecorded" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/record_voice" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_regular" android:textColor="@color/primary" android:lineHeight="16sp" app:lineHeight="16sp" />
-                <TextView android:id="@+id/tvTimer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/timer_zero" android:textSize="@dimen/text_titleL" android:fontFamily="@font/sora_semibold" android:textColor="@color/textPrimary" android:lineHeight="28sp" app:lineHeight="28sp" />
-                <TextView android:id="@+id/tvPhrase" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/voice_phrase_placeholder" android:textSize="@dimen/text_bodyL" android:fontFamily="@font/sora_regular" android:textColor="@color/textPrimary" android:lineHeight="22sp" app:lineHeight="22sp" />
-                <TextView android:id="@+id/btnLanguage" android:layout_width="wrap_content" android:layout_height="44dp" android:layout_marginTop="24dp" android:paddingHorizontal="24dp" android:gravity="center" android:fontFamily="@font/sora_semibold" android:textSize="@dimen/text_buttonS" android:textColor="@color/primary" android:background="@drawable/bg_pill_outline" android:text="English" android:lineHeight="20sp" app:lineHeight="20sp" />
-                <ImageButton android:id="@+id/btnRecord" android:layout_width="57dp" android:layout_height="57dp" android:layout_gravity="center_horizontal" android:layout_marginTop="24dp" android:padding="16dp" android:src="@drawable/ic_preview_mic_white" android:background="@drawable/bg_cta_gradient" android:contentDescription="@string/record_voice" />
-                <TextView android:id="@+id/tvTapHint" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_md" android:text="@string/tap_to_record" android:textSize="@dimen/text_titleS" android:fontFamily="@font/sora_semibold" android:textColor="@color/textPrimary" android:lineHeight="24sp" app:lineHeight="24sp" />
-                <TextView android:id="@+id/tvLimit" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_xxl" android:text="@string/voice_time_limit" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_regular" android:textColor="@color/textSecondary" android:lineHeight="16sp" app:lineHeight="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-    <TextView android:id="@+id/btnRecordAgain" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="@dimen/spacing_md" android:gravity="center" android:fontFamily="@font/sora_bold" android:textSize="@dimen/text_buttonL" android:textColor="@color/primary" android:background="@drawable/bg_outline_button" android:text="@string/record_again" android:clickable="true" android:focusable="true" android:lineHeight="24sp" app:lineHeight="24sp" />
-    <TextView android:id="@+id/btnContinue" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="@dimen/spacing_md" android:gravity="center" android:fontFamily="@font/sora_bold" android:textSize="@dimen/text_buttonL" android:textColor="@color/text_white" android:background="@drawable/bg_cta_gradient" android:text="@string/continue_text" android:clickable="true" android:focusable="true" android:lineHeight="24sp" app:lineHeight="24sp" />
-</LinearLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Step 1 of the voice-lock setup, as in the reference: record -> "Your Voice Key" -> confirm twice. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/vn_white">
+
+    <include
+        android:id="@+id/record"
+        layout="@layout/vn_layout_voice_record" />
+
+    <include
+        android:id="@+id/result"
+        layout="@layout/vn_layout_voice_result"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/confirm"
+        layout="@layout/vn_layout_voice_confirm"
+        android:visibility="gone" />
+</FrameLayout>

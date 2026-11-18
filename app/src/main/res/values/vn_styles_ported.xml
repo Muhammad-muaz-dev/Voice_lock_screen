@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="VN.Headline_SM_Medium">
+        <item name="android:textSize">@dimen/vn_sp_24</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Label_Large">
+        <item name="android:textSize">@dimen/vn_sp_14</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Label_Small">
+        <item name="android:textSize">@dimen/vn_sp_11</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="fontFamily">@font/vn_bevietnampro_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.TITLE_LARGE">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/vn_poppins_semibold</item>
+        <item name="fontFamily">@font/vn_poppins_semibold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_SM1_Regular">
+        <item name="android:textSize">@dimen/vn_sp_11</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_regular</item>
+        <item name="fontFamily">@font/vn_bevietnampro_regular</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="VN.Text_SM_SemiBold">
+        <item name="android:textSize">@dimen/vn_sp_12</item>
+        <item name="android:fontFamily">@font/vn_bevietnampro_semibold</item>
+        <item name="fontFamily">@font/vn_bevietnampro_semibold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+</resources>

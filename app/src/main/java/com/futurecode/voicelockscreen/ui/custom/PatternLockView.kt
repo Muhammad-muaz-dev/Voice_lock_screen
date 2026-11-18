@@ -37,11 +37,11 @@ class PatternLockView @JvmOverloads constructor(
 
     // Colors matching screenshot
     private val cardBgColor = Color.parseColor("#FFFFFF")
-    private val outerFillColor = Color.parseColor("#EBF5FF") // Light blue circle background
-    private val outerStrokeColor = Color.parseColor("#C5E1FF") // Light blue circle border
-    private val innerDotColor = Color.parseColor("#1A8CFF") // Vibrant blue dot
-    private val activeLineColor = Color.parseColor("#1A8CFF")
-    private val errorColor = Color.parseColor("#FF4B4B")
+    private val outerFillColor = Color.parseColor("#EDECFF") // light violet circle (brand tint)
+    private val outerStrokeColor = Color.parseColor("#C4C1FF") // light violet circle border
+    private val innerDotColor = Color.parseColor("#635BFF") // brand violet dot
+    private val activeLineColor = Color.parseColor("#635BFF")
+    private val errorColor = Color.parseColor("#EF4444")
 
     // Paints
     private val cardPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {

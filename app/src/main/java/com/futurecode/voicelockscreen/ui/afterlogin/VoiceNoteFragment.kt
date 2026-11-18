@@ -33,6 +33,7 @@ class VoiceNoteFragment : BaseFragment<FragmentVoiceNoteBinding>(FragmentVoiceNo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        VoiceNoteUi.lightStatusBar(this)
         bindBottomTabs(binding.bottomNav, 2)
         setupList()
         setupActions()

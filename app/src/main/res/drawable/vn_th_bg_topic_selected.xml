@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Selected topic ring (reference: primary stroke around the inset thumbnail). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle"><solid android:color="@android:color/transparent" /><stroke android:width="2dp" android:color="@color/vn_primary01" /><corners android:radius="19dp" /></shape>

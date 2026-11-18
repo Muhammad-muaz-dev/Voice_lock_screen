@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal" android:padding="@dimen/vn_dp_12" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/vn_dp_16" android:layout_marginRight="@dimen/vn_dp_16" android:layout_marginBottom="@dimen/vn_dp_12" android:paddingStart="@dimen/vn_dp_16" android:layout_marginHorizontal="@dimen/vn_dp_16"
+ 
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Text_MD_Medium" android:textColor="@color/vn_neutral03" android:id="@+id/tvLanguage" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.0" />
+    <androidx.appcompat.widget.AppCompatImageView android:id="@+id/ivCheckBox" android:layout_width="@dimen/vn_dp_24" android:layout_height="@dimen/vn_dp_24" />
+</LinearLayout>

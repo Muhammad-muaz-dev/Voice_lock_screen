@@ -16,6 +16,8 @@ import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentNoteDetailBinding
 import com.futurecode.voicelockscreen.databinding.VnPopupNoteOptionBinding
 import com.futurecode.voicelockscreen.utils.NoteAiService
+import com.futurecode.voicelockscreen.utils.NoteTranslateLanguages
+import com.futurecode.voicelockscreen.utils.VoiceLanguagePicker
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 import com.futurecode.voicelockscreen.utils.VoiceNoteItem
 import kotlinx.coroutines.Job
@@ -35,6 +37,7 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding>(FragmentNoteD
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        VoiceNoteUi.lightStatusBar(this)
         val id = arguments?.getLong(ARG_NOTE_ID) ?: 0L
         val found = VoiceLockFeatureStore.note(requireContext(), id)
         if (found == null) {
@@ -101,9 +104,9 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding>(FragmentNoteD
         b.groupTranslateEmpty.isVisible = tab == TAB_TRANSLATE && !hasTranslation
         b.tvTranslateContent.isVisible = tab == TAB_TRANSLATE && hasTranslation
         b.tvTranslateContent.text = note.translation
-        b.tvLanguage.text = VoiceNoteUi.languageLabel(VoiceLockFeatureStore.translateLanguage(requireContext()))
+        b.tvLanguage.text = NoteTranslateLanguages.label(VoiceLockFeatureStore.translateLanguage(requireContext()))
         b.tvLanguageTranslate.isVisible = hasTranslation
-        b.tvLanguageTranslate.text = VoiceNoteUi.languageLabel(tag)
+        b.tvLanguageTranslate.text = NoteTranslateLanguages.label(tag)
     }
 
     private fun styleTab(view: TextView, selected: Boolean) {
@@ -172,7 +175,8 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding>(FragmentNoteD
             return
         }
         runAi(R.string.vn_translating_your_note, R.string.vn_translation_not_available) {
-            NoteAiService.instance.translate(note.transcript, tag).map { note.copy(translation = it, translateLanguage = tag) }
+            val hint = VoiceLanguagePicker.selected(requireContext())
+            NoteAiService.instance.translate(note.transcript, tag, hint).map { note.copy(translation = it, translateLanguage = tag) }
         }
     }
 

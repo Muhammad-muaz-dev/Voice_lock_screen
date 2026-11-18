@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- Dark Navy/Cyan Background Fill -->
-    <solid android:color="#0A222B" />
+    <solid android:color="#FFEDECFF" />
 
     <!-- Rounded Corner Radius -->
     <corners android:radius="@dimen/_12sdp" />
@@ -11,5 +11,5 @@
     <!-- Neon Cyan Border Stroke -->
     <stroke
         android:width="1.5dp"
-        android:color="#00EAF4" />
+        android:color="#FF635BFF" />
 </shape>

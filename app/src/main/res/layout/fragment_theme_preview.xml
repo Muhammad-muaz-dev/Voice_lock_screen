@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Theme / quote preview: copy of the reference fragment_lock_screen_preview (banner removed).
+     Lock-screen look stays dark glass over the wallpaper; accents mapped to our violet family. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/vn_black"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#801F2128"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/vn_dp_16"
+        android:paddingBottom="@dimen/vn_dp_8">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/vn_dp_36"
+            android:layout_height="@dimen/vn_dp_36"
+            android:layout_marginStart="@dimen/vn_dp_8"
+            android:contentDescription="@string/back"
+            android:src="@drawable/vn_ic_back_gray" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/VN.Headline_XSM_Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/vn_dp_8"
+            android:text="@string/preview"
+            android:textColor="@color/vn_white" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivTheme"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/preview"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivQuestion"
+                android:layout_width="@dimen/vn_dp_50"
+                android:layout_height="@dimen/vn_dp_50"
+                android:layout_marginTop="@dimen/vn_dp_8"
+                android:layout_marginEnd="@dimen/vn_dp_16"
+                android:contentDescription="@null"
+                android:src="@drawable/vn_ic_question_lock_screen"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/frameTime"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/vn_bg_radius_16_neutral01_50"
+                app:layout_constraintBottom_toBottomOf="@id/tvDate"
+                app:layout_constraintEnd_toEndOf="@id/tvTime"
+                app:layout_constraintStart_toStartOf="@id/tvTime"
+                app:layout_constraintTop_toTopOf="@id/tvTime" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vn_dp_24"
+                android:fontFamily="@font/vn_bevietnampro_bold"
+                android:paddingHorizontal="@dimen/vn_dp_16"
+                android:paddingTop="@dimen/vn_dp_16"
+                android:textColor="@color/vn_white"
+                android:textSize="@dimen/vn_sp_36"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivQuestion" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                style="@style/VN.Text_MD_SemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vn_dp_8"
+                android:paddingHorizontal="@dimen/vn_dp_16"
+                android:paddingBottom="@dimen/vn_dp_16"
+                android:textColor="@color/vn_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTime" />
+
+            <TextView
+                android:id="@+id/tvPartOfDay"
+                style="@style/VN.Text_MD_Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vn_dp_24"
+                android:background="@color/vn_neutral01_30"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/vn_dp_8"
+                android:paddingVertical="@dimen/vn_dp_4"
+                android:textColor="@color/vn_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDate" />
+
+            <TextView
+                android:id="@+id/tvQuote"
+                style="@style/VN.Text_SM_Italic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/vn_dp_40"
+                android:layout_marginTop="@dimen/vn_dp_8"
+                android:background="@drawable/vn_bg_quote"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/vn_dp_25"
+                android:paddingVertical="@dimen/vn_dp_16"
+                android:textColor="@color/vn_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPartOfDay" />
+
+            <ImageView
+                android:layout_width="@dimen/vn_dp_16"
+                android:layout_height="@dimen/vn_dp_16"
+                android:layout_marginStart="@dimen/vn_dp_11"
+                android:layout_marginTop="@dimen/vn_dp_10"
+                android:contentDescription="@null"
+                android:src="@drawable/vn_ic_quote"
+                app:layout_constraintStart_toStartOf="@id/tvQuote"
+                app:layout_constraintTop_toTopOf="@id/tvQuote" />
+
+            <ImageView
+                android:layout_width="@dimen/vn_dp_16"
+                android:layout_height="@dimen/vn_dp_16"
+                android:layout_marginEnd="@dimen/vn_dp_16"
+                android:layout_marginBottom="@dimen/vn_dp_13"
+                android:contentDescription="@null"
+                android:src="@drawable/vn_ic_quote_star"
+                app:layout_constraintBottom_toBottomOf="@id/tvQuote"
+                app:layout_constraintEnd_toEndOf="@id/tvQuote" />
+
+            <View
+                android:id="@+id/frameVoiceNote"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/vn_dp_40"
+                android:layout_marginTop="@dimen/vn_dp_24"
+                android:layout_marginBottom="@dimen/vn_dp__16"
+                android:background="@drawable/vn_bg_voice_note"
+                app:layout_constraintBottom_toBottomOf="@id/tvVoiceNoteDesc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvQuote" />
+
+            <LinearLayout
+                android:id="@+id/flowVoiceNoteName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vn_dp_16"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/frameVoiceNote"
+                app:layout_constraintStart_toStartOf="@id/frameVoiceNote"
+                app:layout_constraintTop_toTopOf="@id/frameVoiceNote">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/vn_dp_25"
+                    android:contentDescription="@null"
+                    android:src="@drawable/vn_ic_voice" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vn_dp_4"
+                    android:contentDescription="@string/vn_ai_voice_note"
+                    android:src="@drawable/vn_ic_voice_note_name" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvVoiceNoteDesc"
+                style="@style/VN.Text_MD_Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/vn_dp_30"
+                android:layout_marginTop="@dimen/vn_dp_4"
+                android:gravity="center"
+                android:text="@string/vn_th_private_voice_diary"
+                android:textColor="@color/vn_neutral10"
+                app:layout_constraintEnd_toEndOf="@id/frameVoiceNote"
+                app:layout_constraintStart_toStartOf="@id/frameVoiceNote"
+                app:layout_constraintTop_toBottomOf="@id/flowVoiceNoteName" />
+
+            <LinearLayout
+                android:id="@+id/flowUnlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vn_dp_24"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frameVoiceNote">
+
+                <ImageView
+                    android:id="@+id/ivPin"
+                    android:layout_width="@dimen/vn_dp_50"
+                    android:layout_height="@dimen/vn_dp_50"
+                    android:contentDescription="@null"
+                    android:src="@drawable/vn_ic_pin_lock_screen" />
+
+                <ImageView
+                    android:id="@+id/ivPattern"
+                    android:layout_width="@dimen/vn_dp_50"
+                    android:layout_height="@dimen/vn_dp_50"
+                    android:layout_marginStart="@dimen/vn_dp_36"
+                    android:contentDescription="@null"
+                    android:src="@drawable/vn_ic_pattern_lock_screen" />
+
+                <ImageView
+                    android:id="@+id/ivFingerprint"
+                    android:layout_width="@dimen/vn_dp_50"
+                    android:layout_height="@dimen/vn_dp_50"
+                    android:layout_marginStart="@dimen/vn_dp_36"
+                    android:contentDescription="@null"
+                    android:src="@drawable/vn_ic_fingerprint_lock_screen" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivRecord"
+                android:layout_width="@dimen/vn_dp_70"
+                android:layout_height="@dimen/vn_dp_70"
+                android:layout_marginTop="@dimen/vn_dp_24"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/vn_ic_record"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flowUnlock" />
+
+            <TextView
+                android:id="@+id/tvTapToSpeak"
+                style="@style/VN.Text_MD_Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vn_dp_12"
+                android:paddingBottom="@dimen/vn_dp_24"
+                android:text="@string/vn_th_tap_on_mic"
+                android:textColor="@color/vn_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivRecord" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/btnApply"
+        style="@style/VN.Text_MD_Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/vn_dp_16"
+        android:layout_marginBottom="@dimen/vn_dp_6"
+        android:background="@drawable/vn_th_bg_gradient_btn"
+        android:gravity="center"
+        android:paddingVertical="@dimen/vn_dp_14"
+        android:text="@string/vn_th_apply"
+        android:textColor="@color/vn_white"
+        android:visibility="gone" />
+</LinearLayout>

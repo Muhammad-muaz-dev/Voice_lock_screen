@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="vn_dp__50">-144dp</dimen>
     <dimen name="vn_dp__16">-46.08dp</dimen>
     <dimen name="vn_dp_0">0dp</dimen>
     <dimen name="vn_dp_1">2.88dp</dimen>
@@ -11,13 +12,18 @@
     <dimen name="vn_dp_10">28.8dp</dimen>
     <dimen name="vn_dp_12">34.56dp</dimen>
     <dimen name="vn_dp_14">40.32dp</dimen>
+    <dimen name="vn_dp_15">40.32dp</dimen>
     <dimen name="vn_dp_16">46.08dp</dimen>
+    <dimen name="vn_dp_18">51.84dp</dimen>
     <dimen name="vn_dp_20">57.6dp</dimen>
+    <dimen name="vn_dp_23">66.24dp</dimen>
     <dimen name="vn_dp_24">69.12dp</dimen>
     <dimen name="vn_dp_25">72dp</dimen>
+    <dimen name="vn_dp_26">74.88dp</dimen>
     <dimen name="vn_dp_28">80.64dp</dimen>
     <dimen name="vn_dp_32">92.16dp</dimen>
     <dimen name="vn_dp_33">95.04dp</dimen>
+    <dimen name="vn_dp_35">100.8dp</dimen>
     <dimen name="vn_dp_36">103.68dp</dimen>
     <dimen name="vn_dp_38">109.44dp</dimen>
     <dimen name="vn_dp_40">115.2dp</dimen>
@@ -25,23 +31,35 @@
     <dimen name="vn_dp_44">126.72dp</dimen>
     <dimen name="vn_dp_48">138.24dp</dimen>
     <dimen name="vn_dp_50">144dp</dimen>
+    <dimen name="vn_dp_51">146.88dp</dimen>
     <dimen name="vn_dp_52">149.76dp</dimen>
+    <dimen name="vn_dp_56">161.28dp</dimen>
     <dimen name="vn_dp_58">167.04dp</dimen>
     <dimen name="vn_dp_60">172.8dp</dimen>
     <dimen name="vn_dp_66">190.08dp</dimen>
+    <dimen name="vn_dp_70">201.6dp</dimen>
     <dimen name="vn_dp_72">207.36dp</dimen>
     <dimen name="vn_dp_74">213.12dp</dimen>
+    <dimen name="vn_dp_78">224.64dp</dimen>
     <dimen name="vn_dp_80">230.4dp</dimen>
     <dimen name="vn_dp_86">247.68dp</dimen>
     <dimen name="vn_dp_98">282.234dp</dimen>
     <dimen name="vn_dp_100">288dp</dimen>
+    <dimen name="vn_dp_105">302.398dp</dimen>
+    <dimen name="vn_dp_116">334.078dp</dimen>
     <dimen name="vn_dp_120">345.594dp</dimen>
     <dimen name="vn_dp_125">360dp</dimen>
+    <dimen name="vn_dp_132">380.156dp</dimen>
+    <dimen name="vn_dp_133">383.039dp</dimen>
+    <dimen name="vn_dp_138">397.438dp</dimen>
     <dimen name="vn_dp_140">403.195dp</dimen>
     <dimen name="vn_dp_156">449.273dp</dimen>
+    <dimen name="vn_dp_239">688.312dp</dimen>
     <dimen name="vn_dp_1000">2880dp</dimen>
+    <dimen name="vn_sp_11">31.68sp</dimen>
     <dimen name="vn_sp_12">34.56sp</dimen>
     <dimen name="vn_sp_14">40.32sp</dimen>
     <dimen name="vn_sp_16">46.08sp</dimen>
     <dimen name="vn_sp_20">57.6sp</dimen>
+    <dimen name="vn_sp_24">69.12sp</dimen>
 </resources>

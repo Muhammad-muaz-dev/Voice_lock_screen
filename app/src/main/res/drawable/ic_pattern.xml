@@ -4,8 +4,8 @@
     android:viewportWidth="24"
     android:viewportHeight="24">
     <path
-        android:fillColor="#3D8BFF"
+        android:fillColor="#FF635BFF"
         android:pathData="M6,6m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0 M12,6m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0 M18,6m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0 M6,12m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0 M12,12m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0 M18,12m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0 M6,18m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0 M12,18m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0 M18,18m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0 M6,6 L12,12 L18,12"
-        android:strokeColor="#3D8BFF"
+        android:strokeColor="#FF635BFF"
         android:strokeWidth="1"/>
 </vector>

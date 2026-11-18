@@ -9,18 +9,22 @@ import com.futurecode.voicelockscreen.databinding.IncludeBottomTabsBinding
 
 fun Fragment.bindBottomTabs(tabs: IncludeBottomTabsBinding, selected: Int) {
     val iconBg = R.drawable.bg_bottom_tab_active
+    val white = requireContext().getColor(R.color.white)
+    // Selected tab: white icon on the violet pill, violet label on the white bar.
+    listOf(tabs.tabVoiceLockIcon, tabs.tabThemesIcon, tabs.tabVoiceNoteIcon).getOrNull(selected.coerceIn(0, 2))
+        ?.let { (it.getChildAt(0) as? android.widget.ImageView)?.imageTintList = android.content.res.ColorStateList.valueOf(white) }
     when (selected) {
         0 -> {
             tabs.tabVoiceLockIcon.setBackgroundResource(iconBg)
-            tabs.tabVoiceLockLabel.setTextColor(requireContext().getColor(R.color.text_white))
+            tabs.tabVoiceLockLabel.setTextColor(requireContext().getColor(R.color.primary))
         }
         1 -> {
             tabs.tabThemesIcon.setBackgroundResource(iconBg)
-            tabs.tabThemesLabel.setTextColor(requireContext().getColor(R.color.text_white))
+            tabs.tabThemesLabel.setTextColor(requireContext().getColor(R.color.primary))
         }
         else -> {
             tabs.tabVoiceNoteIcon.setBackgroundResource(iconBg)
-            tabs.tabVoiceNoteLabel.setTextColor(requireContext().getColor(R.color.text_white))
+            tabs.tabVoiceNoteLabel.setTextColor(requireContext().getColor(R.color.primary))
         }
     }
     tabs.tabVoiceLock.setOnClickListener {

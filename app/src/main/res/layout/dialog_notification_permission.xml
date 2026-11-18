@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_bold"
                 android:text="@string/notification_later"
-                android:textColor="@color/primarySoft"
+                android:textColor="@color/primary"
                 android:minHeight="48dp"
                 android:padding="@dimen/spacing_md"
                 android:background="@drawable/bg_notification_later"
