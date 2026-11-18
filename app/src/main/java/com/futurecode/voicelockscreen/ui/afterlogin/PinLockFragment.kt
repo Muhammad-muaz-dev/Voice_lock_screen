@@ -186,7 +186,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         }
 
         SecurePinStore.savePin(requireContext(), pin)
-        LockService.startIfNeeded(requireContext())
+        LockService.enableAndStart(requireContext())
         Toast.makeText(requireContext(), R.string.pin_saved, Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
     }

@@ -249,12 +249,12 @@
     <string name="promo_malachite_ninja">Malachite Ninja バンドル</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_command_title">声で\n操作する</string>
-    <string name="onboarding_command_description">高度なAI音声認識で\nスマホのロックを解除</string>
-    <string name="onboarding_recognition_title">スマートな\n音声認識</string>
-    <string name="onboarding_recognition_description">あなた独自の声で\nスマホの安全を守ります</string>
-    <string name="onboarding_protection_title">オールインワン\nプロテクション</string>
-    <string name="onboarding_protection_description">複数のロックオプションで毎日のスマホのセキュリティを強化</string>
+    <string name="onboarding_command_title">声で\n操作</string>
+    <string name="onboarding_command_description">高度なAI音声認識技術でスマートフォンのロックを解除</string>
+    <string name="onboarding_recognition_title">音声でカメラを\n操作</string>
+    <string name="onboarding_recognition_description">声だけでカメラを開き、写真や動画を撮影</string>
+    <string name="onboarding_protection_title">音声メモと\nAI要約</string>
+    <string name="onboarding_protection_description">会議をリアルタイムで文字起こしし、AIで要約</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">たった今</string>

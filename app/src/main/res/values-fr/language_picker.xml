@@ -1,0 +1,7 @@
+<resources>
+    <string name="language_expanded">Développé</string>
+    <string name="language_collapsed">Réduit</string>
+    <string name="language_selected">Sélectionné</string>
+    <string name="language_not_selected">Non sélectionné</string>
+    <string name="onboarding_page_position">Page %1$d sur %2$d</string>
+</resources>

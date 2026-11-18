@@ -14,7 +14,7 @@ import com.futurecode.voicelockscreen.service.LockService
 class SetupCompleteFragment : BaseFragment<FragmentSetupCompleteBinding>(FragmentSetupCompleteBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LockService.startIfNeeded(requireContext())
+        LockService.enableAndStart(requireContext())
         binding.btnBack.setOnClickListener { goHome() }
         binding.btnHome.setOnClickListener { goHome() }
         binding.btnPin.setOnClickListener { findNavController().navigate(R.id.pinLockFragment) }

@@ -252,10 +252,10 @@
     <!-- Onboarding -->
     <string name="onboarding_command_title">Steuern Sie mit\nIhrer Stimme</string>
     <string name="onboarding_command_description">Entsperren Sie Ihr Telefon mit\nfortschrittlicher KI-Spracherkennung</string>
-    <string name="onboarding_recognition_title">Intelligente\nSpracherkennung</string>
-    <string name="onboarding_recognition_description">Ihre einzigartige Stimme hält\nIhr Telefon sicher</string>
-    <string name="onboarding_protection_title">All-In-One\nSchutz</string>
-    <string name="onboarding_protection_description">Mehrere Sperroptionen für eine stärkere\nalltägliche Telefonsicherheit</string>
+    <string name="onboarding_recognition_title">Sprachgesteuerte\nKamera</string>
+    <string name="onboarding_recognition_description">Öffnen Sie die Kamera und nehmen Sie Fotos oder Videos nur mit Ihrer Stimme auf</string>
+    <string name="onboarding_protection_title">Sprachnotizen und\nKI-Zusammenfassungen</string>
+    <string name="onboarding_protection_description">Transkribieren Sie Meetings live und erstellen Sie KI-Zusammenfassungen</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">gerade eben</string>

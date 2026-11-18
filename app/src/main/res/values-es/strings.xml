@@ -251,10 +251,10 @@
     <!-- Onboarding -->
     <string name="onboarding_command_title">Controla con\ntu voz</string>
     <string name="onboarding_command_description">Desbloquea tu teléfono usando\nreconocimiento de voz por IA avanzado</string>
-    <string name="onboarding_recognition_title">Reconocimiento de voz\ninteligente</string>
-    <string name="onboarding_recognition_description">Tu voz única mantiene\ntu teléfono seguro</string>
-    <string name="onboarding_protection_title">Protección\ntodo en uno</string>
-    <string name="onboarding_protection_description">Múltiples opciones de bloqueo para una seguridad cotidiana más fuerte</string>
+    <string name="onboarding_recognition_title">Control de cámara\npor voz</string>
+    <string name="onboarding_recognition_description">Abre la cámara, toma fotos o graba vídeos al instante usando solo tu voz</string>
+    <string name="onboarding_protection_title">Notas de voz y\nresúmenes con IA</string>
+    <string name="onboarding_protection_description">Transcribe tus reuniones en directo y conviértelas en resúmenes con IA</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">justo ahora</string>

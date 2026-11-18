@@ -10,7 +10,6 @@ import android.os.Looper
 import android.os.SystemClock
 import android.provider.Settings
 import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,11 +21,12 @@ import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentVoiceSetupBinding
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.utils.DarkDialogs
+import com.futurecode.voicelockscreen.utils.SpeechSession
 import com.futurecode.voicelockscreen.utils.VoiceLanguagePicker
 import java.util.Locale
 
 class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoiceSetupBinding::inflate) {
-    private var recognizer: SpeechRecognizer? = null
+    private var speechSession: SpeechSession? = null
     private var firstPhrase = ""
     private var phrase = ""
     private var confirming = false
@@ -39,7 +39,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
             if (!listening || bindingOrNull == null) return
             val elapsed = (SystemClock.elapsedRealtime() - startedAt) / 1000
             binding.tvTimer.text = "0:0${elapsed.coerceAtMost(5)} / 0:05"
-            if (elapsed >= 5) recognizer?.stopListening() else handler.postDelayed(this, 250)
+            if (elapsed >= 5) speechSession?.stopListening() else handler.postDelayed(this, 250)
         }
     }
     private val microphone = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -92,14 +92,15 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         }
     }
     private fun record() {
-        if (!SpeechRecognizer.isRecognitionAvailable(requireContext())) { showError(R.string.speech_not_available); return }
-        recognizer?.destroy()
+        if (!SpeechSession.isAvailable(requireContext())) { showError(R.string.speech_not_available); return }
         listening = true; confirmed = false; phrase = ""
         startedAt = SystemClock.elapsedRealtime()
         render()
         handler.post(tick)
-        recognizer = SpeechRecognizer.createSpeechRecognizer(requireContext()).apply {
-            setRecognitionListener(object : RecognitionListener {
+        val session = speechSession ?: SpeechSession(requireContext()).also { speechSession = it }
+        session.start(
+            SpeechSession.voiceIntent(requireContext(), partialResults = true),
+            object : RecognitionListener {
                 override fun onReadyForSpeech(params: Bundle?) = Unit
                 override fun onBeginningOfSpeech() = Unit
                 override fun onRmsChanged(rmsdB: Float) = Unit
@@ -124,18 +125,13 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
                     bindingOrNull?.tvPhrase?.text = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.firstOrNull().orEmpty()
                 }
                 override fun onEvent(eventType: Int, params: Bundle?) = Unit
-            })
-            startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE, VoiceLanguagePicker.selected(requireContext()))
-                putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
-            })
-        }
+            }
+        )
     }
     private fun showError(message: Int) {
         render()
         binding.tvTapHint.setText(message)
-        binding.tvTapHint.setTextColor(requireContext().getColor(R.color.errorSoft))
+        binding.tvTapHint.setTextColor(requireContext().getColor(R.color.error))
     }
     private fun render() {
         binding.tvTitle.setText(if (confirming && !confirmed) R.string.voice_confirm_title else if (phrase.isNotBlank()) R.string.voice_review_title else R.string.voice_record_title)
@@ -151,7 +147,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
     }
     override fun onDestroyView() {
         listening = false; handler.removeCallbacksAndMessages(null)
-        recognizer?.cancel(); recognizer?.destroy(); recognizer = null
+        speechSession?.release(); speechSession = null
         super.onDestroyView()
     }
     companion object {

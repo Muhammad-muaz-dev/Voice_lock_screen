@@ -7,8 +7,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
+import android.util.Log
 import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.Gravity
 import android.view.View
@@ -37,6 +38,7 @@ import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.ui.afterlogin.FingerprintLockFragment
+import com.futurecode.voicelockscreen.utils.SpeechSession
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import com.futurecode.voicelockscreen.utils.VoiceLockPattern
 import java.text.SimpleDateFormat
@@ -47,7 +49,7 @@ class LockScreenActivity : BaseActivity() {
     private lateinit var binding: FragmentScreenPreviewBinding
     private val viewModel: LockScreenViewModel by viewModels()
     private var selectedMethod = VOICE_INDEX
-    private var speechRecognizer: SpeechRecognizer? = null
+    private val speechSession by lazy { SpeechSession(this) }
     private var fallbackOverlay: FrameLayout? = null
     private var isUnlocking = false
     private var didStartVoiceForCurrentResume = false
@@ -103,9 +105,23 @@ class LockScreenActivity : BaseActivity() {
         super.onPause()
     }
 
+    override fun onStop() {
+        super.onStop()
+        relockIfLeftWithoutUnlock()
+    }
+
+    private fun relockIfLeftWithoutUnlock() {
+        if (isUnlocking || isChangingConfigurations) return
+        if (AppLockState.isUnlockedThisSession(this)) return
+        // Screen-off also stops this activity; LockService relocks on the next screen-on.
+        if (getSystemService(PowerManager::class.java)?.isInteractive != true) return
+        // Home/Recents must not bypass the lock, so hand it back to the service.
+        LockService.showLockScreen(this)
+    }
+
     override fun onDestroy() {
         removeFallbackOverlay()
-        stopRecognizer()
+        speechSession.release()
         super.onDestroy()
     }
 
@@ -113,7 +129,6 @@ class LockScreenActivity : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true)
             setTurnScreenOn(true)
-            getSystemService(KeyguardManager::class.java)?.requestDismissKeyguard(this, null)
         } else {
             @Suppress("DEPRECATION")
             window.addFlags(
@@ -200,63 +215,52 @@ class LockScreenActivity : BaseActivity() {
             binding.tvSpeakHint.text = getString(R.string.save_voice_first)
             return
         }
-        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
+        if (!SpeechSession.isAvailable(this)) {
             binding.tvSpeakHint.text = getString(R.string.speech_not_available)
             return
         }
+        if (!SpeechSession.hasMicPermission(this)) {
+            binding.tvSpeakHint.text = getString(R.string.microphone_blocked_body)
+            return
+        }
 
-        stopRecognizer()
         selectedMethod = VOICE_INDEX
         updateSelectedMethod()
         binding.tvSpeakHint.text = getString(R.string.listening_unlock)
+        speechSession.start(SpeechSession.voiceIntent(this), voiceUnlockListener)
+    }
 
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this).apply {
-            setRecognitionListener(object : RecognitionListener {
-                override fun onReadyForSpeech(params: Bundle?) {
-                    binding.tvSpeakHint.text = getString(R.string.listening_unlock)
-                }
-
-                override fun onBeginningOfSpeech() = Unit
-                override fun onRmsChanged(rmsdB: Float) = Unit
-                override fun onBufferReceived(buffer: ByteArray?) = Unit
-                override fun onEndOfSpeech() = Unit
-
-                override fun onError(error: Int) {
-                    showVoiceFallback()
-                }
-
-                override fun onResults(results: Bundle?) {
-                    val spoken = results
-                        ?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                        ?.firstOrNull()
-                        .orEmpty()
-                    viewModel.verifyVoice(this@LockScreenActivity, spoken)
-                }
-
-                override fun onPartialResults(partialResults: Bundle?) = Unit
-                override fun onEvent(eventType: Int, params: Bundle?) = Unit
-            })
-            startListening(speechIntent())
+    private val voiceUnlockListener = object : RecognitionListener {
+        override fun onReadyForSpeech(params: Bundle?) {
+            Log.d(TAG, "Voice unlock: ready for speech")
+            binding.tvSpeakHint.text = getString(R.string.listening_unlock)
         }
+
+        override fun onBeginningOfSpeech() = Unit
+        override fun onRmsChanged(rmsdB: Float) = Unit
+        override fun onBufferReceived(buffer: ByteArray?) = Unit
+        override fun onEndOfSpeech() = Unit
+
+        override fun onError(error: Int) {
+            Log.w(TAG, "Voice unlock: recognizer error $error")
+            showVoiceFallback()
+        }
+
+        override fun onResults(results: Bundle?) {
+            val spoken = results
+                ?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                ?.firstOrNull()
+                .orEmpty()
+            viewModel.verifyVoice(this@LockScreenActivity, spoken)
+        }
+
+        override fun onPartialResults(partialResults: Bundle?) = Unit
+        override fun onEvent(eventType: Int, params: Bundle?) = Unit
     }
 
     private fun showVoiceFallback() {
         binding.tvSpeakHint.text = getString(R.string.voice_try_again)
         Toast.makeText(this, R.string.voice_try_again, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun speechIntent(): Intent {
-        return Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
-        }
-    }
-
-    private fun stopRecognizer() {
-        speechRecognizer?.stopListening()
-        speechRecognizer?.destroy()
-        speechRecognizer = null
     }
 
     private fun showPinUnlockDialog() {
@@ -385,9 +389,7 @@ class LockScreenActivity : BaseActivity() {
         val patternView = dialogView.findViewById<VoiceLockPattern>(R.id.patternView)
         val status = dialogView.findViewById<TextView>(R.id.tvPatternStatus)
 
-
       //  ThemeWallpaperStore.applyTo(binding.imgWallpaper, this)
-
 
         patternView.onPatternComplete = patternComplete@{ sequence ->
             if (isUnlocking) return@patternComplete
@@ -524,6 +526,10 @@ class LockScreenActivity : BaseActivity() {
         AppLockState.setUnlockedThisSession(this, true)
         if (removeFallback) removeFallbackOverlay()
         Toast.makeText(this, R.string.voice_unlocked, Toast.LENGTH_SHORT).show()
+        // Hand off to the system keyguard only after our own unlock succeeds.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            getSystemService(KeyguardManager::class.java)?.requestDismissKeyguard(this, null)
+        }
         binding.root.post {
             finishAndRemoveTask()
         }
@@ -538,6 +544,7 @@ class LockScreenActivity : BaseActivity() {
     )
 
     companion object {
+        private const val TAG = "LockScreenActivity"
         private const val PIN_INDEX = 0
         private const val PATTERN_INDEX = 1
         private const val VOICE_INDEX = 2

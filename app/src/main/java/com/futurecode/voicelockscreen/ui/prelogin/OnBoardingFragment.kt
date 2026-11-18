@@ -38,7 +38,7 @@ class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(FragmentOnBoa
 
         onboardingPages.add(
             OnBoardingPage(
-                imageRes = R.drawable.onboard_one,
+                imageRes = R.drawable.onboarding_voice_midnight,
                 title = getString(R.string.onboarding_command_title),
                 description = getString(R.string.onboarding_command_description)
             )
@@ -46,7 +46,7 @@ class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(FragmentOnBoa
 
         onboardingPages.add(
             OnBoardingPage(
-                imageRes = R.drawable.onboard_two,
+                imageRes = R.drawable.onboarding_camera_midnight,
                 title = getString(R.string.onboarding_recognition_title),
                 description = getString(R.string.onboarding_recognition_description)
             )
@@ -54,7 +54,7 @@ class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(FragmentOnBoa
 
         onboardingPages.add(
             OnBoardingPage(
-                imageRes = R.drawable.onboard_three,
+                imageRes = R.drawable.onboarding_notes_midnight,
                 title = getString(R.string.onboarding_protection_title),
                 description = getString(R.string.onboarding_protection_description)
             )
@@ -67,7 +67,7 @@ class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(FragmentOnBoa
         binding.onBoardingPager.registerOnPageChangeCallback(pageChangeCallback)
 
         setupIndicators(onboardingPages.size)
-        updateIndicators(0)
+        updateIndicators(binding.onBoardingPager.currentItem)
     }
 
     private fun setupListeners() {
@@ -83,29 +83,32 @@ class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(FragmentOnBoa
 
     private fun setupIndicators(count: Int) {
         binding.pageIndicator.removeAllViews()
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            setMargins(8, 0, 8, 0)
-        }
-
         for (i in 0 until count) {
             val indicatorView = ImageView(requireContext())
-            indicatorView.layoutParams = params
+            indicatorView.layoutParams = LinearLayout.LayoutParams(
+                resources.getDimensionPixelSize(R.dimen.onboarding_dot_size),
+                resources.getDimensionPixelSize(R.dimen.onboarding_dot_size)
+            ).apply { marginEnd = resources.getDimensionPixelSize(R.dimen.spacing_sm) }
+            indicatorView.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
             binding.pageIndicator.addView(indicatorView)
         }
     }
 
     private fun updateIndicators(position: Int) {
-        binding.btnNext.setText(if (position == onboardingPages.lastIndex) R.string.get_started else R.string.next)
+        binding.btnNext.setText(R.string.next)
+        binding.pageIndicator.contentDescription = getString(R.string.onboarding_page_position, position + 1, onboardingPages.size)
         val count = binding.pageIndicator.childCount
         for (i in 0 until count) {
             val view = binding.pageIndicator.getChildAt(i) as ImageView
+            view.layoutParams = (view.layoutParams as LinearLayout.LayoutParams).apply {
+                width = resources.getDimensionPixelSize(
+                    if (i == position) R.dimen.onboarding_dot_active_width else R.dimen.onboarding_dot_size
+                )
+            }
             if (i == position) {
-                view.setImageResource(R.drawable.bg_indicator_active)
+                view.setImageResource(R.drawable.bg_onboarding_dot_active)
             } else {
-                view.setImageResource(R.drawable.bg_indicator_inactive)
+                view.setImageResource(R.drawable.bg_onboarding_dot_inactive)
             }
         }
     }

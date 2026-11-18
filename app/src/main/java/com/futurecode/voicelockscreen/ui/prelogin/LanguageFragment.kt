@@ -1,10 +1,7 @@
 package com.futurecode.voicelockscreen.ui.prelogin
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.MyApplication
@@ -14,43 +11,26 @@ import com.futurecode.voicelockscreen.databinding.FragmentLanguageBinding
 import com.futurecode.voicelockscreen.model.LanguageOption
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
-
-    private lateinit var languages: List<LanguageOption>
     private lateinit var languageAdapter: LanguageAdapter
-    private var selectedLanguageCode = "en"
+    private var selectedLanguageCode = "en-US"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        languages = listOf(
-            LanguageOption("en", getString(R.string.language_english_us), getString(R.string.language_english_native)),
-            LanguageOption("es", getString(R.string.language_spanish), getString(R.string.language_spanish_native)),
-            LanguageOption("fr", getString(R.string.language_french), getString(R.string.language_french_native)),
-            LanguageOption("de", getString(R.string.language_german), getString(R.string.language_german_native)),
-            LanguageOption("ja", getString(R.string.language_japanese), getString(R.string.language_japanese_native)),
-            LanguageOption("hi", getString(R.string.language_hindi), getString(R.string.language_hindi_native)),
-            LanguageOption("pt", getString(R.string.language_portuguese), getString(R.string.language_portuguese_native)),
-            LanguageOption("ru", getString(R.string.language_russian), getString(R.string.language_russian_native)),
-            LanguageOption("zh", getString(R.string.language_chinese), getString(R.string.language_chinese_native)),
-            LanguageOption("ar", getString(R.string.language_arabic), getString(R.string.language_arabic_native))
-        )
-        selectedLanguageCode = MyApplication.app.prefManager.selectedLanguage.ifBlank { "en" }
-        languageAdapter = LanguageAdapter(languages, selectedLanguageCode) { language ->
-            selectLanguage(language)
+        val languages = languageOptions()
+        val stored = savedInstanceState?.getString(STATE_SELECTION)
+            ?: MyApplication.app.prefManager.selectedLanguage.ifBlank { "en" }
+        selectedLanguageCode = when (stored) {
+            "en" -> "en-US"
+            "es" -> "es-ES"
+            "pt" -> "pt-PT"
+            else -> stored
         }
-
+        languageAdapter = LanguageAdapter(languages, selectedLanguageCode) { language ->
+            selectedLanguageCode = language.code
+            languageAdapter.updateSelection(language.code)
+        }
+        savedInstanceState?.getStringArrayList(STATE_EXPANDED)?.let(languageAdapter::restoreExpanded)
         binding.rvLanguages.adapter = languageAdapter
-
-        binding.etSearchLanguage.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filterLanguages(s?.toString().orEmpty())
-            }
-
-            override fun afterTextChanged(s: Editable?) = Unit
-        })
-
         binding.btnContinue.setOnClickListener {
             MyApplication.applyLanguage(selectedLanguageCode)
             if (arguments?.getBoolean(ARG_RETURN_TO_SETTINGS, false) == true) {
@@ -61,28 +41,51 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         }
     }
 
-    private fun selectLanguage(language: LanguageOption) {
-        selectedLanguageCode = language.code
-        MyApplication.applyLanguage(language.code)
-        languageAdapter.updateSelection(language.code)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_SELECTION, selectedLanguageCode)
+        if (::languageAdapter.isInitialized) outState.putStringArrayList(STATE_EXPANDED, languageAdapter.expandedCodes())
     }
 
-    private fun filterLanguages(query: String) {
-        val normalizedQuery = query.trim()
-        val filteredLanguages = if (normalizedQuery.isEmpty()) {
-            languages
-        } else {
-            languages.filter { language ->
-                language.name.contains(normalizedQuery, ignoreCase = true) ||
-                    language.nativeName.contains(normalizedQuery, ignoreCase = true)
-            }
-        }
-
-        languageAdapter.submitList(filteredLanguages)
-        binding.tvEmptyLanguages.isVisible = filteredLanguages.isEmpty()
+    private fun languageOptions(): List<LanguageOption> {
+        fun option(code: String, label: String, country: String, variants: List<LanguageOption> = emptyList()) =
+            LanguageOption(code, label, label, country, variants)
+        return listOf(
+            option("en", "English", "GB", listOf(
+                option("en-US", "English (United States)", "US"),
+                option("en-GB", "English (United Kingdom)", "GB"),
+                option("en-AU", "English (Australia)", "AU"),
+                option("en-CA", "English (Canada)", "CA"),
+                option("en-GH", "English (Ghana)", "GH"),
+                option("en-SG", "English (Singapore)", "SG")
+            )),
+            option("es", "Español", "ES", listOf(
+                option("es-ES", "Español (España)", "ES"),
+                option("es-MX", "Español (México)", "MX")
+            )),
+            option("id", "Bahasa Indonesia", "ID"),
+            option("de", "Deutsch", "DE"),
+            option("fr", "Français", "FR"),
+            option("it", "Italiano", "IT"),
+            option("nl", "Nederlands", "NL"),
+            option("pt", "Português", "PT", listOf(
+                option("pt-PT", "Português (Portugal)", "PT"),
+                option("pt-BR", "Português (Brasil)", "BR")
+            )),
+            option("vi", "Tiếng Việt", "VN"),
+            option("tr", "Türkçe", "TR"),
+            option("ru", "Русский", "RU"),
+            // Keep previously offered languages available below the reference list.
+            option("ja", "日本語", "JP"),
+            option("hi", "हिन्दी", "IN"),
+            option("zh", "中文", "CN"),
+            option("ar", "العربية", "SA")
+        )
     }
 
     companion object {
         const val ARG_RETURN_TO_SETTINGS = "return_to_settings"
+        private const val STATE_SELECTION = "language_selection"
+        private const val STATE_EXPANDED = "language_expanded"
     }
 }

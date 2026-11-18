@@ -251,10 +251,10 @@
     <!-- Onboarding -->
     <string name="onboarding_command_title">Commandez avec\nvotre voix</string>
     <string name="onboarding_command_description">Déverrouillez votre téléphone grâce à\nla reconnaissance vocale IA avancée</string>
-    <string name="onboarding_recognition_title">Reconnaissance vocale\nintelligente</string>
-    <string name="onboarding_recognition_description">Votre voix unique garantit la sécurité\nde votre téléphone</string>
-    <string name="onboarding_protection_title">Protection\ntout-en-un</string>
-    <string name="onboarding_protection_description">Plusieurs options de verrouillage pour une sécurité renforcée au quotidien</string>
+    <string name="onboarding_recognition_title">Contrôle de la caméra\npar la voix</string>
+    <string name="onboarding_recognition_description">Ouvrez la caméra, prenez des photos ou enregistrez des vidéos avec votre voix</string>
+    <string name="onboarding_protection_title">Notes vocales et\nrésumés IA</string>
+    <string name="onboarding_protection_description">Transcrivez vos réunions en direct et créez des résumés avec l’IA</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">à l\'instant</string>

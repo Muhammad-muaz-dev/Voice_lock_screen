@@ -17,13 +17,14 @@ import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentCameraVoiceBinding
+import com.futurecode.voicelockscreen.utils.SpeechSession
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 
 class CameraVoiceFragment : BaseFragment<FragmentCameraVoiceBinding>(FragmentCameraVoiceBinding::inflate) {
 
     private var step = 0
     private var recordings = 0
-    private var recognizer: SpeechRecognizer? = null
+    private var speechSession: SpeechSession? = null
     private var listening = false
 
     private val cameraPermission = registerForActivityResult(
@@ -48,8 +49,8 @@ class CameraVoiceFragment : BaseFragment<FragmentCameraVoiceBinding>(FragmentCam
 
     override fun onDestroyView() {
         listening = false
-        recognizer?.cancel()
-        recognizer?.destroy()
+        speechSession?.release()
+        speechSession = null
         super.onDestroyView()
     }
 
@@ -86,15 +87,20 @@ class CameraVoiceFragment : BaseFragment<FragmentCameraVoiceBinding>(FragmentCam
         if (ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             cameraPermission.launch(arrayOf(Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO)); return
         }
-        if (!SpeechRecognizer.isRecognitionAvailable(requireContext())) {
+        if (!SpeechSession.isAvailable(requireContext())) {
             Toast.makeText(requireContext(), R.string.speech_not_available, Toast.LENGTH_SHORT).show()
             return
         }
-        recognizer?.destroy()
         listening = true
         binding.btnPrimary.isEnabled = false
-        recognizer = SpeechRecognizer.createSpeechRecognizer(requireContext()).apply {
-            setRecognitionListener(object : RecognitionListener {
+        // "open camera" is matched in English, so this keeps the device default language.
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        }
+        val session = speechSession ?: SpeechSession(requireContext()).also { speechSession = it }
+        session.start(
+            intent,
+            object : RecognitionListener {
                 override fun onReadyForSpeech(params: Bundle?) {
                     binding.tvHeard.isVisible = true
                     binding.tvHeard.setText(R.string.recording_listening)
@@ -131,12 +137,8 @@ class CameraVoiceFragment : BaseFragment<FragmentCameraVoiceBinding>(FragmentCam
                 }
                 override fun onPartialResults(partialResults: Bundle?) = Unit
                 override fun onEvent(eventType: Int, params: Bundle?) = Unit
-            })
-        }
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        }
-        recognizer?.startListening(intent)
+            }
+        )
     }
 
     private fun render() {

@@ -5,14 +5,20 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.IdRes
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentHomeBinding
+import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.utils.DarkDialogs
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
@@ -22,11 +28,48 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private val notificationPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { VoiceLockFeatureStore.setNotifAsked(requireContext()) }
+    ) {
+        VoiceLockFeatureStore.setNotifAsked(requireContext())
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupNotificationResultListener()
+        setupBackNavigation()
+        setupHeaderActions()
+        setupVoiceCardActions()
+        setupFeatureActions()
+        setupTabActions()
+        setupSwitchActions()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateVoiceLockSwitches()
+
+        binding.root.post {
+            if (bindingOrNull == null) return@post
+            if (viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                maybeAskNotifications()
+            }
+        }
+    }
+
+    private fun setupNotificationResultListener() {
+        parentFragmentManager.setFragmentResultListener(
+            NotificationPermissionDialog.RESULT_KEY,
+            viewLifecycleOwner
+        ) { _, result ->
+            VoiceLockFeatureStore.setNotifAsked(requireContext())
+            val allow = result.getBoolean(NotificationPermissionDialog.RESULT_ALLOW)
+            if (allow && isNotificationPermissionMissing()) {
+                notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    private fun setupBackNavigation() {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -42,25 +85,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 }
             }
         )
+    }
 
-        // Header Actions
-        binding.ivSettings.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
-        }
+    private fun setupHeaderActions() {
+        bindNavigation(binding.ivSettings, R.id.action_homeFragment_to_settingFragment)
+        bindNavigation(binding.ivPremium, R.id.action_homeFragment_to_premiumFragment)
+    }
 
-        binding.ivPremium.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_premiumFragment)
-        }
+    private fun setupVoiceCardActions() {
+        // The whole voice card acts as its switch; the reset button re-records the command.
+        binding.cardUnlock.setOnClickListener { binding.switchUnlock.performClick() }
+        binding.cardLock.setOnClickListener { binding.switchLock.performClick() }
+        bindNavigation(binding.btnResetUnlock, R.id.voiceGuideFragment)
+        bindNavigation(binding.btnResetLock, R.id.voiceGuideFragment)
+    }
 
-        // Voice Unlock Card Setup
-        binding.cardUnlock.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_voiceSetupFragment)
-        }
-
-        // 2x2 Grid Tools
-        binding.cardCamera.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_cameraVoiceFragment)
-        }
+    private fun setupFeatureActions() {
+        bindNavigation(binding.cardCamera, R.id.action_homeFragment_to_cameraVoiceFragment)
 
         binding.pinLock.setOnClickListener {
             openFeatureWithPermission(
@@ -68,60 +109,58 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 R.id.action_homeFragment_to_pinLockFragment
             )
         }
-
         binding.patternLock.setOnClickListener {
             openFeatureWithPermission(
                 PermissionFragment.TARGET_PATTERN,
                 R.id.action_homeFragment_to_patternLockFragment
             )
         }
-
         binding.fingerLock.setOnClickListener {
             openFeatureWithPermission(
                 PermissionFragment.TARGET_FINGERPRINT,
                 R.id.action_homeFragment_to_fingerprintLockFragment
             )
         }
-        binding.cardLock.setOnClickListener { findNavController().navigate(R.id.voiceGuideFragment) }
 
-        // Bottom Navigation Tabs
-        binding.tabVoiceLock.setOnClickListener {
-            // Already on Voice Lock home
-        }
+        // AI Tools actions
+        bindNavigation(binding.cardAiQuotes, R.id.aiQuoteFragment)
+        bindNavigation(binding.cardAiVoiceNotes, R.id.action_homeFragment_to_voiceNoteFragment)
 
-        binding.tabThemes.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_themesFragment)
-        }
-
-        binding.tabVoiceNote.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_voiceNoteFragment)
-        }
-
-        bindVoiceLockSwitches()
+        // Lock Screen Themes actions
+        bindNavigation(binding.btnSeeAllThemes, R.id.action_homeFragment_to_seeAllthemesFragment)
+        bindNavigation(binding.cardTheme1, R.id.action_homeFragment_to_themesFragment)
+        bindNavigation(binding.cardTheme2, R.id.action_homeFragment_to_themesFragment)
+        bindNavigation(binding.cardTheme3, R.id.action_homeFragment_to_themesFragment)
+        bindNavigation(binding.cardTheme4, R.id.action_homeFragment_to_themesFragment)
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateVoiceLockSwitches()
+    private fun setupTabActions() {
+        binding.tabHome.isSelected = true
+        bindNavigation(binding.tabSecurity, R.id.action_homeFragment_to_pinLockFragment)
+        bindNavigation(binding.tabThemes, R.id.action_homeFragment_to_themesFragment)
+        bindNavigation(binding.tabSettings, R.id.action_homeFragment_to_settingFragment)
     }
 
-    private fun bindVoiceLockSwitches() {
+    private fun bindNavigation(view: View, @IdRes destination: Int) {
+        view.setOnClickListener {
+            findNavController().navigate(destination)
+        }
+    }
+
+    private fun setupSwitchActions() {
         binding.switchUnlock.setOnClickListener {
-            val newState = !VoiceLockSwitchStore.isUnlockEffective(requireContext())
-            handleUnlockSwitchChanged(newState)
+            handleUnlockSwitchChanged(!VoiceLockSwitchStore.isUnlockEffective(requireContext()))
         }
-
         binding.switchLock.setOnClickListener {
-            val newState = !VoiceLockSwitchStore.isLockEffective(requireContext())
-            handleLockSwitchChanged(newState)
+            handleLockSwitchChanged(!VoiceLockSwitchStore.isLockEffective(requireContext()))
         }
-
         updateVoiceLockSwitches()
     }
 
     private fun handleUnlockSwitchChanged(enabled: Boolean) {
         VoiceLockSwitchStore.setUnlockEnabled(requireContext(), enabled)
-        if (enabled && !com.futurecode.voicelockscreen.security.SecureVoiceStore.hasPhrase(requireContext())) {
+
+        if (enabled && !SecureVoiceStore.hasPhrase(requireContext())) {
             findNavController().navigate(R.id.voiceGuideFragment)
             return
         }
@@ -130,9 +169,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             updateVoiceLockSwitches()
             return
         }
-
         if (!hasRequiredPermissions()) {
-            openPermissionScreenForHomeSwitch()
+            openPermissionScreen(PermissionFragment.TARGET_HOME)
             updateVoiceLockSwitches()
             return
         }
@@ -144,94 +182,113 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun handleLockSwitchChanged(enabled: Boolean) {
         VoiceLockSwitchStore.setLockEnabled(requireContext(), enabled)
-        if (enabled && !com.futurecode.voicelockscreen.security.SecureVoiceStore.hasPhrase(requireContext())) {
+
+        if (enabled && !SecureVoiceStore.hasPhrase(requireContext())) {
             findNavController().navigate(R.id.voiceGuideFragment)
             return
         }
         if (enabled && !hasRequiredPermissions()) {
-            openPermissionScreenForHomeSwitch()
+            openPermissionScreen(PermissionFragment.TARGET_HOME)
         }
         updateVoiceLockSwitches()
     }
 
     private fun updateVoiceLockSwitches() {
-        val unlockChecked = VoiceLockSwitchStore.isUnlockEffective(requireContext())
-        val lockChecked = VoiceLockSwitchStore.isLockEffective(requireContext())
-        val shiftDistance = 26f * resources.displayMetrics.density
-
-        // 1. Render Unlock Switch (60x34dp, knob 28x28dp)
-        if (unlockChecked) {
-            binding.switchUnlock.setBackgroundResource(R.drawable.bg_switch_track_unlock_active)
-            binding.knobUnlock.setBackgroundResource(R.drawable.bg_switch_thumb_white)
-            binding.knobUnlock.animate().translationX(shiftDistance).setDuration(200).start()
-            binding.tvUnlockStatus.setText(R.string.status_active)
-        } else {
-            binding.switchUnlock.setBackgroundResource(R.drawable.bg_switch_track_unlock)
-            binding.knobUnlock.setBackgroundResource(R.drawable.bg_switch_thumb_lock)
-            binding.knobUnlock.animate().translationX(0f).setDuration(200).start()
-            binding.tvUnlockStatus.setText(R.string.status_inactive)
-        }
-
-        // 2. Render Lock Switch (60x34dp, knob 28x28dp)
-        if (lockChecked) {
-            binding.switchLock.setBackgroundResource(R.drawable.bg_switch_track_lock_active)
-            binding.knobLock.setBackgroundResource(R.drawable.bg_switch_thumb_white)
-            binding.knobLock.animate().translationX(shiftDistance).setDuration(200).start()
-            binding.tvLockStatus.setText(R.string.status_active)
-        } else {
-            binding.switchLock.setBackgroundResource(R.drawable.bg_switch_track_lock)
-            binding.knobLock.setBackgroundResource(R.drawable.bg_switch_thumb_lock)
-            binding.knobLock.animate().translationX(0f).setDuration(200).start()
-            binding.tvLockStatus.setText(R.string.status_inactive)
-        }
-    }
-
-    private fun openPermissionScreenForHomeSwitch() {
-        findNavController().navigate(
-            R.id.action_homeFragment_to_permissionFragment,
-            Bundle().apply {
-                putString(PermissionFragment.ARG_TARGET, PermissionFragment.TARGET_HOME)
-            }
+        renderSwitch(
+            binding.switchUnlock,
+            binding.knobUnlock,
+            binding.tvUnlockSwitchState,
+            binding.tvUnlockStatus,
+            VoiceLockSwitchStore.isUnlockEffective(requireContext())
+        )
+        renderSwitch(
+            binding.switchLock,
+            binding.knobLock,
+            binding.tvLockSwitchState,
+            binding.tvLockStatus,
+            VoiceLockSwitchStore.isLockEffective(requireContext())
         )
     }
 
-    private fun openFeatureWithPermission(target: String, @IdRes directActionId: Int) {
+    private fun renderSwitch(
+        control: View,
+        knob: View,
+        stateLabel: TextView,
+        statusLabel: TextView,
+        enabled: Boolean
+    ) {
+        control.setBackgroundResource(
+            if (enabled) R.drawable.bg_home_switch_on else R.drawable.bg_home_switch_off
+        )
+        knob.setBackgroundResource(
+            if (enabled) R.drawable.bg_switch_thumb_white else R.drawable.bg_switch_thumb_lock
+        )
+        stateLabel.setText(if (enabled) R.string.home_switch_on else R.string.home_switch_off)
+        statusLabel.setText(
+            if (enabled) R.string.home_status_active else R.string.home_status_inactive
+        )
+        alignSwitchLabel(stateLabel, enabled)
+
+        val travel = resources.getDimension(R.dimen.home_switch_width) -
+            resources.getDimension(R.dimen.home_switch_knob_size) -
+            2 * resources.getDimension(R.dimen.spacing_sm)
+        val direction = if (control.layoutDirection == View.LAYOUT_DIRECTION_RTL) -1 else 1
+        knob.animate()
+            .translationX(if (enabled) direction * travel else 0f)
+            .setDuration(SWITCH_ANIMATION_DURATION)
+            .start()
+
+        control.isSelected = enabled
+        ViewCompat.setStateDescription(control, stateLabel.text)
+    }
+
+    private fun alignSwitchLabel(label: TextView, enabled: Boolean) {
+        val inset = resources.getDimensionPixelSize(R.dimen.spacing_sm)
+        label.layoutParams = (label.layoutParams as ConstraintLayout.LayoutParams).apply {
+            startToStart = if (enabled) ConstraintSet.PARENT_ID else ConstraintSet.UNSET
+            endToEnd = if (enabled) ConstraintSet.UNSET else ConstraintSet.PARENT_ID
+            marginStart = if (enabled) inset else 0
+            marginEnd = if (enabled) 0 else inset
+        }
+    }
+
+    private fun openFeatureWithPermission(target: String, @IdRes destination: Int) {
         if (hasRequiredPermissions()) {
-            findNavController().navigate(directActionId)
-            return
+            findNavController().navigate(destination)
+        } else {
+            openPermissionScreen(target)
         }
-
-        findNavController().navigate(
-            R.id.action_homeFragment_to_permissionFragment,
-            Bundle().apply {
-                putString(PermissionFragment.ARG_TARGET, target)
-            }
-        )
     }
 
-    private fun hasRequiredPermissions(): Boolean {
-        return VoiceLockSwitchStore.hasRequiredPermissions(requireContext())
+    private fun openPermissionScreen(target: String) {
+        val arguments = Bundle().apply {
+            putString(PermissionFragment.ARG_TARGET, target)
+        }
+        findNavController().navigate(R.id.action_homeFragment_to_permissionFragment, arguments)
+    }
+
+    private fun hasRequiredPermissions() =
+        VoiceLockSwitchStore.hasRequiredPermissions(requireContext())
+
+    private fun isNotificationPermissionMissing(): Boolean {
+        return Build.VERSION.SDK_INT >= 33 &&
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
     }
 
     private fun maybeAskNotifications() {
+        if (!isNotificationPermissionMissing()) return
         if (VoiceLockFeatureStore.notesAsked(requireContext())) return
-        DarkDialogs.show(
-            requireContext(),
-            getString(R.string.want_security_alerts),
-            getString(R.string.security_alerts_body),
-            getString(R.string.not_now),
-            getString(R.string.allow),
-            onNegative = { VoiceLockFeatureStore.setNotifAsked(requireContext()) }
-        ) {
-            VoiceLockFeatureStore.setNotifAsked(requireContext())
-            if (Build.VERSION.SDK_INT >= 33 &&
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
-        }
+        if (parentFragmentManager.isStateSaved) return
+        if (parentFragmentManager.findFragmentByTag(NotificationPermissionDialog.TAG) != null) return
+        if (findNavController().currentDestination?.id != R.id.homeFragment) return
+
+        NotificationPermissionDialog().show(parentFragmentManager, NotificationPermissionDialog.TAG)
+    }
+
+    private companion object {
+        const val SWITCH_ANIMATION_DURATION = 200L
     }
 }

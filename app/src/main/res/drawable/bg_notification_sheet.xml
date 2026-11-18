@@ -1,0 +1,1 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="@color/surfaceElevated"/><corners android:topLeftRadius="@dimen/radius_xl" android:topRightRadius="@dimen/radius_xl"/></shape>

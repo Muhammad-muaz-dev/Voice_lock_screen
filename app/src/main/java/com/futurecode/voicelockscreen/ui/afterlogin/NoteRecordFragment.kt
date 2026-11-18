@@ -1,14 +1,12 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,13 +16,14 @@ import androidx.navigation.navOptions
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentNoteRecordBinding
+import com.futurecode.voicelockscreen.utils.SpeechSession
 import com.futurecode.voicelockscreen.utils.VoiceLanguagePicker
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 import com.futurecode.voicelockscreen.utils.VoiceNoteItem
 import java.util.Locale
 
 class NoteRecordFragment : BaseFragment<FragmentNoteRecordBinding>(FragmentNoteRecordBinding::inflate) {
-    private var recognizer: SpeechRecognizer? = null
+    private var speechSession: SpeechSession? = null
     private var listening = false
     private var startedAt = 0L
     private var saving = false
@@ -47,7 +46,7 @@ class NoteRecordFragment : BaseFragment<FragmentNoteRecordBinding>(FragmentNoteR
         binding.btnLanguage.setOnClickListener { VoiceLanguagePicker.show(requireContext()) { binding.btnLanguage.text = VoiceLanguagePicker.label(requireContext()) } }
         binding.btnStart.setOnClickListener {
             when {
-                listening -> { binding.btnStart.isEnabled = false; recognizer?.stopListening() }
+                listening -> { binding.btnStart.isEnabled = false; speechSession?.stopListening() }
                 ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED -> permission.launch(Manifest.permission.RECORD_AUDIO)
                 else -> start()
             }
@@ -57,15 +56,16 @@ class NoteRecordFragment : BaseFragment<FragmentNoteRecordBinding>(FragmentNoteR
         if (!prefManager.isPro && VoiceLockFeatureStore.remainingTries(requireContext()) <= 0) {
             findNavController().navigate(R.id.premiumFragment); return
         }
-        if (!SpeechRecognizer.isRecognitionAvailable(requireContext())) { binding.tvTranscript.setText(R.string.speech_not_available); return }
-        recognizer?.destroy()
+        if (!SpeechSession.isAvailable(requireContext())) { binding.tvTranscript.setText(R.string.speech_not_available); return }
         listening = true; saving = false; startedAt = SystemClock.elapsedRealtime()
         binding.btnStart.setText(R.string.stop)
         binding.btnStart.setBackgroundColor(requireContext().getColor(R.color.danger))
         binding.btnLanguage.isEnabled = false
         handler.post(tick)
-        recognizer = SpeechRecognizer.createSpeechRecognizer(requireContext()).apply {
-            setRecognitionListener(object : RecognitionListener {
+        val session = speechSession ?: SpeechSession(requireContext()).also { speechSession = it }
+        session.start(
+            SpeechSession.voiceIntent(requireContext(), partialResults = true),
+            object : RecognitionListener {
                 override fun onReadyForSpeech(params: Bundle?) { bindingOrNull?.tvTranscript?.setText(R.string.recording_listening) }
                 override fun onBeginningOfSpeech() = Unit
                 override fun onRmsChanged(rmsdB: Float) = Unit
@@ -92,13 +92,8 @@ class NoteRecordFragment : BaseFragment<FragmentNoteRecordBinding>(FragmentNoteR
                     if (!partial.isNullOrBlank()) bindingOrNull?.tvTranscript?.text = partial
                 }
                 override fun onEvent(eventType: Int, params: Bundle?) = Unit
-            })
-            startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE, VoiceLanguagePicker.selected(requireContext()))
-                putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS,true)
-            })
-        }
+            }
+        )
     }
     private fun reset() {
         listening = false; handler.removeCallbacks(tick)
@@ -108,7 +103,7 @@ class NoteRecordFragment : BaseFragment<FragmentNoteRecordBinding>(FragmentNoteR
     }
     override fun onDestroyView() {
         listening = false; handler.removeCallbacksAndMessages(null)
-        recognizer?.cancel(); recognizer?.destroy(); recognizer = null
+        speechSession?.release(); speechSession = null
         super.onDestroyView()
     }
 }

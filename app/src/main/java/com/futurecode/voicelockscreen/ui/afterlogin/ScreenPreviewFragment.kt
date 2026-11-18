@@ -1,11 +1,9 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.speech.RecognitionListener
-import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -32,6 +30,7 @@ import com.futurecode.voicelockscreen.security.AppLockState
 import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
+import com.futurecode.voicelockscreen.utils.SpeechSession
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 import com.futurecode.voicelockscreen.utils.VoiceLockPattern
@@ -49,7 +48,7 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
         PreviewMethod(R.string.fingerprint, R.drawable.ic_fingerprint_lock)
     )
     private var selectedMethod = 2
-    private var speechRecognizer: SpeechRecognizer? = null
+    private var speechSession: SpeechSession? = null
     private var fallbackOverlay: FrameLayout? = null
     private var previousStatusBarColor: Int = Color.TRANSPARENT
     private var previousNavigationBarColor: Int = Color.TRANSPARENT
@@ -382,16 +381,21 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
             return
         }
 
-        if (!SpeechRecognizer.isRecognitionAvailable(requireContext())) {
+        if (!SpeechSession.isAvailable(requireContext())) {
             Toast.makeText(requireContext(), R.string.speech_not_available, Toast.LENGTH_SHORT).show()
             return
         }
+        if (!SpeechSession.hasMicPermission(requireContext())) {
+            binding.tvSpeakHint.text = getString(R.string.microphone_blocked_body)
+            return
+        }
 
-        stopRecognizer()
         binding.tvSpeakHint.text = getString(R.string.listening_unlock)
 
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext()).apply {
-            setRecognitionListener(object : RecognitionListener {
+        val session = speechSession ?: SpeechSession(requireContext()).also { speechSession = it }
+        session.start(
+            SpeechSession.voiceIntent(requireContext()),
+            object : RecognitionListener {
                 override fun onReadyForSpeech(params: Bundle?) {
                     binding.tvSpeakHint.text = getString(R.string.listening_unlock)
                 }
@@ -421,9 +425,8 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
 
                 override fun onPartialResults(partialResults: Bundle?) = Unit
                 override fun onEvent(eventType: Int, params: Bundle?) = Unit
-            })
-            startListening(speechIntent())
-        }
+            }
+        )
     }
 
     private fun showTryAgain() {
@@ -443,17 +446,8 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
     }
 
     private fun stopRecognizer() {
-        speechRecognizer?.stopListening()
-        speechRecognizer?.destroy()
-        speechRecognizer = null
-    }
-
-    private fun speechIntent(): Intent {
-        return Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
-        }
+        speechSession?.release()
+        speechSession = null
     }
 
     private data class PreviewMethod(

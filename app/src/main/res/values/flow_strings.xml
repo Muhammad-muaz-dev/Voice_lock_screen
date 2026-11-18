@@ -1,10 +1,10 @@
 <resources>
     <string name="go_pro_title">Go Pro</string>
     <string name="rate_app">Rate the app</string>
-    <string name="home_camera_hint">Use your voice</string>
-    <string name="home_pin_hint">Use a number code</string>
-    <string name="home_pattern_hint">Draw a pattern</string>
-    <string name="home_fingerprint_hint">Use your finger</string>
+    <string name="home_camera_hint">Use voice to open</string>
+    <string name="home_pin_hint">Lock with number pin</string>
+    <string name="home_pattern_hint">Draw to open lock</string>
+    <string name="home_fingerprint_hint">Lock with fingerprint</string>
     <string name="upload_picture">Upload a picture</string>
     <string name="show_clock_quote">Show clock and quote</string>
     <string name="picture_preview_hint">This is how your lock screen will look.</string>

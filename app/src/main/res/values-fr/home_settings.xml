@@ -1,0 +1,11 @@
+<resources>
+    <string name="home_switch_off">OFF</string>
+    <string name="home_switch_on">ON</string>
+    <string name="home_status_inactive">Inactif</string>
+    <string name="home_status_active">Actif</string>
+    <string name="home_example">Exemple</string>
+    <string name="change_voice_command">Modifier la commande vocale</string>
+    <string name="notification_later">Plus tard</string>
+    <string name="settings_premium_description">Débloquez toutes les fonctionnalités</string>
+    <string name="settings_rate_description">Évaluez notre app sur la boutique</string>
+</resources>

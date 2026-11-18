@@ -1,0 +1,1 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="@color/surfaceTint2"/><corners android:radius="@dimen/radius_xl"/></shape>

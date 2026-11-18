@@ -1,78 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Midnight Violet Design System Tokens -->
+    <!-- ========================================================================= -->
+    <!-- Voice Lock Design System v1.0 — Primary Palette                            -->
+    <!-- ========================================================================= -->
+    <color name="primary">#635BFF</color>
+    <color name="primary_light">#EDECFF</color>
+    <color name="primary_dark">#5047E2</color>
+
+    <!-- Semantic Primary Aliases (for existing layout & drawable compatibility) -->
+    <color name="primaryStart">#635BFF</color>
+    <color name="primaryEnd">#5047E2</color>
+    <color name="primaryLight">#EDECFF</color>
+    <color name="primarySoft">#EDECFF</color>
+    <color name="primarySelected">#635BFF</color>
+
+    <!-- ========================================================================= -->
+    <!-- Voice Lock Design System v1.0 — Background & Surface Colors                -->
+    <!-- ========================================================================= -->
+    <color name="bg">#F7F8FC</color>
+    <color name="bg_screen">#F7F8FC</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="card">#FFFFFF</color>
+    <color name="card_bg">#FFFFFF</color>
+    <color name="border">#E6E8EF</color>
+
+    <!-- Elevated & Container Aliases -->
+    <color name="surfaceElevated">#FFFFFF</color>
+    <color name="surfaceSunken">#F7F8FC</color>
+    <color name="field">#FFFFFF</color>
+    <color name="surfaceTint">#EDECFF</color>
+    <color name="surfaceTint2">#EDECFF</color>
+    <color name="surfaceDisabled">#F1F2F6</color>
+    <color name="navBar">#FFFFFF</color>
+    <color name="borderStrong">#635BFF</color>
+    <color name="outline">#E6E8EF</color>
+    <color name="radioRing">#E6E8EF</color>
+
+    <!-- ========================================================================= -->
+    <!-- Voice Lock Design System v1.0 — Text Colors                                -->
+    <!-- ========================================================================= -->
+    <color name="primary_text">#171829</color>
+    <color name="secondary_text">#74768A</color>
+    <color name="tertiary_text">#A1A4B7</color>
+
+    <!-- Semantic Text Aliases -->
+    <color name="textPrimary">#171829</color>
+    <color name="textSecondary">#74768A</color>
+    <color name="textTertiary">#A1A4B7</color>
+    <color name="textPlaceholder">#A1A4B7</color>
+    <color name="textDisabled">#A1A4B7</color>
+
+    <!-- ========================================================================= -->
+    <!-- Voice Lock Design System v1.0 — Semantic Colors                            -->
+    <!-- ========================================================================= -->
+    <color name="success">#22C55E</color>
+    <color name="semantic_success">#22C55E</color>
+    <color name="warning">#F59E0B</color>
+    <color name="semantic_warning">#F59E0B</color>
+    <color name="error">#EF4444</color>
+    <color name="semantic_error">#EF4444</color>
+    <color name="info">#3B82F6</color>
+    <color name="semantic_info">#3B82F6</color>
+
+    <!-- Soft Semantic Tints -->
+    <color name="successSoft">#DCFCE7</color>
+    <color name="errorSoft">#FEE2E2</color>
+    <color name="danger">#EF4444</color>
+    <color name="scrim">#66000000</color>
+
+    <!-- ========================================================================= -->
+    <!-- Voice Lock Design System v1.0 — Badges & Tags (Section 11)                 -->
+    <!-- ========================================================================= -->
+    <color name="badge_not_setup_bg">#EDECFF</color>
+    <color name="badge_not_setup_text">#635BFF</color>
+    <color name="badge_new_bg">#3B82F6</color>
+    <color name="badge_new_text">#FFFFFF</color>
+    <color name="badge_pro_bg">#FEF3C7</color>
+    <color name="badge_pro_text">#D97706</color>
+    <color name="badge_active_bg">#DCFCE7</color>
+    <color name="badge_active_text">#16A34A</color>
+
+    <!-- ========================================================================= -->
+    <!-- Voice Lock Design System v1.0 — Feature & Icon Accents (Section 03)        -->
+    <!-- ========================================================================= -->
+    <color name="icon_bg_voice">#EDECFF</color>
+    <color name="icon_accent_voice">#635BFF</color>
+    <color name="icon_bg_pattern">#EDECFF</color>
+    <color name="icon_accent_pattern">#635BFF</color>
+    <color name="icon_bg_pin">#F4EFFE</color>
+    <color name="icon_accent_pin">#7C3AED</color>
+    <color name="icon_bg_fingerprint">#F4EFFE</color>
+    <color name="icon_accent_fingerprint">#7C3AED</color>
+    <color name="icon_bg_camera">#E0F7F6</color>
+    <color name="icon_accent_camera">#00A896</color>
+    <color name="icon_bg_quotes">#FFF1E8</color>
+    <color name="icon_accent_quotes">#FF7A00</color>
+    <color name="icon_bg_themes">#F3E8FF</color>
+    <color name="icon_accent_themes">#8B5CF6</color>
+    <color name="icon_bg_settings">#F1F5F9</color>
+    <color name="icon_accent_settings">#64748B</color>
+
+    <!-- Component UI States (Buttons, Controls, Dialogs, Toast) -->
+    <color name="switch_track_on">#635BFF</color>
+    <color name="switch_track_off">#E6E8EF</color>
+    <color name="dialog_btn_cancel_bg">#F1F2F6</color>
+    <color name="toast_bg_dark">#1E293B</color>
+    <color name="toast_bg_info">#EFF6FF</color>
+
+    <!-- ========================================================================= -->
+    <!-- Legacy & Compatibility Tokens                                             -->
+    <!-- ========================================================================= -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="text_white">#FFFFFF</color>
     <color name="screen_bg_dark">#0B1020</color>
     <color name="card_bg_dark">#151B33</color>
     <color name="card_stroke_dark">#232B4A</color>
-    <color name="brand_purple">#5B3DF5</color>
-    <color name="gradient_purple_end">#7B2FD6</color>
+    <color name="brand_purple">#635BFF</color>
+    <color name="gradient_purple_end">#5047E2</color>
     <color name="sub_pill_lock_bg">#0F1428</color>
-    <color name="bottom_nav_bg">#11172B</color>
-    <color name="text_white">#FFFFFF</color>
-    <color name="text_muted_sub">#A3A9C2</color>
-
-    <color name="accent_camera_bg">#6D4AFF</color>
-    <color name="accent_pin_bg">#0E8FA8</color>
-    <color name="accent_pattern_bg">#D6336C</color>
-    <color name="accent_fingerprint_bg">#C2570C</color>
-    <color name="divider_unlock_translucent">#4DFFFFFF</color>
-
-    <!-- Additional Palette Tokens -->
-    <color name="primaryStart">#5B3DF5</color>
-    <color name="primaryEnd">#7B2FD6</color>
-    <color name="primaryLight">#8B73FF</color>
-    <color name="primarySoft">#C4B5FF</color>
-    <color name="primarySelected">#7C5CFF</color>
-
-    <color name="bg">#0B1020</color>
-    <color name="surface">#151B33</color>
-    <color name="surfaceElevated">#18203F</color>
-    <color name="surfaceSunken">#10162C</color>
-    <color name="field">#131A36</color>
-    <color name="surfaceTint">#1B2146</color>
-    <color name="surfaceTint2">#2A2F5A</color>
-    <color name="surfaceDisabled">#1A2040</color>
-    <color name="navBar">#11172B</color>
-
-    <color name="border">#232B4A</color>
-    <color name="borderStrong">#3B3F8F</color>
-    <color name="outline">#3B4272</color>
-    <color name="radioRing">#5D6591</color>
-
-    <color name="textPrimary">#FFFFFF</color>
-    <color name="textSecondary">#A3A9C2</color>
-    <color name="textPlaceholder">#8089AD</color>
-    <color name="textDisabled">#6B7399</color>
-
+    <color name="bottom_nav_bg">#FFFFFF</color>
+    <color name="text_muted_sub">#74768A</color>
+    <color name="accent_camera_bg">#3B82F6</color>
+    <color name="accent_pin_bg">#F43F5E</color>
+    <color name="accent_pattern_bg">#635BFF</color>
+    <color name="accent_fingerprint_bg">#10B981</color>
+    <color name="divider_unlock_translucent">#1A171829</color>
+    <color name="bg_color">#F7F8FC</color>
+    <color name="blue_primary">#635BFF</color>
+    <color name="blue_light">#EDECFF</color>
+    <color name="text_dark">#171829</color>
+    <color name="text_gray">#74768A</color>
+    <color name="premium_gold">#F59E0B</color>
+    <color name="pin_key_text">#171829</color>
+    <color name="splash_accent_green">#22C55E</color>
+    <color name="g2">#5047E2</color>
+    <color name="brand_cyan">#22D3EE</color>
     <color name="accentCyan">#22D3EE</color>
-    <color name="accentGold">#FBBF24</color>
-    <color name="success">#15803D</color>
-    <color name="error">#F87171</color>
-    <color name="danger">#D92D3A</color>
-    <color name="successSoft">#86EFAC</color>
-    <color name="errorSoft">#FCA5A5</color>
-    <color name="scrim">#9E05070F</color>
-
-    <!-- Legacy Compatibility Colors -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="bg_color">#F5F9FC</color>
-    <color name="blue_primary">#3D8BFF</color>
-    <color name="blue_light">#EAF2FF</color>
-    <color name="text_dark">#1A1A1A</color>
-    <color name="text_gray">#7A7A7A</color>
-    <color name="premium_gold">#FFB800</color>
-    <color name="pin_key_text">#142242</color>
-    <color name="splash_accent_green">#10B981</color>
-    <color name="g2">#24508C</color>
-    <color name="brand_cyan">#00EAF4</color>
-
-    <color name="icon_muted">#8089AD</color>
-    <color name="chip_bg_dark">#151B33</color>
-    <color name="outline_purple">#5B3DF5</color>
-    <color name="radio_unselected">#5D6591</color>
-    <color name="sub_pill_unlock_translucent">#2AFFFFFF</color>
-    <color name="switch_track_lock">#2A3050</color>
-    <color name="switch_track_unlock_translucent">#4DFFFFFF</color>
-    <color name="text_purple">#8B73FF</color>
+    <color name="accentGold">#F59E0B</color>
+    <color name="icon_muted">#A1A4B7</color>
+    <color name="chip_bg_dark">#F1F2F6</color>
+    <color name="outline_purple">#635BFF</color>
+    <color name="radio_unselected">#E6E8EF</color>
+    <color name="sub_pill_unlock_translucent">#1A635BFF</color>
+    <color name="switch_track_lock">#E6E8EF</color>
+    <color name="switch_track_unlock_translucent">#33635BFF</color>
+    <color name="text_purple">#635BFF</color>
 </resources>

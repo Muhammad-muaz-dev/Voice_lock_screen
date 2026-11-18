@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Home and settings reference geometry. -->
+    <dimen name="home_card_header_height">86dp</dimen>
+    <dimen name="home_lock_art_width">72dp</dimen>
+    <dimen name="home_status_height">52dp</dimen>
+    <dimen name="home_switch_width">70dp</dimen>
+    <dimen name="home_switch_height">36dp</dimen>
+    <dimen name="home_switch_knob_size">24dp</dimen>
+    <dimen name="home_feature_height">76dp</dimen>
+    <dimen name="settings_row_height">52dp</dimen>
+    <dimen name="settings_banner_height">110dp</dimen>
+    <dimen name="notification_sheet_top_padding">24dp</dimen>
+    <dimen name="notification_badge_size">52dp</dimen>
+    <!-- Language picker: reference pill rows and indented regional choices. -->
+    <dimen name="language_row_height">52dp</dimen>
+    <dimen name="language_row_radius">50dp</dimen>
+    <dimen name="language_flag_size">28dp</dimen>
+    <dimen name="language_indicator_size">18dp</dimen>
+    <dimen name="onboarding_art_fade_height">96dp</dimen>
+    <dimen name="onboarding_dot_size">8dp</dimen>
+    <dimen name="onboarding_dot_active_width">20dp</dimen>
     <!-- Spacing Tokens -->
     <dimen name="spacing_xs">4dp</dimen>
     <dimen name="spacing_sm">8dp</dimen>
@@ -23,18 +43,18 @@
     <!-- Typography Scale (Size/LineHeight) -->
     <!-- Note: Line height is handled via lineSpacingExtra or custom fonts in styles -->
     <dimen name="text_clock">36sp</dimen>
-    <dimen name="text_displayNumber">44sp</dimen>
-    <dimen name="text_display">34sp</dimen>
-    <dimen name="text_headline">28sp</dimen>
-    <dimen name="text_titleXL">22sp</dimen>
-    <dimen name="text_titleL">20sp</dimen>
-    <dimen name="text_titleM">18sp</dimen>
-    <dimen name="text_titleS">16sp</dimen>
-    <dimen name="text_bodyL">15sp</dimen>
-    <dimen name="text_bodyM">14sp</dimen>
-    <dimen name="text_bodyS">13sp</dimen>
-    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_displayNumber">32sp</dimen>
+    <dimen name="text_display">28sp</dimen>
+    <dimen name="text_headline">24sp</dimen>
+    <dimen name="text_titleXL">20sp</dimen>
+    <dimen name="text_titleL">18sp</dimen>
+    <dimen name="text_titleM">16sp</dimen>
+    <dimen name="text_titleS">15sp</dimen>
+    <dimen name="text_bodyL">14sp</dimen>
+    <dimen name="text_bodyM">13sp</dimen>
+    <dimen name="text_bodyS">12sp</dimen>
+    <dimen name="text_caption">11sp</dimen>
     <dimen name="text_overline">11sp</dimen>
-    <dimen name="text_buttonL">16sp</dimen>
-    <dimen name="text_buttonS">14sp</dimen>
+    <dimen name="text_buttonL">14sp</dimen>
+    <dimen name="text_buttonS">12sp</dimen>
 </resources>

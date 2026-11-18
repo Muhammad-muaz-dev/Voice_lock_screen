@@ -1,0 +1,7 @@
+<resources>
+    <string name="language_expanded">展開</string>
+    <string name="language_collapsed">折りたたみ</string>
+    <string name="language_selected">選択済み</string>
+    <string name="language_not_selected">未選択</string>
+    <string name="onboarding_page_position">%2$d ページ中 %1$d ページ</string>
+</resources>

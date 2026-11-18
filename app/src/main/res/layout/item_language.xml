@@ -1,6 +1,27 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/languageContainer" android:layout_width="match_parent" android:layout_height="60dp" android:layout_marginBottom="@dimen/spacing_sm" android:background="@drawable/bg_row_language" android:clickable="true" android:focusable="true" android:paddingStart="@dimen/spacing_md" android:paddingEnd="@dimen/spacing_lg">
-    <TextView android:id="@+id/tvBadge" android:layout_width="36dp" android:layout_height="36dp" android:background="@drawable/bg_badge_gradient" android:fontFamily="@font/sora_bold" android:gravity="center" android:textColor="@color/text_white" android:textSize="@dimen/text_caption" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" tools:text="US" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-    <TextView android:id="@+id/tvLanguageName" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_md" android:ellipsize="end" android:fontFamily="@font/sora_bold" android:maxLines="1" android:textColor="@color/text_white" android:textSize="@dimen/text_titleS" app:layout_constraintBottom_toTopOf="@id/tvLanguageNativeName" app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected" app:layout_constraintStart_toEndOf="@id/tvBadge" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_chainStyle="packed" tools:text="English (United States)" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
-    <TextView android:id="@+id/tvLanguageNativeName" android:layout_width="0dp" android:layout_height="wrap_content" android:ellipsize="end" android:maxLines="1" android:textColor="@color/text_muted_sub" android:textSize="@dimen/text_caption" android:visibility="gone" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected" app:layout_constraintStart_toStartOf="@id/tvLanguageName" app:layout_constraintTop_toBottomOf="@id/tvLanguageName" tools:text="English" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-    <ImageView android:id="@+id/imgLanguageSelected" android:layout_width="26dp" android:layout_height="26dp" android:contentDescription="@null" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" tools:src="@drawable/bg_radio_selected" />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/languageContainer" android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:minHeight="@dimen/language_row_height" android:layout_marginBottom="@dimen/spacing_sm"
+    android:background="@drawable/bg_language_picker_row" android:foreground="?attr/selectableItemBackground"
+    android:clickable="true" android:focusable="true" android:paddingHorizontal="@dimen/spacing_lg"
+    android:paddingVertical="@dimen/spacing_md">
+
+    <com.futurecode.voicelockscreen.ui.view.LanguageFlagView android:id="@+id/imgFlag"
+        android:layout_width="@dimen/language_flag_size" android:layout_height="@dimen/language_flag_size"
+        android:importantForAccessibility="no"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView android:id="@+id/tvLanguageName" style="@style/Text.VoiceLock.bodyL"
+        android:layout_width="0dp" android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_lg" android:layout_marginEnd="@dimen/spacing_sm"
+        android:fontFamily="@font/sora_medium" android:textColor="@color/textPrimary"
+        app:layout_constraintStart_toEndOf="@id/imgFlag" app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected"
+        app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="English (United Kingdom)" />
+
+    <ImageView android:id="@+id/imgLanguageSelected" android:layout_width="@dimen/language_indicator_size"
+        android:layout_height="@dimen/language_indicator_size" android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" tools:src="@drawable/ic_language_unselected" />
 </androidx.constraintlayout.widget.ConstraintLayout>

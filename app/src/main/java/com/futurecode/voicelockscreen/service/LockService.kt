@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.AlarmManager
 import android.app.ActivityOptions
+import android.app.KeyguardManager
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -18,6 +19,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.SystemClock
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.app.ServiceCompat
@@ -27,6 +29,7 @@ import com.futurecode.voicelockscreen.activity.LockScreenActivity
 import com.futurecode.voicelockscreen.receiver.BootReceiver
 import com.futurecode.voicelockscreen.security.AppLockState
 import com.futurecode.voicelockscreen.utils.LockPermissionHelper
+import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 
 class LockService : Service() {
     private val mainHandler = Handler(Looper.getMainLooper())
@@ -100,18 +103,27 @@ class LockService : Service() {
         if (!AppLockState.hasAnyLockEnabled(this)) return
         if (AppLockState.isUnlockedThisSession(this)) return
 
-        if (shouldUseOverlayFirst()) {
+        // App overlays are hidden while the system keyguard is showing, so the
+        // overlay is only usable when the device has no keyguard to cover it.
+        if (!isKeyguardLocked() && LockPermissionHelper.hasOverlayPermission(this)) {
             lockOverlayWindow.show()
             return
         }
 
+        lockOverlayWindow.dismiss()
         val launched = runCatching {
             startActivity(LockScreenActivity.newIntent(this))
         }.isSuccess
 
+        // Background activity starts can be blocked silently on Android 10+, so the
+        // full-screen intent guarantees the lock activity appears over the keyguard.
         if (!launched || Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             showFullScreenLockNotification()
         }
+    }
+
+    private fun isKeyguardLocked(): Boolean {
+        return getSystemService(KeyguardManager::class.java)?.isKeyguardLocked == true
     }
 
     private fun startAsForeground() {
@@ -172,11 +184,6 @@ class LockService : Service() {
             .notify(LOCK_ALERT_NOTIFICATION_ID, notification)
     }
 
-    private fun shouldUseOverlayFirst(): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE &&
-            LockPermissionHelper.hasOverlayPermission(this)
-    }
-
     private fun pendingIntentActivityOptions(): Bundle? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             ActivityOptions.makeBasic().apply {
@@ -231,7 +238,8 @@ class LockService : Service() {
     }
 
     companion object {
-        private const val CHANNEL_ID = "lock_monitor_silent_channel_v2"
+        private const val TAG = "LockService"
+        private const val CHANNEL_ID ="lock_monitor_silent_channel_v2"
         private const val LOCK_ALERT_CHANNEL_ID = "lock_alert_channel_v2"
         private const val NOTIFICATION_ID = 1002
         const val LOCK_ALERT_NOTIFICATION_ID = 1003
@@ -242,8 +250,14 @@ class LockService : Service() {
         const val ACTION_SHOW_LOCK_SCREEN = "com.futurecode.voicelockscreen.SHOW_LOCK_SCREEN"
 
         fun start(context: Context) {
-            val intent = Intent(context, LockService::class.java)
-            ContextCompat.startForegroundService(context, intent)
+            startForegroundSafely(context, Intent(context, LockService::class.java))
+        }
+
+        // Android 12+ refuses foreground-service starts from the background (e.g. when the
+        // process is spun up for a job); the boot/restart paths retry later instead of crashing.
+        private fun startForegroundSafely(context: Context, intent: Intent) {
+            runCatching { ContextCompat.startForegroundService(context, intent) }
+                .onFailure { Log.w(TAG, "Lock service start refused", it) }
         }
 
         fun stop(context: Context) {
@@ -255,12 +269,17 @@ class LockService : Service() {
             start(context)
         }
 
+        fun enableAndStart(context: Context) {
+            VoiceLockSwitchStore.setUnlockEnabled(context, true)
+            startIfNeeded(context)
+        }
+
         fun showLockScreen(context: Context) {
             if (!AppLockState.hasAnyLockEnabled(context)) return
             val intent = Intent(context, LockService::class.java).apply {
                 action = ACTION_SHOW_LOCK_SCREEN
             }
-            ContextCompat.startForegroundService(context, intent)
+            startForegroundSafely(context, intent)
         }
     }
 }

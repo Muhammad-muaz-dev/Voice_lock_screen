@@ -2,64 +2,84 @@ package com.futurecode.voicelockscreen.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.databinding.ItemLanguageBinding
 import com.futurecode.voicelockscreen.model.LanguageOption
 
 class LanguageAdapter(
-    private var list: List<LanguageOption>,
+    private val languages: List<LanguageOption>,
     private var selectedLanguageCode: String,
     private val onLanguageClick: (LanguageOption) -> Unit
 ) : RecyclerView.Adapter<LanguageAdapter.LanguageViewHolder>() {
+    private data class Row(val language: LanguageOption, val child: Boolean = false)
+    private val expanded = mutableSetOf<String>()
+    private var rows = buildRows()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LanguageViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemLanguageBinding.inflate(inflater, parent, false)
-        return LanguageViewHolder(binding)
+    private fun buildRows(): List<Row> = buildList {
+        languages.forEach { language ->
+            add(Row(language))
+            if (language.code in expanded) language.variants.forEach { add(Row(it, true)) }
+        }
     }
 
-    override fun onBindViewHolder(holder: LanguageViewHolder, position: Int) {
-        val item = list[position]
-        val isSelected = item.code == selectedLanguageCode
-        holder.bind(item, isSelected, onLanguageClick)
-    }
-
-    override fun getItemCount(): Int = list.size
-
-    fun submitList(newList: List<LanguageOption>) {
-        list = newList
+    fun restoreExpanded(codes: Collection<String>) {
+        expanded.clear()
+        expanded.addAll(codes)
+        rows = buildRows()
         notifyDataSetChanged()
     }
 
-    fun updateSelection(languageCode: String) {
-        val previousIndex = list.indexOfFirst { it.code == selectedLanguageCode }
-        val selectedIndex = list.indexOfFirst { it.code == languageCode }
-        selectedLanguageCode = languageCode
+    fun expandedCodes(): ArrayList<String> = ArrayList(expanded)
 
-        if (previousIndex >= 0) notifyItemChanged(previousIndex)
-        if (selectedIndex >= 0) notifyItemChanged(selectedIndex)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LanguageViewHolder(
+        ItemLanguageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
+
+    override fun onBindViewHolder(holder: LanguageViewHolder, position: Int) {
+        val row = rows[position]
+        holder.bind(row.language, row.child)
     }
 
-    class LanguageViewHolder(
-        private val binding: ItemLanguageBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    override fun getItemCount() = rows.size
 
-        fun bind(
-            language: LanguageOption,
-            isSelected: Boolean,
-            onLanguageClick: (LanguageOption) -> Unit
-        ) {
-            binding.tvLanguageName.text = language.name
-            binding.tvLanguageNativeName.text = language.nativeName
-            binding.tvBadge.text = language.code.uppercase().take(2)
+    fun updateSelection(languageCode: String) {
+        selectedLanguageCode = languageCode
+        notifyDataSetChanged()
+    }
+
+    inner class LanguageViewHolder(private val binding: ItemLanguageBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(language: LanguageOption, child: Boolean) {
+            val group = language.variants.isNotEmpty()
+            val isSelected = !group && language.code == selectedLanguageCode
+            val isExpanded = language.code in expanded
+            val params = binding.root.layoutParams as ViewGroup.MarginLayoutParams
+            params.marginStart = if (child) binding.root.resources.getDimensionPixelSize(R.dimen.spacing_xxxl) else 0
+            binding.root.layoutParams = params
+            binding.tvLanguageName.text = language.nativeName
+            binding.imgFlag.country = language.country
+            binding.imgFlag.englishVariant = child && language.code.startsWith("en-")
             binding.languageContainer.setBackgroundResource(
-                if (isSelected) R.drawable.bg_row_language_selected else R.drawable.bg_row_language
+                if (isSelected) R.drawable.bg_language_picker_row_selected else R.drawable.bg_language_picker_row
             )
             binding.imgLanguageSelected.setImageResource(
-                if (isSelected) R.drawable.bg_radio_selected else R.drawable.bg_radio_unselected
+                if (group) R.drawable.ic_language_expand
+                else if (isSelected) R.drawable.ic_language_selected else R.drawable.ic_language_unselected
             )
-            binding.root.setOnClickListener { onLanguageClick(language) }
+            binding.imgLanguageSelected.rotation = if (group && isExpanded) 180f else 0f
+            binding.root.isSelected = isSelected
+            ViewCompat.setStateDescription(binding.root, binding.root.context.getString(
+                if (group) { if (isExpanded) R.string.language_expanded else R.string.language_collapsed }
+                else { if (isSelected) R.string.language_selected else R.string.language_not_selected }
+            ))
+            binding.root.setOnClickListener {
+                if (group) {
+                    if (!expanded.add(language.code)) expanded.remove(language.code)
+                    rows = buildRows()
+                    notifyDataSetChanged()
+                } else onLanguageClick(language)
+            }
         }
     }
 }

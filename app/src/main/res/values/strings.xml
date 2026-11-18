@@ -50,19 +50,19 @@
     <string name="pin_setup_required">Set up your PIN first</string>
 
     <!-- Settings Screen -->
-    <string name="setting">Setting</string>
+    <string name="setting">Settings</string>
     <string name="premium">PREMIUM</string>
     <string name="upgrade_to_premium">Upgrade to Premium</string>
     <string name="premium_desc">Unlock all app features &amp; more — no limits, no ads.</string>
     <string name="upgrade_now">Upgrade Now</string>
-    <string name="general_settings">GENERAL SETTINGS</string>
+    <string name="general_settings">General settings</string>
     <string name="change_language">Change Language</string>
     <string name="select_preferred_language">Select your preferred language</string>
     <string name="change_security_question">Change Security Question</string>
-    <string name="update_account_recovery">Update your account recovery question</string>
+    <string name="update_account_recovery">In case you forget your password</string>
     <string name="disable_system_lock">Disable System Lock</string>
     <string name="avoid_multiple_lock">Avoid multiple lock screens</string>
-    <string name="other">OTHER</string>
+    <string name="other">Other</string>
     <string name="share_app">Share App</string>
     <string name="share_with_friends">Share this app with friends</string>
     <string name="feedback">Feedback</string>
@@ -277,12 +277,12 @@
     <string name="promo_malachite_ninja">Malachite Ninja Bun</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_command_title">Lock and unlock with your voice</string>
-    <string name="onboarding_command_description">Just say it. Your phone does the rest.</string>
-    <string name="onboarding_recognition_title">Open your camera by voice</string>
-    <string name="onboarding_recognition_description">Say it and your camera opens. No tapping needed.</string>
-    <string name="onboarding_protection_title">Notes you can just say</string>
-    <string name="onboarding_protection_description">Talk and we’ll write it down. We can sum it up for you too.</string>
+    <string name="onboarding_command_title">Command with Your\nVoice</string>
+    <string name="onboarding_command_description">Use Your Voice to unlock Phone via Advanced AI Voice Recognition Technology</string>
+    <string name="onboarding_recognition_title">Voice-Activated Camera\nControl</string>
+    <string name="onboarding_recognition_description">Open Camera, Take Photos, or Record Videos Instantly Using Just Your Voice</string>
+    <string name="onboarding_protection_title">Instant Voice Notes &amp;\nAI Summaries</string>
+    <string name="onboarding_protection_description">Live Transcribe your Meetings &amp; turn it into AI Summary</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">just now</string>
@@ -290,15 +290,15 @@
     <string name="local_notification_channel">Recover Deleted Message Local Notifications</string>
 
     <!-- Midnight Violet Home Screen Strings -->
-    <string name="voice_lock_title">Voice Lock</string>
+    <string name="voice_lock_title">Voice Screen Lock</string>
     <string name="unlock_screen_title">Unlock Screen</string>
     <string name="lock_screen_title">Lock Screen</string>
     <string name="status_label">Status</string>
     <string name="status_inactive">Off</string>
     <string name="status_active">On</string>
     <string name="say_label">Say</string>
-    <string name="say_unlock_phrase">“Hey, unlock my screen”</string>
-    <string name="say_lock_phrase">“Hey, lock my screen”</string>
+    <string name="say_unlock_phrase">Hey, Unlock my screen</string>
+    <string name="say_lock_phrase">Hey, Lock my screen</string>
     <string name="open_camera_title">Open Camera</string>
     <string name="open_camera_desc">Use voice to open</string>
     <string name="pin_lock_title">Pin lock</string>
@@ -307,9 +307,9 @@
     <string name="pattern_lock_desc">Draw to open lock</string>
     <string name="fingerprint_title">Fingerprint</string>
     <string name="fingerprint_desc">Lock with fingerprint</string>
-    <string name="tab_voice_lock">Voice Lock</string>
+    <string name="tab_voice_lock">AI Voice Lock</string>
     <string name="tab_themes">Themes</string>
-    <string name="tab_voice_note">Voice Note</string>
+    <string name="tab_voice_note">AI Voice Note</string>
     <string name="language">Language</string>
     <string name="onboarding_intro1_title">Lock and unlock with your voice</string>
     <string name="onboarding_intro1_desc">Just say it. Your phone does the rest.</string>
@@ -333,8 +333,8 @@
     <string name="payment_failed_body">Your payment didn’t go through.</string>
     <string name="try_again">Try again</string>
     <string name="hide_option">Hide option</string>
-    <string name="want_security_alerts">Want security alerts?</string>
-    <string name="security_alerts_body">We’ll tell you when someone tries to unlock your phone.</string>
+    <string name="want_security_alerts">Don’t miss important alerts</string>
+    <string name="security_alerts_body">Allow the app to send notifications about unlock attempts, failed tries, or other security events</string>
     <string name="allow">Allow</string>
     <string name="exit_app_title">Are you sure you want to leave?</string>
     <string name="exit">Exit</string>
@@ -351,7 +351,7 @@
     <string name="voice_ready">Your voice is ready.</string>
     <string name="take_a_look">Take a look</string>
     <string name="answer_too_short">Needs at least 3 characters.</string>
-    <string name="rate_us">Rate us</string>
+    <string name="rate_us">Rate Us</string>
     <string name="send_feedback">Send feedback</string>
     <string name="thanks_feedback">That really helps us.</string>
     <string name="close">Close</string>
@@ -427,5 +427,26 @@
     <string name="status_off">Off</string>
     <string name="status_on">On</string>
     <string name="lockout_active">Locked</string>
+
+    <!-- Redesigned Home Screen strings -->
+    <string name="secure_smart_yours">Secure. Smart. Yours.</string>
+    <string name="voice_lock_screen_title">Voice Lock Screen</string>
+    <string name="unlock_with_your_voice">Unlock with your voice</string>
+    <string name="not_set_up">Not Set Up</string>
+    <string name="set_up_active">Active</string>
+    <string name="draw_to_unlock">Draw to unlock</string>
+    <string name="set_a_pin_code">Set a PIN code</string>
+    <string name="use_biometrics">Use biometrics</string>
+    <string name="say_and_capture">Say and capture</string>
+    <string name="ai_tools">AI Tools</string>
+    <string name="ai_quotes_title">AI Quotes</string>
+    <string name="daily_inspiration">Daily inspiration</string>
+    <string name="ai_voice_notes_title">AI Voice Notes</string>
+    <string name="speak_your_thoughts">Speak your thoughts</string>
+    <string name="see_all_arrow">See All &gt;</string>
+    <string name="home_tab">Home</string>
+    <string name="security_tab">Security</string>
+    <string name="themes_tab">Themes</string>
+    <string name="settings_tab">Settings</string>
 </resources>
 

@@ -47,7 +47,7 @@ class PatternLockFragment : BaseFragment<FragmentPatternLockBinding>(FragmentPat
 
         if (sequence == firstPattern) {
             SecurePatternStore.savePattern(requireContext(), sequence)
-            LockService.startIfNeeded(requireContext())
+            LockService.enableAndStart(requireContext())
             binding.tvPatternStatus.text = getString(R.string.pattern_saved)
             Toast.makeText(requireContext(), R.string.pattern_saved, Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()

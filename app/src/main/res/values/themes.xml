@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Base.Theme.VoiceLockScreen" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="colorPrimary">@color/primaryStart</item>
-        <item name="colorOnPrimary">@color/textPrimary</item>
+    <style name="Base.Theme.VoiceLockScreen" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/primaryLight</item>
         <item name="android:colorBackground">@color/bg</item>
         <item name="colorSurface">@color/surface</item>
@@ -11,7 +11,7 @@
         <item name="android:windowBackground">@color/bg</item>
         <item name="android:fontFamily">@font/sora</item>
         <item name="fontFamily">@font/sora</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 

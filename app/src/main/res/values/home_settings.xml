@@ -1,0 +1,11 @@
+<resources>
+    <string name="home_switch_off">OFF</string>
+    <string name="home_switch_on">ON</string>
+    <string name="home_status_inactive">Inactive</string>
+    <string name="home_status_active">Active</string>
+    <string name="home_example">Example</string>
+    <string name="change_voice_command">Change voice command</string>
+    <string name="notification_later">Later</string>
+    <string name="settings_premium_description">Unlock all app features &amp; more</string>
+    <string name="settings_rate_description">Rate our app on the app store</string>
+</resources>
