@@ -1,20 +1,174 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/bottomNavContainer" android:layout_width="match_parent" android:layout_height="84dp" android:background="@drawable/bg_bottom_nav_bar" android:gravity="center_vertical" android:orientation="horizontal">
-    <LinearLayout android:id="@+id/tabVoiceLock" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-        <FrameLayout android:id="@+id/tabVoiceLockIcon" android:layout_width="66dp" android:layout_height="33dp">
-            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:contentDescription="@string/tab_voice_lock" android:src="@drawable/ic_lock_outline" android:tint="@color/text_muted_sub" />
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomNavContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bottom_nav_bar"
+    android:elevation="4dp"
+    android:minHeight="76dp"
+    android:paddingHorizontal="@dimen/spacing_sm"
+    android:paddingVertical="@dimen/spacing_xs">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tabVoiceLock"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:contentDescription="@string/tab_voice_lock"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
+        android:paddingHorizontal="@dimen/spacing_xs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tabThemes"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/tabVoiceLockIcon"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            app:layout_constraintBottom_toTopOf="@id/tabVoiceLockLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageView
+                android:id="@+id/ivTabVoiceLock"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_voice_lock_tab"
+                app:tint="@color/secondary_text" />
         </FrameLayout>
-        <TextView android:id="@+id/tabVoiceLockLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/tab_voice_lock" android:textColor="@color/text_muted_sub" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_semibold" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-    </LinearLayout>
-    <LinearLayout android:id="@+id/tabThemes" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-        <FrameLayout android:id="@+id/tabThemesIcon" android:layout_width="66dp" android:layout_height="33dp">
-            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:contentDescription="@string/tab_themes" android:src="@drawable/ic_nav_themes" android:tint="@color/text_muted_sub" />
+
+        <TextView
+            android:id="@+id/tabVoiceLockLabel"
+            style="@style/Text.VoiceLock.caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:fontFamily="@font/sora_semibold"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:maxLines="2"
+            android:text="@string/tab_voice_lock"
+            android:textColor="@color/secondary_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabVoiceLockIcon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tabThemes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:contentDescription="@string/tab_themes"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
+        android:paddingHorizontal="@dimen/spacing_xs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tabVoiceNote"
+        app:layout_constraintStart_toEndOf="@id/tabVoiceLock"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/tabThemesIcon"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            app:layout_constraintBottom_toTopOf="@id/tabThemesLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageView
+                android:id="@+id/ivTabThemes"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_nav_themes"
+                app:tint="@color/secondary_text" />
         </FrameLayout>
-        <TextView android:id="@+id/tabThemesLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/tab_themes" android:textColor="@color/text_muted_sub" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_semibold" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-    </LinearLayout>
-    <LinearLayout android:id="@+id/tabVoiceNote" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-        <FrameLayout android:id="@+id/tabVoiceNoteIcon" android:layout_width="66dp" android:layout_height="33dp">
-            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:layout_gravity="center" android:contentDescription="@string/tab_voice_note" android:src="@drawable/ic_nav_voicenote" android:tint="@color/text_muted_sub" />
+
+        <TextView
+            android:id="@+id/tabThemesLabel"
+            style="@style/Text.VoiceLock.caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:fontFamily="@font/sora_semibold"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:maxLines="2"
+            android:text="@string/tab_themes"
+            android:textColor="@color/secondary_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabThemesIcon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tabVoiceNote"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:contentDescription="@string/tab_voice_note"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:minHeight="48dp"
+        android:paddingHorizontal="@dimen/spacing_xs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tabThemes"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/tabVoiceNoteIcon"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            app:layout_constraintBottom_toTopOf="@id/tabVoiceNoteLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageView
+                android:id="@+id/ivTabVoiceNote"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_nav_voicenote"
+                app:tint="@color/secondary_text" />
         </FrameLayout>
-        <TextView android:id="@+id/tabVoiceNoteLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/tab_voice_note" android:textColor="@color/text_muted_sub" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_semibold" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-    </LinearLayout>
-</LinearLayout>
+
+        <TextView
+            android:id="@+id/tabVoiceNoteLabel"
+            style="@style/Text.VoiceLock.caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:fontFamily="@font/sora_semibold"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:maxLines="2"
+            android:text="@string/tab_voice_note"
+            android:textColor="@color/secondary_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabVoiceNoteIcon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

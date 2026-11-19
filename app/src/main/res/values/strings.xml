@@ -309,7 +309,7 @@
     <string name="fingerprint_desc">Lock with fingerprint</string>
     <string name="tab_voice_lock">AI Voice Lock</string>
     <string name="tab_themes">Themes</string>
-    <string name="tab_voice_note">AI Voice Note</string>
+    <string name="tab_voice_note">AI Notes</string>
     <string name="language">Language</string>
     <string name="onboarding_intro1_title">Lock and unlock with your voice</string>
     <string name="onboarding_intro1_desc">Just say it. Your phone does the rest.</string>

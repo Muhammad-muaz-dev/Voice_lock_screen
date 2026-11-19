@@ -23,6 +23,7 @@ import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.utils.DarkDialogs
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
+import com.futurecode.voicelockscreen.utils.bindBottomTabs
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
@@ -40,7 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupHeaderActions()
         setupVoiceCardActions()
         setupFeatureActions()
-        setupTabActions()
+        bindBottomTabs(binding.bottomNav, 0)
         setupSwitchActions()
     }
 
@@ -132,13 +133,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         bindNavigation(binding.cardTheme2, R.id.action_homeFragment_to_themesFragment)
         bindNavigation(binding.cardTheme3, R.id.action_homeFragment_to_themesFragment)
         bindNavigation(binding.cardTheme4, R.id.action_homeFragment_to_themesFragment)
-    }
-
-    private fun setupTabActions() {
-        binding.tabHome.isSelected = true
-        bindNavigation(binding.tabSecurity, R.id.action_homeFragment_to_pinLockFragment)
-        bindNavigation(binding.tabThemes, R.id.action_homeFragment_to_themesFragment)
-        bindNavigation(binding.tabSettings, R.id.action_homeFragment_to_settingFragment)
     }
 
     private fun bindNavigation(view: View, @IdRes destination: Int) {

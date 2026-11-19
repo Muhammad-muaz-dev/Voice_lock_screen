@@ -1,5 +1,6 @@
 package com.futurecode.voicelockscreen.utils
 
+import android.content.res.ColorStateList
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -8,41 +9,82 @@ import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.databinding.IncludeBottomTabsBinding
 
 fun Fragment.bindBottomTabs(tabs: IncludeBottomTabsBinding, selected: Int) {
-    val iconBg = R.drawable.bg_bottom_tab_active
-    val white = requireContext().getColor(R.color.white)
-    // Selected tab: white icon on the violet pill, violet label on the white bar.
-    listOf(tabs.tabVoiceLockIcon, tabs.tabThemesIcon, tabs.tabVoiceNoteIcon).getOrNull(selected.coerceIn(0, 2))
-        ?.let { (it.getChildAt(0) as? android.widget.ImageView)?.imageTintList = android.content.res.ColorStateList.valueOf(white) }
-    when (selected) {
-        0 -> {
-            tabs.tabVoiceLockIcon.setBackgroundResource(iconBg)
-            tabs.tabVoiceLockLabel.setTextColor(requireContext().getColor(R.color.primary))
+    val selectedTab = selected.coerceIn(0, 2)
+    val tabsByPosition = listOf(
+        BottomTab(
+            root = tabs.tabVoiceLock,
+            iconContainer = tabs.tabVoiceLockIcon,
+            icon = tabs.ivTabVoiceLock,
+            label = tabs.tabVoiceLockLabel,
+            labelResource = R.string.tab_voice_lock
+        ),
+        BottomTab(
+            root = tabs.tabThemes,
+            iconContainer = tabs.tabThemesIcon,
+            icon = tabs.ivTabThemes,
+            label = tabs.tabThemesLabel,
+            labelResource = R.string.tab_themes
+        ),
+        BottomTab(
+            root = tabs.tabVoiceNote,
+            iconContainer = tabs.tabVoiceNoteIcon,
+            icon = tabs.ivTabVoiceNote,
+            label = tabs.tabVoiceNoteLabel,
+            labelResource = R.string.tab_voice_note
+        )
+    )
+
+    tabsByPosition.forEachIndexed { position, tab ->
+        val isSelected = position == selectedTab
+        tab.root.isSelected = isSelected
+        tab.root.contentDescription = getString(tab.labelResource)
+        tab.iconContainer.setBackgroundResource(
+            if (isSelected) R.drawable.bg_bottom_tab_active else android.R.color.transparent
+        )
+        tab.icon.imageTintList = ColorStateList.valueOf(
+            requireContext().getColor(
+                if (isSelected) R.color.white else R.color.secondary_text
+            )
+        )
+        tab.label.setTextColor(
+            requireContext().getColor(
+                if (isSelected) R.color.primary else R.color.secondary_text
+            )
+        )
+        tab.root.setOnClickListener {
+            when (position) {
+                0 -> if (!isSelected) {
+                    findNavController().popBackStack(R.id.homeFragment, false)
+                }
+                1 -> if (!isSelected) {
+                    findNavController().navigate(R.id.themesFragment, null, navOptions {
+                        popUpTo(R.id.homeFragment) { inclusive = false }
+                        launchSingleTop = true
+                    })
+                }
+                else -> if (!isSelected) {
+                    findNavController().navigate(R.id.voiceNoteFragment, null, navOptions {
+                        popUpTo(R.id.homeFragment) { inclusive = false }
+                        launchSingleTop = true
+                    })
+                }
+            }
         }
-        1 -> {
-            tabs.tabThemesIcon.setBackgroundResource(iconBg)
-            tabs.tabThemesLabel.setTextColor(requireContext().getColor(R.color.primary))
-        }
-        else -> {
-            tabs.tabVoiceNoteIcon.setBackgroundResource(iconBg)
-            tabs.tabVoiceNoteLabel.setTextColor(requireContext().getColor(R.color.primary))
-        }
-    }
-    tabs.tabVoiceLock.setOnClickListener {
-        if (selected != 0) findNavController().popBackStack(R.id.homeFragment, false)
-    }
-    tabs.tabThemes.setOnClickListener {
-        if (selected != 1) findNavController().navigate(R.id.themesFragment, null, navOptions {
-            popUpTo(R.id.homeFragment) { inclusive = false }
-            launchSingleTop = true
-        })
-    }
-    tabs.tabVoiceNote.setOnClickListener {
-        if (selected != 2) findNavController().navigate(R.id.voiceNoteFragment, null, navOptions {
-            popUpTo(R.id.homeFragment) { inclusive = false }
-            launchSingleTop = true
-        })
     }
 }
 
-fun View.gone() { visibility = View.GONE }
-fun View.visible() { visibility = View.VISIBLE }
+private data class BottomTab(
+    val root: View,
+    val iconContainer: View,
+    val icon: android.widget.ImageView,
+    val label: android.widget.TextView,
+    val labelResource: Int
+)
+
+fun View.gone() {
+    visibility = View.GONE
+}
+
+fun View.visible() {
+    visibility = View.VISIBLE
+}
