@@ -142,9 +142,10 @@ object VoiceNoteUi {
         return dialog
     }
 
-    fun showMicAccess(context: Context, onOk: () -> Unit, onCancel: () -> Unit = {}) {
+    fun showMicAccess(context: Context, @StringRes descriptionRes: Int = R.string.vn_text_microphone_permission_desc, onOk: () -> Unit, onCancel: () -> Unit = {}) {
         val binding = VnSheetMicAccessBinding.inflate(LayoutInflater.from(context))
         val dialog = transparentSheet(context, binding.root, inset = binding.cl)
+        binding.tvDesc.setText(descriptionRes)
         binding.tvCancel.setOnClickListener { dialog.dismiss(); onCancel() }
         binding.tvOK.setOnClickListener { dialog.dismiss(); onOk() }
         dialog.show()

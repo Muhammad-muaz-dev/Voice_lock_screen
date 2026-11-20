@@ -97,8 +97,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         // The whole voice card acts as its switch; the reset button re-records the command.
         binding.cardUnlock.setOnClickListener { binding.switchUnlock.performClick() }
         binding.cardLock.setOnClickListener { binding.switchLock.performClick() }
-        bindNavigation(binding.btnResetUnlock, R.id.voiceGuideFragment)
-        bindNavigation(binding.btnResetLock, R.id.voiceGuideFragment)
+        bindNavigation(binding.btnResetUnlock, R.id.voiceSetupFragment)
+        bindNavigation(binding.btnResetLock, R.id.voiceSetupFragment)
     }
 
     private fun setupFeatureActions() {
@@ -155,7 +155,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         VoiceLockSwitchStore.setUnlockEnabled(requireContext(), enabled)
 
         if (enabled && !SecureVoiceStore.hasPhrase(requireContext())) {
-            findNavController().navigate(R.id.voiceGuideFragment)
+            findNavController().navigate(R.id.voiceSetupFragment)
             return
         }
         if (!enabled) {
@@ -178,7 +178,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         VoiceLockSwitchStore.setLockEnabled(requireContext(), enabled)
 
         if (enabled && !SecureVoiceStore.hasPhrase(requireContext())) {
-            findNavController().navigate(R.id.voiceGuideFragment)
+            findNavController().navigate(R.id.voiceSetupFragment)
             return
         }
         if (enabled && !hasRequiredPermissions()) {
@@ -221,6 +221,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         statusLabel.setText(
             if (enabled) R.string.home_status_active else R.string.home_status_inactive
         )
+        val statusColor = when {
+            statusLabel.id == R.id.tvUnlockStatus -> R.color.white
+            enabled -> R.color.success
+            else -> R.color.textSecondary
+        }
+        statusLabel.setTextColor(ContextCompat.getColor(requireContext(), statusColor))
         alignSwitchLabel(stateLabel, enabled)
 
         val travel = resources.getDimension(R.dimen.home_switch_width) -
@@ -247,7 +253,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun openFeatureWithPermission(target: String, @IdRes destination: Int) {
-        if (hasRequiredPermissions()) {
+        if (VoiceLockSwitchStore.hasLockPermissions(requireContext())) {
             findNavController().navigate(destination)
         } else {
             openPermissionScreen(target)

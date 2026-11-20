@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.HomeActivity
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentSplashBinding
@@ -52,12 +50,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     fun navigation() {
         viewLifecycleOwner.lifecycleScope.launch {
             delay(SPLASH_DURATION_MS)
-            if (prefManager.isOnboardingDone) {
-                startActivity(Intent(requireContext(), HomeActivity::class.java))
-                requireActivity().finish()
-            } else {
-                findNavController().navigate(R.id.action_splashFragment_to_languageFragment)
-            }
+            prefManager.isOnboardingDone = true
+            prefManager.isLanguageSelectedFirstTime = true
+            startActivity(Intent(requireContext(), HomeActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
+            requireActivity().finish()
         }
     }
 

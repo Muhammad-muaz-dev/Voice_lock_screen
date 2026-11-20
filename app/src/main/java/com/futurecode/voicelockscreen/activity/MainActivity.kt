@@ -22,7 +22,7 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         // Option A: Custom Dark Color Pass karein (Matching your screenshot)
-        // App is light-only: splash, language and onboarding use the light status bar with dark icons.
+        // App is light-only: splash and language selection use the light status bar with dark icons.
         window.setLightStatusBarWithDarkIcons(getColor(R.color.bg))
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
         navController = navHostFragment!!.navController

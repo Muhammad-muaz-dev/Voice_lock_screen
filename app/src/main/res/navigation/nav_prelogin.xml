@@ -10,22 +10,7 @@
         android:name="com.futurecode.voicelockscreen.ui.prelogin.SplashFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_splash" >
-        <action
-            android:id="@+id/action_splashFragment_to_languageFragment"
-            app:destination="@id/languageFragment" />
+
     </fragment>
-    <fragment
-        android:id="@+id/languageFragment"
-        android:name="com.futurecode.voicelockscreen.ui.prelogin.LanguageFragment"
-        android:label="@string/select_language"
-        tools:layout="@layout/fragment_language" >
-        <action
-            android:id="@+id/action_languageFragment_to_onBoardingFragment"
-            app:destination="@id/onBoardingFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/onBoardingFragment"
-        android:name="com.futurecode.voicelockscreen.ui.prelogin.OnBoardingFragment"
-        android:label="@string/get_started"
-        tools:layout="@layout/fragment_on_boarding" />
+
 </navigation>

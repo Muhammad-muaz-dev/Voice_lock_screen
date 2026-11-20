@@ -32,7 +32,6 @@
     <string name="no_language_found">No language found</string>
     <string name="continue_text">Continue</string>
     <string name="next">Next</string>
-    <string name="get_started">Get Started</string>
     <string name="back">Back</string>
     <string name="pin_code">Pin Code</string>
     <string name="create_your_pin">Create Your PIN</string>
@@ -276,13 +275,6 @@
     <string name="promo_trouble">Trouble Bundle</string>
     <string name="promo_malachite_ninja">Malachite Ninja Bun</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_command_title">Command with Your\nVoice</string>
-    <string name="onboarding_command_description">Use Your Voice to unlock Phone via Advanced AI Voice Recognition Technology</string>
-    <string name="onboarding_recognition_title">Voice-Activated Camera\nControl</string>
-    <string name="onboarding_recognition_description">Open Camera, Take Photos, or Record Videos Instantly Using Just Your Voice</string>
-    <string name="onboarding_protection_title">Instant Voice Notes &amp;\nAI Summaries</string>
-    <string name="onboarding_protection_description">Live Transcribe your Meetings &amp; turn it into AI Summary</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">just now</string>
@@ -311,12 +303,7 @@
     <string name="tab_themes">Themes</string>
     <string name="tab_voice_note">AI Notes</string>
     <string name="language">Language</string>
-    <string name="onboarding_intro1_title">Lock and unlock with your voice</string>
-    <string name="onboarding_intro1_desc">Just say it. Your phone does the rest.</string>
-    <string name="onboarding_intro2_title">Open your camera by voice</string>
-    <string name="onboarding_intro2_desc">Say it and your camera opens. No tapping needed.</string>
-    <string name="onboarding_intro3_title">Notes you can just say</string>
-    <string name="onboarding_intro3_desc">Talk and we’ll write it down. We can sum it up for you too.</string>
+    <string name="splash_tagline">Just say it. Your phone does the rest.</string>
     <string name="restore">Restore</string>
     <string name="get_voice_lock">Get Voice Lock</string>
     <string name="try_free_days">Try it free, then cancel any time.</string>
@@ -448,5 +435,17 @@
     <string name="security_tab">Security</string>
     <string name="themes_tab">Themes</string>
     <string name="settings_tab">Settings</string>
+    <string name="pro_panel_title">START LIKE A PRO</string>
+    <string name="pro_panel_subtitle">Unlock All Features</string>
+    <string name="pro_basic">BASIC</string>
+    <string name="pro_feature_voice">Voice Lock Screen</string>
+    <string name="pro_feature_security">Pin &amp; Finger Lock options</string>
+    <string name="pro_feature_themes">Unlimited Themes</string>
+    <string name="pro_feature_support">VIP Customer Support</string>
+    <string name="pro_feature_ads">Remove Ads</string>
+    <string name="pro_feature_unavailable">&#8212;</string>
+    <string name="pro_price_summary">Rs 2,550.00/week after FREE 3-day trial</string>
+    <string name="pro_legal_disclosure">By continuing you agree to our &lt;u&gt;Terms&lt;/u&gt; and &lt;u&gt;Privacy&lt;/u&gt; policies. Subscription is billed after the trial ends and will auto-renew. Cancel subscription anytime before trial ends to avoid charges.</string>
+    <string name="display_over_other_apps_desc">Shows the lock screen above other apps when your screen is locked.</string>
 </resources>
 

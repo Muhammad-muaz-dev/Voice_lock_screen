@@ -1,7 +1,6 @@
 package com.futurecode.voicelockscreen.activity
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
@@ -9,7 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.databinding.ActivityHomeBinding
 import com.futurecode.voicelockscreen.security.AppLockState
-import com.futurecode.voicelockscreen.utils.setDarkStatusBarWithWhiteIcons
+import com.futurecode.voicelockscreen.utils.setLightStatusBarWithDarkIcons
 
 class HomeActivity : BaseActivity() { // Assumed mapping, adjust if you inherit directly from AppCompatActivity
 
@@ -24,18 +23,19 @@ class HomeActivity : BaseActivity() { // Assumed mapping, adjust if you inherit 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val darkBackgroundColor = Color.parseColor("#0B1020")
-        window.setDarkStatusBarWithWhiteIcons(darkBackgroundColor)
+        val darkBackgroundColor = android.graphics.Color.parseColor("#0B1020")
+        val lightBackgroundColor = getColor(R.color.bg)
+        window.setLightStatusBarWithDarkIcons(lightBackgroundColor)
 
         // FIXED: Ab runtime binding safely initialized frame reference se fragment container fetch karega
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        // Home keeps its existing white-icon status bar; every other (light) screen gets dark icons.
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
-                destination.id != R.id.homeFragment && destination.id != R.id.screenPreviewFragment &&
-                destination.id != R.id.themePreviewFragment && destination.id != R.id.customThemeFragment
+            val darkPreview = destination.id == R.id.screenPreviewFragment ||
+                destination.id == R.id.customThemeFragment
+            window.statusBarColor = if (darkPreview) darkBackgroundColor else lightBackgroundColor
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = !darkPreview
         }
         if (intent.getBooleanExtra(EXTRA_SHOW_LOCK_PREVIEW, false)) {
             AppLockState.requestLockAfterPhoneUnlock(this)

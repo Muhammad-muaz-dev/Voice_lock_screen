@@ -32,7 +32,6 @@
     <string name="no_language_found">Aucune langue trouvée</string>
     <string name="continue_text">Continuer</string>
     <string name="next">Suivant</string>
-    <string name="get_started">Commencer</string>
     <string name="back">Retour</string>
     <string name="pin_code">Code PIN</string>
     <string name="create_your_pin">Créez votre code PIN</string>
@@ -248,16 +247,10 @@
     <string name="promo_trouble">Pack Trouble</string>
     <string name="promo_malachite_ninja">Pack Malachite Ninja</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_command_title">Commandez avec\nvotre voix</string>
-    <string name="onboarding_command_description">Déverrouillez votre téléphone grâce à\nla reconnaissance vocale IA avancée</string>
-    <string name="onboarding_recognition_title">Contrôle de la caméra\npar la voix</string>
-    <string name="onboarding_recognition_description">Ouvrez la caméra, prenez des photos ou enregistrez des vidéos avec votre voix</string>
-    <string name="onboarding_protection_title">Notes vocales et\nrésumés IA</string>
-    <string name="onboarding_protection_description">Transcrivez vos réunions en direct et créez des résumés avec l’IA</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">à l\'instant</string>
     <string name="hours_short">%1$d h</string>
     <string name="local_notification_channel">Notifications locales de récupération des messages supprimés</string>
+    <string name="display_over_other_apps_desc">Affiche un écran de verrouillage au-dessus des autres applications.</string>
 </resources>

@@ -32,7 +32,6 @@
     <string name="no_language_found">No se encontró el idioma</string>
     <string name="continue_text">Continuar</string>
     <string name="next">Siguiente</string>
-    <string name="get_started">Empezar</string>
     <string name="back">Atrás</string>
     <string name="pin_code">Código PIN</string>
     <string name="create_your_pin">Crea tu PIN</string>
@@ -248,16 +247,10 @@
     <string name="promo_trouble">Paquete Trouble</string>
     <string name="promo_malachite_ninja">Paquete Malachite Ninja</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_command_title">Controla con\ntu voz</string>
-    <string name="onboarding_command_description">Desbloquea tu teléfono usando\nreconocimiento de voz por IA avanzado</string>
-    <string name="onboarding_recognition_title">Control de cámara\npor voz</string>
-    <string name="onboarding_recognition_description">Abre la cámara, toma fotos o graba vídeos al instante usando solo tu voz</string>
-    <string name="onboarding_protection_title">Notas de voz y\nresúmenes con IA</string>
-    <string name="onboarding_protection_description">Transcribe tus reuniones en directo y conviértelas en resúmenes con IA</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">justo ahora</string>
     <string name="hours_short">%1$d h</string>
     <string name="local_notification_channel">Notificaciones locales de mensajes eliminados recuperados</string>
+    <string name="display_over_other_apps_desc">Muestra la pantalla de bloqueo sobre otras aplicaciones cuando la pantalla está bloqueada.</string>
 </resources>

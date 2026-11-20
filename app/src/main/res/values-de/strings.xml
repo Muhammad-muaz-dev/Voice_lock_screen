@@ -32,7 +32,6 @@
     <string name="no_language_found">Keine Sprache gefunden</string>
     <string name="continue_text">Weiter</string>
     <string name="next">Weiter</string>
-    <string name="get_started">Loslegen</string>
     <string name="back">Zurück</string>
     <string name="pin_code">PIN-Code</string>
     <string name="create_your_pin">Erstellen Sie Ihre PIN</string>
@@ -249,16 +248,10 @@
     <string name="promo_trouble">Trouble Paket</string>
     <string name="promo_malachite_ninja">Malachite Ninja Paket</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_command_title">Steuern Sie mit\nIhrer Stimme</string>
-    <string name="onboarding_command_description">Entsperren Sie Ihr Telefon mit\nfortschrittlicher KI-Spracherkennung</string>
-    <string name="onboarding_recognition_title">Sprachgesteuerte\nKamera</string>
-    <string name="onboarding_recognition_description">Öffnen Sie die Kamera und nehmen Sie Fotos oder Videos nur mit Ihrer Stimme auf</string>
-    <string name="onboarding_protection_title">Sprachnotizen und\nKI-Zusammenfassungen</string>
-    <string name="onboarding_protection_description">Transkribieren Sie Meetings live und erstellen Sie KI-Zusammenfassungen</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">gerade eben</string>
     <string name="hours_short">%1$d Std.</string>
     <string name="local_notification_channel">Gelöschte Nachrichten wiederherstellen Lokale Benachrichtigungen</string>
+    <string name="display_over_other_apps_desc">Zeigt den Sperrbildschirm über anderen Apps an, wenn der Bildschirm gesperrt ist.</string>
 </resources>

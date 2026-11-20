@@ -3,5 +3,4 @@
     <string name="language_collapsed">Collapsed</string>
     <string name="language_selected">Selected</string>
     <string name="language_not_selected">Not selected</string>
-    <string name="onboarding_page_position">Page %1$d of %2$d</string>
 </resources>

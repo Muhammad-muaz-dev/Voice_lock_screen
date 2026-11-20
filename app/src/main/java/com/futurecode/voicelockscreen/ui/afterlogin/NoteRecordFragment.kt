@@ -91,7 +91,7 @@ class NoteRecordFragment : BaseFragment<FragmentNoteRecordBinding>(FragmentNoteR
         if (SpeechSession.hasMicPermission(requireContext())) {
             startRecording()
         } else {
-            VoiceNoteUi.showMicAccess(requireContext(), onOk = {
+            VoiceNoteUi.showMicAccess(requireContext(), descriptionRes = R.string.vn_text_note_microphone_permission_desc, onOk = {
                 if (isAdded) permission.launch(Manifest.permission.RECORD_AUDIO)
             })
         }

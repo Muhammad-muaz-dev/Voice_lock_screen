@@ -1,9 +1,10 @@
 package com.futurecode.voicelockscreen.ui.prelogin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.activity.HomeActivity
 import com.futurecode.voicelockscreen.activity.MyApplication
 import com.futurecode.voicelockscreen.adapter.LanguageAdapter
 import com.futurecode.voicelockscreen.base.BaseFragment
@@ -36,11 +37,20 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             if (arguments?.getBoolean(ARG_RETURN_TO_SETTINGS, false) == true) {
                 findNavController().popBackStack()
             } else {
-                findNavController().navigate(R.id.action_languageFragment_to_onBoardingFragment)
+                goToHome()
             }
         }
     }
 
+    private fun goToHome() {
+        MyApplication.app.prefManager.isOnboardingDone = true
+        val intent = Intent(requireContext(), HomeActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra(HomeActivity.EXTRA_SHOW_PREMIUM, true)
+        }
+        startActivity(intent)
+        requireActivity().finish()
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(STATE_SELECTION, selectedLanguageCode)

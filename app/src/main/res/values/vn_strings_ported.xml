@@ -8,7 +8,7 @@
     <string name="vn_text_change_language">Change Language</string>
     <string name="vn_text_change_language_desc">Select your preferred language</string>
     <string name="vn_text_change_security_question">Change Security Question</string>
-    <string name="vn_text_change_security_question_desc">Incase you forget your password</string>
+    <string name="vn_text_change_security_question_desc">In case you forget your password</string>
     <string name="vn_text_choose_a_security_question">Choose a security question</string>
     <string name="vn_text_choose_your_language">Choose Your Language</string>
     <string name="vn_text_choose_your_language_to_record">Choose your language to record</string>
@@ -35,8 +35,9 @@
     <string name="vn_text_lock_screen_preview">Lock Screen Preview</string>
     <string name="vn_text_love_it">I Love It!</string>
     <string name="vn_text_microphone_access">Microphone Access</string>
-    <string name="vn_text_microphone_access_desc">To record your voice and create voice password</string>
-    <string name="vn_text_microphone_permission_desc">To create your voice password, we need access to your microphone.</string>
+    <string name="vn_text_microphone_access_desc">To record your voice and create a voice password</string>
+    <string name="vn_text_microphone_permission_desc">Allow microphone access to record your voice password.</string>
+    <string name="vn_text_note_microphone_permission_desc">Allow microphone access to record and transcribe voice notes.</string>
     <string name="vn_text_no_languages_found">No languages found</string>
     <string name="vn_text_not_really">Not really</string>
     <string name="vn_text_ok">OK</string>

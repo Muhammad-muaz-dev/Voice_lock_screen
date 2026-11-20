@@ -32,7 +32,6 @@
     <string name="no_language_found">言語が見つかりません</string>
     <string name="continue_text">次へ進む</string>
     <string name="next">次へ</string>
-    <string name="get_started">始める</string>
     <string name="back">戻る</string>
     <string name="pin_code">PINコード</string>
     <string name="create_your_pin">PINコードを作成</string>
@@ -248,16 +247,10 @@
     <string name="promo_trouble">Trouble バンドル</string>
     <string name="promo_malachite_ninja">Malachite Ninja バンドル</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_command_title">声で\n操作</string>
-    <string name="onboarding_command_description">高度なAI音声認識技術でスマートフォンのロックを解除</string>
-    <string name="onboarding_recognition_title">音声でカメラを\n操作</string>
-    <string name="onboarding_recognition_description">声だけでカメラを開き、写真や動画を撮影</string>
-    <string name="onboarding_protection_title">音声メモと\nAI要約</string>
-    <string name="onboarding_protection_description">会議をリアルタイムで文字起こしし、AIで要約</string>
 
     <!-- Miscellaneous system-facing text -->
     <string name="just_now">たった今</string>
     <string name="hours_short">%1$d 時間</string>
     <string name="local_notification_channel">削除されたメッセージの復元 ローカル通知</string>
+    <string name="display_over_other_apps_desc">画面がロックされているとき、他のアプリの上にロック画面を表示します。</string>
 </resources>

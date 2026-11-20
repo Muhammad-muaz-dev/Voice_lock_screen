@@ -2,7 +2,6 @@ package com.futurecode.voicelockscreen.ui.afterlogin
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -13,60 +12,48 @@ import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPermissionBinding
 import com.futurecode.voicelockscreen.utils.LockPermissionHelper
+
 class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermissionBinding::inflate) {
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
         updatePermissionStatus()
-        if (hasRequiredPermissions()) {
-            navigateToTarget()
-        } else if (hasRuntimePermissions() && !hasOverlayPermission()) {
-            requestOverlayPermission()
-        }
+        if (hasRequiredPermissions()) navigateToTarget()
     }
 
     private val overlayPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
         updatePermissionStatus()
-        if (hasRequiredPermissions()) {
-            navigateToTarget()
-        }
+        if (hasRequiredPermissions()) navigateToTarget()
     }
 
     private var target: String = TARGET_VOICE
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         target = arguments?.getString(ARG_TARGET).orEmpty().ifBlank { TARGET_VOICE }
 
-        binding.ivBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
+        binding.ivBack.setOnClickListener { findNavController().popBackStack() }
         binding.btnContinue.setOnClickListener {
             when {
                 hasRequiredPermissions() -> navigateToTarget()
                 !hasRuntimePermissions() -> requestRequiredPermissions()
-                !hasOverlayPermission() -> requestOverlayPermission()
+                else -> requestOverlayPermission()
             }
         }
-
         binding.swPhone.setOnClickListener {
-            if (!hasPhonePermission()) requestRequiredPermissions()
+            if (!hasPhonePermission()) requestSinglePermission(Manifest.permission.READ_PHONE_STATE)
             updatePermissionStatus()
         }
-
-        binding.swOverlay.setOnClickListener {
-            if (!hasMicrophonePermission()) {
-                requestRequiredPermissions()
-            } else if (!hasOverlayPermission()) {
-                requestOverlayPermission()
-            }
+        binding.swMicrophone.setOnClickListener {
+            if (targetNeedsMicrophone() && !hasMicrophonePermission()) requestSinglePermission(Manifest.permission.RECORD_AUDIO)
             updatePermissionStatus()
         }
-
+        binding.swDisplay.setOnClickListener {
+            if (!hasOverlayPermission()) requestOverlayPermission()
+            updatePermissionStatus()
+        }
         updatePermissionStatus()
     }
 
@@ -77,18 +64,17 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
 
     private fun requestRequiredPermissions() {
         val permissions = buildList {
-            add(Manifest.permission.RECORD_AUDIO)
-            add(Manifest.permission.READ_PHONE_STATE)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                add(Manifest.permission.POST_NOTIFICATIONS)
-            }
+            if (targetNeedsMicrophone() && !hasMicrophonePermission()) add(Manifest.permission.RECORD_AUDIO)
+            if (!hasPhonePermission()) add(Manifest.permission.READ_PHONE_STATE)
         }
-        permissionLauncher.launch(permissions.toTypedArray())
+        if (permissions.isNotEmpty()) permissionLauncher.launch(permissions.toTypedArray())
+    }
+
+    private fun requestSinglePermission(permission: String) {
+        permissionLauncher.launch(arrayOf(permission))
     }
 
     private fun requestOverlayPermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
-
         overlayPermissionLauncher.launch(LockPermissionHelper.overlaySettingsIntent(requireContext()))
     }
 
@@ -96,35 +82,46 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
         val phoneGranted = hasPhonePermission()
         val microphoneGranted = hasMicrophonePermission()
         val overlayGranted = hasOverlayPermission()
-        val count = listOf(phoneGranted, microphoneGranted).count { it }
+        val needsMicrophone = targetNeedsMicrophone()
+        val requiredStates = if (needsMicrophone) {
+            listOf(phoneGranted, microphoneGranted, overlayGranted)
+        } else {
+            listOf(phoneGranted, overlayGranted)
+        }
 
-        binding.swPhone.setOnCheckedChangeListener(null)
-        binding.swOverlay.setOnCheckedChangeListener(null)
         binding.swPhone.isChecked = phoneGranted
-        binding.swOverlay.isChecked = microphoneGranted && overlayGranted
-
-        binding.tvEnabledCount.text = getString(R.string.permissions_enabled_count, count, REQUIRED_PERMISSION_COUNT)
+        binding.swMicrophone.isChecked = microphoneGranted
+        binding.swDisplay.isChecked = overlayGranted
+        binding.clMicrophonePermission.visibility = if (needsMicrophone) View.VISIBLE else View.GONE
+        binding.dividerPhoneMicrophone.visibility = if (needsMicrophone) View.VISIBLE else View.GONE
+        binding.tvEnabledCount.text = getString(
+            R.string.permissions_enabled_count,
+            requiredStates.count { it },
+            requiredStates.size
+        )
         binding.btnContinue.isEnabled = true
         binding.btnContinue.alpha = if (hasRequiredPermissions()) 1f else 0.85f
     }
 
-    private fun hasRequiredPermissions(): Boolean =
-        hasRuntimePermissions() &&
-            hasOverlayPermission()
+    private fun hasRequiredPermissions(): Boolean = hasRuntimePermissions() && hasOverlayPermission()
 
-    private fun hasRuntimePermissions(): Boolean = hasPhonePermission() && hasMicrophonePermission()
+    private fun hasRuntimePermissions(): Boolean =
+        hasPhonePermission() && (!targetNeedsMicrophone() || hasMicrophonePermission())
+
+    private fun targetNeedsMicrophone(): Boolean = target !in setOf(
+        TARGET_PIN,
+        TARGET_PATTERN,
+        TARGET_FINGERPRINT
+    )
 
     private fun hasPhonePermission(): Boolean = hasPermission(Manifest.permission.READ_PHONE_STATE)
 
     private fun hasMicrophonePermission(): Boolean = hasPermission(Manifest.permission.RECORD_AUDIO)
 
-    private fun hasOverlayPermission(): Boolean {
-        return LockPermissionHelper.hasOverlayPermission(requireContext())
-    }
+    private fun hasOverlayPermission(): Boolean = LockPermissionHelper.hasOverlayPermission(requireContext())
 
-    private fun hasPermission(permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
-    }
+    private fun hasPermission(permission: String): Boolean =
+        ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
 
     private fun navigateToTarget() {
         if (target == TARGET_HOME) {
@@ -140,7 +137,6 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
             TARGET_VOICE -> R.id.voiceSetupFragment
             else -> R.id.voiceSetupFragment
         }
-
         if (findNavController().currentDestination?.id == R.id.permissionFragment) {
             findNavController().navigate(destination)
         } else {
@@ -156,6 +152,5 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
         const val TARGET_PATTERN = "pattern"
         const val TARGET_FINGERPRINT = "fingerprint"
         const val TARGET_HOME = "home"
-        private const val REQUIRED_PERMISSION_COUNT = 2
     }
 }

@@ -42,10 +42,12 @@
         android:theme="@style/Theme.VoiceLockScreen" >
         <activity
             android:name=".activity.HomeActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.LockScreenActivity"
+            android:screenOrientation="portrait"
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleTask"
@@ -56,6 +58,7 @@
             android:turnScreenOn="true" />
         <activity
             android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

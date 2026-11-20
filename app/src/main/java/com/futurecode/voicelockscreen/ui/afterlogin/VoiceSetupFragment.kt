@@ -3,6 +3,7 @@ package com.futurecode.voicelockscreen.ui.afterlogin
 import android.Manifest
 import android.animation.ValueAnimator
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.speech.RecognitionListener
 import android.speech.SpeechRecognizer
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.animation.LinearInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isInvisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
@@ -17,20 +19,14 @@ import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentVoiceSetupBinding
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.utils.SpeechSession
+import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 import com.futurecode.voicelockscreen.utils.VoiceLanguagePicker
 import java.util.Locale
 
-/**
- * Voice password setup (reference copy). Record screen -> "Your Voice Key" -> confirm the phrase twice,
- * then the existing security-question step. Saving still goes through [SecureVoiceStore].
- */
+/** Records a voice password and recovery answer in one setup screen. */
 class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoiceSetupBinding::inflate) {
 
-    private enum class Page { RECORD, RESULT, CONFIRM }
-
-    private var page = Page.RECORD
     private var phrase = ""
-    private var confirmStep = 1
     private var listening = false
     private var speechSession: SpeechSession? = null
     private var progressAnimator: ValueAnimator? = null
@@ -47,9 +43,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         VoiceNoteUi.lightStatusBar(this)
-        page = savedInstanceState?.getString(KEY_PAGE)?.let { Page.valueOf(it) } ?: Page.RECORD
         phrase = savedInstanceState?.getString(KEY_PHRASE).orEmpty()
-        confirmStep = savedInstanceState?.getInt(KEY_STEP) ?: 1
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, back)
 
         with(binding.record) {
@@ -63,79 +57,42 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
             }
             ivRecord.setOnClickListener { requestListening() }
             ivRecording.setOnClickListener { stopListening() }
+            btnContinue.setOnClickListener { saveVoiceKey() }
         }
-        with(binding.result) {
-            ivBack.setOnClickListener { goBack() }
-            btnRecordAgain.setOnClickListener { phrase = ""; show(Page.RECORD) }
-            btnContinue.setOnClickListener { confirmStep = 1; show(Page.CONFIRM) }
-        }
-        with(binding.confirm) {
-            ivBack.setOnClickListener { goBack() }
-            buttonRecord.setOnClickListener { if (listening) stopListening() else requestListening() }
-        }
-        show(page)
+        setupRecoveryFields()
+        renderRecord(warning = false)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(KEY_PAGE, page.name)
         outState.putString(KEY_PHRASE, phrase)
-        outState.putInt(KEY_STEP, confirmStep)
     }
 
     private fun goBack() {
-        if (listening) stopListening()
-        when (page) {
-            Page.RECORD -> findNavController().popBackStack()
-            Page.RESULT -> { phrase = ""; show(Page.RECORD) }
-            Page.CONFIRM -> show(Page.RESULT)
+        if (listening) {
+            speechSession?.cancel()
+            finishListening()
         }
-    }
-
-    private fun show(target: Page) {
-        page = target
-        back.isEnabled = target != Page.RECORD
-        val b = bindingOrNull ?: return
-        b.record.root.isVisible = target == Page.RECORD
-        b.result.root.isVisible = target == Page.RESULT
-        b.confirm.root.isVisible = target == Page.CONFIRM
-        when (target) {
-            Page.RECORD -> renderRecord(warning = false)
-            Page.RESULT -> b.result.tvRecorded.text = phrase
-            Page.CONFIRM -> renderConfirm(error = null)
-        }
+        findNavController().popBackStack()
     }
 
     private fun renderRecord(warning: Boolean) {
         val r = bindingOrNull?.record ?: return
-        r.tvRecorded.text = if (listening) r.tvRecorded.text else ""
+        r.tvRecorded.text = if (listening) r.tvRecorded.text else phrase
         val empty = r.tvRecorded.text.isNullOrBlank()
         r.llChooseLanguage.isVisible = empty && !listening
         r.tvExplainLanguage.isVisible = empty && !listening
         r.tvWarning.isInvisible = !warning
-        r.ivRecord.isVisible = !listening
+        r.ivRecord.isInvisible = listening
         r.ivRecording.isVisible = listening
         r.animRecording.isVisible = listening
         r.progressBar.isVisible = listening
+        val answerLength = r.etRecoveryAnswer.text?.toString()?.trim()?.length ?: 0
+        val recoveryReady = r.actvRecoveryQuestion.text?.toString()?.isNotBlank() == true && answerLength >= 3
+        r.btnContinue.isEnabled = !listening && normalizePhrase(phrase).isNotBlank() && recoveryReady
+        r.btnContinue.alpha = if (r.btnContinue.isEnabled) 1f else 0.5f
+        back.isEnabled = listening
         if (listening) r.animRecording.playAnimation() else r.animRecording.cancelAnimation()
-    }
-
-    private fun renderConfirm(error: Int?) {
-        val c = bindingOrNull?.confirm ?: return
-        c.imageState.setImageResource(
-            if (confirmStep == 1) R.drawable.vn_ic_confirm_voice_lock_step_1 else R.drawable.vn_ic_confirm_voice_lock_step_2
-        )
-        c.textState.setText(R.string.vn_text_confirm_your_password)
-        c.textDesc.setText(
-            if (confirmStep == 1) R.string.vn_text_confirm_voice_lock_repeat_password_desc
-            else R.string.vn_text_confirm_voice_lock_last_password_desc
-        )
-        c.textError.isVisible = error != null
-        error?.let { c.textError.setText(it) }
-        c.imageVoice.isVisible = !listening
-        c.animRecording.isVisible = listening
-        c.progressBar.isVisible = listening
-        if (listening) c.animRecording.playAnimation() else c.animRecording.cancelAnimation()
     }
 
     private fun requestListening() {
@@ -156,7 +113,8 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
             return
         }
         listening = true
-        if (page == Page.RECORD) binding.record.tvRecorded.text = ""
+        phrase = ""
+        binding.record.tvRecorded.text = ""
         refresh()
         startProgress()
         val session = speechSession ?: SpeechSession(requireContext()).also { speechSession = it }
@@ -168,10 +126,10 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         speechSession?.stopListening()
     }
 
-    /** Reference: a 5 s ring around the mic; anything after 5 s doesn't count. */
+    /** Keep recordings to five seconds so the setup stays quick. */
     private fun startProgress() {
         progressAnimator?.cancel()
-        val bar = if (page == Page.RECORD) binding.record.progressBar else binding.confirm.progressBar
+        val bar = binding.record.progressBar
         bar.max = 100
         bar.progress = 0
         progressAnimator = ValueAnimator.ofInt(0, 100).apply {
@@ -193,13 +151,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         progressAnimator = null
     }
 
-    private fun refresh() {
-        when (page) {
-            Page.RECORD -> renderRecord(warning = false)
-            Page.CONFIRM -> renderConfirm(error = null)
-            Page.RESULT -> Unit
-        }
-    }
+    private fun refresh() = renderRecord(warning = false)
 
     private val listener = object : RecognitionListener {
         override fun onReadyForSpeech(params: Bundle?) = Unit
@@ -210,7 +162,6 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         override fun onEvent(eventType: Int, params: Bundle?) = Unit
 
         override fun onPartialResults(partialResults: Bundle?) {
-            if (page != Page.RECORD) return
             val text = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.firstOrNull().orEmpty()
             bindingOrNull?.record?.tvRecorded?.text = text
         }
@@ -236,27 +187,67 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
     }
 
     private fun handleHeard(heard: String) {
-        val normalized = normalizePhrase(heard)
-        when (page) {
-            Page.RECORD -> {
-                if (normalized.isBlank()) {
-                    binding.record.tvRecorded.text = ""
-                    renderRecord(warning = true)
-                } else {
-                    phrase = heard
-                    show(Page.RESULT)
-                }
-            }
-            Page.CONFIRM -> when {
-                normalized.isBlank() -> renderConfirm(R.string.vn_text_warning_no_voice_detected)
-                normalized != normalizePhrase(phrase) -> renderConfirm(R.string.vn_text_wrong_password_please_try_again)
-                confirmStep == 1 -> { confirmStep = 2; renderConfirm(null) }
-                else -> {
-                    SecureVoiceStore.savePhrase(requireContext(), phrase)
-                    findNavController().navigate(R.id.action_voiceSetupFragment_to_securityQuestionFragment, null, VoiceNoteUi.slideNavOptions)
-                }
-            }
-            Page.RESULT -> Unit
+        val record = bindingOrNull?.record ?: return
+        if (normalizePhrase(heard).isBlank()) {
+            phrase = ""
+            record.tvRecorded.text = ""
+            renderRecord(warning = true)
+            return
+        }
+
+        phrase = heard.trim()
+        record.tvRecorded.text = phrase
+        renderRecord(warning = false)
+    }
+
+    private fun setupRecoveryFields() {
+        val record = binding.record
+        val preferences = requireContext().getSharedPreferences(VOICE_PREFS, 0)
+        val questions = resources.getStringArray(R.array.security_questions).toList()
+        record.actvRecoveryQuestion.setAdapter(
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, questions)
+        )
+        record.actvRecoveryQuestion.setText(preferences.getString("security_question", "").orEmpty(), false)
+        record.etRecoveryAnswer.setText(preferences.getString("security_answer", "").orEmpty())
+        record.actvRecoveryQuestion.setOnClickListener {
+            if (!listening) record.actvRecoveryQuestion.showDropDown()
+        }
+        record.actvRecoveryQuestion.setOnItemClickListener { _, _, _, _ ->
+            record.tvRecoveryError.isInvisible = true
+            refresh()
+        }
+        record.etRecoveryAnswer.doAfterTextChanged {
+            record.tvRecoveryError.isInvisible = true
+            refresh()
+        }
+    }
+
+    private fun saveVoiceKey() {
+        val phraseToSave = phrase.trim()
+        val record = binding.record
+        val question = record.actvRecoveryQuestion.text?.toString()?.trim().orEmpty()
+        val answer = record.etRecoveryAnswer.text?.toString()?.trim().orEmpty()
+        if (listening || normalizePhrase(phraseToSave).isBlank()) return
+        if (question.isBlank() || answer.length < 3) {
+            record.tvRecoveryError.isInvisible = false
+            return
+        }
+
+        requireContext().getSharedPreferences(VOICE_PREFS, 0).edit()
+            .putString("security_question", question)
+            .putString("security_answer", answer)
+            .putBoolean("security_ready", true)
+            .apply()
+        SecureVoiceStore.savePhrase(requireContext(), phraseToSave)
+
+        if (VoiceLockSwitchStore.hasRequiredPermissions(requireContext())) {
+            findNavController().navigate(R.id.setupCompleteFragment, null, VoiceNoteUi.slideNavOptions)
+        } else {
+            findNavController().navigate(
+                R.id.permissionFragment,
+                Bundle().apply { putString(PermissionFragment.ARG_TARGET, PermissionFragment.TARGET_COMPLETE) },
+                VoiceNoteUi.slideNavOptions
+            )
         }
     }
 
@@ -277,9 +268,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
     }
 
     companion object {
-        private const val KEY_PAGE = "page"
         private const val KEY_PHRASE = "phrase"
-        private const val KEY_STEP = "confirm_step"
         private const val MAX_RECORD_MS = 5000L
         const val VOICE_PREFS = "voice_setup_prefs"
         const val KEY_VOICE_PHRASE = "voice_phrase"

@@ -1,42 +1,439 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg" android:fitsSystemWindows="true" tools:context=".ui.afterlogin.PremiumFragment">
-    <ImageButton android:id="@+id/ivClose" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginTop="@dimen/spacing_lg" android:layout_marginEnd="@dimen/spacing_lg" android:background="@drawable/bg_header_circle_dark" android:contentDescription="@string/close" android:padding="@dimen/spacing_sm" android:src="@drawable/ic_close_blue" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" app:tint="@color/textPrimary" />
-    <TextView android:id="@+id/tvRestore" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:fontFamily="@font/sora_regular" android:text="@string/restore" android:textColor="@color/primaryStart" android:textSize="@dimen/text_bodyS" app:layout_constraintBottom_toBottomOf="@id/ivClose" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="@id/ivClose" android:letterSpacing="0" android:lineHeight="20sp" app:lineHeight="20sp" />
-    <androidx.core.widget.NestedScrollView android:id="@+id/contentScroll" android:layout_width="match_parent" android:layout_height="0dp" android:fillViewport="true" app:layout_constraintBottom_toTopOf="@id/clBottom" app:layout_constraintTop_toBottomOf="@id/ivClose">
-        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingBottom="@dimen/spacing_lg">
-            <TextView android:id="@+id/tvTitleMain" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_lg" android:fontFamily="@font/sora_regular" android:text="@string/go_pro_title" android:textColor="@color/textPrimary" android:textSize="@dimen/text_display" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="42sp" app:lineHeight="42sp" />
-            <TextView android:id="@+id/tvTitlePremium" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginHorizontal="@dimen/spacing_xl" android:layout_marginTop="@dimen/spacing_xs" android:fontFamily="@font/sora_regular" android:gravity="center" android:text="@string/try_free_days" android:textColor="@color/textSecondary" android:textSize="@dimen/text_bodyS" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvTitleMain" android:letterSpacing="0" android:lineHeight="20sp" app:lineHeight="20sp" />
-            <TextView android:id="@+id/tvChoosePlan" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_lg" android:fontFamily="@font/sora_regular" android:text="@string/choose_your_plan" android:textColor="@color/textSecondary" android:textSize="@dimen/text_caption" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvTitlePremium" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-            <com.google.android.material.card.MaterialCardView android:id="@+id/clWeekly" style="@style/Widget.VoiceLock.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_sm" app:layout_constraintTop_toBottomOf="@id/tvChoosePlan">
-                <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="@dimen/spacing_md">
-                    <TextView android:id="@+id/tvWeeklyTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/weekly" android:textColor="@color/textPrimary" android:textSize="@dimen/text_bodyL" android:textStyle="bold" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="22sp" app:lineHeight="22sp" />
-                    <TextView android:id="@+id/tvWeeklyDesc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/seven_day_access" android:textColor="@color/textSecondary" android:textSize="@dimen/text_caption" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvWeeklyTitle" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-                    <TextView android:id="@+id/tvWeeklyPrice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/weekly_price" android:textColor="@color/textPrimary" android:textSize="@dimen/text_bodyL" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="22sp" app:lineHeight="22sp" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-            <com.google.android.material.card.MaterialCardView android:id="@+id/clMonthly" style="@style/Widget.VoiceLock.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_sm" app:layout_constraintTop_toBottomOf="@id/clWeekly">
-                <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="@dimen/spacing_md">
-                    <TextView android:id="@+id/tvMonthlyTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/monthly" android:textColor="@color/textPrimary" android:textSize="@dimen/text_bodyL" android:textStyle="bold" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="22sp" app:lineHeight="22sp" />
-                    <TextView android:id="@+id/tvMonthlyDesc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/thirty_day_access" android:textColor="@color/textSecondary" android:textSize="@dimen/text_caption" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvMonthlyTitle" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-                    <TextView android:id="@+id/tvMonthlyPrice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/monthly_price" android:textColor="@color/textPrimary" android:textSize="@dimen/text_bodyL" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="22sp" app:lineHeight="22sp" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-            <com.google.android.material.card.MaterialCardView android:id="@+id/clYearly" style="@style/Widget.VoiceLock.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_sm" app:cardBackgroundColor="@color/surfaceElevated" app:layout_constraintTop_toBottomOf="@id/clMonthly">
-                <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="@dimen/spacing_md">
-                    <TextView android:id="@+id/tvBestValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_recorded_badge" android:fontFamily="@font/sora_regular" android:paddingHorizontal="@dimen/spacing_sm" android:paddingVertical="@dimen/spacing_xs" android:text="@string/best_deal" android:textColor="@color/primaryStart" android:textSize="@dimen/text_caption" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-                    <TextView android:id="@+id/tvYearlyTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/yearly" android:textColor="@color/textPrimary" android:textSize="@dimen/text_bodyL" android:textStyle="bold" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" android:letterSpacing="0" android:lineHeight="22sp" app:lineHeight="22sp" />
-                    <TextView android:id="@+id/tvYearlyDesc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/yearly_save" android:textColor="@color/textSecondary" android:textSize="@dimen/text_caption" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvYearlyTitle" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-                    <TextView android:id="@+id/tvYearlyPrice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/yearly_price" android:textColor="@color/textPrimary" android:textSize="@dimen/text_bodyL" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/tvBestValue" android:letterSpacing="0" android:lineHeight="22sp" app:lineHeight="22sp" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.afterlogin.PremiumFragment">
+
+    <ImageButton
+        android:id="@+id/ivClose"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_header_circle_dark"
+        android:contentDescription="@string/close"
+        android:padding="10dp"
+        android:src="@drawable/ic_close_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/textPrimary" />
+
+    <TextView
+        android:id="@+id/tvRestore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/sora_regular"
+        android:text="@string/restore"
+        android:textColor="@color/primaryStart"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivClose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivClose" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/clBottom"
+        app:layout_constraintTop_toBottomOf="@id/ivClose">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_pro_badge"
+                android:contentDescription="@null"
+                android:padding="8dp"
+                android:src="@drawable/ic_pro_award" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/sora_bold"
+                android:gravity="center"
+                android:text="@string/pro_panel_title"
+                android:textColor="@color/textPrimary"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/sora_regular"
+                android:gravity="center"
+                android:text="@string/pro_panel_subtitle"
+                android:textColor="@color/textSecondary"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="24dp"
+                    android:layout_height="1dp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="58dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:gravity="center"
+                    android:text="@string/premium"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:gravity="center"
+                    android:text="@string/pro_basic"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_mic_blue"
+                    app:tint="@color/primaryStart" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sora_regular"
+                    android:text="@string/pro_feature_voice"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_check_small"
+                    app:tint="@color/primaryStart" />
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_check_small"
+                    app:tint="@color/primaryStart" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_lock_closed"
+                    app:tint="@color/primaryStart" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sora_regular"
+                    android:text="@string/pro_feature_security"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_check_small"
+                    app:tint="@color/primaryStart" />
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_check_small"
+                    app:tint="@color/primaryStart" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_nav_themes"
+                    app:tint="@color/primaryStart" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sora_regular"
+                    android:text="@string/pro_feature_themes"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_check_small"
+                    app:tint="@color/primaryStart" />
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_check_small"
+                    app:tint="@color/primaryStart" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_pro_support"
+                    app:tint="@color/primaryStart" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sora_regular"
+                    android:text="@string/pro_feature_support"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_check_small"
+                    app:tint="@color/primaryStart" />
+
+                <TextView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_bold"
+                    android:gravity="center"
+                    android:text="@string/pro_feature_unavailable"
+                    android:textColor="@color/primaryStart"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_pro_ads_off"
+                    app:tint="@color/primaryStart" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sora_regular"
+                    android:text="@string/pro_feature_ads"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@null"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_check_small"
+                    app:tint="@color/primaryStart" />
+
+                <TextView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_bold"
+                    android:gravity="center"
+                    android:text="@string/pro_feature_unavailable"
+                    android:textColor="@color/primaryStart"
+                    android:textSize="22sp" />
+            </LinearLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/clBottom" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@color/bg" android:paddingHorizontal="@dimen/spacing_lg" android:paddingBottom="@dimen/spacing_xxl" android:paddingTop="@dimen/spacing_sm" app:layout_constraintBottom_toBottomOf="parent">
-        <com.google.android.material.button.MaterialButton android:id="@+id/btnPurchase" style="@style/Widget.VoiceLock.Button.Primary" android:layout_width="match_parent" android:layout_height="56dp" android:text="@string/start_free_trial" android:textAllCaps="false" app:layout_constraintTop_toTopOf="parent" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_buttonL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_cta_gradient" android:lineHeight="24sp" app:lineHeight="24sp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_sm" android:fontFamily="@font/sora_regular" android:text="@string/cancel_anytime" android:textColor="@color/textSecondary" android:textSize="@dimen/text_caption" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/btnPurchase" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tvPriceSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sora_regular"
+            android:gravity="center"
+            android:text="@string/pro_price_summary"
+            android:textColor="@color/textSecondary"
+            android:textSize="13sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPurchase"
+            style="@style/Widget.VoiceLock.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/sora_bold"
+            android:letterSpacing="0"
+            android:text="@string/start_free_trial"
+            android:textAllCaps="true"
+            android:textSize="17sp"
+            app:backgroundTint="@null"
+            app:layout_constraintTop_toBottomOf="@id/tvPriceSummary"
+            android:background="@drawable/bg_cta_gradient"
+            android:insetTop="0dp"
+            android:insetBottom="0dp" />
+
+        <TextView
+            android:id="@+id/tvLegalDisclosure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/sora_regular"
+            android:gravity="center"
+            android:lineSpacingExtra="1dp"
+            android:text="@string/pro_legal_disclosure"
+            android:textColor="@color/textSecondary"
+            android:textSize="11sp"
+            app:layout_constraintTop_toBottomOf="@id/btnPurchase" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/successOverlay" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg" android:padding="@dimen/spacing_huge" android:visibility="gone" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
-        <TextView android:id="@+id/tvSuccessTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/sora_regular" android:text="@string/youre_in" android:textColor="@color/textPrimary" android:textSize="@dimen/text_titleL" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_chainStyle="packed" android:letterSpacing="0" android:lineHeight="28sp" app:lineHeight="28sp" />
-        <TextView android:id="@+id/tvSuccessSub" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_sm" android:fontFamily="@font/sora_regular" android:gravity="center" android:text="@string/thanks_pro" android:textColor="@color/textSecondary" android:textSize="@dimen/text_bodyS" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvSuccessTitle" android:letterSpacing="0" android:lineHeight="20sp" app:lineHeight="20sp" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/btnLetsGo" style="@style/Widget.VoiceLock.Button.Primary" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="@dimen/spacing_xl" android:text="@string/lets_go" android:textAllCaps="false" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/tvSuccessSub" android:fontFamily="@font/sora_bold" android:letterSpacing="0" android:textSize="@dimen/text_buttonL" android:insetTop="0dp" android:insetBottom="0dp" app:backgroundTint="@null" android:background="@drawable/bg_cta_gradient" android:lineHeight="24sp" app:lineHeight="24sp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/successOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg"
+        android:padding="@dimen/spacing_huge"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvSuccessTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sora_regular"
+            android:text="@string/youre_in"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/text_titleL"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tvSuccessSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:fontFamily="@font/sora_regular"
+            android:gravity="center"
+            android:text="@string/thanks_pro"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/text_bodyS"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSuccessTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLetsGo"
+            style="@style/Widget.VoiceLock.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:fontFamily="@font/sora_bold"
+            android:text="@string/lets_go"
+            android:textAllCaps="false"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSuccessSub"
+            android:background="@drawable/bg_cta_gradient"
+            android:insetTop="0dp"
+            android:insetBottom="0dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

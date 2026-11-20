@@ -43,8 +43,11 @@ object VoiceLockSwitchStore {
     }
 
     fun hasRequiredPermissions(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.RECORD_AUDIO) &&
-            hasPermission(context, Manifest.permission.READ_PHONE_STATE) &&
+        return hasPermission(context, Manifest.permission.RECORD_AUDIO) && hasLockPermissions(context)
+    }
+
+    fun hasLockPermissions(context: Context): Boolean {
+        return hasPermission(context, Manifest.permission.READ_PHONE_STATE) &&
             LockPermissionHelper.hasOverlayPermission(context)
     }
 
