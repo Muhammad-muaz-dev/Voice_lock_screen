@@ -101,6 +101,11 @@ dependencies {
     // firebase analytics
     implementation("com.google.firebase:firebase-analytics")
     implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
+    // Remote switches for ad placements
+    implementation("com.google.firebase:firebase-config")
+
+    // Google Mobile Ads – Next-Gen SDK
+    implementation("com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk:1.7.0")
 
 
 

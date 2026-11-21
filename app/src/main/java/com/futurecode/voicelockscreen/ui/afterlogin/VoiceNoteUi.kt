@@ -149,6 +149,7 @@ object VoiceNoteUi {
         binding.tvCancel.setOnClickListener { dialog.dismiss(); onCancel() }
         binding.tvOK.setOnClickListener { dialog.dismiss(); onOk() }
         dialog.show()
+        com.futurecode.voicelockscreen.utils.SystemBars.hide(dialog)
     }
 
     fun showDeleteNote(context: Context, onDelete: () -> Unit) {
@@ -157,6 +158,7 @@ object VoiceNoteUi {
         binding.tvCancel.setOnClickListener { dialog.dismiss() }
         binding.tvOK.setOnClickListener { dialog.dismiss(); onDelete() }
         dialog.show()
+        com.futurecode.voicelockscreen.utils.SystemBars.hide(dialog)
     }
 
     /** "Did you enjoy using our app?" sheet from the reference Settings > Rate Us. */
@@ -166,6 +168,7 @@ object VoiceNoteUi {
         binding.tvNotReally.setOnClickListener { dialog.dismiss(); onNotReally() }
         binding.tvLoveIt.setOnClickListener { dialog.dismiss(); onLoveIt() }
         dialog.show()
+        com.futurecode.voicelockscreen.utils.SystemBars.hide(dialog)
     }
 
     fun showNoteName(context: Context, current: String, onSave: (String) -> Unit) {
@@ -188,6 +191,7 @@ object VoiceNoteUi {
             onSave(name)
         }
         dialog.show()
+        com.futurecode.voicelockscreen.utils.SystemBars.hide(dialog)
         binding.etName.requestFocus()
     }
 
@@ -250,6 +254,7 @@ object VoiceNoteUi {
             onApply(selected)
         }
         dialog.show()
+        com.futurecode.voicelockscreen.utils.SystemBars.hide(dialog)
     }
 
     /** Full-screen speech-language sheet from the reference record screens; picking a row applies it. */
@@ -276,6 +281,7 @@ object VoiceNoteUi {
         }
         binding.ivClose.setOnClickListener { dialog.dismiss() }
         dialog.show()
+        com.futurecode.voicelockscreen.utils.SystemBars.hide(dialog)
     }
 
     private fun speechLanguages(): List<Pair<String, String>> {

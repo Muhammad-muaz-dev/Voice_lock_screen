@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android 12+ system splash: brand violet so it flows straight into the in-app splash. -->
+    <style name="Theme.VoiceLockScreen" parent="Base.Theme.VoiceLockScreen">
+        <item name="android:windowSplashScreenBackground">@color/primary</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/primary</item>
+    </style>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- A wide oval clipped by the panel bounds gives the curved top edge. -->
+    <item
+        android:bottom="-240dp"
+        android:left="-96dp"
+        android:right="-96dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/primary_light" />
+        </shape>
+    </item>
+</layer-list>

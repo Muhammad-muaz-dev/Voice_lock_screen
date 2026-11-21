@@ -1,19 +1,26 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
 import android.Manifest
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
+import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.IdRes
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.futurecode.voicelockscreen.ads.AdViews
+import com.futurecode.voicelockscreen.ads.AdsConfig
+import com.futurecode.voicelockscreen.api.wallpaper.WallpaperRepository
+import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
@@ -26,6 +33,8 @@ import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 import com.futurecode.voicelockscreen.utils.bindBottomTabs
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+
+    private var voicePulse: AnimatorSet? = null
 
     private val notificationPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -42,6 +51,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupVoiceCardActions()
         setupFeatureActions()
         bindBottomTabs(binding.bottomNav, 0)
+        loadHomeBanner()
         setupSwitchActions()
     }
 
@@ -94,11 +104,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setupVoiceCardActions() {
-        // The whole voice card acts as its switch; the reset button re-records the command.
-        binding.cardUnlock.setOnClickListener { binding.switchUnlock.performClick() }
-        binding.cardLock.setOnClickListener { binding.switchLock.performClick() }
-        bindNavigation(binding.btnResetUnlock, R.id.voiceSetupFragment)
-        bindNavigation(binding.btnResetLock, R.id.voiceSetupFragment)
+        // The toggle (and the mic orb) turn unlock-by-voice on and off.
+        val toggle = View.OnClickListener {
+            handleUnlockSwitchChanged(!VoiceLockSwitchStore.isUnlockEffective(requireContext()))
+        }
+        binding.switchVoice.setOnClickListener(toggle)
+        binding.voiceMic.setOnClickListener(toggle)
     }
 
     private fun setupFeatureActions() {
@@ -123,16 +134,42 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             )
         }
 
-        // AI Tools actions
-        bindNavigation(binding.cardAiQuotes, R.id.aiQuoteFragment)
-        bindNavigation(binding.cardAiVoiceNotes, R.id.action_homeFragment_to_voiceNoteFragment)
-
         // Lock Screen Themes actions
         bindNavigation(binding.btnSeeAllThemes, R.id.action_homeFragment_to_seeAllthemesFragment)
         bindNavigation(binding.cardTheme1, R.id.action_homeFragment_to_themesFragment)
         bindNavigation(binding.cardTheme2, R.id.action_homeFragment_to_themesFragment)
         bindNavigation(binding.cardTheme3, R.id.action_homeFragment_to_themesFragment)
         bindNavigation(binding.cardTheme4, R.id.action_homeFragment_to_themesFragment)
+        loadThemeThumbnails()
+    }
+
+    /**
+     * Fills the four theme thumbnails with the newest wallpapers from the themes API.
+     * Bundled images stay in place when offline; tapping a loaded one opens its preview.
+     */
+    private fun loadThemeThumbnails() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val wallpapers = runCatching {
+                val category = WallpaperRepository.categories().firstOrNull() ?: return@runCatching emptyList()
+                WallpaperRepository.wallpapers(category.id).items
+            }.getOrDefault(emptyList())
+            val b = bindingOrNull ?: return@launch
+            val slots = listOf(b.cardTheme1 to b.ivTheme1, b.cardTheme2 to b.ivTheme2, b.cardTheme3 to b.ivTheme3, b.cardTheme4 to b.ivTheme4)
+            slots.zip(wallpapers).forEach { (slot, wallpaper) ->
+                val (card, image) = slot
+                Glide.with(image).load(wallpaper.fileUrl).override(240, 400).centerCrop().into(image)
+                card.setOnClickListener {
+                    findNavController().navigate(R.id.themePreviewFragment, ThemePreviewFragment.wallpaperArgs(wallpaper))
+                }
+            }
+        }
+    }
+
+    /** Banner at the bottom of Home when switched on from remote config. */
+    private fun loadHomeBanner() {
+        AdViews.clearOnDetach(binding.adBannerContainer)
+        if (!AdsConfig.homeBanner) return
+        AdViews.loadBanner(requireActivity(), binding.adBannerContainer)
     }
 
     private fun bindNavigation(view: View, @IdRes destination: Int) {
@@ -142,12 +179,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setupSwitchActions() {
-        binding.switchUnlock.setOnClickListener {
-            handleUnlockSwitchChanged(!VoiceLockSwitchStore.isUnlockEffective(requireContext()))
-        }
-        binding.switchLock.setOnClickListener {
-            handleLockSwitchChanged(!VoiceLockSwitchStore.isLockEffective(requireContext()))
-        }
         updateVoiceLockSwitches()
     }
 
@@ -174,81 +205,65 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         updateVoiceLockSwitches()
     }
 
-    private fun handleLockSwitchChanged(enabled: Boolean) {
-        VoiceLockSwitchStore.setLockEnabled(requireContext(), enabled)
-
-        if (enabled && !SecureVoiceStore.hasPhrase(requireContext())) {
-            findNavController().navigate(R.id.voiceSetupFragment)
-            return
-        }
-        if (enabled && !hasRequiredPermissions()) {
-            openPermissionScreen(PermissionFragment.TARGET_HOME)
-        }
-        updateVoiceLockSwitches()
-    }
-
     private fun updateVoiceLockSwitches() {
-        renderSwitch(
-            binding.switchUnlock,
-            binding.knobUnlock,
-            binding.tvUnlockSwitchState,
-            binding.tvUnlockStatus,
-            VoiceLockSwitchStore.isUnlockEffective(requireContext())
-        )
-        renderSwitch(
-            binding.switchLock,
-            binding.knobLock,
-            binding.tvLockSwitchState,
-            binding.tvLockStatus,
-            VoiceLockSwitchStore.isLockEffective(requireContext())
+        val context = requireContext()
+        renderVoiceCard(
+            hasPhrase = SecureVoiceStore.hasPhrase(context),
+            active = VoiceLockSwitchStore.isUnlockEffective(context)
         )
     }
 
-    private fun renderSwitch(
-        control: View,
-        knob: View,
-        stateLabel: TextView,
-        statusLabel: TextView,
-        enabled: Boolean
-    ) {
-        control.setBackgroundResource(
-            if (enabled) R.drawable.bg_home_switch_on else R.drawable.bg_home_switch_off
-        )
-        knob.setBackgroundResource(
-            if (enabled) R.drawable.bg_switch_thumb_white else R.drawable.bg_switch_thumb_lock
-        )
-        stateLabel.setText(if (enabled) R.string.home_switch_on else R.string.home_switch_off)
-        statusLabel.setText(
-            if (enabled) R.string.home_status_active else R.string.home_status_inactive
-        )
-        val statusColor = when {
-            statusLabel.id == R.id.tvUnlockStatus -> R.color.white
-            enabled -> R.color.success
-            else -> R.color.textSecondary
+    private fun renderVoiceCard(hasPhrase: Boolean, active: Boolean) {
+        val status = when {
+            !hasPhrase -> R.string.home_voice_status_line_setup
+            active -> R.string.home_voice_status_line_on
+            else -> R.string.home_voice_status_line_off
         }
-        statusLabel.setTextColor(ContextCompat.getColor(requireContext(), statusColor))
-        alignSwitchLabel(stateLabel, enabled)
-
-        val travel = resources.getDimension(R.dimen.home_switch_width) -
-            resources.getDimension(R.dimen.home_switch_knob_size) -
-            2 * resources.getDimension(R.dimen.spacing_sm)
-        val direction = if (control.layoutDirection == View.LAYOUT_DIRECTION_RTL) -1 else 1
-        knob.animate()
-            .translationX(if (enabled) direction * travel else 0f)
-            .setDuration(SWITCH_ANIMATION_DURATION)
-            .start()
-
-        control.isSelected = enabled
-        ViewCompat.setStateDescription(control, stateLabel.text)
+        binding.switchVoice.isChecked = active
+        binding.tvVoiceSubtitle.setText(status)
+        binding.voiceMic.alpha = if (active) 1f else INACTIVE_MIC_ALPHA
+        binding.voiceMic.contentDescription = "${getString(R.string.home_voice_title)}. ${getString(status)}"
+        startVoiceWaves()
     }
 
-    private fun alignSwitchLabel(label: TextView, enabled: Boolean) {
-        val inset = resources.getDimensionPixelSize(R.dimen.spacing_sm)
-        label.layoutParams = (label.layoutParams as ConstraintLayout.LayoutParams).apply {
-            startToStart = if (enabled) ConstraintSet.PARENT_ID else ConstraintSet.UNSET
-            endToEnd = if (enabled) ConstraintSet.UNSET else ConstraintSet.PARENT_ID
-            marginStart = if (enabled) inset else 0
-            marginEnd = if (enabled) 0 else inset
+    /**
+     * Waves around the mic: three rings keep expanding out of the orb and fading, staggered so a
+     * new one starts every third of a cycle. Runs while Home is visible.
+     */
+    private fun startVoiceWaves() {
+        if (voicePulse != null) return
+        val waves = listOf(binding.voicePulse, binding.voicePulse2, binding.voicePulse3)
+        voicePulse = AnimatorSet().apply {
+            playTogether(waves.flatMapIndexed { index, wave ->
+                val delay = index * WAVE_DURATION_MS / waves.size
+                listOf(
+                    pulseAnimator(wave, View.SCALE_X, 1f, WAVE_SCALE, delay),
+                    pulseAnimator(wave, View.SCALE_Y, 1f, WAVE_SCALE, delay),
+                    pulseAnimator(wave, View.ALPHA, WAVE_START_ALPHA, 0f, delay)
+                )
+            })
+            start()
+        }
+    }
+
+    private fun pulseAnimator(
+        target: View,
+        property: android.util.Property<View, Float>,
+        from: Float,
+        to: Float,
+        delay: Long
+    ) = ObjectAnimator.ofFloat(target, property, from, to).apply {
+        duration = WAVE_DURATION_MS
+        startDelay = delay
+        repeatCount = ValueAnimator.INFINITE
+        interpolator = DecelerateInterpolator()
+    }
+
+    private fun stopVoiceWaves() {
+        voicePulse?.cancel()
+        voicePulse = null
+        bindingOrNull?.let { b ->
+            listOf(b.voicePulse, b.voicePulse2, b.voicePulse3).forEach { it.alpha = 0f }
         }
     }
 
@@ -288,7 +303,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         NotificationPermissionDialog().show(parentFragmentManager, NotificationPermissionDialog.TAG)
     }
 
+    override fun onPause() {
+        stopVoiceWaves()
+        super.onPause()
+    }
+
     private companion object {
-        const val SWITCH_ANIMATION_DURATION = 200L
+        const val INACTIVE_MIC_ALPHA = 0.55f
+        const val WAVE_SCALE = 1.75f
+        const val WAVE_START_ALPHA = 0.8f
+        const val WAVE_DURATION_MS = 2400L
     }
 }

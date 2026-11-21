@@ -1,110 +1,67 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Splash: brand violet, rounded app icon, app name and a thin white loader. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splashRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg_dark"
+    android:background="@color/primary"
     tools:context=".ui.prelogin.SplashFragment">
 
-    <!-- Brand -->
-    <FrameLayout
-        android:id="@+id/img_logo"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:background="@drawable/bg_brand_icon_box"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/ivSplashLogo"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toTopOf="@id/tvSplashName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38">
-
-        <ImageView
-            android:id="@+id/img_background"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_soundwave" />
-    </FrameLayout>
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/voice_screen"
+        android:id="@+id/tvSplashName"
+        style="@style/Text.VoiceLock.titleXL"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_xxl"
         android:layout_marginTop="@dimen/spacing_lg"
-        android:fontFamily="@font/sora_bold"
-        android:gravity="center_horizontal"
-        android:letterSpacing="0"
-        android:lineHeight="36sp"
-        android:text="@string/voice_lock_title"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/text_headline"
-        app:lineHeight="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_logo" />
-
-    <TextView
-        android:id="@+id/voice_secure_phone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_huge"
-        android:layout_marginTop="@dimen/spacing_sm"
-        android:fontFamily="@font/sora_regular"
-        android:gravity="center_horizontal"
-        android:letterSpacing="0"
-        android:lineHeight="20sp"
-        android:text="@string/splash_tagline"
-        android:textColor="@color/text_muted_sub"
-        android:textSize="@dimen/text_bodyM"
-        app:lineHeight="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/voice_screen" />
-
-    <!-- Loading: status and percentage sit above the brand progress bar -->
-    <TextView
-        android:id="@+id/setup_status"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/spacing_sm"
-        android:fontFamily="@font/sora_medium"
-        android:letterSpacing="0"
-        android:lineHeight="16sp"
-        android:text="@string/setting_up_vice_security"
-        android:textColor="@color/text_muted_sub"
-        android:textSize="@dimen/text_caption"
-        app:lineHeight="16sp"
-        app:layout_constraintBottom_toTopOf="@id/splashProgressBar"
-        app:layout_constraintEnd_toStartOf="@id/tvSplashPercent"
-        app:layout_constraintStart_toStartOf="@id/splashProgressBar" />
-
-    <TextView
-        android:id="@+id/tvSplashPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sora_bold"
-        android:importantForAccessibility="no"
-        android:letterSpacing="0"
-        android:lineHeight="16sp"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/text_caption"
-        app:lineHeight="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/setup_status"
-        app:layout_constraintEnd_toEndOf="@id/splashProgressBar"
-        tools:text="68%" />
-
-    <com.futurecode.voicelockscreen.ui.view.VoiceProgressBar
-        android:id="@+id/splashProgressBar"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/spacing_xl"
-        android:layout_marginHorizontal="@dimen/spacing_huge"
-        android:layout_marginTop="@dimen/spacing_xs"
-        android:layout_marginBottom="@dimen/spacing_huge"
-        android:contentDescription="@string/setting_up_vice_security"
+        android:fontFamily="@font/sora_semibold"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivSplashLogo" />
+
+    <ProgressBar
+        android:id="@+id/splashProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="6dp"
+        android:layout_marginHorizontal="72dp"
+        android:layout_marginBottom="@dimen/spacing_xxl"
+        android:indeterminate="false"
+        android:max="1000"
+        android:progressDrawable="@drawable/bg_splash_progress"
+        app:layout_constraintBottom_toTopOf="@id/splashAdContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Bottom ad (native or banner, chosen by remote config). Hidden until an ad fills it. -->
+    <FrameLayout
+        android:id="@+id/splashAdContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_md"
+        android:layout_marginBottom="@dimen/spacing_md"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

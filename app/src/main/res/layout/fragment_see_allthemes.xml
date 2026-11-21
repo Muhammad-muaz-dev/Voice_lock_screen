@@ -1,50 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Theme Screen Lock: copy of the reference fragment_all_theme (ad slots removed), light scheme. -->
+<!-- Lock screen themes: category chips from the themes API, then a wallpaper grid with paging. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/vn_white"
-    android:fitsSystemWindows="true">
+    android:background="@color/bg"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.afterlogin.SeeAllthemesFragment">
 
     <ImageView
         android:id="@+id/ivBack"
-        android:layout_width="@dimen/vn_dp_36"
-        android:layout_height="@dimen/vn_dp_36"
-        android:layout_marginStart="@dimen/vn_dp_12"
-        android:layout_marginTop="@dimen/vn_dp_8"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/back"
-        android:src="@drawable/vn_ic_back"
+        android:padding="10dp"
+        android:src="@drawable/ic_arrow_back_line"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTitle"
-        style="@style/VN.Headline_XSM_Medium"
+        style="@style/Text.VoiceLock.titleXL"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/vn_dp_12"
-        android:layout_marginEnd="@dimen/vn_dp_16"
-        android:includeFontPadding="false"
-        android:maxLines="2"
+        android:layout_marginStart="@dimen/spacing_xs"
+        android:layout_marginEnd="@dimen/spacing_lg"
+        android:fontFamily="@font/sora_semibold"
+        android:maxLines="1"
         android:text="@string/vn_text_theme_screen_lock"
-        android:textColor="@color/vn_neutral01"
+        android:textColor="@color/primary_text"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/ivBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivBack"
         app:layout_constraintTop_toTopOf="@id/ivBack" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategories"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivBack"
+        tools:listitem="@layout/item_wallpaper_category" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvThemes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/vn_dp_16"
-        android:layout_marginTop="@dimen/vn_dp_12"
-        android:layout_marginBottom="@dimen/vn_dp_6"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:clipToPadding="false"
         android:overScrollMode="never"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_xxl"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivBack" />
+        app:layout_constraintTop_toBottomOf="@id/rvCategories" />
+
+    <ProgressBar
+        android:id="@+id/progressThemes"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminateTint="@color/primary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvCategories"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvThemesMessage"
+        style="@style/Text.VoiceLock.bodyL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_xxl"
+        android:fontFamily="@font/sora_regular"
+        android:gravity="center"
+        android:textColor="@color/textSecondary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/btnThemesRetry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvCategories"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@string/themes_load_error" />
+
+    <TextView
+        android:id="@+id/btnThemesRetry"
+        style="@style/Text.VoiceLock.buttonL"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:background="@drawable/bg_cta_gradient"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/sora_semibold"
+        android:gravity="center"
+        android:minWidth="140dp"
+        android:paddingHorizontal="@dimen/spacing_xxl"
+        android:text="@string/themes_retry"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvThemesMessage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

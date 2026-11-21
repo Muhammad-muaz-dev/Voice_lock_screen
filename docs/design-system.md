@@ -23,7 +23,7 @@ describe its visual intent.
 | **Primary** | `primary` / `primaryStart` | #635BFF | Main brand violet; primary buttons, active toggles, accents |
 | **Primary** | `primary_light` / `primaryLight` | #EDECFF | Soft lavender; icon backgrounds, tags, selected tints |
 | **Primary** | `primary_dark` / `primaryDark` | #5047E2 | Deep indigo; pressed button states, gradient endpoints |
-| **Background** | `bg` / `bg_screen` | #F7F8FC | Screen background |
+| **Background** | `bg` / `bg_screen` | #E9EEF6 | Screen background for every app screen (window, status bar, root layouts) |
 | **Background** | `surface` / `card` | #FFFFFF | Cards, bottom sheet, bottom nav containers |
 | **Background** | `border` | #E6E8EF | Card strokes, input outlines, unselected controls |
 | **Text** | `primary_text` / `textPrimary` | #171829 | Headings, titles, main body text |
@@ -51,6 +51,12 @@ describe its visual intent.
 | Icons | `icon_accent_settings` / `icon_bg_settings` | #64748B / #F1F5F9 | Settings feature icon & container |
 | Controls | `switch_track_on` / `switch_track_off` | #635BFF / #E6E8EF | Switch track on / off |
 | Overlays | `dialog_btn_cancel_bg` | #F1F2F6 | Dialog secondary / cancel button |
+| Overlays | `scrim` / `scrimStrong` | #66000000 / #CC000000 | Coach-mark dim / full guide overlay above system settings |
+| Glow | `primaryGlow` | #33635BFF | Soft violet halos, illustration glows, pressed-mic ring |
+| Glow | `successGlow` | #3322C55E | Success badge halo |
+| Semantic | `successStrong` | #16A34A | Voice-enrolment progress arc and check (with `successSoft` track) |
+| Glass | `glassFill` / `glassDot` | #40FFFFFF / #99FFFFFF | Frosted keys and dots on wallpapers; translucent chips on the violet hero |
+| Glass | `whiteSoft` / `whiteMuted` | #1FFFFFFF / #D9FFFFFF | Decorative circles and secondary text on the violet hero card |
 | Overlays | `toast_bg_dark` / `toast_bg_info` | #1E293B / #EFF6FF | Dark toast / info banner backgrounds |
 
 ## Typography
@@ -108,7 +114,7 @@ identical shadows on every device. Icon sizes describe artwork, not touch areas.
 | Icon tile | Rounded outlined tile; colored circular icon, centered short title, secondary description. Use brand violet for camera and semantic green for PIN as shown. |
 | List row | Rounded surface with border; leading icon tile, bodyL label, secondary caption, trailing chevron or control. |
 | Search/input | field background, outline stroke, md radius, leading search icon; placeholder uses textPlaceholder. Error uses error outline and errorSoft helper text. |
-| Switch | Off: #2A3050 track and #A3A9C2 knob. On: violet gradient and white knob. Keep the knob position synchronized with state. |
+| Switch | Off: `switch_track_off` (#D4D7E1) track and white knob. On: violet track and white knob. Keep the knob position synchronized with state. |
 | Chip/tag | Compact rounded pill; violet for “New”, gold with dark text for “Pro”; icon optional. |
 | Bottom navigation | navBar rounded container; selected item has violet pill, other items use soft secondary icons/labels. caption labels and consistent icon sizes. |
 | Waveform/progress | accentCyan signal bars on a dark background. Provide a text/state equivalent for recording or loading. |
@@ -209,3 +215,11 @@ For any new or updated UI, check palette, type role/weight, spacing, radius,
 component states, 360/390/412 dp layouts, and font scaling. Changes to a shared
 token require reviewing its consumers and updating this specification. Keep this
 document and the reference board available as the project’s reusable design source.
+
+
+## Typography implementation note
+
+The app theme sets only `android:fontFamily` (Sora family). Do not add the AppCompat
+`fontFamily` theme attribute: AppCompat gives it priority over a view's
+`android:fontFamily`, which silently forces every `sora_semibold`/`sora_bold` back to
+regular weight.

@@ -92,9 +92,8 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
 
     private fun exitPreviewMode() {
         val window = requireActivity().window
-        WindowInsetsControllerCompat(window, window.decorView).show(
-            WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.navigationBars()
-        )
+        // The system navigation bar stays hidden app-wide (see SystemBars).
+        WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.statusBars())
         WindowCompat.setDecorFitsSystemWindows(window, true)
         window.statusBarColor = previousStatusBarColor
         window.navigationBarColor = previousNavigationBarColor

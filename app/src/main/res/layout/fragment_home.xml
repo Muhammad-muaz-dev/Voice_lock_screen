@@ -78,12 +78,14 @@
     <!-- Scrollable Home Content -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/homeScrollView"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/bottom_nav_content_inset"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
         android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@id/appBar"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -95,389 +97,130 @@
             android:paddingTop="@dimen/spacing_sm"
             android:paddingBottom="24dp">
 
-            <!-- 1. Voice-first cards: Unlock Screen (primary) and Lock Screen -->
+            <!-- 1. Voice Screen Lock: mic orb with rings, title, toggle and status (no card). -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cardUnlock"
+                android:id="@+id/voiceSection"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_home_unlock_card"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="@dimen/spacing_lg"
-                app:layout_constraintTop_toTopOf="parent"
+                android:paddingTop="@dimen/spacing_sm"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/imgUnlockArt"
-                    android:layout_width="@dimen/home_lock_art_width"
-                    android:layout_height="@dimen/home_lock_art_width"
-                    android:src="@drawable/ic_home_unlock_illustration"
-                    android:contentDescription="@null"
+                <View
+                    android:id="@+id/voiceRingOuter"
+                    android:layout_width="137dp"
+                    android:layout_height="137dp"
+                    android:background="@drawable/bg_voice_orb_ring_outer"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvUnlockTitle"
-                    style="@style/Text.VoiceLock.titleM"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_md"
-                    android:layout_marginEnd="@dimen/spacing_sm"
-                    android:fontFamily="@font/sora_bold"
-                    android:text="@string/unlock_screen_title"
-                    android:textColor="@color/text_white"
-                    app:layout_constraintStart_toEndOf="@id/imgUnlockArt"
-                    app:layout_constraintEnd_toStartOf="@id/switchUnlock"
-                    app:layout_constraintTop_toTopOf="@id/imgUnlockArt"
-                    app:layout_constraintBottom_toBottomOf="@id/imgUnlockArt" />
+                <View
+                    android:id="@+id/voiceRingInner"
+                    android:layout_width="106dp"
+                    android:layout_height="106dp"
+                    android:background="@drawable/bg_voice_orb_ring_inner"
+                    app:layout_constraintBottom_toBottomOf="@id/voiceRingOuter"
+                    app:layout_constraintEnd_toEndOf="@id/voiceRingOuter"
+                    app:layout_constraintStart_toStartOf="@id/voiceRingOuter"
+                    app:layout_constraintTop_toTopOf="@id/voiceRingOuter" />
 
-                <FrameLayout
-                    android:id="@+id/btnResetUnlock"
-                    android:layout_width="@dimen/spacing_max"
-                    android:layout_height="@dimen/spacing_max"
-                    android:background="@drawable/bg_home_reset_unlock"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="@string/change_voice_command"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <View
+                    android:id="@+id/voicePulse2"
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:alpha="0"
+                    android:background="@drawable/bg_voice_wave"
+                    app:layout_constraintBottom_toBottomOf="@id/voiceRingOuter"
+                    app:layout_constraintEnd_toEndOf="@id/voiceRingOuter"
+                    app:layout_constraintStart_toStartOf="@id/voiceRingOuter"
+                    app:layout_constraintTop_toTopOf="@id/voiceRingOuter" />
 
-                    <ImageView
-                        android:layout_width="@dimen/spacing_xl"
-                        android:layout_height="@dimen/spacing_xl"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_home_reset"
-                        android:contentDescription="@null"
-                        app:tint="@color/text_white" />
-                </FrameLayout>
+                <View
+                    android:id="@+id/voicePulse3"
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:alpha="0"
+                    android:background="@drawable/bg_voice_wave"
+                    app:layout_constraintBottom_toBottomOf="@id/voiceRingOuter"
+                    app:layout_constraintEnd_toEndOf="@id/voiceRingOuter"
+                    app:layout_constraintStart_toStartOf="@id/voiceRingOuter"
+                    app:layout_constraintTop_toTopOf="@id/voiceRingOuter" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/switchUnlock"
-                    android:layout_width="@dimen/home_switch_width"
-                    android:layout_height="@dimen/home_switch_height"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:background="@drawable/bg_home_switch_off"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="@string/unlock_screen_title"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnResetUnlock">
-
-                    <View
-                        android:id="@+id/knobUnlock"
-                        android:layout_width="@dimen/home_switch_knob_size"
-                        android:layout_height="@dimen/home_switch_knob_size"
-                        android:layout_marginStart="@dimen/spacing_sm"
-                        android:background="@drawable/bg_switch_thumb_lock"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvUnlockSwitchState"
-                        style="@style/Text.VoiceLock.caption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_sm"
-                        android:fontFamily="@font/sora_bold"
-                        android:text="@string/home_switch_off"
-                        android:textColor="@color/primary_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/barrierUnlockHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="imgUnlockArt,switchUnlock" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/statusStripUnlock"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_md"
-                    android:background="@drawable/bg_home_status_unlock"
-                    android:minHeight="@dimen/home_status_height"
-                    android:padding="@dimen/spacing_md"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/barrierUnlockHeader"
-                    app:layout_constraintBottom_toBottomOf="parent">
-
-                    <TextView
-                        android:id="@+id/tvUnlockStatusLabel"
-                        style="@style/Text.VoiceLock.caption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sora_regular"
-                        android:text="@string/status_label"
-                        android:textColor="@color/text_white"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvUnlockStatus"
-                        style="@style/Text.VoiceLock.bodyM"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sora_semibold"
-                        android:text="@string/home_status_inactive"
-                        android:textColor="@color/successSoft"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvUnlockStatusLabel"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                    <androidx.constraintlayout.widget.Barrier
-                        android:id="@+id/barrierUnlockStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:barrierDirection="end"
-                        app:constraint_referenced_ids="tvUnlockStatusLabel,tvUnlockStatus" />
-
-                    <View
-                        android:id="@+id/dividerUnlockStatus"
-                        android:layout_width="1dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="@dimen/spacing_md"
-                        android:background="@color/text_white"
-                        android:alpha="0.4"
-                        app:layout_constraintStart_toEndOf="@id/barrierUnlockStatus"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvUnlockExampleLabel"
-                        style="@style/Text.VoiceLock.caption"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_md"
-                        android:fontFamily="@font/sora_regular"
-                        android:text="@string/home_example"
-                        android:textColor="@color/text_white"
-                        app:layout_constraintStart_toEndOf="@id/dividerUnlockStatus"
-                        app:layout_constraintEnd_toStartOf="@id/imgUnlockWave"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvUnlockExample"
-                        style="@style/Text.VoiceLock.bodyM"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_md"
-                        android:fontFamily="@font/sora_medium"
-                        android:text="@string/say_unlock_phrase"
-                        android:textColor="@color/text_white"
-                        app:layout_constraintStart_toEndOf="@id/dividerUnlockStatus"
-                        app:layout_constraintEnd_toStartOf="@id/imgUnlockWave"
-                        app:layout_constraintTop_toBottomOf="@id/tvUnlockExampleLabel" />
-
-                    <ImageView
-                        android:id="@+id/imgUnlockWave"
-                        android:layout_width="@dimen/spacing_xl"
-                        android:layout_height="@dimen/spacing_xl"
-                        android:src="@drawable/ic_soundwave"
-                        android:contentDescription="@null"
-                        app:tint="@color/text_white"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cardLock"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:background="@drawable/bg_home_lock_card"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="@dimen/spacing_lg"
-                app:layout_constraintTop_toBottomOf="@id/cardUnlock"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                <View
+                    android:id="@+id/voicePulse"
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:alpha="0"
+                    android:background="@drawable/bg_voice_wave"
+                    app:layout_constraintBottom_toBottomOf="@id/voiceRingOuter"
+                    app:layout_constraintEnd_toEndOf="@id/voiceRingOuter"
+                    app:layout_constraintStart_toStartOf="@id/voiceRingOuter"
+                    app:layout_constraintTop_toTopOf="@id/voiceRingOuter" />
 
                 <ImageView
-                    android:id="@+id/imgLockArt"
-                    android:layout_width="@dimen/home_lock_art_width"
-                    android:layout_height="@dimen/home_lock_art_width"
-                    android:src="@drawable/ic_home_lock_illustration"
-                    android:contentDescription="@null"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:id="@+id/voiceMic"
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:background="@drawable/bg_camera_mic_circle"
+                    android:clickable="true"
+                    android:elevation="8dp"
+                    android:focusable="true"
+                    android:padding="25dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/vn_ic_mic_white"
+                    app:layout_constraintBottom_toBottomOf="@id/voiceRingOuter"
+                    app:layout_constraintEnd_toEndOf="@id/voiceRingOuter"
+                    app:layout_constraintStart_toStartOf="@id/voiceRingOuter"
+                    app:layout_constraintTop_toTopOf="@id/voiceRingOuter" />
 
                 <TextView
-                    android:id="@+id/tvLockTitle"
-                    style="@style/Text.VoiceLock.titleM"
+                    android:id="@+id/tvVoiceTitle"
+                    style="@style/Text.VoiceLock.titleXL"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_md"
-                    android:layout_marginEnd="@dimen/spacing_sm"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
+                    android:layout_marginTop="@dimen/spacing_xs"
                     android:fontFamily="@font/sora_bold"
-                    android:text="@string/lock_screen_title"
+                    android:gravity="center"
+                    android:text="@string/home_voice_title"
                     android:textColor="@color/primary_text"
-                    app:layout_constraintStart_toEndOf="@id/imgLockArt"
-                    app:layout_constraintEnd_toStartOf="@id/switchLock"
-                    app:layout_constraintTop_toTopOf="@id/imgLockArt"
-                    app:layout_constraintBottom_toBottomOf="@id/imgLockArt" />
-
-                <FrameLayout
-                    android:id="@+id/btnResetLock"
-                    android:layout_width="@dimen/spacing_max"
-                    android:layout_height="@dimen/spacing_max"
-                    android:background="@drawable/bg_home_reset_lock"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="@string/change_voice_command"
+                    android:textSize="22sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/voiceRingOuter" />
 
-                    <ImageView
-                        android:layout_width="@dimen/spacing_xl"
-                        android:layout_height="@dimen/spacing_xl"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_home_reset"
-                        android:contentDescription="@null"
-                        app:tint="@color/primary" />
-                </FrameLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/switchLock"
-                    android:layout_width="@dimen/home_switch_width"
-                    android:layout_height="@dimen/home_switch_height"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:background="@drawable/bg_home_switch_off"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="@string/lock_screen_title"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnResetLock">
-
-                    <View
-                        android:id="@+id/knobLock"
-                        android:layout_width="@dimen/home_switch_knob_size"
-                        android:layout_height="@dimen/home_switch_knob_size"
-                        android:layout_marginStart="@dimen/spacing_sm"
-                        android:background="@drawable/bg_switch_thumb_lock"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvLockSwitchState"
-                        style="@style/Text.VoiceLock.caption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_sm"
-                        android:fontFamily="@font/sora_bold"
-                        android:text="@string/home_switch_off"
-                        android:textColor="@color/primary_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/barrierLockHeader"
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchVoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="imgLockArt,switchLock" />
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:contentDescription="@string/home_voice_title"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvVoiceTitle"
+                    app:thumbTint="@drawable/selector_permission_thumb"
+                    app:trackDecorationTint="@android:color/transparent"
+                    app:trackTint="@drawable/selector_permission_track" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/statusStripLock"
+                <TextView
+                    android:id="@+id/tvVoiceSubtitle"
+                    style="@style/Text.VoiceLock.bodyM"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_md"
-                    android:background="@drawable/bg_home_status_lock"
-                    android:minHeight="@dimen/home_status_height"
-                    android:padding="@dimen/spacing_md"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:fontFamily="@font/sora_regular"
+                    android:gravity="center"
+                    android:textColor="@color/textSecondary"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/barrierLockHeader"
-                    app:layout_constraintBottom_toBottomOf="parent">
-
-                    <TextView
-                        android:id="@+id/tvLockStatusLabel"
-                        style="@style/Text.VoiceLock.caption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sora_regular"
-                        android:text="@string/status_label"
-                        android:textColor="@color/secondary_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvLockStatus"
-                        style="@style/Text.VoiceLock.bodyM"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sora_semibold"
-                        android:text="@string/home_status_inactive"
-                        android:textColor="@color/badge_active_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvLockStatusLabel"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                    <androidx.constraintlayout.widget.Barrier
-                        android:id="@+id/barrierLockStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:barrierDirection="end"
-                        app:constraint_referenced_ids="tvLockStatusLabel,tvLockStatus" />
-
-                    <View
-                        android:id="@+id/dividerLockStatus"
-                        android:layout_width="1dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="@dimen/spacing_md"
-                        android:background="@color/border"
-                        app:layout_constraintStart_toEndOf="@id/barrierLockStatus"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvLockExampleLabel"
-                        style="@style/Text.VoiceLock.caption"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_md"
-                        android:fontFamily="@font/sora_regular"
-                        android:text="@string/home_example"
-                        android:textColor="@color/secondary_text"
-                        app:layout_constraintStart_toEndOf="@id/dividerLockStatus"
-                        app:layout_constraintEnd_toStartOf="@id/imgLockWave"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvLockExample"
-                        style="@style/Text.VoiceLock.bodyM"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_md"
-                        android:fontFamily="@font/sora_medium"
-                        android:text="@string/say_lock_phrase"
-                        android:textColor="@color/primary_text"
-                        app:layout_constraintStart_toEndOf="@id/dividerLockStatus"
-                        app:layout_constraintEnd_toStartOf="@id/imgLockWave"
-                        app:layout_constraintTop_toBottomOf="@id/tvLockExampleLabel" />
-
-                    <ImageView
-                        android:id="@+id/imgLockWave"
-                        android:layout_width="@dimen/spacing_xl"
-                        android:layout_height="@dimen/spacing_xl"
-                        android:src="@drawable/ic_soundwave"
-                        android:contentDescription="@null"
-                        app:tint="@color/primary"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/switchVoice"
+                    tools:text="@string/home_voice_status_line_off" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- 2. Other locks grid (2x2): Camera & PIN, then Pattern & Fingerprint -->
@@ -494,7 +237,7 @@
                 app:cardElevation="0dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/border"
-                app:layout_constraintTop_toBottomOf="@id/cardLock"
+                app:layout_constraintTop_toBottomOf="@id/voiceSection"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/pinLock"
                 app:layout_constraintHorizontal_chainStyle="spread">
@@ -506,12 +249,11 @@
 
                     <ImageView
                         android:id="@+id/badgeCamera"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:background="@drawable/bg_squircle_camera"
-                        android:src="@drawable/ic_camera_simple"
-                        app:tint="@color/icon_accent_camera"
-                        android:padding="9dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_feature_tile_camera"
+                        android:src="@drawable/ic_feature_camera"
+                        android:padding="12dp"
                         android:contentDescription="@null"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -584,11 +326,11 @@
 
                     <ImageView
                         android:id="@+id/badgePin"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:background="@drawable/bg_squircle_pin"
-                        android:src="@drawable/ic_pin_hash"
-                        android:padding="9dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_feature_tile_pin"
+                        android:src="@drawable/ic_feature_pin"
+                        android:padding="12dp"
                         android:contentDescription="@null"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -661,12 +403,11 @@
 
                     <ImageView
                         android:id="@+id/badgePattern"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:background="@drawable/bg_squircle_pattern"
-                        android:src="@drawable/ic_pattern_grid_9"
-                        app:tint="@color/primary"
-                        android:padding="9dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_feature_tile_pattern"
+                        android:src="@drawable/ic_feature_pattern"
+                        android:padding="12dp"
                         android:contentDescription="@null"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -739,12 +480,11 @@
 
                     <ImageView
                         android:id="@+id/badgeFingerprint"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:background="@drawable/bg_squircle_fingerprint"
-                        android:src="@drawable/ic_fingerprint_simple"
-                        app:tint="@color/icon_accent_fingerprint"
-                        android:padding="9dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_feature_tile_fingerprint"
+                        android:src="@drawable/ic_feature_fingerprint"
+                        android:padding="12dp"
                         android:contentDescription="@null"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -792,183 +532,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 3. AI Tools Section -->
-            <TextView
-                android:id="@+id/tvAiToolsHeader"
-                style="@style/Text.VoiceLock.titleM"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:fontFamily="@font/sora_bold"
-                android:text="@string/ai_tools"
-                android:textColor="@color/primary_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fingerLock" />
-
-            <!-- AI Quotes Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardAiQuotes"
-                android:layout_width="0dp"
-                android:layout_height="116dp"
-                android:layout_marginTop="12dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/border"
-                app:layout_constraintTop_toBottomOf="@id/tvAiToolsHeader"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/cardAiVoiceNotes"
-                app:layout_constraintHorizontal_chainStyle="spread">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:src="@drawable/ai_quotes_g"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="@null"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/badgeQuotes"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_squircle_quotes"
-                        android:src="@drawable/ic_quote_mark"
-                        android:padding="6dp"
-                        android:contentDescription="@null"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvQuotesTitle"
-                        style="@style/Text.VoiceLock.titleS"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginEnd="@dimen/spacing_sm"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/sora_bold"
-                        android:text="@string/ai_quotes_title"
-                        android:textColor="@color/primary_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/badgeQuotes"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvQuotesSubtitle"
-                        style="@style/Text.VoiceLock.caption"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginEnd="@dimen/spacing_sm"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/sora_regular"
-                        android:text="@string/daily_inspiration"
-                        android:textColor="@color/secondary_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvQuotesTitle"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- AI Voice Notes Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardAiVoiceNotes"
-                android:layout_width="0dp"
-                android:layout_height="116dp"
-                android:layout_marginStart="12dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/surface"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/border"
-                app:layout_constraintTop_toTopOf="@id/cardAiQuotes"
-                app:layout_constraintBottom_toBottomOf="@id/cardAiQuotes"
-                app:layout_constraintStart_toEndOf="@id/cardAiQuotes"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:src="@drawable/ai_notes_bg"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="@null"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/badgeNotesMic"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_squircle_notes_mic"
-                        android:src="@drawable/ic_mic_blue"
-                        app:tint="#2563EB"
-                        android:padding="6dp"
-                        android:contentDescription="@null"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvNotesTitle"
-                        style="@style/Text.VoiceLock.titleS"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginEnd="@dimen/spacing_sm"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/sora_bold"
-                        android:text="@string/ai_voice_notes_title"
-                        android:textColor="@color/primary_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/badgeNotesMic"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvNotesSubtitle"
-                        style="@style/Text.VoiceLock.caption"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_marginEnd="@dimen/spacing_sm"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/sora_regular"
-                        android:text="@string/speak_your_thoughts"
-                        android:textColor="@color/secondary_text"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvNotesTitle"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- 4. Lock Screen Themes Section -->
+            <!-- 3. Lock Screen Themes Section -->
             <TextView
                 android:id="@+id/tvThemesHeader"
                 style="@style/Text.VoiceLock.titleM"
@@ -979,7 +543,7 @@
                 android:text="@string/lock_screen_themes"
                 android:textColor="@color/primary_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardAiQuotes" />
+                app:layout_constraintTop_toBottomOf="@id/patternLock" />
 
             <TextView
                 android:id="@+id/btnSeeAllThemes"
@@ -1014,6 +578,7 @@
                 app:layout_constraintHorizontal_chainStyle="spread">
 
                 <ImageView
+                    android:id="@+id/ivTheme1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/theme_one"
@@ -1037,6 +602,7 @@
                 app:layout_constraintEnd_toStartOf="@id/cardTheme3">
 
                 <ImageView
+                    android:id="@+id/ivTheme2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/theme_two"
@@ -1060,6 +626,7 @@
                 app:layout_constraintEnd_toStartOf="@id/cardTheme4">
 
                 <ImageView
+                    android:id="@+id/ivTheme3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/theme_three"
@@ -1083,6 +650,7 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
+                    android:id="@+id/ivTheme4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/theme_four"
@@ -1100,9 +668,20 @@
         android:id="@+id/bottomNav"
         layout="@layout/include_bottom_tabs"
         android:layout_width="0dp"
-        android:layout_height="84dp"
-        android:layout_marginHorizontal="@dimen/spacing_lg"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/spacing_sm"
         android:layout_marginBottom="@dimen/spacing_sm"
+        app:layout_constraintBottom_toTopOf="@id/adBannerContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Home banner (remote config). Sits at the very bottom; the floating nav sits above it. -->
+    <FrameLayout
+        android:id="@+id/adBannerContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/bg"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

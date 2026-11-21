@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/vn_white"
+    android:background="@color/bg"
     android:fitsSystemWindows="true">
 
     <ImageView
@@ -61,9 +61,10 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/vn_dp_16"
         android:clipToPadding="false"
+        android:paddingBottom="@dimen/bottom_nav_content_inset"
         android:overScrollMode="never"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivLogo">
@@ -352,8 +353,8 @@
         android:id="@+id/bottomNav"
         layout="@layout/include_bottom_tabs"
         android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:layout_marginHorizontal="@dimen/spacing_lg"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="@dimen/spacing_sm"
         android:layout_marginBottom="@dimen/spacing_sm"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Translucent guide shown on top of the system "Display over other apps" settings page.
+    Tells the user which entry to switch on; Got It dismisses it and leaves Settings visible.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/guideRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/scrimStrong"
+    tools:context=".activity.OverlayGuideActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/guideSheet"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_camera_sheet"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="@dimen/spacing_xl"
+        android:paddingTop="@dimen/spacing_xxxl"
+        android:paddingBottom="@dimen/spacing_xxxl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tvGuideTitle"
+            style="@style/Text.VoiceLock.titleL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sora_semibold"
+            android:gravity="center"
+            android:text="@string/camera_enable_permission"
+            android:textColor="@color/primary_text"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvGuideDescription"
+            style="@style/Text.VoiceLock.bodyL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:fontFamily="@font/sora_regular"
+            android:gravity="center"
+            android:textColor="@color/textSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvGuideTitle"
+            tools:text="Find “AI Voice Lock” and turn it on to use this feature" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/guideAppRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xxl"
+            android:background="@drawable/bg_camera_guide_row"
+            android:padding="@dimen/spacing_md"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvGuideDescription">
+
+            <FrameLayout
+                android:id="@+id/guideIconFrame"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/bg_camera_guide_icon"
+                android:padding="@dimen/spacing_sm"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivGuideAppIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:importantForAccessibility="no"
+                    android:src="@mipmap/ic_launcher" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvGuideAppName"
+                style="@style/Text.VoiceLock.titleL"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_lg"
+                android:layout_marginEnd="@dimen/spacing_sm"
+                android:ellipsize="end"
+                android:fontFamily="@font/sora_medium"
+                android:maxLines="1"
+                android:textColor="@color/textSecondary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guideSwitch"
+                app:layout_constraintStart_toEndOf="@id/guideIconFrame"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="AI Voice Lock" />
+
+            <FrameLayout
+                android:id="@+id/guideSwitch"
+                android:layout_width="56dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_camera_guide_switch"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/guideSwitchKnob"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/bg_camera_toggle_knob_on" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/ivGuideHand"
+                android:layout_width="48dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_camera_tap_hand"
+                app:layout_constraintStart_toStartOf="@id/guideSwitch"
+                app:layout_constraintTop_toTopOf="@id/guideSwitch" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/btnGuideGotIt"
+            style="@style/Text.VoiceLock.buttonL"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/spacing_xxxl"
+            android:background="@drawable/bg_cta_gradient"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/sora_semibold"
+            android:gravity="center"
+            android:text="@string/camera_got_it"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideAppRow" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

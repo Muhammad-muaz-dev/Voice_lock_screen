@@ -1,0 +1,76 @@
+{
+  "conditions": [],
+  "parameters": {
+    "splash_ads_config": {
+      "defaultValue": {
+        "value": "{\"AppOpenEnable\":1,\"InterstitialEnable\":0,\"BannerEnable\":0,\"NativeEnable\":1,\"SplashConsentTimeout\":7000,\"NativeFormat\":1,\"AdCtaColor\":\"#635BFF\",\"AdCtaTextColor\":\"#FFFFFF\",\"CtaTextStyle\":\"bold\"}"
+      },
+      "description": "Splash ads: full-screen (AppOpen/Interstitial) and bottom ad (Native/Banner)",
+      "valueType": "JSON"
+    },
+    "language_ads_config": {
+      "defaultValue": {
+        "value": "{\"AppOpenEnable\":0,\"InterstitialEnable\":0,\"BannerEnable\":0,\"NativeEnable\":1,\"SplashConsentTimeout\":7000,\"NativeFormat\":1,\"AdCtaColor\":\"#635BFF\",\"AdCtaTextColor\":\"#FFFFFF\",\"CtaTextStyle\":\"bold\"}"
+      },
+      "description": "Language screen bottom ad (Native/Banner)",
+      "valueType": "JSON"
+    },
+    "onboarding_ads_config": {
+      "defaultValue": {
+        "value": "{\"AppOpenEnable\":0,\"InterstitialEnable\":0,\"BannerEnable\":0,\"NativeEnable\":1,\"SplashConsentTimeout\":7000,\"NativeFormat\":2,\"AdCtaColor\":\"#635BFF\",\"AdCtaTextColor\":\"#FFFFFF\",\"CtaTextStyle\":\"bold\"}"
+      },
+      "description": "Onboarding bottom ad (Native/Banner)",
+      "valueType": "JSON"
+    },
+    "inapp_screen_enabled": {
+      "defaultValue": { "value": "true" },
+      "description": "Show Premium (in-app) screen after splash",
+      "valueType": "BOOLEAN"
+    },
+    "language_screen_enabled": {
+      "defaultValue": { "value": "true" },
+      "description": "Show Language screen on first launch",
+      "valueType": "BOOLEAN"
+    },
+    "onboarding_enabled": {
+      "defaultValue": { "value": "true" },
+      "description": "Show Onboarding on first launch",
+      "valueType": "BOOLEAN"
+    },
+    "onboarding_page_1_enabled": {
+      "defaultValue": { "value": "true" },
+      "description": "Onboarding page 1: Select Your Lock Method",
+      "valueType": "BOOLEAN"
+    },
+    "onboarding_page_2_enabled": {
+      "defaultValue": { "value": "true" },
+      "description": "Onboarding page 2: Personalize Your Lock Screen",
+      "valueType": "BOOLEAN"
+    },
+    "onboarding_page_3_enabled": {
+      "defaultValue": { "value": "true" },
+      "description": "Onboarding page 3: All-in-One Lock",
+      "valueType": "BOOLEAN"
+    },
+    "onboarding_page_4_enabled": {
+      "defaultValue": { "value": "true" },
+      "description": "Onboarding page 4: Enjoy Smart Protection",
+      "valueType": "BOOLEAN"
+    },
+    "home_banner_enabled": {
+      "defaultValue": { "value": "true" },
+      "description": "Banner at the bottom of Home",
+      "valueType": "BOOLEAN"
+    },
+    "cooldown_inter_enabled": {
+      "defaultValue": { "value": "true" },
+      "description": "Interstitial on feature clicks and back presses, limited by cooldown",
+      "valueType": "BOOLEAN"
+    },
+    "inter_cooldown_seconds": {
+      "defaultValue": { "value": "30" },
+      "description": "Minimum seconds between full-screen ads",
+      "valueType": "NUMBER"
+    }
+  }
+}

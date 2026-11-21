@@ -16,6 +16,9 @@
     <dimen name="language_flag_size">28dp</dimen>
     <dimen name="language_indicator_size">18dp</dimen>
     <!-- Spacing Tokens -->
+    <!-- Floating bottom nav: 64dp bar + 8dp margin + 16dp breathing room for the last item. -->
+    <dimen name="bottom_nav_content_inset">88dp</dimen>
+    <dimen name="pin_glass_key">64dp</dimen>
     <dimen name="spacing_xs">4dp</dimen>
     <dimen name="spacing_sm">8dp</dimen>
     <dimen name="spacing_md">12dp</dimen>

@@ -17,8 +17,8 @@
     <!-- ========================================================================= -->
     <!-- Voice Lock Design System v1.0 — Background & Surface Colors                -->
     <!-- ========================================================================= -->
-    <color name="bg">#F7F8FC</color>
-    <color name="bg_screen">#F7F8FC</color>
+    <color name="bg">#E9EEF6</color>
+    <color name="bg_screen">#E9EEF6</color>
     <color name="surface">#FFFFFF</color>
     <color name="card">#FFFFFF</color>
     <color name="card_bg">#FFFFFF</color>
@@ -64,9 +64,17 @@
 
     <!-- Soft Semantic Tints -->
     <color name="successSoft">#DCFCE7</color>
+    <color name="successStrong">#16A34A</color>
     <color name="errorSoft">#FEE2E2</color>
     <color name="danger">#EF4444</color>
     <color name="scrim">#66000000</color>
+    <color name="scrimStrong">#CC000000</color>
+    <color name="successGlow">#3322C55E</color>
+    <color name="primaryGlow">#33635BFF</color>
+    <color name="glassFill">#40FFFFFF</color>
+    <color name="whiteSoft">#1FFFFFFF</color>
+    <color name="whiteMuted">#D9FFFFFF</color>
+    <color name="glassDot">#99FFFFFF</color>
 
     <!-- ========================================================================= -->
     <!-- Voice Lock Design System v1.0 — Badges & Tags (Section 11)                 -->
@@ -102,7 +110,7 @@
 
     <!-- Component UI States (Buttons, Controls, Dialogs, Toast) -->
     <color name="switch_track_on">#635BFF</color>
-    <color name="switch_track_off">#E6E8EF</color>
+    <color name="switch_track_off">#D4D7E1</color>
     <color name="dialog_btn_cancel_bg">#F1F2F6</color>
     <color name="toast_bg_dark">#1E293B</color>
     <color name="toast_bg_info">#EFF6FF</color>
@@ -113,7 +121,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="text_white">#FFFFFF</color>
-    <color name="screen_bg_dark">#F7F8FC</color> <!-- was #0B1020 (old dark design); app is light-only -->
+    <color name="screen_bg_dark">#E9EEF6</color> <!-- was #0B1020 (old dark design); app is light-only -->
     <color name="card_bg_dark">#FFFFFF</color> <!-- was #151B33 -->
     <color name="card_stroke_dark">#E6E8EF</color> <!-- was #232B4A -->
     <color name="brand_purple">#635BFF</color>
@@ -126,7 +134,7 @@
     <color name="accent_pattern_bg">#635BFF</color>
     <color name="accent_fingerprint_bg">#10B981</color>
     <color name="divider_unlock_translucent">#1A171829</color>
-    <color name="bg_color">#F7F8FC</color>
+    <color name="bg_color">#E9EEF6</color>
     <color name="blue_primary">#635BFF</color>
     <color name="blue_light">#EDECFF</color>
     <color name="text_dark">#171829</color>

@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import com.futurecode.voicelockscreen.ads.AdsManager
 import com.futurecode.voicelockscreen.db.PrefManager
 import com.futurecode.voicelockscreen.service.LockService
+import com.futurecode.voicelockscreen.utils.SystemBars
 import java.util.Locale
 
 
@@ -35,6 +37,8 @@ class MyApplication : Application() {
         // This is required because NetworkMonitor needs getCurrentActivity() to show the dialog
         setupActivityTracker()
         LockService.startIfNeeded(this)
+        AdsManager.initialize(this)
+        SystemBars.install(this)
 
         // 2. Initialize and Start Network Monitoring
 //        networkMonitor = NetworkMonitor(this)

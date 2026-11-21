@@ -1,115 +1,138 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
+import android.Manifest
 import android.content.Intent
-import android.graphics.Outline
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewOutlineProvider
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.futurecode.voicelockscreen.BuildConfig
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentSettingBinding
-import com.futurecode.voicelockscreen.databinding.VnItemSettingBinding
+import com.futurecode.voicelockscreen.databinding.ItemSettingsRowBinding
 import com.futurecode.voicelockscreen.db.PrefManager
-import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.ui.prelogin.LanguageFragment
+import com.futurecode.voicelockscreen.security.SecureVoiceStore
+import com.futurecode.voicelockscreen.utils.LockPermissionHelper
 import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 
-/** Settings, laid out like the reference: premium banner, "General settings" and "Other" cards. */
+/** Settings: Notifications + Language, Rate us / Feedback / Share app, Privacy policy. */
 class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
 
-    private data class Row(@DrawableRes val icon: Int, @StringRes val title: Int, @StringRes val desc: Int, val action: () -> Unit)
+    private val notificationPermission = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (!granted) openNotificationSettings()
+        renderNotificationToggle()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         VoiceNoteUi.lightStatusBar(this)
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
-        setupBanner()
-        bindRows(
-            binding.rcvGeneralSetting,
-            listOf(
-                Row(R.drawable.vn_ic_world, R.string.vn_text_change_language, R.string.vn_text_change_language_desc) {
-                    findNavController().navigate(
-                        R.id.languageFragment,
-                        Bundle().apply { putBoolean(LanguageFragment.ARG_RETURN_TO_SETTINGS, true) }
-                    )
-                },
-                Row(R.drawable.vn_ic_change_security, R.string.vn_text_change_security_question, R.string.vn_text_change_security_question_desc) {
-                    findNavController().navigate(R.id.securityQuestionFragment, Bundle().apply { putBoolean("editing", true) })
-                },
-                Row(R.drawable.vn_ic_disable_lock, R.string.vn_text_disable_system_lock, R.string.vn_text_disable_system_lock_desc) {
-                    VoiceLockSwitchStore.setUnlockEnabled(requireContext(), false)
-                    LockService.stop(requireContext())
-                    openIntent(Intent(Settings.ACTION_SECURITY_SETTINGS), getString(R.string.system_lock_settings_unavailable))
-                }
+        setupRows()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        renderNotificationToggle()
+        renderLockVoiceToggle()
+    }
+
+    private fun setupRows() {
+        bindRow(binding.rowNotifications, R.drawable.ic_settings_bell, R.string.settings_notifications) {
+            onNotificationsTapped()
+        }
+        binding.rowNotifications.switchRow.isVisible = true
+        binding.rowNotifications.switchRow.setOnClickListener { onNotificationsTapped() }
+
+        bindRow(binding.rowLockVoice, R.drawable.ic_settings_mic, R.string.home_lock_by_voice) { onLockVoiceTapped() }
+        binding.rowLockVoice.switchRow.isVisible = true
+        binding.rowLockVoice.switchRow.setOnClickListener { onLockVoiceTapped() }
+
+        bindRow(binding.rowVoiceCommand, R.drawable.ic_camera_reset, R.string.change_voice_command) {
+            findNavController().navigate(R.id.voiceSetupFragment)
+        }
+        bindRow(binding.rowLanguage, R.drawable.ic_settings_translate, R.string.settings_language) {
+            findNavController().navigate(
+                R.id.languageFragment,
+                Bundle().apply { putBoolean(LanguageFragment.ARG_RETURN_TO_SETTINGS, true) }
             )
-        )
-        bindRows(
-            binding.rcvOther,
-            listOf(
-                Row(R.drawable.vn_ic_share, R.string.vn_text_share_app, R.string.vn_text_share_app_desc) { shareApp() },
-                Row(R.drawable.vn_ic_feedback, R.string.vn_text_feedback, R.string.vn_text_feedback_desc) { sendFeedback() },
-                Row(R.drawable.vn_ic_privacy_policy, R.string.vn_text_policies, R.string.vn_text_policies_desc) { openPrivacyPolicy() },
-                Row(R.drawable.vn_ic_rate, R.string.vn_text_rate_us, R.string.vn_text_rate_us_desc) {
-                    VoiceNoteUi.showRate(requireContext(), onNotReally = { sendFeedback() }, onLoveIt = { openStore() })
-                }
+        }
+        bindRow(binding.rowRate, R.drawable.ic_settings_star, R.string.settings_rate_us) {
+            VoiceNoteUi.showRate(requireContext(), onNotReally = { sendFeedback() }, onLoveIt = { openStore() })
+        }
+        bindRow(binding.rowFeedback, R.drawable.ic_settings_feedback, R.string.settings_feedback) { sendFeedback() }
+        bindRow(binding.rowShare, R.drawable.ic_settings_share, R.string.settings_share_app) { shareApp() }
+        bindRow(binding.rowPrivacy, R.drawable.ic_settings_privacy, R.string.settings_privacy_policy) { openPrivacyPolicy() }
+    }
+
+    private fun bindRow(row: ItemSettingsRowBinding, @DrawableRes icon: Int, @StringRes title: Int, action: () -> Unit) {
+        row.ivIcon.setImageResource(icon)
+        row.tvTitle.setText(title)
+        row.root.setOnClickListener { action() }
+    }
+
+    // region Lock screen by voice
+
+    private fun renderLockVoiceToggle() {
+        val row = bindingOrNull?.rowLockVoice ?: return
+        row.switchRow.isChecked = VoiceLockSwitchStore.isLockEffective(requireContext())
+    }
+
+    private fun onLockVoiceTapped() {
+        val context = requireContext()
+        val enable = !VoiceLockSwitchStore.isLockEffective(context)
+        VoiceLockSwitchStore.setLockEnabled(context, enable)
+        when {
+            enable && !SecureVoiceStore.hasPhrase(context) -> findNavController().navigate(R.id.voiceSetupFragment)
+            enable && !VoiceLockSwitchStore.hasRequiredPermissions(context) -> findNavController().navigate(
+                R.id.permissionFragment,
+                Bundle().apply { putString(PermissionFragment.ARG_TARGET, PermissionFragment.TARGET_HOME) }
             )
-        )
+        }
+        renderLockVoiceToggle()
     }
 
-    private fun setupBanner() {
-        val radius = resources.getDimension(R.dimen.vn_dp_16)
-        binding.frameBannerIAP.outlineProvider = object : ViewOutlineProvider() {
-            override fun getOutline(view: View, outline: Outline) = outline.setRoundRect(0, 0, view.width, view.height, radius)
-        }
-        binding.frameBannerIAP.clipToOutline = true
-        if (prefManager.isPro) {
-            binding.tvUpgradeTitle.setText(R.string.youre_premium)
-            binding.tvPremiumDesc.setText(R.string.everything_unlocked)
-            binding.btnUpgrade.setText(R.string.manage_plan)
-        }
-        val openPremium = View.OnClickListener {
-            if (prefManager.isPro && !BuildConfig.DEBUG) {
-                openIntent(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/account/subscriptions")), getString(R.string.no_app_found))
-            } else {
-                findNavController().navigate(R.id.premiumFragment)
-            }
-        }
-        binding.frameBannerIAP.setOnClickListener(openPremium)
-        binding.btnUpgrade.setOnClickListener(openPremium)
+    // endregion
+
+    // region Notifications
+
+    private fun notificationsEnabled(): Boolean =
+        LockPermissionHelper.hasNotificationPermission(requireContext()) &&
+            NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+
+    private fun renderNotificationToggle() {
+        val row = bindingOrNull?.rowNotifications ?: return
+        row.switchRow.isChecked = notificationsEnabled()
     }
 
-    private fun bindRows(list: RecyclerView, rows: List<Row>) {
-        list.layoutManager = LinearLayoutManager(requireContext())
-        list.isNestedScrollingEnabled = false
-        list.adapter = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val row = VnItemSettingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return object : RecyclerView.ViewHolder(row.root) {}.also { it.itemView.tag = row }
-            }
-
-            override fun getItemCount() = rows.size
-
-            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                val row = holder.itemView.tag as VnItemSettingBinding
-                val item = rows[position]
-                row.ivThumb.setImageResource(item.icon)
-                row.tvTitle.setText(item.title)
-                row.tvDesc.setText(item.desc)
-                row.root.setOnClickListener { item.action() }
-            }
+    private fun onNotificationsTapped() {
+        val needsRuntimePermission = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            !LockPermissionHelper.hasNotificationPermission(requireContext())
+        if (needsRuntimePermission) {
+            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            // Turning notifications on or off after that happens in the system settings.
+            openNotificationSettings()
         }
+        renderNotificationToggle()
     }
+
+    private fun openNotificationSettings() {
+        openIntent(LockPermissionHelper.appNotificationSettingsIntent(requireContext()), getString(R.string.no_app_found))
+    }
+
+    // endregion
+
+    // region Actions
 
     private fun shareApp() {
         val message = PrefManager.get(requireContext()).shareMessage.ifBlank {
@@ -153,4 +176,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     }
 
     private fun playStoreUrl() = "https://play.google.com/store/apps/details?id=${requireContext().packageName}"
+
+    // endregion
 }

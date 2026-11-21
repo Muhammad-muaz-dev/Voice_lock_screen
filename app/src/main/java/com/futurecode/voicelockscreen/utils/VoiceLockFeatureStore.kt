@@ -20,6 +20,8 @@ object VoiceLockFeatureStore {
     private const val PREFS = "voice_lock_features"
     private const val KEY_CAMERA_PHRASE = "camera_phrase"
     private const val KEY_CAMERA_ENABLED = "camera_enabled"
+    private const val KEY_CAMERA_VOICE_READY = "camera_voice_ready"
+    private const val KEY_CAMERA_COACH_SHOWN = "camera_coach_shown"
     private const val KEY_QUOTE = "lock_quote"
     private const val KEY_SHOW_CLOCK_QUOTE = "show_clock_quote"
     private const val KEY_CUSTOM_URI = "custom_theme_uri"
@@ -41,6 +43,19 @@ object VoiceLockFeatureStore {
 
     fun setCameraEnabled(context: Context, enabled: Boolean) {
         prefs(context).edit().putBoolean(KEY_CAMERA_ENABLED, enabled).apply()
+    }
+
+    /** True once the user has recorded "Open Camera" three times. */
+    fun isCameraVoiceReady(context: Context) = prefs(context).getBoolean(KEY_CAMERA_VOICE_READY, false)
+
+    fun setCameraVoiceReady(context: Context, ready: Boolean) {
+        prefs(context).edit().putBoolean(KEY_CAMERA_VOICE_READY, ready).apply()
+    }
+
+    fun isCameraCoachShown(context: Context) = prefs(context).getBoolean(KEY_CAMERA_COACH_SHOWN, false)
+
+    fun setCameraCoachShown(context: Context) {
+        prefs(context).edit().putBoolean(KEY_CAMERA_COACH_SHOWN, true).apply()
     }
 
     fun lockQuote(context: Context) =

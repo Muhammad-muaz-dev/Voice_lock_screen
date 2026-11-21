@@ -1,32 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Language picker: title with a confirm check, then pill rows. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/bg" android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fitsSystemWindows="true"
     tools:context=".ui.prelogin.LanguageFragment">
 
-    <TextView android:id="@+id/tvTitle" style="@style/Text.VoiceLock.titleXL"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_xxl"
-        android:fontFamily="@font/sora_semibold" android:text="@string/language" android:textColor="@color/textPrimary"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.VoiceLock.titleXL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_lg"
+        android:layout_marginEnd="@dimen/spacing_sm"
+        android:fontFamily="@font/sora_medium"
+        android:text="@string/language"
+        android:textColor="@color/primary_text"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@id/btnContinue"
+        app:layout_constraintEnd_toStartOf="@id/btnContinue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnContinue" />
+
+    <ImageView
+        android:id="@+id/btnContinue"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:layout_marginEnd="@dimen/spacing_sm"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/continue_text"
+        android:padding="12dp"
+        android:src="@drawable/ic_language_done"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvLanguages"
-        android:layout_width="0dp" android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/spacing_lg" android:layout_marginTop="@dimen/spacing_xxl"
-        android:clipToPadding="true" android:paddingBottom="@dimen/spacing_sm" android:overScrollMode="never"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvLanguages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_lg"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" app:layout_constraintBottom_toTopOf="@id/btnContinue"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_language" tools:itemCount="15" />
+        app:layout_constraintBottom_toTopOf="@id/languageAdContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnContinue"
+        tools:itemCount="10"
+        tools:listitem="@layout/item_language" />
 
-    <TextView android:id="@+id/btnContinue" style="@style/Text.VoiceLock.buttonL"
-        android:layout_width="0dp" android:layout_height="wrap_content" android:minHeight="48dp"
-        android:layout_marginHorizontal="@dimen/spacing_lg" android:layout_marginBottom="@dimen/spacing_lg"
-        android:layout_marginTop="@dimen/spacing_sm" android:padding="@dimen/spacing_md"
-        android:background="@drawable/bg_language_continue" android:foreground="?attr/selectableItemBackground"
-        android:clickable="true" android:focusable="true" android:gravity="center"
-        android:fontFamily="@font/sora_bold" android:text="@string/continue_text" android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Native ad (preloaded on Splash). Hidden when off or not filled. -->
+    <FrameLayout
+        android:id="@+id/languageAdContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_lg"
+        android:layout_marginBottom="@dimen/spacing_md"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

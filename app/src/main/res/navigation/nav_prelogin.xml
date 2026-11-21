@@ -13,4 +13,22 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/premiumFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.PremiumFragment"
+        android:label="@string/premium"
+        tools:layout="@layout/fragment_premium" />
+
+    <fragment
+        android:id="@+id/languageFragment"
+        android:name="com.futurecode.voicelockscreen.ui.prelogin.LanguageFragment"
+        android:label="@string/language"
+        tools:layout="@layout/fragment_language" />
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.futurecode.voicelockscreen.ui.prelogin.OnboardingFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_onboarding" />
+
 </navigation>

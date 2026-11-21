@@ -31,6 +31,17 @@ object ThemeWallpaperStore {
 
     fun applyTo(image: android.widget.ImageView, context: Context) {
         val uri = VoiceLockFeatureStore.customThemeUri(context)
+        if (uri != null && uri.scheme == "file") {
+            val file = java.io.File(uri.path.orEmpty())
+            if (file.exists()) {
+                com.bumptech.glide.Glide.with(context.applicationContext)
+                    .load(file)
+                    .centerCrop()
+                    .error(getSelectedWallpaperRes(context))
+                    .into(image)
+                return
+            }
+        }
         if (uri != null) {
             val loaded = runCatching { image.setImageURI(uri); image.drawable != null }.getOrDefault(false)
             if (loaded) return

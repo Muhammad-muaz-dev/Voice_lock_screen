@@ -244,14 +244,16 @@
 
     <!-- Security questions -->
     <string-array name="security_questions">
-        <item>What was the name of your primary school?</item>
-        <item>What is the name of your first pet?</item>
-        <item>What was the name of the street you grew up on?</item>
-        <item>What is your mother\'s maiden name?</item>
-        <item>What city were you born in?</item>
-        <item>What was the make of your first car?</item>
-        <item>What is the name of your oldest sibling?</item>
-        <item>What was your childhood nickname?</item>
+        <item>What is the name of your best friend in elementary school?</item>
+        <item>What was the name of your first pet?</item>
+        <item>In which city were you born?</item>
+        <item>What is the name of your high school?</item>
+        <item>What is your favourite food?</item>
+        <item>What is the name of a teacher you remember the most?</item>
+        <item>What is your favourite movie or book?</item>
+        <item>What is your mother\'s or father\'s birthday?</item>
+        <item>Where was your first travel destination?</item>
+        <item>What is the name of the first street you lived on?</item>
     </string-array>
 
     <!-- Advertising and promotional UI -->
@@ -301,7 +303,7 @@
     <string name="fingerprint_desc">Lock with fingerprint</string>
     <string name="tab_voice_lock">AI Voice Lock</string>
     <string name="tab_themes">Themes</string>
-    <string name="tab_voice_note">AI Notes</string>
+    <string name="tab_voice_note">AI Voice Notes</string>
     <string name="language">Language</string>
     <string name="splash_tagline">Just say it. Your phone does the rest.</string>
     <string name="restore">Restore</string>
@@ -447,5 +449,141 @@
     <string name="pro_price_summary">Rs 2,550.00/week after FREE 3-day trial</string>
     <string name="pro_legal_disclosure">By continuing you agree to our &lt;u&gt;Terms&lt;/u&gt; and &lt;u&gt;Privacy&lt;/u&gt; policies. Subscription is billed after the trial ends and will auto-renew. Cancel subscription anytime before trial ends to avoid charges.</string>
     <string name="display_over_other_apps_desc">Shows the lock screen above other apps when your screen is locked.</string>
+
+    <!-- Open Camera by Voice flow -->
+    <string name="camera_permissions_heading">Additional permissions required</string>
+    <string name="camera_permissions_description">Our app needs access to these permissions to work correctly.</string>
+    <string name="camera_access_row_desc">To take photos and record videos</string>
+    <string name="camera_microphone_access_desc">To record your voice and create voice password</string>
+    <string name="camera_display_access_desc">To show the camera controls while you are using other screens</string>
+    <string name="camera_permission_denied">Allow camera and microphone to use voice camera.</string>
+    <string name="camera_enable_permission">Enable Permission</string>
+    <string name="camera_enable_permission_desc">Find “%1$s” and turn it on to use this feature</string>
+    <string name="camera_got_it">Got It</string>
+    <string name="camera_phrase_test">Say “&lt;b&gt;Open Camera&lt;/b&gt;” to test your voice</string>
+    <string name="camera_record_say">Say “&lt;b&gt;Open Camera&lt;/b&gt;”</string>
+    <string name="camera_recording_initial">Initial Recording 1/3</string>
+    <string name="camera_recording_initial_desc">Speak the phrase to establish your voice profile</string>
+    <string name="camera_recording_second">Recording 2/3</string>
+    <string name="camera_recording_second_desc">Say the same phrase again to verify.</string>
+    <string name="camera_recording_third">Verification 3/3</string>
+    <string name="camera_recording_third_desc">Say the same phrase one last time to ensure accuracy</string>
+    <string name="camera_voice_progress">Voice recording progress</string>
+    <string name="camera_how_description">Control your camera effortlessly in 2 easy steps</string>
+    <string name="camera_step_one">STEP 1</string>
+    <string name="camera_step_two">STEP 2</string>
+    <string name="tap_to_hear">Tap to hear</string>
+    <string name="camera_wake_heading">Wake Up Your Camera Assistant</string>
+    <string name="camera_wake_description">Say “&lt;b&gt;Open Camera&lt;/b&gt;” to open camera and activate voice control.</string>
+    <string name="camera_give_command">Give Your Command</string>
+    <string name="camera_photo_mode">Photo Mode</string>
+    <string name="camera_video_mode">Video Mode</string>
+    <string name="camera_command_capture">Say “&lt;b&gt;Capture&lt;/b&gt;” to take photo</string>
+    <string name="camera_command_open_photo">Say “&lt;b&gt;Open Photo&lt;/b&gt;” to switch to photo</string>
+    <string name="camera_command_open_video">Say “&lt;b&gt;Open Video&lt;/b&gt;” to switch to video</string>
+    <string name="camera_command_record">Say “&lt;b&gt;Record&lt;/b&gt;” to start video</string>
+    <string name="camera_command_end_record">Say “&lt;b&gt;End Record&lt;/b&gt;” to stop</string>
+    <string name="camera_main_description">Open your camera and capture photos or videos using simple voice commands.</string>
+    <string name="camera_toggle_on">ON</string>
+    <string name="camera_toggle_off">OFF</string>
+    <string name="camera_help">Camera guide</string>
+    <string name="camera_guideline_tip">You can always check our guideline here</string>
+    <string name="camera_ok">OK</string>
+    <string name="camera_reset_voice">Reset Your Voice</string>
+    <string name="camera_all_set_title">You’re All Set!</string>
+    <string name="camera_all_set_description">Now, start by saying “&lt;b&gt;Open Camera&lt;/b&gt;”</string>
+    <string name="camera_home">Home</string>
+    <string name="camera_phrase_open">Open Camera</string>
+    <string name="camera_phrase_capture">Capture</string>
+    <string name="camera_phrase_open_photo">Open Photo</string>
+    <string name="camera_phrase_open_video">Open Video</string>
+    <string name="camera_phrase_record">Record</string>
+    <string name="camera_phrase_end_record">End Record</string>
+
+    <!-- Settings (reference layout) -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_rate_us">Rate us</string>
+    <string name="settings_feedback">Feedback</string>
+    <string name="settings_share_app">Share app</string>
+    <string name="settings_privacy_policy">Privacy policy</string>
+
+    <!-- PIN setup flow -->
+    <string name="pin_setup_title">Pin Setup</string>
+    <string name="pin_setup_card_desc">Protect your device with a secure 4-digit or 6-digit PIN.</string>
+    <string name="pin_setup_now">Setup Now</string>
+    <string name="recovery_password_title">Recovery Password</string>
+    <string name="recovery_password_card_desc">Change recovery password by question</string>
+    <string name="recovery_set_question">Set Question</string>
+    <string name="pin_step_choose_type">Step 1 :- Choose your type</string>
+    <string name="pin_step_input">Step 2 :- input your pin code</string>
+    <string name="pin_step_confirm">Step 3 :- confirm your pin code</string>
+    <string name="pin_step_done">Step 4 :- input your pin code</string>
+    <string name="pin_type_label">%1$d Number</string>
+    <string name="pin_input_hint">Please enter your pin code, pin lock will replace in case voice unlock fails.</string>
+    <string name="pin_confirm_input_hint">Please re-enter the same pin code to confirm it.</string>
+    <string name="pin_setup_success">Setup Success!</string>
+    <string name="pin_setup_success_desc">Your PIN setup is complete.\nTap done to start test this function.</string>
+    <string name="pin_show">Show PIN</string>
+    <string name="pin_hide">Hide PIN</string>
+    <string name="pin_done">Done</string>
+    <string name="pin_step_progress">Step %1$d of 4</string>
+    <string name="pin_lock_test_title">Pin lock Test</string>
+    <string name="pin_lock_skip">Skip</string>
+    <string name="pin_please_enter">Please enter PIN</string>
+    <string name="pin_test_success">PIN works. You\'re all set.</string>
+    <string name="pin_delete_digit">Delete digit</string>
+
+    <!-- Recovery password (security question) -->
+    <string name="recovery_question_label">Security question</string>
+    <string name="recovery_question_placeholder">Choose a question</string>
+    <string name="recovery_answer_label">Your answer</string>
+    <string name="recovery_apply">Apply</string>
+    <string name="recovery_save">Save</string>
+
+    <!-- Home voice card -->
+    <string name="home_voice_active">Voice Lock Active</string>
+    <string name="home_voice_active_desc">Listening for your unique voice key</string>
+    <string name="home_voice_inactive">Voice Lock Off</string>
+    <string name="home_voice_inactive_desc">Tap to turn on unlock by voice</string>
+    <string name="home_voice_setup">Set Up Voice Lock</string>
+    <string name="home_voice_setup_desc">Record your unique voice key to unlock</string>
+    <string name="home_voice_status_active">Active</string>
+    <string name="home_voice_status_off">Off</string>
+    <string name="home_voice_status_setup">Not set up</string>
+    <string name="home_voice_turn_off">Turn Off</string>
+    <string name="home_voice_turn_on">Turn On</string>
+    <string name="home_voice_setup_now">Set Up Now</string>
+    <string name="home_voice_status_setup_short">Setup needed</string>
+    <string name="home_voice_phrase_example">Say “&lt;b&gt;Hey, unlock my screen&lt;/b&gt;”</string>
+    <string name="home_voice_phrase_ready">Say your &lt;b&gt;voice key&lt;/b&gt; to unlock</string>
+    <string name="home_voice_title">Voice Screen Lock</string>
+    <string name="home_voice_status_line_off">Off · turn on to protect your phone</string>
+    <string name="home_voice_status_line_on">On · listening for your voice key</string>
+    <string name="home_voice_status_line_setup">Not set up · turn on to record your voice key</string>
+    <string name="home_lock_by_voice">Lock screen by voice</string>
+
+    <!-- Onboarding -->
+    <string name="onboard_title_1">Select Your Lock Method</string>
+    <string name="onboard_body_1">Pick voice, PIN, pattern or fingerprint to secure your phone.</string>
+    <string name="onboard_title_2">Personalize Your Lock Screen</string>
+    <string name="onboard_body_2">Choose a theme, add daily quotes and make your lock screen yours.</string>
+    <string name="onboard_title_3">All-in-One Lock</string>
+    <string name="onboard_body_3">Secure your phone with voice, PIN, pattern and fingerprint.</string>
+    <string name="onboard_title_4">Enjoy Smart Protection</string>
+    <string name="onboard_body_4">Unlock with your voice while keeping your phone safe from intruders.</string>
+    <string name="onboard_start">Start</string>
+
+    <!-- Wallpaper themes API -->
+    <string name="themes_load_error">Couldn\'t load themes. Check your connection and try again.</string>
+    <string name="themes_empty">No wallpapers in this category yet.</string>
+    <string name="themes_retry">Try again</string>
+    <string name="themes_applying">Applying…</string>
+    <string name="themes_apply_failed">Couldn\'t download this wallpaper. Try again.</string>
+
+    <!-- Ads -->
+    <string name="ad_label">Ad</string>
+    <string name="onboarding_skip">Skip</string>
 </resources>
 

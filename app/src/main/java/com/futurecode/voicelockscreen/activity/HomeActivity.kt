@@ -3,6 +3,8 @@ package com.futurecode.voicelockscreen.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.WindowCompat
+import com.futurecode.voicelockscreen.ads.AdsManager
+import com.futurecode.voicelockscreen.utils.FullBleed
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.futurecode.voicelockscreen.R
@@ -36,7 +38,11 @@ class HomeActivity : BaseActivity() { // Assumed mapping, adjust if you inherit 
                 destination.id == R.id.customThemeFragment
             window.statusBarColor = if (darkPreview) darkBackgroundColor else lightBackgroundColor
             WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = !darkPreview
+            // Full-screen previews draw edge to edge; every other screen keeps the inset padding.
+            FullBleed.set(this, darkPreview)
+            maybeShowCooldownAd(destination.id)
         }
+        AdsManager.preloadCooldownInterstitial()
         if (intent.getBooleanExtra(EXTRA_SHOW_LOCK_PREVIEW, false)) {
             AppLockState.requestLockAfterPhoneUnlock(this)
             binding.root.post {
@@ -97,8 +103,29 @@ class HomeActivity : BaseActivity() { // Assumed mapping, adjust if you inherit 
         navController.navigate(R.id.screenPreviewFragment)
     }
 
+    private var firstDestinationSeen = false
+
+    /**
+     * Cooldown interstitial on every navigation after the first screen: opening a feature and
+     * going back both change the destination. AdsManager enforces remote on/off and cooldown.
+     */
+    private fun maybeShowCooldownAd(destinationId: Int) {
+        if (!firstDestinationSeen) {
+            firstDestinationSeen = true
+            return
+        }
+        if (destinationId in NO_COOLDOWN_AD) return
+        AdsManager.showCooldownInterstitial(this)
+    }
+
     companion object {
         const val EXTRA_SHOW_LOCK_PREVIEW = "extra_show_lock_preview"
         const val EXTRA_SHOW_PREMIUM = "extra_show_premium"
+
+        /** Screens where a full-screen ad would interrupt a lock/unlock or purchase step. */
+        private val NO_COOLDOWN_AD = setOf(
+            R.id.screenPreviewFragment,
+            R.id.premiumFragment
+        )
     }
 }

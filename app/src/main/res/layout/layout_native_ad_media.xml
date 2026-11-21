@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Native ad with media; fills its container (Onboarding bottom area). The header is kept compact
+    so the MediaView keeps AdMob's 120dp video minimum inside a 35%-of-screen slot.
+-->
+<com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_ad_slot">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/adContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacing_md">
+
+        <ImageView
+            android:id="@+id/adIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_ad_icon"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/adHeadline"
+            style="@style/Text.VoiceLock.titleS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:ellipsize="end"
+            android:fontFamily="@font/sora_semibold"
+            android:maxLines="1"
+            android:textColor="@color/primary_text"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/adIcon"
+            app:layout_constraintTop_toTopOf="@id/adIcon"
+            tools:text="Ad headline" />
+
+        <TextView
+            android:id="@+id/adBody"
+            style="@style/Text.VoiceLock.bodyS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/sora_regular"
+            android:maxLines="1"
+            android:textColor="@color/textSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/adHeadline"
+            app:layout_constraintTop_toBottomOf="@id/adHeadline"
+            tools:text="Ad body text goes here." />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/adHeaderBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="adIcon,adBody" />
+
+        <com.google.android.libraries.ads.mobile.sdk.nativead.MediaView
+            android:id="@+id/adMedia"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_sm"
+            app:layout_constraintBottom_toTopOf="@id/adCallToAction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_min="120dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/adHeaderBarrier" />
+
+        <!-- "Ad" attribution sits on the media's top-left corner. -->
+        <TextView
+            android:id="@+id/adBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_xs"
+            android:background="@drawable/bg_ad_badge"
+            android:fontFamily="@font/sora_semibold"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="1dp"
+            android:text="@string/ad_label"
+            android:textColor="@color/badge_pro_text"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/adMedia"
+            app:layout_constraintTop_toTopOf="@id/adMedia" />
+
+        <Button
+            android:id="@+id/adCallToAction"
+            style="@style/Text.VoiceLock.buttonS"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:background="@drawable/bg_cta_gradient"
+            android:fontFamily="@font/sora_semibold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Install" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView>

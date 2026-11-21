@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One onboarding illustration: phone mockup of Voice Lock with floating feature badges. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivMockup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/spacing_xxxl"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/img_onboard_1" />
+
+    <ImageView
+        android:id="@+id/ivShield"
+        android:layout_width="250dp"
+        android:layout_height="182dp"
+        android:elevation="10dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_onboard_shield"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivMockup"
+        app:layout_constraintEnd_toEndOf="@id/ivMockup"
+        app:layout_constraintStart_toStartOf="@id/ivMockup"
+        app:layout_constraintTop_toTopOf="@id/ivMockup"
+        app:layout_constraintVertical_bias="0.42" />
+
+    <FrameLayout
+        android:id="@+id/badgeOne"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_badge_purple"
+        android:elevation="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivMockup"
+        app:layout_constraintEnd_toEndOf="@id/ivMockup"
+        app:layout_constraintStart_toStartOf="@id/ivMockup"
+        app:layout_constraintTop_toTopOf="@id/ivMockup">
+
+        <ImageView
+            android:id="@+id/badgeOneIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/badgeTwo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_badge_purple"
+        android:elevation="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivMockup"
+        app:layout_constraintEnd_toEndOf="@id/ivMockup"
+        app:layout_constraintStart_toStartOf="@id/ivMockup"
+        app:layout_constraintTop_toTopOf="@id/ivMockup">
+
+        <ImageView
+            android:id="@+id/badgeTwoIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/badgeThree"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_badge_purple"
+        android:elevation="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivMockup"
+        app:layout_constraintEnd_toEndOf="@id/ivMockup"
+        app:layout_constraintStart_toStartOf="@id/ivMockup"
+        app:layout_constraintTop_toTopOf="@id/ivMockup">
+
+        <ImageView
+            android:id="@+id/badgeThreeIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/badgeFour"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_badge_purple"
+        android:elevation="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivMockup"
+        app:layout_constraintEnd_toEndOf="@id/ivMockup"
+        app:layout_constraintStart_toStartOf="@id/ivMockup"
+        app:layout_constraintTop_toTopOf="@id/ivMockup">
+
+        <ImageView
+            android:id="@+id/badgeFourIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

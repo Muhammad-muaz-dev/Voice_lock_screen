@@ -5,7 +5,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.futurecode.voicelockscreen.api.wallpaper.Wallpaper
+import com.futurecode.voicelockscreen.api.wallpaper.WallpaperRepository
+import kotlinx.coroutines.launch
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentThemePreviewBinding
@@ -26,7 +31,19 @@ class ThemePreviewFragment : BaseFragment<FragmentThemePreviewBinding>(FragmentT
         val quote = args.getString(ARG_QUOTE) ?: VoiceLockFeatureStore.lockQuote(requireContext())
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
         ThemePreviewBinder.bindContent(binding, requireContext(), quote)
-        if (themeId != NO_THEME && themeRes != 0) {
+        val wallpaperUrl = args.getString(ARG_WALLPAPER_URL)
+        if (wallpaperUrl != null) {
+            bindRemoteWallpaper(
+                Wallpaper(
+                    id = args.getInt(ARG_WALLPAPER_ID),
+                    categoryId = 0,
+                    title = null,
+                    mediaType = "image",
+                    isPremium = args.getBoolean(ARG_WALLPAPER_PREMIUM),
+                    fileUrl = wallpaperUrl
+                )
+            )
+        } else if (themeId != NO_THEME && themeRes != 0) {
             binding.ivTheme.setImageResource(themeRes)
             binding.btnApply.isVisible = true
             binding.btnApply.setOnClickListener {
@@ -40,7 +57,50 @@ class ThemePreviewFragment : BaseFragment<FragmentThemePreviewBinding>(FragmentT
         }
     }
 
+    /** API wallpaper: preview from the URL; Apply downloads it once and uses it on the lock screen. */
+    private fun bindRemoteWallpaper(wallpaper: Wallpaper) {
+        Glide.with(binding.ivTheme).load(wallpaper.fileUrl).centerCrop().into(binding.ivTheme)
+        binding.btnApply.isVisible = true
+        binding.btnApply.setOnClickListener {
+            if (wallpaper.isPremium && !prefManager.isPro) {
+                findNavController().navigate(R.id.premiumFragment)
+                return@setOnClickListener
+            }
+            applyRemoteWallpaper(wallpaper)
+        }
+    }
+
+    private fun applyRemoteWallpaper(wallpaper: Wallpaper) {
+        val button = binding.btnApply
+        val originalLabel = (button as? android.widget.TextView)?.text
+        button.isEnabled = false
+        (button as? android.widget.TextView)?.setText(R.string.themes_applying)
+        viewLifecycleOwner.lifecycleScope.launch {
+            val context = requireContext().applicationContext
+            val result = runCatching { WallpaperRepository.downloadForLockScreen(context, wallpaper) }
+            val b = bindingOrNull ?: return@launch
+            b.btnApply.isEnabled = true
+            (b.btnApply as? android.widget.TextView)?.text = originalLabel
+            result.onSuccess { uri ->
+                VoiceLockFeatureStore.saveCustomThemeUri(context, uri)
+                VoiceLockFeatureStore.setShowClockAndQuote(context, true)
+                Toast.makeText(context, R.string.theme_applied, Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
+            }.onFailure {
+                Toast.makeText(context, R.string.themes_apply_failed, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     companion object {
+        private const val ARG_WALLPAPER_ID = "wallpaper_id"
+        private const val ARG_WALLPAPER_URL = "wallpaper_url"
+        private const val ARG_WALLPAPER_PREMIUM = "wallpaper_premium"
+        fun wallpaperArgs(wallpaper: Wallpaper) = bundleOf(
+            ARG_WALLPAPER_ID to wallpaper.id,
+            ARG_WALLPAPER_URL to wallpaper.fileUrl,
+            ARG_WALLPAPER_PREMIUM to wallpaper.isPremium
+        )
         private const val ARG_THEME_ID = "theme_id"
         private const val ARG_THEME_RES = "theme_res"
         private const val ARG_QUOTE = "quote"

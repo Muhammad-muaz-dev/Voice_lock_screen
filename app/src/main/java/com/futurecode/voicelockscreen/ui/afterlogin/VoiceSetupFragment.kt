@@ -3,7 +3,6 @@ package com.futurecode.voicelockscreen.ui.afterlogin
 import android.Manifest
 import android.animation.ValueAnimator
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.speech.RecognitionListener
 import android.speech.SpeechRecognizer
 import android.view.View
@@ -11,7 +10,6 @@ import android.view.animation.LinearInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isInvisible
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
@@ -23,7 +21,7 @@ import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 import com.futurecode.voicelockscreen.utils.VoiceLanguagePicker
 import java.util.Locale
 
-/** Records a voice password and recovery answer in one setup screen. */
+/** Records the voice password. The recovery question is its own next step. */
 class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoiceSetupBinding::inflate) {
 
     private var phrase = ""
@@ -59,7 +57,6 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
             ivRecording.setOnClickListener { stopListening() }
             btnContinue.setOnClickListener { saveVoiceKey() }
         }
-        setupRecoveryFields()
         renderRecord(warning = false)
     }
 
@@ -87,9 +84,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         r.ivRecording.isVisible = listening
         r.animRecording.isVisible = listening
         r.progressBar.isVisible = listening
-        val answerLength = r.etRecoveryAnswer.text?.toString()?.trim()?.length ?: 0
-        val recoveryReady = r.actvRecoveryQuestion.text?.toString()?.isNotBlank() == true && answerLength >= 3
-        r.btnContinue.isEnabled = !listening && normalizePhrase(phrase).isNotBlank() && recoveryReady
+        r.btnContinue.isEnabled = !listening && normalizePhrase(phrase).isNotBlank()
         r.btnContinue.alpha = if (r.btnContinue.isEnabled) 1f else 0.5f
         back.isEnabled = listening
         if (listening) r.animRecording.playAnimation() else r.animRecording.cancelAnimation()
@@ -200,55 +195,31 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         renderRecord(warning = false)
     }
 
-    private fun setupRecoveryFields() {
-        val record = binding.record
-        val preferences = requireContext().getSharedPreferences(VOICE_PREFS, 0)
-        val questions = resources.getStringArray(R.array.security_questions).toList()
-        record.actvRecoveryQuestion.setAdapter(
-            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, questions)
-        )
-        record.actvRecoveryQuestion.setText(preferences.getString("security_question", "").orEmpty(), false)
-        record.etRecoveryAnswer.setText(preferences.getString("security_answer", "").orEmpty())
-        record.actvRecoveryQuestion.setOnClickListener {
-            if (!listening) record.actvRecoveryQuestion.showDropDown()
-        }
-        record.actvRecoveryQuestion.setOnItemClickListener { _, _, _, _ ->
-            record.tvRecoveryError.isInvisible = true
-            refresh()
-        }
-        record.etRecoveryAnswer.doAfterTextChanged {
-            record.tvRecoveryError.isInvisible = true
-            refresh()
-        }
-    }
-
     private fun saveVoiceKey() {
         val phraseToSave = phrase.trim()
-        val record = binding.record
-        val question = record.actvRecoveryQuestion.text?.toString()?.trim().orEmpty()
-        val answer = record.etRecoveryAnswer.text?.toString()?.trim().orEmpty()
         if (listening || normalizePhrase(phraseToSave).isBlank()) return
-        if (question.isBlank() || answer.length < 3) {
-            record.tvRecoveryError.isInvisible = false
-            return
-        }
-
-        requireContext().getSharedPreferences(VOICE_PREFS, 0).edit()
-            .putString("security_question", question)
-            .putString("security_answer", answer)
-            .putBoolean("security_ready", true)
-            .apply()
         SecureVoiceStore.savePhrase(requireContext(), phraseToSave)
+        navigateAfterVoice()
+    }
 
-        if (VoiceLockSwitchStore.hasRequiredPermissions(requireContext())) {
-            findNavController().navigate(R.id.setupCompleteFragment, null, VoiceNoteUi.slideNavOptions)
-        } else {
-            findNavController().navigate(
-                R.id.permissionFragment,
-                Bundle().apply { putString(PermissionFragment.ARG_TARGET, PermissionFragment.TARGET_COMPLETE) },
-                VoiceNoteUi.slideNavOptions
-            )
+    /**
+     * Voice -> recovery question (first time only) -> permissions this flow still needs -> done.
+     * Re-recording later skips the question when one is already saved.
+     */
+    private fun navigateAfterVoice() {
+        val context = requireContext()
+        val hasQuestion = context.getSharedPreferences(VOICE_PREFS, 0).getBoolean(KEY_SECURITY_READY, false)
+        val destination = when {
+            !hasQuestion -> R.id.securityQuestionFragment
+            VoiceLockSwitchStore.hasRequiredPermissions(context) -> R.id.setupCompleteFragment
+            else -> R.id.permissionFragment
         }
+        val args = if (destination == R.id.permissionFragment) {
+            Bundle().apply { putString(PermissionFragment.ARG_TARGET, PermissionFragment.TARGET_COMPLETE) }
+        } else {
+            null
+        }
+        findNavController().navigate(destination, args, VoiceNoteUi.slideNavOptions)
     }
 
     override fun onPause() {
@@ -274,6 +245,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         const val KEY_VOICE_PHRASE = "voice_phrase"
         const val KEY_VOICE_PHRASE_NORMALIZED = "voice_phrase_normalized"
         const val KEY_VOICE_RECORDED = "voice_recorded"
+        const val KEY_SECURITY_READY = "security_ready"
         fun normalizePhrase(phrase: String): String = phrase.lowercase(Locale.ROOT)
             .replace(Regex("[^\\p{L}\\p{M}\\p{N} ]"), " ").replace(Regex("\\s+"), " ").trim()
     }

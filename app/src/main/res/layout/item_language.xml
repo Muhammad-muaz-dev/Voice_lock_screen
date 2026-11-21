@@ -1,27 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Language row: leading radio and the language name in a white pill. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/languageContainer" android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:minHeight="@dimen/language_row_height" android:layout_marginBottom="@dimen/spacing_sm"
-    android:background="@drawable/bg_language_picker_row" android:foreground="?attr/selectableItemBackground"
-    android:clickable="true" android:focusable="true" android:paddingHorizontal="@dimen/spacing_lg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/languageContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_md"
+    android:background="@drawable/bg_language_picker_row"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:minHeight="56dp"
+    android:paddingHorizontal="@dimen/spacing_lg"
     android:paddingVertical="@dimen/spacing_md">
 
-    <com.futurecode.voicelockscreen.ui.view.LanguageFlagView android:id="@+id/imgFlag"
-        android:layout_width="@dimen/language_flag_size" android:layout_height="@dimen/language_flag_size"
+    <ImageView
+        android:id="@+id/imgLanguageSelected"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:importantForAccessibility="no"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_radio_on_ring" />
 
-    <TextView android:id="@+id/tvLanguageName" style="@style/Text.VoiceLock.bodyL"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_lg" android:layout_marginEnd="@dimen/spacing_sm"
-        android:fontFamily="@font/sora_medium" android:textColor="@color/textPrimary"
-        app:layout_constraintStart_toEndOf="@id/imgFlag" app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected"
-        app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/tvLanguageName"
+        style="@style/Text.VoiceLock.titleS"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_lg"
+        android:fontFamily="@font/sora_medium"
+        android:textColor="@color/primary_text"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgLanguageSelected"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="English" />
-
-    <ImageView android:id="@+id/imgLanguageSelected" android:layout_width="@dimen/language_indicator_size"
-        android:layout_height="@dimen/language_indicator_size" android:contentDescription="@null"
-        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" tools:src="@drawable/ic_language_unselected" />
 </androidx.constraintlayout.widget.ConstraintLayout>

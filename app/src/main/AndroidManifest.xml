@@ -40,6 +40,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VoiceLockScreen" >
+        <!-- AdMob app ID (Google sample/test app). Replace before release. -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+
         <activity
             android:name=".activity.HomeActivity"
             android:screenOrientation="portrait"
@@ -56,6 +61,12 @@
             android:taskAffinity="${applicationId}.lock"
             android:theme="@style/Theme.VoiceLockScreen"
             android:turnScreenOn="true" />
+        <activity
+            android:name=".activity.OverlayGuideActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.VoiceLockScreen.Translucent" />
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"

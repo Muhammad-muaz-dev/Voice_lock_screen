@@ -10,12 +10,20 @@
         <item name="android:navigationBarColor">@color/navBar</item>
         <item name="android:windowBackground">@color/bg</item>
         <item name="android:fontFamily">@font/sora</item>
-        <item name="fontFamily">@font/sora</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="Theme.VoiceLockScreen" parent="Base.Theme.VoiceLockScreen" />
+
+    <!-- Overlay-permission guide drawn on top of the system settings page. -->
+    <style name="Theme.VoiceLockScreen.Translucent" parent="Base.Theme.VoiceLockScreen">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/surface</item>
+    </style>
 
     <style name="MaterialSearch" parent="@android:style/Theme.Dialog">
         <item name="android:windowIsTranslucent">true</item>

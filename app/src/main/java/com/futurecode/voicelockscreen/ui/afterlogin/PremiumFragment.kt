@@ -3,7 +3,9 @@ package com.futurecode.voicelockscreen.ui.afterlogin
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
+import com.futurecode.voicelockscreen.ui.prelogin.PreloginFlow
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.BuildConfig
 import com.futurecode.voicelockscreen.base.BaseFragment
@@ -15,8 +17,9 @@ class PremiumFragment : BaseFragment<FragmentPremiumBinding>(FragmentPremiumBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.ivClose.setOnClickListener {
-            findNavController().popBackStack()
+        binding.ivClose.setOnClickListener { close() }
+        if (inLaunchFlow) {
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { close() }
         }
         binding.tvRestore.setOnClickListener {
             if (BuildConfig.DEBUG && requireContext().getSharedPreferences("local_pro",0).getBoolean("purchased",false)) {
@@ -25,8 +28,17 @@ class PremiumFragment : BaseFragment<FragmentPremiumBinding>(FragmentPremiumBind
             } else showFail()
         }
         binding.btnPurchase.setOnClickListener { completePurchase() }
-        binding.btnLetsGo.setOnClickListener { findNavController().popBackStack() }
+        binding.btnLetsGo.setOnClickListener { close() }
         if (prefManager.isPro) showSuccess()
+    }
+
+    private val inLaunchFlow: Boolean
+        get() = arguments?.getBoolean(PreloginFlow.ARG_IN_FLOW) == true
+
+    /** In the launch flow, leaving Premium moves on to the next step; elsewhere it just pops. */
+    private fun close() {
+        if (inLaunchFlow) PreloginFlow.continueFrom(this, PreloginFlow.Step.INAPP)
+        else findNavController().popBackStack()
     }
 
     private fun completePurchase() {

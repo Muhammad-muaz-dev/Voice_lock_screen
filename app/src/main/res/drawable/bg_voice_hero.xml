@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Home voice hero: violet gradient with soft decorative circles. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="315"
+                android:endColor="@color/primary_dark"
+                android:startColor="@color/primary" />
+            <corners android:radius="@dimen/radius_xl" />
+        </shape>
+    </item>
+    <item
+        android:width="220dp"
+        android:height="220dp"
+        android:gravity="top|end"
+        android:right="-80dp"
+        android:top="-90dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/whiteSoft" />
+        </shape>
+    </item>
+    <item
+        android:width="160dp"
+        android:height="160dp"
+        android:bottom="-70dp"
+        android:gravity="bottom|start"
+        android:left="-60dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/whiteSoft" />
+        </shape>
+    </item>
+</layer-list>

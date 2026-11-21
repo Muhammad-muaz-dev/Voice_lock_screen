@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PIN length option: "N Number", masked preview and a decorative mini keypad. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_pin_type_card"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingTop="@dimen/spacing_lg"
+    android:paddingBottom="@dimen/spacing_lg">
+
+    <TextView
+        android:id="@+id/tvTypeTitle"
+        style="@style/Text.VoiceLock.titleL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sora_semibold"
+        android:gravity="center"
+        android:textColor="@color/primary_text"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="4 Number" />
+
+    <TextView
+        android:id="@+id/tvTypeMask"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:fontFamily="@font/sora_semibold"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:letterSpacing="0.05"
+        android:textColor="@color/primary_text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTypeTitle"
+        tools:text="****" />
+
+    <TextView
+        android:id="@+id/key1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="1"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/key2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="2"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/key3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="3"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/key4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="4"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/key5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="5"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/key6"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="6"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/key7"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="7"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/key8"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="8"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/key9"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="9"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <View
+        android:id="@+id/keySpace9"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="invisible" />
+    <TextView
+        android:id="@+id/key0"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_pin_mini_key"
+        android:fontFamily="@font/sora_medium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="0"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+    <View
+        android:id="@+id/keySpace11"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="invisible" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowKeys"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        app:constraint_referenced_ids="key1,key2,key3,key4,key5,key6,key7,key8,key9,keySpace9,key0,keySpace11"
+        app:flow_horizontalGap="6dp"
+        app:flow_maxElementsWrap="3"
+        app:flow_verticalGap="6dp"
+        app:flow_wrapMode="aligned"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTypeMask" />
+</androidx.constraintlayout.widget.ConstraintLayout>

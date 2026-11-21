@@ -38,15 +38,14 @@ class LanguageAdapter(
             params.marginStart = 0
             binding.root.layoutParams = params
 
-            binding.tvLanguageName.text = language.nativeName
-            binding.imgFlag.country = language.country
+            binding.tvLanguageName.text = language.name
             binding.languageContainer.setBackgroundResource(
                 if (isSelected) R.drawable.bg_language_picker_row_selected
                 else R.drawable.bg_language_picker_row
             )
             binding.imgLanguageSelected.setImageResource(
-                if (isSelected) R.drawable.ic_language_selected
-                else R.drawable.ic_language_unselected
+                if (isSelected) R.drawable.ic_radio_on_ring
+                else R.drawable.ic_radio_off_ring
             )
             binding.root.isSelected = isSelected
             ViewCompat.setStateDescription(

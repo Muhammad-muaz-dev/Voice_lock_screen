@@ -1,12 +1,15 @@
 package com.futurecode.voicelockscreen.ui.prelogin
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.futurecode.voicelockscreen.activity.HomeActivity
+import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.MyApplication
 import com.futurecode.voicelockscreen.adapter.LanguageAdapter
+import com.futurecode.voicelockscreen.ads.AdPlacement
+import com.futurecode.voicelockscreen.ads.AdViews
+import com.futurecode.voicelockscreen.ads.AdsConfig
+import com.futurecode.voicelockscreen.ads.AdsManager
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentLanguageBinding
 import com.futurecode.voicelockscreen.model.LanguageOption
@@ -28,24 +31,42 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             languageAdapter.updateSelection(language.code)
         }
         binding.rvLanguages.adapter = languageAdapter
-        binding.btnContinue.setOnClickListener {
-            MyApplication.applyLanguage(selectedLanguageCode)
-            if (arguments?.getBoolean(ARG_RETURN_TO_SETTINGS, false) == true) {
-                findNavController().popBackStack()
-            } else {
-                goToHome()
+        binding.btnContinue.setOnClickListener { confirmLanguage() }
+        showNativeAd()
+    }
+
+    /** Native at the bottom, only in the launch flow (not when opened from Settings). */
+    private fun showNativeAd() {
+        AdViews.clearOnDetach(binding.languageAdContainer)
+        if (isFromSettings()) return
+        val config = AdsConfig.languageAds
+        if (!AdsConfig.adsAllowed) return
+        if (config.native) {
+            // The native was started during splash; this hands it over (or waits for it).
+            AdsManager.takeLanguageNative { ad ->
+                val b = bindingOrNull
+                when {
+                    ad == null -> Unit
+                    b == null -> ad.destroy()
+                    else -> AdViews.showNative(b.languageAdContainer, ad, config)
+                }
             }
+        } else {
+            AdPlacement.show(this, binding.languageAdContainer, config)
         }
     }
 
-    private fun goToHome() {
-        MyApplication.app.prefManager.isOnboardingDone = true
-        val intent = Intent(requireContext(), HomeActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra(HomeActivity.EXTRA_SHOW_PREMIUM, true)
+    private fun isFromSettings() = arguments?.getBoolean(ARG_RETURN_TO_SETTINGS, false) == true
+
+    private fun confirmLanguage() {
+        if (isFromSettings()) {
+            findNavController().popBackStack()
+        } else {
+            // Navigate before applying the locale: the locale change recreates the activity and the
+            // restored back stack keeps the next screen.
+            PreloginFlow.continueFrom(this, PreloginFlow.Step.LANGUAGE)
         }
-        startActivity(intent)
-        requireActivity().finish()
+        MyApplication.applyLanguage(selectedLanguageCode)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -57,22 +78,23 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         fun option(code: String, label: String, country: String) =
             LanguageOption(code, label, label, country)
 
+        // Reference order first, then the remaining supported languages.
         return listOf(
             option("en", "English", "GB"),
-            option("es", "Español", "ES"),
-            option("id", "Bahasa Indonesia", "ID"),
-            option("de", "Deutsch", "DE"),
-            option("fr", "Français", "FR"),
-            option("it", "Italiano", "IT"),
-            option("nl", "Nederlands", "NL"),
-            option("pt", "Português", "PT"),
-            option("vi", "Tiếng Việt", "VN"),
-            option("tr", "Türkçe", "TR"),
-            option("ru", "Русский", "RU"),
-            option("ja", "日本語", "JP"),
-            option("hi", "हिन्दी", "IN"),
-            option("zh", "中文", "CN"),
-            option("ar", "العربية", "SA")
+            option("es", "Spanish", "ES"),
+            option("pt", "Portuguese", "PT"),
+            option("fr", "French", "FR"),
+            option("de", "German", "DE"),
+            option("it", "Italian", "IT"),
+            option("ru", "Russian", "RU"),
+            option("ar", "Arabic", "SA"),
+            option("tr", "Turkish", "TR"),
+            option("id", "Indonesian", "ID"),
+            option("nl", "Dutch", "NL"),
+            option("vi", "Vietnamese", "VN"),
+            option("ja", "Japanese", "JP"),
+            option("hi", "Hindi", "IN"),
+            option("zh", "Chinese", "CN")
         )
     }
 

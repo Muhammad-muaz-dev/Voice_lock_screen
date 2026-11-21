@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PIN Setup menu card: round icon, title, description and a tinted pill action. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_settings_card"
+    android:padding="@dimen/spacing_lg">
+
+    <ImageView
+        android:id="@+id/ivOptionIcon"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/img_pin_setup_icon" />
+
+    <TextView
+        android:id="@+id/tvOptionTitle"
+        style="@style/Text.VoiceLock.titleXL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_lg"
+        android:fontFamily="@font/sora_semibold"
+        android:textColor="@color/primary_text"
+        android:textSize="19sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivOptionIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/pin_setup_title" />
+
+    <TextView
+        android:id="@+id/tvOptionDesc"
+        style="@style/Text.VoiceLock.bodyM"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:fontFamily="@font/sora_regular"
+        android:textColor="@color/textSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvOptionTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvOptionTitle"
+        tools:text="@string/pin_setup_card_desc" />
+
+    <TextView
+        android:id="@+id/btnOption"
+        style="@style/Text.VoiceLock.buttonL"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:background="@drawable/bg_pill_tint_button"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/sora_semibold"
+        android:gravity="center"
+        android:textColor="@color/primary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvOptionTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvOptionDesc"
+        tools:text="@string/pin_setup_now" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,28 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:background="@color/vn_neutral10" android:layout_width="match_parent" android:layout_height="match_parent"
- 
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_16">
-        <androidx.appcompat.widget.AppCompatImageView android:id="@+id/ivBack" android:layout_width="@dimen/vn_dp_36" android:layout_height="@dimen/vn_dp_36" android:src="@drawable/vn_ic_back" android:layout_marginStart="@dimen/vn_dp_8" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
-        <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Headline_XSM_Medium" android:textColor="@color/vn_neutral01" android:id="@+id/tvTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/vn_text_setting" android:layout_marginStart="@dimen/vn_dp_8" app:layout_constraintBottom_toBottomOf="@+id/ivBack" app:layout_constraintStart_toEndOf="@+id/ivBack" app:layout_constraintTop_toTopOf="@+id/ivBack" />
-    </LinearLayout>
-    <androidx.core.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="@dimen/vn_dp_6" android:layout_marginBottom="@dimen/vn_dp_6" android:fillViewport="true" android:layout_weight="1.0" android:layout_marginVertical="@dimen/vn_dp_6">
-        <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
-            <FrameLayout android:id="@+id/frameBannerIAP" android:layout_width="match_parent" android:layout_height="@dimen/vn_dp_132" android:layout_marginLeft="@dimen/vn_dp_16" android:layout_marginTop="@dimen/vn_dp_16" android:layout_marginRight="@dimen/vn_dp_16" android:layout_marginHorizontal="@dimen/vn_dp_16">
-                <androidx.appcompat.widget.AppCompatImageView android:id="@+id/ivBannerIap" android:src="@drawable/vn_img_banner_iap" android:background="@drawable/vn_bg_radius_16" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" />
-                <FrameLayout android:layout_gravity="end" android:background="@drawable/vn_bg_gradient_shadow_banner_iap" android:layout_width="wrap_content" android:layout_height="match_parent" android:paddingStart="@dimen/vn_dp_26">
-                    <androidx.appcompat.widget.LinearLayoutCompat android:gravity="center_horizontal" android:layout_gravity="end|center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="@dimen/vn_dp_18" android:elevation="@dimen/vn_dp_10">
-                        <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Text_MD_SemiBold" android:textColor="@color/vn_white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/tvUpgradeTitle" android:text="@string/vn_text_upgrade_to_premium" android:includeFontPadding="false" />
-                        <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Text_SM1_Regular" android:textColor="@color/vn_neutral08" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_4" android:id="@+id/tvPremiumDesc" android:text="@string/vn_text_unlock_all_app_features_amp_more" android:includeFontPadding="false" />
-                        <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Label_Large" android:textColor="@color/vn_white" android:gravity="center" android:background="@drawable/vn_bg_corner_100_gradient_iap" android:paddingTop="@dimen/vn_dp_8" android:paddingBottom="@dimen/vn_dp_8" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_12" android:id="@+id/btnUpgrade" android:text="@string/vn_text_upgrade" android:includeFontPadding="false" android:paddingVertical="@dimen/vn_dp_8" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-                </FrameLayout>
-            </FrameLayout>
-            <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Label_Large" android:textColor="@color/vn_neutral05" android:id="@+id/tvGeneralSetting" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_20" android:text="@string/vn_text_general_settings" android:layout_marginStart="@dimen/vn_dp_24" />
-            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rcvGeneralSetting" android:background="@drawable/vn_bg_radius_16_white" android:paddingLeft="@dimen/vn_dp_16" android:paddingTop="@dimen/vn_dp_20" android:paddingRight="@dimen/vn_dp_16" android:paddingBottom="@dimen/vn_dp_20" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/vn_dp_16" android:layout_marginTop="@dimen/vn_dp_4" android:layout_marginRight="@dimen/vn_dp_16" android:layout_marginHorizontal="@dimen/vn_dp_16" android:paddingHorizontal="@dimen/vn_dp_16" android:paddingVertical="@dimen/vn_dp_20" />
-            <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Label_Large" android:textColor="@color/vn_neutral05" android:id="@+id/tvOther" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_16" android:text="@string/vn_text_other" android:layout_marginStart="@dimen/vn_dp_24" />
-            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rcvOther" android:background="@drawable/vn_bg_radius_16_white" android:paddingLeft="@dimen/vn_dp_16" android:paddingTop="@dimen/vn_dp_20" android:paddingRight="@dimen/vn_dp_16" android:paddingBottom="@dimen/vn_dp_20" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/vn_dp_16" android:layout_marginTop="@dimen/vn_dp_4" android:layout_marginRight="@dimen/vn_dp_16" android:layout_marginHorizontal="@dimen/vn_dp_16" android:paddingHorizontal="@dimen/vn_dp_16" android:paddingVertical="@dimen/vn_dp_20" />
-        </LinearLayout>
+<!-- Settings: Notifications + Language / Rate, Feedback, Share / Privacy policy. -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.afterlogin.SettingFragment">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back"
+        android:padding="10dp"
+        android:src="@drawable/ic_arrow_back_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.VoiceLock.titleXL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="64dp"
+        android:fontFamily="@font/sora_semibold"
+        android:gravity="center"
+        android:text="@string/settings_title"
+        android:textColor="@color/primary_text"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivBack" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/settingsScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_xl"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="@dimen/spacing_xxl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivBack">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/spacing_lg">
+
+            <!-- Card 1: Notifications, Language -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardGeneral"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_settings_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include
+                    android:id="@+id/rowNotifications"
+                    layout="@layout/item_settings_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/dividerGeneral"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
+                    android:background="@color/border"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rowNotifications" />
+
+                <include
+                    android:id="@+id/rowLockVoice"
+                    layout="@layout/item_settings_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerGeneral" />
+
+                <View
+                    android:id="@+id/dividerLockVoice"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
+                    android:background="@color/border"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rowLockVoice" />
+
+                <include
+                    android:id="@+id/rowVoiceCommand"
+                    layout="@layout/item_settings_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerLockVoice" />
+
+                <View
+                    android:id="@+id/dividerVoiceCommand"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
+                    android:background="@color/border"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rowVoiceCommand" />
+
+                <include
+                    android:id="@+id/rowLanguage"
+                    layout="@layout/item_settings_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerVoiceCommand" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Card 2: Rate us, Feedback, Share app -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardSupport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:background="@drawable/bg_settings_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardGeneral">
+
+                <include
+                    android:id="@+id/rowRate"
+                    layout="@layout/item_settings_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/dividerRate"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
+                    android:background="@color/border"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rowRate" />
+
+                <include
+                    android:id="@+id/rowFeedback"
+                    layout="@layout/item_settings_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerRate" />
+
+                <View
+                    android:id="@+id/dividerFeedback"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
+                    android:background="@color/border"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rowFeedback" />
+
+                <include
+                    android:id="@+id/rowShare"
+                    layout="@layout/item_settings_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerFeedback" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Card 3: Privacy policy -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardPrivacy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:background="@drawable/bg_settings_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardSupport">
+
+                <include
+                    android:id="@+id/rowPrivacy"
+                    layout="@layout/item_settings_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-    <Space android:id="@+id/gap9" android:layout_width="match_parent" android:layout_height="0dp" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

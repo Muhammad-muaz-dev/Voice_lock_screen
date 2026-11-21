@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Open Camera by Voice flow. One screen, five states driven by CameraVoiceFragment:
+    permissions -> confirm voice (3 recordings) -> how it works -> main toggle -> all set.
+-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface"
+    android:background="@color/bg"
     android:fitsSystemWindows="true"
     tools:context=".ui.afterlogin.CameraVoiceFragment">
+
+    <!-- ===================== Header ===================== -->
 
     <ImageView
         android:id="@+id/btnBack"
@@ -24,19 +30,38 @@
 
     <TextView
         android:id="@+id/tvTitle"
+        style="@style/Text.VoiceLock.titleXL"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_md"
         android:layout_marginEnd="@dimen/spacing_lg"
-        android:fontFamily="@font/sora_semibold"
+        android:fontFamily="@font/sora_medium"
         android:includeFontPadding="false"
-        android:text="@string/confirm_your_voice"
+        android:maxLines="2"
         android:textColor="@color/primary_text"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnBack"
-        app:layout_constraintTop_toTopOf="@id/btnBack" />
+        app:layout_constraintTop_toTopOf="@id/btnBack"
+        tools:text="@string/permissions_required" />
+
+    <ImageView
+        android:id="@+id/btnHelp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/spacing_lg"
+        android:background="@drawable/bg_camera_help"
+        android:contentDescription="@string/camera_help"
+        android:padding="11dp"
+        android:src="@drawable/ic_camera_help"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnBack"
+        tools:visibility="visible" />
+
+    <!-- ===================== Scrollable content ===================== -->
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/contentScroll"
@@ -56,100 +81,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clRecording"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/spacing_lg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/promptPill"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="@dimen/spacing_sm"
-                    android:layout_marginTop="@dimen/spacing_xl"
-                    android:background="@drawable/bg_camera_prompt"
-                    android:paddingHorizontal="@dimen/spacing_lg"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/tvPrompt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sora_regular"
-                        android:includeFontPadding="false"
-                        android:text="@string/camera_phrase_test"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/btnHearPhrase"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/btnHearPhrase"
-                        android:layout_width="32dp"
-                        android:layout_height="40dp"
-                        android:contentDescription="@string/tap_to_hear"
-                        android:padding="4dp"
-                        android:src="@drawable/ic_camera_speaker"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <com.futurecode.voicelockscreen.ui.view.CameraProgressView
-                    android:id="@+id/progressRing"
-                    android:layout_width="144dp"
-                    android:layout_height="144dp"
-                    android:layout_marginTop="@dimen/spacing_xxl"
-                    android:contentDescription="@string/camera_voice_progress"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/promptPill"
-                    app:layout_goneMarginTop="@dimen/spacing_xxxl" />
-
-                <TextView
-                    android:id="@+id/tvRecordingTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xxl"
-                    android:fontFamily="@font/sora_semibold"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/primary_text"
-                    android:textSize="22sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/progressRing"
-                    tools:text="Initial Recording 1/3" />
-
-                <TextView
-                    android:id="@+id/tvRecordingDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:fontFamily="@font/sora_regular"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:lineSpacingExtra="2dp"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="17sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvRecordingTitle"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="Speak the phrase to establish your voice profile" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- ===== State: Permissions Required ===== -->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clPermissions"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/spacing_lg"
                 android:paddingBottom="@dimen/spacing_xl"
@@ -159,51 +95,43 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible">
 
-                <FrameLayout
+                <ImageView
                     android:id="@+id/permissionHero"
-                    android:layout_width="136dp"
-                    android:layout_height="136dp"
-                    android:layout_marginTop="@dimen/spacing_xl"
-                    android:background="@drawable/bg_camera_permission_hero"
+                    android:layout_width="156dp"
+                    android:layout_height="156dp"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_camera_permission_hero"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="78dp"
-                        android:layout_height="78dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/permissions_required"
-                        android:src="@drawable/ic_shield_white" />
-                </FrameLayout>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvPermissionHeading"
+                    style="@style/Text.VoiceLock.titleL"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xl"
-                    android:fontFamily="@font/sora_semibold"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:fontFamily="@font/sora_medium"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="@string/camera_permissions_heading"
                     android:textColor="@color/primary_text"
-                    android:textSize="19sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/permissionHero" />
 
                 <TextView
                     android:id="@+id/tvPermissionDescription"
+                    style="@style/Text.VoiceLock.bodyL"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_sm"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
                     android:fontFamily="@font/sora_regular"
                     android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:lineSpacingExtra="2dp"
                     android:text="@string/camera_permissions_description"
                     android:textColor="@color/textSecondary"
-                    android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvPermissionHeading" />
@@ -213,22 +141,25 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_xxl"
-                    android:background="@drawable/bg_main_card"
+                    android:background="@drawable/bg_camera_surface_card"
                     android:paddingHorizontal="@dimen/spacing_md"
-                    android:paddingVertical="@dimen/spacing_sm"
+                    android:paddingVertical="@dimen/spacing_md"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvPermissionDescription">
 
+                    <!-- Camera -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cameraPermissionRow"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:minHeight="78dp"
-                        android:paddingVertical="@dimen/spacing_sm"
+                        android:background="?attr/selectableItemBackground"
+                        android:minHeight="72dp"
+                        android:paddingVertical="@dimen/spacing_xs"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
+
                         <FrameLayout
                             android:id="@+id/cameraPermissionIconBg"
                             android:layout_width="40dp"
@@ -237,69 +168,73 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
+
                             <ImageView
                                 android:layout_width="22dp"
                                 android:layout_height="22dp"
                                 android:layout_gravity="center"
-                                android:contentDescription="@string/camera_access"
+                                android:importantForAccessibility="no"
                                 android:src="@drawable/ic_camera_simple"
-                                app:tint="@color/primary" />
+                                app:tint="@color/primary_text" />
                         </FrameLayout>
+
                         <TextView
                             android:id="@+id/tvCameraPermissionTitle"
+                            style="@style/Text.VoiceLock.titleS"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/spacing_md"
-                            android:layout_marginEnd="@dimen/spacing_xs"
+                            android:layout_marginEnd="@dimen/spacing_sm"
                             android:fontFamily="@font/sora_medium"
-                            android:includeFontPadding="false"
                             android:text="@string/camera_access"
                             android:textColor="@color/primary_text"
-                            android:textSize="15sp"
+                            app:layout_constraintBottom_toTopOf="@id/tvCameraPermissionDesc"
                             app:layout_constraintEnd_toStartOf="@id/switchCamera"
                             app:layout_constraintStart_toEndOf="@id/cameraPermissionIconBg"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
                         <TextView
+                            android:id="@+id/tvCameraPermissionDesc"
+                            style="@style/Text.VoiceLock.bodyS"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="@dimen/spacing_xs"
                             android:fontFamily="@font/sora_regular"
-                            android:includeFontPadding="false"
-                            android:lineSpacingExtra="1dp"
-                            android:text="@string/camera_access_desc"
+                            android:text="@string/camera_access_row_desc"
                             android:textColor="@color/textSecondary"
-                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@id/tvCameraPermissionTitle"
                             app:layout_constraintStart_toStartOf="@id/tvCameraPermissionTitle"
                             app:layout_constraintTop_toBottomOf="@id/tvCameraPermissionTitle" />
-                        <androidx.appcompat.widget.SwitchCompat
+
+                        <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/switchCamera"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/camera_access"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:thumbTint="@drawable/selector_permission_thumb"
+                            app:trackDecorationTint="@android:color/transparent"
+                            app:trackTint="@drawable/selector_permission_track" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View
-                        android:id="@+id/dividerCameraMic"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:background="@color/border"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cameraPermissionRow" />
-
+                    <!-- Microphone -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/microphonePermissionRow"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:minHeight="78dp"
-                        android:paddingVertical="@dimen/spacing_sm"
+                        android:background="?attr/selectableItemBackground"
+                        android:minHeight="72dp"
+                        android:paddingVertical="@dimen/spacing_xs"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/dividerCameraMic">
+                        app:layout_constraintTop_toBottomOf="@id/cameraPermissionRow">
+
                         <FrameLayout
                             android:id="@+id/micPermissionIconBg"
                             android:layout_width="40dp"
@@ -308,70 +243,73 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
+
                             <ImageView
                                 android:layout_width="22dp"
                                 android:layout_height="22dp"
                                 android:layout_gravity="center"
-                                android:contentDescription="@string/microphone_access"
-                                android:src="@drawable/ic_mic_blue"
-                                app:tint="@color/primary" />
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_camera_mic_outline" />
                         </FrameLayout>
+
                         <TextView
                             android:id="@+id/tvMicrophonePermissionTitle"
+                            style="@style/Text.VoiceLock.titleS"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/spacing_md"
-                            android:layout_marginEnd="@dimen/spacing_xs"
+                            android:layout_marginEnd="@dimen/spacing_sm"
                             android:fontFamily="@font/sora_medium"
-                            android:includeFontPadding="false"
                             android:text="@string/microphone_access"
                             android:textColor="@color/primary_text"
-                            android:textSize="15sp"
+                            app:layout_constraintBottom_toTopOf="@id/tvMicrophonePermissionDesc"
                             app:layout_constraintEnd_toStartOf="@id/switchMicrophone"
                             app:layout_constraintStart_toEndOf="@id/micPermissionIconBg"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
                         <TextView
+                            android:id="@+id/tvMicrophonePermissionDesc"
+                            style="@style/Text.VoiceLock.bodyS"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="@dimen/spacing_xs"
                             android:fontFamily="@font/sora_regular"
-                            android:includeFontPadding="false"
-                            android:lineSpacingExtra="1dp"
                             android:text="@string/camera_microphone_access_desc"
                             android:textColor="@color/textSecondary"
-                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@id/tvMicrophonePermissionTitle"
                             app:layout_constraintStart_toStartOf="@id/tvMicrophonePermissionTitle"
                             app:layout_constraintTop_toBottomOf="@id/tvMicrophonePermissionTitle" />
-                        <androidx.appcompat.widget.SwitchCompat
+
+                        <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/switchMicrophone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/microphone_access"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:thumbTint="@drawable/selector_permission_thumb"
+                            app:trackDecorationTint="@android:color/transparent"
+                            app:trackTint="@drawable/selector_permission_track" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View
-                        android:id="@+id/dividerMicDisplay"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:background="@color/border"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/microphonePermissionRow" />
-
+                    <!-- Display over other apps -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/displayPermissionRow"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:minHeight="78dp"
-                        android:paddingVertical="@dimen/spacing_sm"
+                        android:background="?attr/selectableItemBackground"
+                        android:minHeight="72dp"
+                        android:paddingVertical="@dimen/spacing_xs"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/dividerMicDisplay">
+                        app:layout_constraintTop_toBottomOf="@id/microphonePermissionRow">
+
                         <FrameLayout
                             android:id="@+id/displayPermissionIconBg"
                             android:layout_width="40dp"
@@ -380,300 +318,287 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
+
                             <ImageView
                                 android:layout_width="22dp"
                                 android:layout_height="22dp"
                                 android:layout_gravity="center"
-                                android:contentDescription="@string/display_over_other_apps"
-                                android:src="@drawable/ic_overlay_window"
-                                app:tint="@color/primary" />
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_camera_layers" />
                         </FrameLayout>
+
                         <TextView
                             android:id="@+id/tvDisplayPermissionTitle"
+                            style="@style/Text.VoiceLock.titleS"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/spacing_md"
-                            android:layout_marginEnd="@dimen/spacing_xs"
+                            android:layout_marginEnd="@dimen/spacing_sm"
                             android:fontFamily="@font/sora_medium"
-                            android:includeFontPadding="false"
                             android:text="@string/display_over_other_apps"
                             android:textColor="@color/primary_text"
-                            android:textSize="15sp"
+                            app:layout_constraintBottom_toTopOf="@id/tvDisplayPermissionDesc"
                             app:layout_constraintEnd_toStartOf="@id/switchDisplay"
                             app:layout_constraintStart_toEndOf="@id/displayPermissionIconBg"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
                         <TextView
+                            android:id="@+id/tvDisplayPermissionDesc"
+                            style="@style/Text.VoiceLock.bodyS"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="@dimen/spacing_xs"
                             android:fontFamily="@font/sora_regular"
-                            android:includeFontPadding="false"
-                            android:lineSpacingExtra="1dp"
                             android:text="@string/camera_display_access_desc"
                             android:textColor="@color/textSecondary"
-                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@id/tvDisplayPermissionTitle"
                             app:layout_constraintStart_toStartOf="@id/tvDisplayPermissionTitle"
                             app:layout_constraintTop_toBottomOf="@id/tvDisplayPermissionTitle" />
-                        <androidx.appcompat.widget.SwitchCompat
+
+                        <com.google.android.material.materialswitch.MaterialSwitch
                             android:id="@+id/switchDisplay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/display_over_other_apps"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:thumbTint="@drawable/selector_permission_thumb"
+                            app:trackDecorationTint="@android:color/transparent"
+                            app:trackTint="@drawable/selector_permission_track" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- ===== State: Confirm Your Voice ===== -->
+
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clComplete"
-                android:layout_width="match_parent"
+                android:id="@+id/clRecording"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/spacing_lg"
-                android:paddingBottom="@dimen/spacing_xl"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <FrameLayout
-                    android:id="@+id/successBadge"
-                    android:layout_width="104dp"
-                    android:layout_height="104dp"
-                    android:layout_marginTop="@dimen/spacing_xxl"
-                    android:background="@drawable/bg_camera_success_halo"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/promptPill"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xl"
+                    android:background="@drawable/bg_camera_prompt"
+                    android:minHeight="52dp"
+                    android:paddingStart="@dimen/spacing_lg"
+                    android:paddingEnd="@dimen/spacing_xs"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvPrompt"
+                        style="@style/Text.VoiceLock.bodyM"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sora_regular"
+                        android:textColor="@color/textSecondary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btnHearPhrase"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Say “Open Camera” to test your voice" />
+
                     <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bg_camera_success_circle"
-                        android:contentDescription="@string/youre_all_set"
-                        android:padding="20dp"
-                        android:src="@drawable/ic_camera_check"
-                        app:tint="@color/white" />
-                </FrameLayout>
+                        android:id="@+id/btnHearPhrase"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/tap_to_hear"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_camera_speaker"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.futurecode.voicelockscreen.ui.view.CameraProgressView
+                    android:id="@+id/progressRing"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginTop="@dimen/spacing_xxl"
+                    android:contentDescription="@string/camera_voice_progress"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/promptPill"
+                    app:layout_goneMarginTop="@dimen/spacing_huge" />
 
                 <TextView
-                    android:id="@+id/tvCompleteTitle"
+                    android:id="@+id/tvRecordingTitle"
+                    style="@style/Text.VoiceLock.titleL"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_xxl"
-                    android:fontFamily="@font/sora_bold"
+                    android:fontFamily="@font/sora_semibold"
                     android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/camera_all_set_title"
                     android:textColor="@color/primary_text"
-                    android:textSize="23sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/successBadge" />
+                    app:layout_constraintTop_toBottomOf="@id/progressRing"
+                    tools:text="@string/camera_recording_initial" />
 
                 <TextView
-                    android:id="@+id/tvCompleteDescription"
+                    android:id="@+id/tvRecordingDescription"
+                    style="@style/Text.VoiceLock.bodyM"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_sm"
-                    android:fontFamily="@font/sora_regular"
+                    android:fontFamily="@font/sora_medium"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:textColor="@color/textSecondary"
-                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCompleteTitle"
-                    tools:text="Now, start by saying “Open Camera”" />
-
-                <FrameLayout
-                    android:id="@+id/cameraArtwork"
-                    android:layout_width="0dp"
-                    android:layout_height="172dp"
-                    android:layout_marginHorizontal="@dimen/spacing_sm"
-                    android:layout_marginTop="@dimen/spacing_xxl"
-                    android:background="@drawable/bg_camera_artwork"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCompleteDescription">
-                    <View
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="18dp"
-                        android:background="@drawable/bg_camera_artwork_dot" />
-                    <ImageView
-                        android:layout_width="112dp"
-                        android:layout_height="112dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/open_camera_by_voice"
-                        android:padding="20dp"
-                        android:src="@drawable/ic_camera_voice"
-                        app:tint="@color/primary" />
-                    <View
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="bottom|start"
-                        android:layout_margin="18dp"
-                        android:background="@drawable/bg_camera_artwork_dot_small" />
-                </FrameLayout>
+                    app:layout_constraintTop_toBottomOf="@id/tvRecordingTitle"
+                    tools:text="@string/camera_recording_initial_desc" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ===== State: How It Works ===== -->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clHowItWorks"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/spacing_lg"
                 android:paddingBottom="@dimen/spacing_xl"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/tvHowTitle"
+                    android:id="@+id/tvHowDescription"
+                    style="@style/Text.VoiceLock.bodyL"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_lg"
-                    android:fontFamily="@font/sora_semibold"
+                    android:layout_marginHorizontal="@dimen/spacing_xxxl"
+                    android:fontFamily="@font/sora_regular"
                     android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/camera_how_it_works"
-                    android:textColor="@color/primary_text"
-                    android:textSize="22sp"
+                    android:text="@string/camera_how_description"
+                    android:textColor="@color/textSecondary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvHowDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:fontFamily="@font/sora_regular"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/camera_how_description"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvHowTitle" />
-
+                <!-- Step 1 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardWakeCamera"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xl"
+                    android:layout_marginTop="@dimen/spacing_xxl"
                     android:background="@drawable/bg_camera_info_card"
-                    android:padding="@dimen/spacing_lg"
+                    android:padding="@dimen/spacing_xl"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvHowDescription">
 
                     <TextView
                         android:id="@+id/tvStepOneBadge"
+                        style="@style/Text.VoiceLock.buttonS"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="32dp"
                         android:background="@drawable/bg_camera_step_pill"
                         android:fontFamily="@font/sora_semibold"
                         android:gravity="center"
-                        android:includeFontPadding="false"
                         android:paddingHorizontal="@dimen/spacing_md"
                         android:text="@string/camera_step_one"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@id/btnHearWake"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/btnHearWake" />
 
                     <TextView
                         android:id="@+id/btnHearWake"
+                        style="@style/Text.VoiceLock.bodyM"
                         android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:background="@drawable/bg_camera_prompt"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_camera_hear_pill"
                         android:drawableEnd="@drawable/ic_camera_speaker"
                         android:drawablePadding="@dimen/spacing_sm"
                         android:fontFamily="@font/sora_medium"
                         android:gravity="center"
-                        android:includeFontPadding="false"
-                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:paddingHorizontal="@dimen/spacing_lg"
                         android:text="@string/tap_to_hear"
                         android:textColor="@color/primary"
-                        android:textSize="13sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvWakeTitle"
+                        style="@style/Text.VoiceLock.titleS"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_lg"
-                        android:fontFamily="@font/sora_semibold"
-                        android:includeFontPadding="false"
+                        android:fontFamily="@font/sora_bold"
                         android:text="@string/camera_wake_heading"
                         android:textColor="@color/primary_text"
-                        android:textSize="17sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvStepOneBadge" />
+                        app:layout_constraintTop_toBottomOf="@id/btnHearWake" />
 
                     <TextView
                         android:id="@+id/tvWakeDescription"
+                        style="@style/Text.VoiceLock.bodyM"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_sm"
                         android:fontFamily="@font/sora_regular"
-                        android:includeFontPadding="false"
-                        android:lineSpacingExtra="2dp"
-                        android:text="@string/camera_wake_description"
                         android:textColor="@color/textSecondary"
-                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvWakeTitle" />
+                        app:layout_constraintTop_toBottomOf="@id/tvWakeTitle"
+                        tools:text="Say “Open Camera” to open camera and activate voice control." />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <!-- Step 2 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardCameraCommands"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:layout_marginTop="@dimen/spacing_xl"
                     android:background="@drawable/bg_camera_info_card"
-                    android:padding="@dimen/spacing_lg"
+                    android:padding="@dimen/spacing_xl"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardWakeCamera">
 
                     <TextView
                         android:id="@+id/tvStepTwoBadge"
+                        style="@style/Text.VoiceLock.buttonS"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="32dp"
                         android:background="@drawable/bg_camera_step_pill"
                         android:fontFamily="@font/sora_semibold"
                         android:gravity="center"
-                        android:includeFontPadding="false"
                         android:paddingHorizontal="@dimen/spacing_md"
                         android:text="@string/camera_step_two"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvCommandsHeading"
+                        style="@style/Text.VoiceLock.titleS"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_sm"
-                        android:fontFamily="@font/sora_semibold"
-                        android:includeFontPadding="false"
+                        android:layout_marginStart="@dimen/spacing_md"
+                        android:fontFamily="@font/sora_bold"
                         android:text="@string/camera_give_command"
                         android:textColor="@color/primary_text"
-                        android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="@id/tvStepTwoBadge"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tvStepTwoBadge"
@@ -681,274 +606,293 @@
 
                     <ImageView
                         android:id="@+id/ivPhotoMode"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_marginTop="@dimen/spacing_lg"
-                        android:contentDescription="@string/camera_photo_mode"
-                        android:src="@drawable/ic_camera_simple"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="@dimen/spacing_xl"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_camera_photo_mode"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvStepTwoBadge"
-                        app:tint="@color/primary" />
+                        app:layout_constraintTop_toBottomOf="@id/tvStepTwoBadge" />
 
                     <TextView
                         android:id="@+id/tvPhotoMode"
+                        style="@style/Text.VoiceLock.titleS"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_sm"
-                        android:fontFamily="@font/sora_semibold"
-                        android:includeFontPadding="false"
+                        android:layout_marginStart="@dimen/spacing_md"
+                        android:fontFamily="@font/sora_bold"
                         android:text="@string/camera_photo_mode"
                         android:textColor="@color/primary_text"
-                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@id/ivPhotoMode"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/ivPhotoMode"
                         app:layout_constraintTop_toTopOf="@id/ivPhotoMode" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <include
                         android:id="@+id/rowCapture"
+                        layout="@layout/item_camera_command"
                         android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="@dimen/spacing_sm"
-                        android:background="@drawable/bg_camera_command_row"
-                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ivPhotoMode">
-                        <TextView
-                            android:id="@+id/tvCapture"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sora_regular"
-                            android:includeFontPadding="false"
-                            android:text="@string/camera_command_capture"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/btnHearCapture"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                        <ImageView
-                            android:id="@+id/btnHearCapture"
-                            android:layout_width="32dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="@string/tap_to_hear"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_camera_speaker"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintTop_toBottomOf="@id/ivPhotoMode" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <include
                         android:id="@+id/rowOpenPhoto"
+                        layout="@layout/item_camera_command"
                         android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="@dimen/spacing_sm"
-                        android:background="@drawable/bg_camera_command_row"
-                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rowCapture">
-                        <TextView
-                            android:id="@+id/tvOpenPhoto"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sora_regular"
-                            android:includeFontPadding="false"
-                            android:text="@string/camera_command_open_photo"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/btnHearOpenPhoto"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                        <ImageView
-                            android:id="@+id/btnHearOpenPhoto"
-                            android:layout_width="32dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="@string/tap_to_hear"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_camera_speaker"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintTop_toBottomOf="@id/rowCapture" />
 
                     <ImageView
                         android:id="@+id/ivVideoMode"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_marginTop="@dimen/spacing_lg"
-                        android:contentDescription="@string/camera_video_mode"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="@dimen/spacing_xl"
+                        android:importantForAccessibility="no"
                         android:src="@drawable/ic_camera_video"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rowOpenPhoto"
-                        app:tint="@color/primary" />
+                        app:layout_constraintTop_toBottomOf="@id/rowOpenPhoto" />
 
                     <TextView
                         android:id="@+id/tvVideoMode"
+                        style="@style/Text.VoiceLock.titleS"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_sm"
-                        android:fontFamily="@font/sora_semibold"
-                        android:includeFontPadding="false"
+                        android:layout_marginStart="@dimen/spacing_md"
+                        android:fontFamily="@font/sora_bold"
                         android:text="@string/camera_video_mode"
                         android:textColor="@color/primary_text"
-                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@id/ivVideoMode"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/ivVideoMode"
                         app:layout_constraintTop_toTopOf="@id/ivVideoMode" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <include
                         android:id="@+id/rowOpenVideo"
+                        layout="@layout/item_camera_command"
                         android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="@dimen/spacing_sm"
-                        android:background="@drawable/bg_camera_command_row"
-                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ivVideoMode">
-                        <TextView
-                            android:id="@+id/tvOpenVideo"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sora_regular"
-                            android:includeFontPadding="false"
-                            android:text="@string/camera_command_open_video"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/btnHearOpenVideo"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                        <ImageView
-                            android:id="@+id/btnHearOpenVideo"
-                            android:layout_width="32dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="@string/tap_to_hear"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_camera_speaker"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintTop_toBottomOf="@id/ivVideoMode" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <include
                         android:id="@+id/rowRecordVideo"
+                        layout="@layout/item_camera_command"
                         android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="@dimen/spacing_sm"
-                        android:background="@drawable/bg_camera_command_row"
-                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rowOpenVideo">
-                        <TextView
-                            android:id="@+id/tvRecordVideo"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sora_regular"
-                            android:includeFontPadding="false"
-                            android:text="@string/camera_command_record"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/btnHearRecordVideo"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                        <ImageView
-                            android:id="@+id/btnHearRecordVideo"
-                            android:layout_width="32dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="@string/tap_to_hear"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_camera_speaker"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintTop_toBottomOf="@id/rowOpenVideo" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <include
                         android:id="@+id/rowEndVideo"
+                        layout="@layout/item_camera_command"
                         android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="@dimen/spacing_sm"
-                        android:background="@drawable/bg_camera_command_row"
-                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rowRecordVideo">
-                        <TextView
-                            android:id="@+id/tvEndVideo"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sora_regular"
-                            android:includeFontPadding="false"
-                            android:text="@string/camera_command_end_record"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/btnHearEndVideo"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                        <ImageView
-                            android:id="@+id/btnHearEndVideo"
-                            android:layout_width="32dp"
-                            android:layout_height="40dp"
-                            android:contentDescription="@string/tap_to_hear"
-                            android:padding="4dp"
-                            android:src="@drawable/ic_camera_speaker"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintTop_toBottomOf="@id/rowRecordVideo" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ===== State: Open Camera by Voice (main) ===== -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/spacing_lg"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/mainHero"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/spacing_xxl"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_camera_main"
+                    app:layout_constraintDimensionRatio="460:380"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvMainTitle"
+                    style="@style/Text.VoiceLock.titleXL"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:fontFamily="@font/sora_medium"
+                    android:gravity="center"
+                    android:text="@string/open_camera_by_voice"
+                    android:textColor="@color/primary_text"
+                    android:textSize="22sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mainHero" />
+
+                <TextView
+                    android:id="@+id/tvMainDescription"
+                    style="@style/Text.VoiceLock.bodyL"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:layout_marginHorizontal="@dimen/spacing_sm"
+                    android:fontFamily="@font/sora_regular"
+                    android:gravity="center"
+                    android:text="@string/camera_main_description"
+                    android:textColor="@color/textSecondary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvMainTitle" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ===== State: You're All Set ===== -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clComplete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/spacing_lg"
+                android:paddingBottom="@dimen/spacing_xl"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/successBadge"
+                    android:layout_width="136dp"
+                    android:layout_height="136dp"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_camera_success"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvCompleteTitle"
+                    style="@style/Text.VoiceLock.titleXL"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:fontFamily="@font/sora_bold"
+                    android:gravity="center"
+                    android:text="@string/camera_all_set_title"
+                    android:textColor="@color/primary_text"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/successBadge" />
+
+                <TextView
+                    android:id="@+id/tvCompleteDescription"
+                    style="@style/Text.VoiceLock.bodyL"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:fontFamily="@font/sora_regular"
+                    android:gravity="center"
+                    android:textColor="@color/textSecondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCompleteTitle"
+                    tools:text="Now, start by saying “Open Camera”" />
+
+                <!-- All Set animation: reference frames crossfaded in a loop. -->
+                <FrameLayout
+                    android:id="@+id/cameraArtwork"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/spacing_xxl"
+                    android:background="@drawable/bg_camera_artwork"
+                    android:contentDescription="@string/open_camera_by_voice"
+                    app:layout_constraintDimensionRatio="618:344"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCompleteDescription">
+
+                    <ImageView
+                        android:id="@+id/ivSceneBack"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:importantForAccessibility="no"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_camera_all_set_1" />
+
+                    <ImageView
+                        android:id="@+id/ivSceneFront"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:importantForAccessibility="no"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_camera_all_set_1" />
+                </FrameLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- ===================== Bottom actions ===================== -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomActions"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <!-- Record panel (Confirm Your Voice) -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/recordPanel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_camera_record_panel"
+            android:paddingTop="@dimen/spacing_max"
+            android:paddingBottom="@dimen/spacing_xxxl"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/tvRecordPrompt"
+                style="@style/Text.VoiceLock.titleL"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xxl"
-                android:fontFamily="@font/sora_semibold"
+                android:layout_marginHorizontal="@dimen/spacing_lg"
+                android:fontFamily="@font/sora_regular"
                 android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="@string/say_open_camera"
                 android:textColor="@color/textSecondary"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Say “Open Camera”" />
 
             <FrameLayout
                 android:id="@+id/btnRecord"
-                android:layout_width="112dp"
-                android:layout_height="112dp"
-                android:layout_marginTop="@dimen/spacing_lg"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_marginTop="@dimen/spacing_xl"
                 android:background="@drawable/bg_camera_mic_halo"
                 android:clickable="true"
                 android:contentDescription="@string/tap_to_record"
@@ -956,51 +900,217 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvRecordPrompt">
+
                 <ImageView
                     android:id="@+id/ivRecordMic"
-                    android:layout_width="92dp"
-                    android:layout_height="92dp"
+                    android:layout_width="74dp"
+                    android:layout_height="74dp"
                     android:layout_gravity="center"
                     android:background="@drawable/bg_camera_mic_circle"
-                    android:contentDescription="@string/tap_to_record"
-                    android:padding="28dp"
+                    android:elevation="2dp"
+                    android:importantForAccessibility="no"
+                    android:padding="24dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/vn_ic_mic_white" />
             </FrameLayout>
 
             <TextView
                 android:id="@+id/tvRecordHint"
+                style="@style/Text.VoiceLock.titleL"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:fontFamily="@font/sora_regular"
+                android:layout_marginHorizontal="@dimen/spacing_lg"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:fontFamily="@font/sora_medium"
                 android:gravity="center"
-                android:includeFontPadding="false"
                 android:text="@string/tap_to_record"
                 android:textColor="@color/textSecondary"
-                android:textSize="18sp"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnRecord" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- Main controls (Open Camera by Voice) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainControls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/spacing_xxl"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cameraToggle"
+                android:layout_width="136dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:background="@drawable/bg_camera_toggle_off"
+                android:clickable="true"
+                android:elevation="6dp"
+                android:focusable="true"
+                android:paddingHorizontal="@dimen/spacing_lg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/toggleKnob"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_camera_toggle_knob_off"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvToggleLabel"
+                    style="@style/Text.VoiceLock.titleXL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_medium"
+                    android:text="@string/camera_toggle_off"
+                    android:textColor="@color/primary_text"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/ivTapHand"
+                android:layout_width="60dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="@dimen/spacing_xl"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_camera_tap_hand"
+                app:layout_constraintEnd_toEndOf="@id/cameraToggle"
+                app:layout_constraintStart_toStartOf="@id/cameraToggle"
+                app:layout_constraintTop_toBottomOf="@id/cameraToggle" />
+
+            <TextView
+                android:id="@+id/btnResetVoice"
+                style="@style/Text.VoiceLock.titleS"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/spacing_xxl"
+                android:background="?attr/selectableItemBackground"
+                android:drawableStart="@drawable/ic_camera_reset"
+                android:drawablePadding="@dimen/spacing_md"
+                android:fontFamily="@font/sora_semibold"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/spacing_lg"
+                android:text="@string/camera_reset_voice"
+                android:textColor="@color/primary"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivTapHand" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/btnPrimary"
+            style="@style/Text.VoiceLock.buttonL"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginHorizontal="@dimen/spacing_lg"
             android:layout_marginBottom="@dimen/spacing_xxl"
             android:background="@drawable/bg_cta_gradient"
             android:clickable="true"
-            android:fontFamily="@font/sora_bold"
+            android:focusable="true"
+            android:fontFamily="@font/sora_semibold"
             android:gravity="center"
-            android:includeFontPadding="false"
             android:text="@string/continue_text"
             android:textColor="@color/white"
-            android:textSize="16sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ===================== First-run coach mark ===================== -->
+
+    <View
+        android:id="@+id/coachScrim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/scrim"
+        android:clickable="true"
+        android:elevation="12dp"
+        android:focusable="true"
+        android:outlineProvider="none"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/coachArrow"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:layout_marginEnd="14dp"
+        android:elevation="14dp"
+        android:importantForAccessibility="no"
+        android:outlineProvider="none"
+        android:src="@drawable/ic_camera_tooltip_arrow"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/btnHelp"
+        app:layout_constraintTop_toBottomOf="@id/btnHelp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/coachTooltip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:background="@drawable/bg_camera_tooltip"
+        android:elevation="14dp"
+        android:padding="@dimen/spacing_xl"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/btnHelp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/coachArrow"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tvCoachMessage"
+            style="@style/Text.VoiceLock.titleS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sora_medium"
+            android:text="@string/camera_guideline_tip"
+            android:textColor="@color/primary_text"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btnCoachOk"
+            style="@style/Text.VoiceLock.buttonL"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:background="@drawable/bg_camera_step_pill"
+            android:fontFamily="@font/sora_semibold"
+            android:gravity="center"
+            android:minWidth="96dp"
+            android:paddingHorizontal="@dimen/spacing_xl"
+            android:text="@string/camera_ok"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCoachMessage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
