@@ -18,7 +18,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" app:layout_constraintBottom_toTopOf="@id/btnContinue"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_language" tools:itemCount="11" />
+        tools:listitem="@layout/item_language" tools:itemCount="15" />
 
     <TextView android:id="@+id/btnContinue" style="@style/Text.VoiceLock.buttonL"
         android:layout_width="0dp" android:layout_height="wrap_content" android:minHeight="48dp"

@@ -18,7 +18,7 @@
         android:fontFamily="@font/sora_medium" android:textColor="@color/textPrimary"
         app:layout_constraintStart_toEndOf="@id/imgFlag" app:layout_constraintEnd_toStartOf="@id/imgLanguageSelected"
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="English (United Kingdom)" />
+        tools:text="English" />
 
     <ImageView android:id="@+id/imgLanguageSelected" android:layout_width="@dimen/language_indicator_size"
         android:layout_height="@dimen/language_indicator_size" android:contentDescription="@null"

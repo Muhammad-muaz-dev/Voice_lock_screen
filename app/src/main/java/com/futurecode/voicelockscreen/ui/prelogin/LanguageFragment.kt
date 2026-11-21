@@ -13,24 +13,20 @@ import com.futurecode.voicelockscreen.model.LanguageOption
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
     private lateinit var languageAdapter: LanguageAdapter
-    private var selectedLanguageCode = "en-US"
+    private var selectedLanguageCode = "en"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val languages = languageOptions()
         val stored = savedInstanceState?.getString(STATE_SELECTION)
             ?: MyApplication.app.prefManager.selectedLanguage.ifBlank { "en" }
-        selectedLanguageCode = when (stored) {
-            "en" -> "en-US"
-            "es" -> "es-ES"
-            "pt" -> "pt-PT"
-            else -> stored
-        }
+        val supportedCodes = languages.map { it.code }.toSet()
+        selectedLanguageCode = stored.substringBefore('-').takeIf { it in supportedCodes } ?: "en"
+
         languageAdapter = LanguageAdapter(languages, selectedLanguageCode) { language ->
             selectedLanguageCode = language.code
             languageAdapter.updateSelection(language.code)
         }
-        savedInstanceState?.getStringArrayList(STATE_EXPANDED)?.let(languageAdapter::restoreExpanded)
         binding.rvLanguages.adapter = languageAdapter
         binding.btnContinue.setOnClickListener {
             MyApplication.applyLanguage(selectedLanguageCode)
@@ -51,41 +47,28 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         startActivity(intent)
         requireActivity().finish()
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(STATE_SELECTION, selectedLanguageCode)
-        if (::languageAdapter.isInitialized) outState.putStringArrayList(STATE_EXPANDED, languageAdapter.expandedCodes())
     }
 
     private fun languageOptions(): List<LanguageOption> {
-        fun option(code: String, label: String, country: String, variants: List<LanguageOption> = emptyList()) =
-            LanguageOption(code, label, label, country, variants)
+        fun option(code: String, label: String, country: String) =
+            LanguageOption(code, label, label, country)
+
         return listOf(
-            option("en", "English", "GB", listOf(
-                option("en-US", "English (United States)", "US"),
-                option("en-GB", "English (United Kingdom)", "GB"),
-                option("en-AU", "English (Australia)", "AU"),
-                option("en-CA", "English (Canada)", "CA"),
-                option("en-GH", "English (Ghana)", "GH"),
-                option("en-SG", "English (Singapore)", "SG")
-            )),
-            option("es", "Español", "ES", listOf(
-                option("es-ES", "Español (España)", "ES"),
-                option("es-MX", "Español (México)", "MX")
-            )),
+            option("en", "English", "GB"),
+            option("es", "Español", "ES"),
             option("id", "Bahasa Indonesia", "ID"),
             option("de", "Deutsch", "DE"),
             option("fr", "Français", "FR"),
             option("it", "Italiano", "IT"),
             option("nl", "Nederlands", "NL"),
-            option("pt", "Português", "PT", listOf(
-                option("pt-PT", "Português (Portugal)", "PT"),
-                option("pt-BR", "Português (Brasil)", "BR")
-            )),
+            option("pt", "Português", "PT"),
             option("vi", "Tiếng Việt", "VN"),
             option("tr", "Türkçe", "TR"),
             option("ru", "Русский", "RU"),
-            // Keep previously offered languages available below the reference list.
             option("ja", "日本語", "JP"),
             option("hi", "हिन्दी", "IN"),
             option("zh", "中文", "CN"),
@@ -96,6 +79,5 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     companion object {
         const val ARG_RETURN_TO_SETTINGS = "return_to_settings"
         private const val STATE_SELECTION = "language_selection"
-        private const val STATE_EXPANDED = "language_expanded"
     }
 }

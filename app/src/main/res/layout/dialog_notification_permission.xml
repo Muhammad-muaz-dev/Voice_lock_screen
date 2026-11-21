@@ -1,102 +1,93 @@
-<!-- Constraint-based layout; shared design tokens define the visual styling. -->
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/notificationBody"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/spacing_max"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/vn_bg_bottom_sheet_dialog"
+        android:paddingHorizontal="@dimen/vn_dp_24"
+        android:paddingTop="@dimen/vn_dp_60"
+        android:paddingBottom="@dimen/vn_dp_6"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/bg_notification_sheet"
-        android:paddingHorizontal="@dimen/spacing_xxl"
-        android:paddingTop="@dimen/notification_sheet_top_padding"
-        android:paddingBottom="@dimen/spacing_xxl">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvNotificationTitle"
-            style="@style/Text.VoiceLock.titleXL"
+            style="@style/VN.Headline_XSM_Medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sora_semibold"
+            android:gravity="center"
             android:text="@string/want_security_alerts"
-            android:textColor="@color/textPrimary"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/vn_neutral01"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvNotificationDescription"
-            style="@style/Text.VoiceLock.bodyL"
+            style="@style/VN.Text_MD_Regular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sora_medium"
+            android:layout_marginTop="@dimen/vn_dp_8"
+            android:gravity="center"
             android:text="@string/security_alerts_body"
-            android:textColor="@color/textSecondary"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/vn_neutral05"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/spacing_md"
-            app:layout_constraintTop_toBottomOf="@id/tvNotificationTitle"
-            android:gravity="center" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNotificationTitle" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/notificationActions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/vn_dp_38"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/spacing_huge"
-            app:layout_constraintTop_toBottomOf="@id/tvNotificationDescription"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNotificationDescription">
 
             <TextView
                 android:id="@+id/btnNotificationLater"
-                style="@style/Text.VoiceLock.buttonL"
+                style="@style/VN.Text_MD_Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/sora_bold"
-                android:text="@string/notification_later"
-                android:textColor="@color/primary"
-                android:minHeight="48dp"
-                android:padding="@dimen/spacing_md"
-                android:background="@drawable/bg_notification_later"
+                android:background="@drawable/vn_bg_radius_100_primary08"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/notification_later"
+                android:textColor="@color/vn_primary02"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btnNotificationAllow"
-                app:layout_constraintHorizontal_chainStyle="spread" />
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/btnNotificationAllow"
-                style="@style/Text.VoiceLock.buttonL"
+                style="@style/VN.Text_MD_Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/sora_bold"
-                android:text="@string/allow"
-                android:textColor="@color/textPrimary"
-                android:minHeight="48dp"
-                android:padding="@dimen/spacing_md"
-                android:background="@drawable/bg_settings_upgrade"
+                android:background="@drawable/vn_bg_radius_100_primary01"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/allow"
+                android:textColor="@color/vn_white"
+                android:layout_marginStart="@dimen/vn_dp_8"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="@dimen/spacing_lg"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btnNotificationLater"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -104,23 +95,23 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/notificationBadge"
-        android:layout_width="@dimen/notification_badge_size"
-        android:layout_height="@dimen/notification_badge_size"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="@dimen/vn_dp_98"
+        android:layout_height="@dimen/vn_dp_98"
+        android:background="@drawable/bg_notification_badge"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/bg_notification_badge">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imgNotificationBell"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:src="@drawable/ic_notification_bell"
             android:contentDescription="@null"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_notification_bell"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

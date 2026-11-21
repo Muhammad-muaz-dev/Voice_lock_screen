@@ -10,8 +10,6 @@
     <dimen name="home_feature_height">76dp</dimen>
     <dimen name="settings_row_height">52dp</dimen>
     <dimen name="settings_banner_height">110dp</dimen>
-    <dimen name="notification_sheet_top_padding">24dp</dimen>
-    <dimen name="notification_badge_size">52dp</dimen>
     <!-- Language picker: reference pill rows and indented regional choices. -->
     <dimen name="language_row_height">52dp</dimen>
     <dimen name="language_row_radius">50dp</dimen>

@@ -1,24 +1,26 @@
 package com.futurecode.voicelockscreen.ui.afterlogin
 
 import android.content.DialogInterface
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.databinding.DialogNotificationPermissionBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-/** Home notification explanation; only Allow opens Android's permission prompt. */
+/** Home notification explanation styled like the app's microphone-access sheet. */
 class NotificationPermissionDialog : BottomSheetDialogFragment() {
 
     private var resultSent = false
+    private var notificationSurface: View? = null
 
-    override fun getTheme() = R.style.Theme_VoiceLock_NotificationSheet
+    override fun getTheme() = R.style.VN_BottomSheet
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +28,13 @@ class NotificationPermissionDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = DialogNotificationPermissionBinding.inflate(inflater, container, false)
+        notificationSurface = binding.notificationBody
+        val baseBottomPadding = binding.notificationBody.paddingBottom
+        ViewCompat.setOnApplyWindowInsetsListener(binding.notificationBody) { view, insets ->
+            val navigationInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            view.updatePadding(bottom = baseBottomPadding + navigationInset)
+            insets
+        }
         setupActions(binding)
         return binding.root
     }
@@ -35,11 +44,17 @@ class NotificationPermissionDialog : BottomSheetDialogFragment() {
         val sheetDialog = dialog as? BottomSheetDialog ?: return
         configureBehavior(sheetDialog)
         configureAppearance(sheetDialog)
+        notificationSurface?.let { ViewCompat.requestApplyInsets(it) }
     }
 
     override fun onCancel(dialog: DialogInterface) {
         sendResult(false)
         super.onCancel(dialog)
+    }
+
+    override fun onDestroyView() {
+        notificationSurface = null
+        super.onDestroyView()
     }
 
     private fun setupActions(binding: DialogNotificationPermissionBinding) {
@@ -56,21 +71,10 @@ class NotificationPermissionDialog : BottomSheetDialogFragment() {
 
     private fun configureAppearance(sheetDialog: BottomSheetDialog) {
         sheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-            ?.apply {
-                clearBackground(this)
-                // Behavior installs its shape on the first layout.
-                post { clearBackground(this) }
+            ?.let { sheet ->
+                sheet.setBackgroundResource(android.R.color.transparent)
+                sheet.post { sheet.setBackgroundResource(android.R.color.transparent) }
             }
-
-        sheetDialog.window?.apply {
-            navigationBarColor = requireContext().getColor(R.color.surfaceElevated)
-            setDimAmount(SHEET_DIM_AMOUNT)
-        }
-    }
-
-    private fun clearBackground(view: View) {
-        view.backgroundTintList = null
-        view.background = ColorDrawable(Color.TRANSPARENT)
     }
 
     private fun respond(allow: Boolean) {
@@ -90,6 +94,5 @@ class NotificationPermissionDialog : BottomSheetDialogFragment() {
         const val TAG = "home_notification_permission"
         const val RESULT_KEY = "notification_permission_choice"
         const val RESULT_ALLOW = "allow"
-        private const val SHEET_DIM_AMOUNT = 0.62f
     }
 }

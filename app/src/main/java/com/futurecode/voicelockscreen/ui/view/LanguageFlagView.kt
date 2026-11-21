@@ -8,7 +8,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 
-/** System flag glyphs clipped into circles; regional English flags share the UK motif. */
+/** System flag glyphs clipped into circles for the flat language list. */
 class LanguageFlagView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : View(context, attrs) {
@@ -16,8 +16,6 @@ class LanguageFlagView @JvmOverloads constructor(
     private val bounds = Rect()
     private val clip = Path()
     var country: String = "GB"
-        set(value) { field = value; invalidate() }
-    var englishVariant: Boolean = false
         set(value) { field = value; invalidate() }
 
     override fun onDraw(canvas: Canvas) {
@@ -30,17 +28,7 @@ class LanguageFlagView @JvmOverloads constructor(
         val circleSave = canvas.save()
         canvas.clipPath(clip)
         drawFlag(canvas, country, x, y, size)
-        if (englishVariant && country != "GB") {
-            val halfSave = canvas.save()
-            clip.reset()
-            clip.moveTo(0f, size)
-            clip.lineTo(size, 0f)
-            clip.lineTo(size, size)
-            clip.close()
-            canvas.clipPath(clip)
-            drawFlag(canvas, "GB", x, y, size)
-            canvas.restoreToCount(halfSave)
-        }
+
         canvas.restoreToCount(circleSave)
     }
 
