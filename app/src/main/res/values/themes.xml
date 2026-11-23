@@ -16,6 +16,10 @@
 
     <style name="Theme.VoiceLockScreen" parent="Base.Theme.VoiceLockScreen" />
 
+    <style name="Theme.VoiceLockScreen.LockActivity" parent="Theme.VoiceLockScreen">
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
     <!-- Overlay-permission guide drawn on top of the system settings page. -->
     <style name="Theme.VoiceLockScreen.Translucent" parent="Base.Theme.VoiceLockScreen">
         <item name="android:windowIsTranslucent">true</item>

@@ -107,18 +107,15 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
     }
 
     /**
-     * Loads a fresh native the first time each page is shown. The ad area (35% of the screen)
-     * appears only once an ad has loaded; until then the onboarding uses the full height.
+     * Loads a fresh native the first time each page is shown.
      */
     private fun refreshAdFor(position: Int) {
         val config = AdsConfig.onboardingAds
         if (!AdsConfig.adsAllowed || !refreshedPages.add(position)) return
         if (config.native) {
-            setAdAreaHeight(nativeArea = true)
-            AdPlacement.show(this, binding.onboardAdContainer, config)
+            AdPlacement.show(this, binding.onboardAdContainer, config, R.layout.layout_native_ad_onboarding)
         } else if (config.banner && position == 0) {
             // A banner refreshes by itself; load it once.
-            setAdAreaHeight(nativeArea = false)
             AdPlacement.show(this, binding.onboardAdContainer, config)
         }
     }
@@ -141,19 +138,6 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
         }
     }
 
-    /** Native: the ad takes 35% of the height (content 65%). Banner: the ad wraps its own height. */
-    private fun setAdAreaHeight(nativeArea: Boolean) {
-        val params = binding.onboardAdContainer.layoutParams as androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
-        if (nativeArea) {
-            params.height = 0
-            params.matchConstraintPercentHeight = NATIVE_AREA_PERCENT
-        } else {
-            params.height = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-            params.matchConstraintPercentHeight = 1f
-        }
-        binding.onboardAdContainer.layoutParams = params
-    }
-
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
 
     private inner class PageAdapter : RecyclerView.Adapter<PageAdapter.Holder>() {
@@ -168,7 +152,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
         override fun onBindViewHolder(holder: Holder, position: Int) {
             val page = pages[position]
             val view = holder.page
-            bindMockup(view.ivMockup, page.mockup)
+            view.ivMockup.bindArtwork(page.mockup)
             view.ivShield.isVisible = page.showShield
             val slots = listOf(
                 view.badgeOne to view.badgeOneIcon,
@@ -177,20 +161,6 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
                 view.badgeFour to view.badgeFourIcon
             )
             slots.forEachIndexed { index, (frame, icon) -> bindBadge(frame, icon, page.badges.getOrNull(index)) }
-        }
-
-        private fun bindMockup(mockup: ImageView, @DrawableRes artwork: Int) {
-            val isVoiceArtwork = artwork == R.drawable.img_onboard_1
-            val gutter = resources.getDimensionPixelSize(
-                if (isVoiceArtwork) R.dimen.spacing_lg else R.dimen.spacing_xxxl
-            )
-            mockup.layoutParams = (mockup.layoutParams as ConstraintLayout.LayoutParams).apply {
-                marginStart = gutter
-                marginEnd = gutter
-                dimensionRatio = if (isVoiceArtwork) VOICE_ARTWORK_RATIO else null
-            }
-            mockup.scaleType = if (isVoiceArtwork) ImageView.ScaleType.FIT_XY else ImageView.ScaleType.FIT_CENTER
-            mockup.setImageResource(artwork)
         }
 
         private fun bindBadge(frame: FrameLayout, icon: ImageView, badge: Badge?) {
@@ -206,11 +176,8 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
     }
 
     private companion object {
-        // Slightly widen the full artwork, including its transparent shadow clearance.
-        const val VOICE_ARTWORK_RATIO = "0.56:1"
         const val DOT_DP = 8
         const val ACTIVE_DOT_DP = 28
         const val TEXT_FADE_MS = 220L
-        const val NATIVE_AREA_PERCENT = 0.35f
     }
 }

@@ -5,7 +5,7 @@
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
     android:clipToPadding="false"
-    android:clipChildren="false"
+    android:clipChildren="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -48,7 +48,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:paddingTop="@dimen/card_shadow_gutter"
-        android:clipChildren="false"
+        android:clipChildren="true"
         android:id="@+id/permissionScroll"
         android:layout_width="0dp"
         android:layout_height="0dp"

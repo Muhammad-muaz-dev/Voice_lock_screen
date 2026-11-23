@@ -62,4 +62,5 @@
     <dimen name="lock_mic_size">58dp</dimen>
     <dimen name="elevation_card">2dp</dimen>
     <dimen name="card_shadow_gutter">8dp</dimen>
+    <dimen name="onboarding_artwork_max_width">360dp</dimen>
 </resources>

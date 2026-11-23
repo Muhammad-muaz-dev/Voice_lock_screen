@@ -67,7 +67,7 @@
             android:noHistory="false"
             android:showWhenLocked="true"
             android:taskAffinity="${applicationId}.lock"
-            android:theme="@style/Theme.VoiceLockScreen"
+            android:theme="@style/Theme.VoiceLockScreen.LockActivity"
             android:turnScreenOn="true" />
         <activity
             android:name=".activity.OverlayGuideActivity"

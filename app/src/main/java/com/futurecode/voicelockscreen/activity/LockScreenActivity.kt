@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
+import android.os.ResultReceiver
 import android.util.Log
 import android.speech.RecognitionListener
 import android.speech.SpeechRecognizer
@@ -26,6 +27,8 @@ import com.futurecode.voicelockscreen.activity.LockScreenViewModel.UnlockStatus
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.core.content.IntentCompat
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -96,8 +99,28 @@ class LockScreenActivity : BaseActivity() {
             didStartVoiceForCurrentResume = true
             val fingerprint = intent.getBooleanExtra(EXTRA_FINGERPRINT, false)
             intent.removeExtra(EXTRA_FINGERPRINT)
-            binding.root.post {
+            val startUnlock = Runnable {
+                if (!didStartVoiceForCurrentResume || isFinishing || isDestroyed) return@Runnable
                 if (fingerprint) startFingerprintUnlock() else startVoiceUnlock()
+            }
+            val handoff = IntentCompat.getParcelableExtra(intent, EXTRA_FIRST_FRAME_RECEIVER, ResultReceiver::class.java)
+            intent.removeExtra(EXTRA_FIRST_FRAME_RECEIVER)
+            if (handoff == null) {
+                binding.root.post(startUnlock)
+            } else {
+                binding.root.doOnPreDraw { root ->
+                    val finishHandoff = Runnable {
+                        if (isFinishing || isDestroyed) return@Runnable
+                        handoff.send(RESULT_OK, null)
+                        root.post(startUnlock)
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && root.isHardwareAccelerated) {
+                        root.viewTreeObserver.registerFrameCommitCallback(finishHandoff)
+                    } else {
+                        root.post(finishHandoff)
+                    }
+                }
+                binding.root.invalidate()
             }
         }
     }
@@ -496,11 +519,17 @@ class LockScreenActivity : BaseActivity() {
     companion object {
         private const val TAG = "LockScreenActivity"
         private const val EXTRA_FINGERPRINT = "lock_fingerprint_requested"
+        private const val EXTRA_FIRST_FRAME_RECEIVER = "lock_first_frame_receiver"
         private const val BIOMETRIC_AUTHENTICATORS = BiometricManager.Authenticators.BIOMETRIC_WEAK
 
-        fun newIntent(context: Context, fingerprint: Boolean = false): Intent {
+        fun newIntent(
+            context: Context,
+            fingerprint: Boolean = false,
+            firstFrameReceiver: ResultReceiver? = null
+        ): Intent {
             return Intent(context, LockScreenActivity::class.java).apply {
                 putExtra(EXTRA_FINGERPRINT, fingerprint)
+                firstFrameReceiver?.let { putExtra(EXTRA_FIRST_FRAME_RECEIVER, it) }
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)

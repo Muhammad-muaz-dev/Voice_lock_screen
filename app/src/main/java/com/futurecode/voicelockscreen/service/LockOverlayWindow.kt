@@ -4,6 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.ResultReceiver
 import android.provider.Settings
 import android.view.ContextThemeWrapper
 import android.view.Gravity
@@ -16,6 +20,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.LockScreenActivity
 import com.futurecode.voicelockscreen.databinding.ViewLockScreenBinding
@@ -36,12 +43,20 @@ class LockOverlayWindow(private val context: Context) {
     private var binding: ViewLockScreenBinding? = null
     private var selectedMethod = LockMethod.VOICE
     private var isUnlocking = false
+    private var pendingHandoff: ResultReceiver? = null
+    private var handoffInProgress = false
 
 
+    @Suppress("DEPRECATION")
     fun show() {
         if (!canDrawOverlays() || root != null) return
 
-        val overlayRoot = FrameLayout(themedContext)
+        val overlayRoot = FrameLayout(themedContext).apply {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            }
+        }
         val overlayBinding = ViewLockScreenBinding.inflate(inflater, overlayRoot, false)
         overlayRoot.addView(
             overlayBinding.root,
@@ -52,8 +67,6 @@ class LockOverlayWindow(private val context: Context) {
         )
         root = overlayRoot
         binding = overlayBinding
-        windowManager.addView(overlayRoot, layoutParams())
-
         ThemeWallpaperStore.applyTo(overlayBinding.imgWallpaper, context)
         LockScreenUi.bind(overlayBinding) { method ->
             selectedMethod = method
@@ -61,6 +74,7 @@ class LockOverlayWindow(private val context: Context) {
             openSelectedMethod()
         }
         LockScreenUi.select(overlayBinding, selectedMethod)
+        windowManager.addView(overlayRoot, layoutParams())
     }
 
     fun dismiss(unlocked: Boolean = false) {
@@ -68,6 +82,8 @@ class LockOverlayWindow(private val context: Context) {
         root?.let { runCatching { windowManager.removeView(it) } }
         root = null
         binding = null
+        pendingHandoff = null
+        handoffInProgress = false
         isUnlocking = false
     }
 
@@ -182,6 +198,13 @@ class LockOverlayWindow(private val context: Context) {
             isClickable = true
             isFocusable = true
         }
+        ViewCompat.setOnApplyWindowInsetsListener(dim) { view, insets ->
+            val safe = insets.getInsetsIgnoringVisibility(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            view.updatePadding(left = safe.left, top = safe.top, right = safe.right, bottom = safe.bottom)
+            insets
+        }
         val fallback = inflater.inflate(layoutRes, dim, false)
         dim.addView(
             fallback,
@@ -198,6 +221,7 @@ class LockOverlayWindow(private val context: Context) {
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
         )
+        ViewCompat.requestApplyInsets(dim)
         return fallback
     }
 
@@ -222,10 +246,31 @@ class LockOverlayWindow(private val context: Context) {
     }
 
     private fun openLockActivity() {
-        dismiss()
-        runCatching {
-            context.startActivity(LockScreenActivity.newIntent(context, fingerprint = selectedMethod == LockMethod.FINGERPRINT))
+        val overlay = root ?: return
+        if (handoffInProgress) return
+        val handoff = object : ResultReceiver(Handler(Looper.getMainLooper())) {
+            override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+                if (pendingHandoff === this) dismiss()
+            }
         }
+        pendingHandoff = handoff
+        handoffInProgress = true
+        runCatching {
+            context.startActivity(
+                LockScreenActivity.newIntent(
+                    context,
+                    fingerprint = selectedMethod == LockMethod.FINGERPRINT,
+                    firstFrameReceiver = handoff
+                )
+            )
+        }.onFailure {
+            pendingHandoff = null
+            handoffInProgress = false
+        }
+        // A blocked launch leaves the existing lock in place and lets the user retry.
+        overlay.postDelayed({
+            if (pendingHandoff === handoff) handoffInProgress = false
+        }, HANDOFF_RETRY_DELAY_MS)
     }
 
     private fun layoutParams(): WindowManager.LayoutParams {
@@ -240,10 +285,19 @@ class LockOverlayWindow(private val context: Context) {
             WindowManager.LayoutParams.MATCH_PARENT,
             type,
             WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                WindowManager.LayoutParams.FLAG_FULLSCREEN or
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
             PixelFormat.TRANSLUCENT
-        )
+        ).apply {
+            gravity = Gravity.TOP or Gravity.START
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                setFitInsetsTypes(0)
+                layoutInDisplayCutoutMode =
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                layoutInDisplayCutoutMode =
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            }
+        }
     }
 
     private fun canDrawOverlays(): Boolean {
@@ -255,6 +309,7 @@ class LockOverlayWindow(private val context: Context) {
 
 
     companion object {
+        private const val HANDOFF_RETRY_DELAY_MS = 3_000L
         private const val FALLBACK_TAG = "lock_fallback"
     }
 }

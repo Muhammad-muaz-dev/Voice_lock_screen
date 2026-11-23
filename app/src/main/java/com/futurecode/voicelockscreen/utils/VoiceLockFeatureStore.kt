@@ -59,7 +59,7 @@ object VoiceLockFeatureStore {
     }
 
     fun lockQuote(context: Context) =
-        prefs(context).getString(KEY_QUOTE, "Every morning is a fresh start.").orEmpty()
+        prefs(context).getString(KEY_QUOTE, null).orEmpty().ifBlank { quoteForTopic("Passion") }
 
     fun saveLockQuote(context: Context, quote: String) {
         prefs(context).edit().putString(KEY_QUOTE, quote).apply()

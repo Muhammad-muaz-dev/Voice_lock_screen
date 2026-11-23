@@ -195,6 +195,15 @@ end, minimum 48 dp touch height. Swipe and Next advance pages; Next on page thre
 finishes onboarding through the existing navigation flow. The outlined action
 and pill shape match the approved onboarding reference.
 
+The voice onboarding page previews the Home voice control inside a rounded surface.
+Both screens share the microphone orb, rings, title, switch, and status layout.
+Onboarding artwork fits proportionally between Skip and the title with a 360 dp
+maximum width. The same bounds apply when the ad slot is hidden.
+
+Onboarding native ads with media use a 130 dp square media area next to a compact
+column for the advertiser icon, Ad badge, title, description, and CTA. Descriptions
+use up to two lines. The ad slot wraps its content and the CTA keeps a 48 dp touch target.
+
 ### Home, settings, and notification extension
 
 Home follows the approved reference composition: a violet gradient Unlock Screen

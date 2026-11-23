@@ -3,8 +3,15 @@ package com.futurecode.voicelockscreen.ui.afterlogin
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
+import androidx.core.graphics.Insets
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -31,6 +38,7 @@ class ThemePreviewFragment : BaseFragment<FragmentThemePreviewBinding>(FragmentT
         val quote = args.getString(ARG_QUOTE) ?: VoiceLockFeatureStore.lockQuote(requireContext())
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
         LockScreenUi.bind(binding.lockScreen, quote = quote, showClockAndQuote = true)
+        setupEdgeToEdgePreview()
         val wallpaperUrl = args.getString(ARG_WALLPAPER_URL)
         if (wallpaperUrl != null) {
             bindRemoteWallpaper(
@@ -55,6 +63,56 @@ class ThemePreviewFragment : BaseFragment<FragmentThemePreviewBinding>(FragmentT
             ThemeWallpaperStore.applyTo(binding.lockScreen.imgWallpaper, requireContext())
             binding.btnApply.isVisible = false
         }
+    }
+
+    private fun setupEdgeToEdgePreview() {
+        val views = binding
+        val content = views.lockScreen.lockContent
+        val scroll = content.parent as ViewGroup
+        val scene = views.lockScreen.root
+        val viewport = ThemePreviewViewport(requireContext())
+        val constraints = scroll.layoutParams as ConstraintLayout.LayoutParams
+        scroll.removeView(content)
+        scene.removeView(scroll)
+        viewport.addView(content)
+        scene.addView(viewport, constraints)
+
+        val spacing = resources.getDimensionPixelSize(R.dimen.spacing_sm)
+        val applyMargin = resources.getDimensionPixelSize(R.dimen.spacing_lg)
+        var safe = Insets.NONE
+        fun updateViewport() {
+            val toolbarHeight = maxOf(views.ivBack.height, views.tvTitle.height)
+            val applySpace = if (views.btnApply.isVisible) views.btnApply.height + 2 * spacing else 0
+            viewport.updatePadding(
+                left = safe.left,
+                top = safe.top + toolbarHeight,
+                right = safe.right,
+                bottom = safe.bottom + applySpace
+            )
+        }
+
+        listOf(views.ivBack, views.tvTitle, views.btnApply).forEach { overlay ->
+            overlay.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> updateViewport() }
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(views.root) { _, insets ->
+            safe = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            val rtl = views.root.layoutDirection == View.LAYOUT_DIRECTION_RTL
+            views.ivBack.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                topMargin = safe.top
+                marginStart = if (rtl) safe.right else safe.left
+            }
+            views.tvTitle.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                marginEnd = spacing + if (rtl) safe.left else safe.right
+            }
+            views.btnApply.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                marginStart = applyMargin + if (rtl) safe.right else safe.left
+                marginEnd = applyMargin + if (rtl) safe.left else safe.right
+                bottomMargin = spacing + safe.bottom
+            }
+            updateViewport()
+            insets
+        }
+        ViewCompat.requestApplyInsets(views.root)
     }
 
     /** API wallpaper: preview from the URL; Apply downloads it once and uses it on the lock screen. */

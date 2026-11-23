@@ -63,7 +63,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:clipToPadding="false"
-        android:clipChildren="false"
+        android:clipChildren="true"
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -165,14 +165,14 @@
             app:layout_constraintTop_toBottomOf="@id/frameCreateNew" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:clipChildren="false"
+            android:clipChildren="true"
             android:paddingTop="@dimen/card_shadow_gutter"
             android:id="@+id/rvNotes"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/vn_dp_8"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/bottom_nav_content_inset"
+            android:paddingBottom="@dimen/card_shadow_gutter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

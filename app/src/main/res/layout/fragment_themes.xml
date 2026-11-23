@@ -2,7 +2,7 @@
 <!-- Themes tab: copy of the reference fragment_themes (ad slot removed), light scheme, violet accents. -->
 <androidx.constraintlayout.widget.ConstraintLayout
     android:clipToPadding="false"
-    android:clipChildren="false"
+    android:clipChildren="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -61,16 +61,16 @@
 
     <ScrollView
         android:paddingTop="@dimen/card_shadow_gutter"
-        android:clipChildren="false"
+        android:clipChildren="true"
         android:id="@+id/scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/vn_dp_16"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/bottom_nav_content_inset"
+        android:paddingBottom="@dimen/card_shadow_gutter"
         android:overScrollMode="never"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivLogo">

@@ -19,8 +19,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.futurecode.voicelockscreen.adapter.HomeWallpaperAdapter
-import com.futurecode.voicelockscreen.ads.AdViews
-import com.futurecode.voicelockscreen.ads.AdsConfig
 import com.futurecode.voicelockscreen.api.wallpaper.WallpaperRepository
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
@@ -56,7 +54,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupFeatureActions()
         setupHomeThemes()
         bindBottomTabs(binding.bottomNav, 0)
-        loadHomeBanner()
         setupSwitchActions()
     }
 
@@ -113,8 +110,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val toggle = View.OnClickListener {
             handleUnlockSwitchChanged(!VoiceLockSwitchStore.isUnlockEffective(requireContext()))
         }
-        binding.switchVoice.setOnClickListener(toggle)
-        binding.voiceMic.setOnClickListener(toggle)
+        binding.voiceSection.switchVoice.setOnClickListener(toggle)
+        binding.voiceSection.voiceMic.setOnClickListener(toggle)
     }
 
     private fun setupFeatureActions() {
@@ -178,13 +175,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.onDestroyView()
     }
 
-    /** Banner at the bottom of Home when switched on from remote config. */
-    private fun loadHomeBanner() {
-        AdViews.clearOnDetach(binding.adBannerContainer)
-        if (!AdsConfig.homeBanner) return
-        AdViews.loadBanner(requireActivity(), binding.adBannerContainer)
-    }
-
     private fun bindNavigation(view: View, @IdRes destination: Int) {
         view.setOnClickListener {
             findNavController().navigate(destination)
@@ -232,10 +222,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             active -> R.string.home_voice_status_line_on
             else -> R.string.home_voice_status_line_off
         }
-        binding.switchVoice.isChecked = active
-        binding.tvVoiceSubtitle.setText(status)
-        binding.voiceMic.alpha = if (active) 1f else INACTIVE_MIC_ALPHA
-        binding.voiceMic.contentDescription = "${getString(R.string.home_voice_title)}. ${getString(status)}"
+        binding.voiceSection.switchVoice.isChecked = active
+        binding.voiceSection.tvVoiceSubtitle.setText(status)
+        binding.voiceSection.voiceMic.alpha = if (active) 1f else INACTIVE_MIC_ALPHA
+        binding.voiceSection.voiceMic.contentDescription = "${getString(R.string.home_voice_title)}. ${getString(status)}"
         startVoiceWaves()
     }
 
@@ -245,7 +235,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
      */
     private fun startVoiceWaves() {
         if (voicePulse != null) return
-        val waves = listOf(binding.voicePulse, binding.voicePulse2, binding.voicePulse3)
+        val waves = listOf(binding.voiceSection.voicePulse, binding.voiceSection.voicePulse2, binding.voiceSection.voicePulse3)
         voicePulse = AnimatorSet().apply {
             playTogether(waves.flatMapIndexed { index, wave ->
                 val delay = index * WAVE_DURATION_MS / waves.size
@@ -276,7 +266,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         voicePulse?.cancel()
         voicePulse = null
         bindingOrNull?.let { b ->
-            listOf(b.voicePulse, b.voicePulse2, b.voicePulse3).forEach { it.alpha = 0f }
+            listOf(b.voiceSection.voicePulse, b.voiceSection.voicePulse2, b.voiceSection.voicePulse3).forEach { it.alpha = 0f }
         }
     }
 

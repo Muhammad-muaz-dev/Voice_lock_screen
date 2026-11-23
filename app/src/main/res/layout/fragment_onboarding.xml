@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Onboarding: Skip (top right), pages (phone illustration, title, body, dots + Next), and a
-    native ad at the bottom. With an ad, the content takes 65% of the height; without, all of it.
+    native ad at the bottom. When the ad slot is hidden, content uses the full safe area.
 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -22,18 +22,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideIllustration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.68" />
-
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vpOnboarding"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/guideIllustration"
+            app:layout_constraintBottom_toTopOf="@id/tvOnboardTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -61,15 +54,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacing_lg"
-            android:layout_marginTop="@dimen/spacing_lg"
-            android:fontFamily="@font/sora_medium"
+            android:fontFamily="@font/sora_bold"
             android:gravity="center"
             android:maxLines="2"
+            android:layout_marginBottom="6dp"
             android:textColor="@color/primary_text"
             android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvOnboardBody"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideIllustration"
             tools:text="@string/onboard_title_1" />
 
         <TextView
@@ -78,15 +71,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacing_xl"
-            android:layout_marginTop="@dimen/spacing_sm"
             android:fontFamily="@font/sora_regular"
             android:gravity="center"
             android:maxLines="3"
+            android:layout_marginBottom="24dp"
             android:textColor="@color/textSecondary"
             android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/btnOnboardNext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvOnboardTitle"
             tools:text="@string/onboard_body_1" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -142,33 +135,31 @@
             android:id="@+id/btnOnboardNext"
             style="@style/Text.VoiceLock.buttonL"
             android:layout_width="wrap_content"
-            android:layout_height="44dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="@dimen/spacing_lg"
             android:layout_marginBottom="@dimen/spacing_lg"
             android:background="@drawable/bg_onboard_next"
             android:clickable="true"
             android:focusable="true"
-            android:fontFamily="@font/sora_regular"
+            android:fontFamily="@font/sora_bold"
             android:gravity="center"
             android:minWidth="104dp"
             android:paddingHorizontal="@dimen/spacing_xl"
             android:text="@string/next"
             android:textColor="@color/primary"
-            android:textSize="17sp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Native ad; its height is set to 35% of the screen once an ad loads. -->
     <FrameLayout
         android:id="@+id/onboardAdContainer"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_md"
         android:layout_marginBottom="@dimen/spacing_md"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.35"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

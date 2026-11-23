@@ -62,10 +62,9 @@ object PreloginFlow {
 
     private fun openHome(fragment: Fragment) {
         val activity = fragment.requireActivity()
+        if (activity.isFinishing) return
+        activity.startActivity(Intent(activity, HomeActivity::class.java))
         MyApplication.app.prefManager.isOnboardingDone = true
-        activity.startActivity(Intent(activity, HomeActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        })
         activity.finish()
     }
 }

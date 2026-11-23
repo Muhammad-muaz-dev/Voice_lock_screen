@@ -4,8 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/vn_black"
-    android:fitsSystemWindows="true">
+    android:background="@color/vn_black">
+
+    <include
+        android:id="@+id/lockScreen"
+        layout="@layout/view_lock_screen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/ivBack"
@@ -15,6 +24,7 @@
         android:contentDescription="@string/back"
         android:padding="@dimen/spacing_md"
         android:src="@drawable/vn_ic_back_gray"
+        app:tint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,23 +38,15 @@
         android:fontFamily="@font/sora_semibold"
         android:text="@string/preview"
         android:textColor="@color/white"
+        android:shadowColor="@color/scrimStrong"
+        android:shadowRadius="4"
         app:layout_constraintBottom_toBottomOf="@id/ivBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivBack"
         app:layout_constraintTop_toTopOf="@id/ivBack" />
 
-    <include
-        android:id="@+id/lockScreen"
-        layout="@layout/view_lock_screen"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnApply"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivBack" />
-
     <TextView
-        android:id="@id/btnApply"
+        android:id="@+id/btnApply"
         style="@style/Text.VoiceLock.buttonL"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

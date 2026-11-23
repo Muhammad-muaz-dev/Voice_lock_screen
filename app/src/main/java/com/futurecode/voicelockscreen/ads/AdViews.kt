@@ -27,8 +27,13 @@ object AdViews {
      * Inflates [layoutRes] (a NativeAdView) into [container], fills it from [ad] and registers it.
      * The previous ad in the container, if any, is destroyed.
      */
-    fun showNative(container: ViewGroup, ad: NativeAd, config: ScreenAdConfig) {
-        val layoutRes = if (config.nativeHasMedia) R.layout.layout_native_ad_media else R.layout.layout_native_ad_small
+    fun showNative(
+        container: ViewGroup,
+        ad: NativeAd,
+        config: ScreenAdConfig,
+        @LayoutRes mediaLayout: Int = R.layout.layout_native_ad_media
+    ) {
+        val layoutRes = if (config.nativeHasMedia) mediaLayout else R.layout.layout_native_ad_small
         showNative(container, ad, layoutRes)
         container.findViewById<Button>(R.id.adCallToAction)?.let { styleCta(it, config) }
     }
@@ -90,6 +95,7 @@ object AdViews {
         adView.loadAd(BannerAdRequest.Builder(AdIds.BANNER, size).build(), object : AdLoadCallback<BannerAd> {
             override fun onAdLoaded(ad: BannerAd) {
                 container.post {
+                    if (container.tag !== adView) return@post
                     container.isVisible = true
                     onResult(true)
                 }
@@ -97,6 +103,7 @@ object AdViews {
 
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 container.post {
+                    if (container.tag !== adView) return@post
                     clear(container)
                     onResult(false)
                 }

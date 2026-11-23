@@ -565,14 +565,15 @@
     <string name="home_lock_by_voice">Lock screen by voice</string>
 
     <!-- Onboarding -->
-    <string name="onboard_title_1">Select Your Lock Method</string>
-    <string name="onboard_body_1">Pick voice, PIN, pattern or fingerprint to secure your phone.</string>
-    <string name="onboard_title_2">Personalize Your Lock Screen</string>
-    <string name="onboard_body_2">Choose a theme, add daily quotes and make your lock screen yours.</string>
-    <string name="onboard_title_3">All-in-One Lock</string>
-    <string name="onboard_body_3">Secure your phone with voice, PIN, pattern and fingerprint.</string>
-    <string name="onboard_title_4">Enjoy Smart Protection</string>
-    <string name="onboard_body_4">Unlock with your voice while keeping your phone safe from intruders.</string>
+    <string name="onboard_title_1">Unlock by voice</string>
+    <string name="onboard_camera_tile_title">Open Camera</string>
+    <string name="onboard_body_1">Set a phrase to unlock your phone.</string>
+    <string name="onboard_title_2">Make it yours</string>
+    <string name="onboard_body_2">Pick a theme and add a daily quote.</string>
+    <string name="onboard_title_3">Choose your lock</string>
+    <string name="onboard_body_3">Use a PIN, pattern, or fingerprint.</string>
+    <string name="onboard_title_4">Keep it private</string>
+    <string name="onboard_body_4">Add a layer of protection to your phone.</string>
     <string name="onboard_start">Start</string>
 
     <!-- Wallpaper themes API -->
