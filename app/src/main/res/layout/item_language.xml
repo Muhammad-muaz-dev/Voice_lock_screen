@@ -6,19 +6,18 @@
     android:id="@+id/languageContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/spacing_md"
+    android:layout_marginBottom="@dimen/spacing_sm"
     android:background="@drawable/bg_language_picker_row"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    android:minHeight="56dp"
     android:paddingHorizontal="@dimen/spacing_lg"
-    android:paddingVertical="@dimen/spacing_md">
+    android:paddingVertical="@dimen/spacing_lg">
 
     <ImageView
         android:id="@+id/imgLanguageSelected"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +32,7 @@
         android:layout_marginStart="@dimen/spacing_lg"
         android:fontFamily="@font/sora_medium"
         android:textColor="@color/primary_text"
-        android:textSize="17sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgLanguageSelected"

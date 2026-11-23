@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_lg"
         android:layout_marginEnd="@dimen/spacing_sm"
-        android:fontFamily="@font/sora_medium"
+        android:fontFamily="@font/sora_bold"
         android:text="@string/language"
         android:textColor="@color/primary_text"
         android:textSize="20sp"
@@ -27,13 +27,11 @@
 
     <ImageView
         android:id="@+id/btnContinue"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="@dimen/spacing_md"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_marginEnd="@dimen/spacing_sm"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/continue_text"
-        android:padding="12dp"
         android:src="@drawable/ic_language_done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -60,8 +58,6 @@
         android:id="@+id/languageAdContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_lg"
-        android:layout_marginBottom="@dimen/spacing_md"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
