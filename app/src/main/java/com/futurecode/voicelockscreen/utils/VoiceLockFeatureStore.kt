@@ -2,6 +2,7 @@ package com.futurecode.voicelockscreen.utils
 
 import android.content.Context
 import android.net.Uri
+import com.futurecode.voicelockscreen.R
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -59,7 +60,7 @@ object VoiceLockFeatureStore {
     }
 
     fun lockQuote(context: Context) =
-        prefs(context).getString(KEY_QUOTE, null).orEmpty().ifBlank { quoteForTopic("Passion") }
+        prefs(context).getString(KEY_QUOTE, null).orEmpty().ifBlank { quoteForTopic(context, "passion") }
 
     fun saveLockQuote(context: Context, quote: String) {
         prefs(context).edit().putString(KEY_QUOTE, quote).apply()
@@ -146,19 +147,20 @@ object VoiceLockFeatureStore {
         prefs(context).edit().putString(KEY_TRANSLATE_LANGUAGE, tag).apply()
     }
 
-    fun quoteForTopic(topic: String): String {
-        return when (topic.lowercase()) {
-            "passion" -> "Love what you do, and the rest follows."
-            "growth" -> "Every day is a new chance to change your life."
-            "vitality" -> "Take care of your body. It’s the only place you live."
-            "aspire" -> "Aim higher than yesterday."
-            "wisdom" -> "Learn a little, then live a little more."
-            "courage" -> "Feel the fear, then take the step anyway."
-            "harmony" -> "Quiet mind, steady heart."
-            "gratitude" -> "Start with thanks, then start the day."
-            "dreams" -> "Make the dream small enough to start today."
-            else -> "Stay hopeful. The next page is still blank."
+    fun quoteForTopic(context: Context, topic: String): String {
+        val quoteRes = when (topic.lowercase()) {
+            "passion" -> R.string.lock_quote_passion
+            "growth" -> R.string.lock_quote_growth
+            "vitality" -> R.string.lock_quote_vitality
+            "aspire" -> R.string.lock_quote_aspire
+            "wisdom" -> R.string.lock_quote_wisdom
+            "courage" -> R.string.lock_quote_courage
+            "harmony" -> R.string.lock_quote_harmony
+            "gratitude" -> R.string.lock_quote_gratitude
+            "dreams" -> R.string.lock_quote_dreams
+            else -> R.string.lock_quote_hope
         }
+        return context.getString(quoteRes)
     }
 
     fun summarize(transcript: String): String {

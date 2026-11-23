@@ -1,6 +1,0 @@
-<resources>
-    <string name="language_expanded">Erweitert</string>
-    <string name="language_collapsed">Reduziert</string>
-    <string name="language_selected">Ausgewählt</string>
-    <string name="language_not_selected">Nicht ausgewählt</string>
-</resources>

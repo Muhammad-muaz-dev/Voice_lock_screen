@@ -1,5 +1,6 @@
 package com.futurecode.voicelockscreen.utils
 
+import android.text.format.DateFormat
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.view.ViewCompat
@@ -10,7 +11,6 @@ import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.databinding.ViewLockScreenBinding
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 enum class LockMethod(@StringRes val hint: Int) {
     PIN(R.string.pin_unlock),
@@ -29,8 +29,10 @@ object LockScreenUi {
     ) {
         val context = binding.root.context
         val now = Date()
-        binding.tvMainTime.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(now)
-        binding.tvDate.text = SimpleDateFormat("EEE, dd MMM", Locale.getDefault()).format(now)
+        val locale = context.resources.configuration.locales[0]
+        binding.tvMainTime.text = DateFormat.getTimeFormat(context).format(now)
+        val datePattern = DateFormat.getBestDateTimePattern(locale, "EEEMMMd")
+        binding.tvDate.text = SimpleDateFormat(datePattern, locale).format(now)
         binding.tvQuote.text = quote ?: VoiceLockFeatureStore.lockQuote(context)
         binding.tvGreeting.setText(context.getTimeBasedGreetingRes())
         val show = showClockAndQuote ?: VoiceLockFeatureStore.showClockAndQuote(context)

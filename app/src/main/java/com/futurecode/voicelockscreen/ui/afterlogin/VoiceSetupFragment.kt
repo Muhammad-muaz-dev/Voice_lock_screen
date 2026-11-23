@@ -13,6 +13,7 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.ads.AdPlacement
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentVoiceSetupBinding
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
@@ -58,6 +59,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
             btnContinue.setOnClickListener { saveVoiceKey() }
         }
         renderRecord(warning = false)
+        AdPlacement.loadAndShowNative(viewLifecycleOwner, binding.record.voiceSetupNativeAdContainer)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

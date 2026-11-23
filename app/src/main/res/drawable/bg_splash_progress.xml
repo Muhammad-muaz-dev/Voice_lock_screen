@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Splash loader: translucent white track with a solid white fill. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
-            <solid android:color="@color/glassFill" />
+            <solid android:color="@color/border" />
             <corners android:radius="100dp" />
         </shape>
     </item>
     <item android:id="@android:id/progress">
         <scale android:scaleWidth="100%">
             <shape android:shape="rectangle">
-                <solid android:color="@color/white" />
+                <solid android:color="@color/primary" />
                 <corners android:radius="100dp" />
             </shape>
         </scale>

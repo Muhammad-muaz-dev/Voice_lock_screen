@@ -104,9 +104,13 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding>(FragmentNoteD
         b.groupTranslateEmpty.isVisible = tab == TAB_TRANSLATE && !hasTranslation
         b.tvTranslateContent.isVisible = tab == TAB_TRANSLATE && hasTranslation
         b.tvTranslateContent.text = note.translation
-        b.tvLanguage.text = NoteTranslateLanguages.label(VoiceLockFeatureStore.translateLanguage(requireContext()))
+        val displayLocale = resources.configuration.locales[0]
+        b.tvLanguage.text = NoteTranslateLanguages.label(
+            VoiceLockFeatureStore.translateLanguage(requireContext()),
+            displayLocale
+        )
         b.tvLanguageTranslate.isVisible = hasTranslation
-        b.tvLanguageTranslate.text = NoteTranslateLanguages.label(tag)
+        b.tvLanguageTranslate.text = NoteTranslateLanguages.label(tag, displayLocale)
     }
 
     private fun styleTab(view: TextView, selected: Boolean) {

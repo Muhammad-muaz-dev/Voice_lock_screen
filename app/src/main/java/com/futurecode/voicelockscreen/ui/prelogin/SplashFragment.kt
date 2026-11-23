@@ -40,7 +40,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         JsonReadUtils.fetchJsonData(requireContext()) { }
-        applyBrandBars(true)
+        applySplashInsetsMode(true)
         applyInsets()
         roundLogo()
         startProgress()
@@ -51,7 +51,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     override fun onDestroyView() {
         progressAnimator?.cancel()
         progressAnimator = null
-        applyBrandBars(false)
+        applySplashInsetsMode(false)
         super.onDestroyView()
     }
 
@@ -100,13 +100,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
     // region UI
 
-    /** Violet reaches under the status and navigation bars; icons turn light on it. */
-    private fun applyBrandBars(enabled: Boolean) {
+    private fun applySplashInsetsMode(enabled: Boolean) {
         val activity = activity ?: return
         FullBleed.set(activity, enabled)
         WindowCompat.getInsetsController(activity.window, activity.window.decorView).apply {
-            isAppearanceLightStatusBars = !enabled
-            isAppearanceLightNavigationBars = !enabled
+            isAppearanceLightStatusBars = true
+            isAppearanceLightNavigationBars = true
         }
     }
 

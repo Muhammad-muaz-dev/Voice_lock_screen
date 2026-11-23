@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import java.text.Collator
 import java.util.Locale
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -50,15 +51,17 @@ object LocalNoteAiService : NoteAiService {
 
 /** Languages offered in the translate picker: only those ML Kit can translate, English first. */
 object NoteTranslateLanguages {
-    fun options(): List<Pair<String, String>> {
+    fun options(displayLocale: Locale): List<Pair<String, String>> {
+        val collator = Collator.getInstance(displayLocale)
         val all = TranslateLanguage.getAllLanguages()
-            .map { it to label(it) }
+            .map { it to label(it, displayLocale) }
             .filter { it.second.isNotBlank() }
-        val english = all.firstOrNull { it.first == TranslateLanguage.ENGLISH } ?: (TranslateLanguage.ENGLISH to label(TranslateLanguage.ENGLISH))
-        return listOf(english) + all.filter { it.first != english.first }.sortedBy { it.second }
+        val english = all.firstOrNull { it.first == TranslateLanguage.ENGLISH } ?: (TranslateLanguage.ENGLISH to label(TranslateLanguage.ENGLISH, displayLocale))
+        return listOf(english) + all.filter { it.first != english.first }.sortedWith { first, second -> collator.compare(first.second, second.second) }
     }
 
-    fun label(tag: String): String = Locale.forLanguageTag(tag).getDisplayName(Locale.ENGLISH).ifBlank { tag }
+    fun label(tag: String, displayLocale: Locale): String =
+        Locale.forLanguageTag(tag).getDisplayName(displayLocale).ifBlank { tag }
 
     /** Maps any BCP-47 tag (e.g. "en-US", "zh-Hant") to an ML Kit code, or null if unsupported. */
     fun toMlKit(tag: String): String? {

@@ -49,10 +49,9 @@ class PrefManager(private val context: Context) {
     var selectedLanguage: String
         get() = sharedPref.getString(AppConstants.KEY_LANGAUGE.name, DEFAULT_LANGUAGE)
             .orEmpty()
-            .ifBlank { DEFAULT_LANGUAGE }
         set(value) {
             sharedPref.edit()
-                .putString(AppConstants.KEY_LANGAUGE.name, value.ifBlank { DEFAULT_LANGUAGE })
+                .putString(AppConstants.KEY_LANGAUGE.name, value)
                 .apply()
         }
 
@@ -380,7 +379,7 @@ class PrefManager(private val context: Context) {
     }
 
     companion object {
-        private const val DEFAULT_LANGUAGE = "en"
+        private const val DEFAULT_LANGUAGE = ""
         private const val KEY_LANGUAGE_SELECTED = "IS_LANGUAGE_SELECTED"
 
         fun get(context: Context) = PrefManager(context)

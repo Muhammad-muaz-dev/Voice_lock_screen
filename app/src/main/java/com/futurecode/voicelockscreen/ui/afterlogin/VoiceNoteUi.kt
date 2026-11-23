@@ -2,6 +2,7 @@ package com.futurecode.voicelockscreen.ui.afterlogin
 
 import android.app.Dialog
 import android.content.Context
+import android.text.format.DateFormat
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,7 @@ import com.futurecode.voicelockscreen.utils.NoteTranslateLanguages
 import com.futurecode.voicelockscreen.utils.VoiceLanguagePicker
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.text.Collator
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -76,8 +78,12 @@ object VoiceNoteUi {
             .setPopExitAnim(R.anim.vn_exit_to_right)
             .build()
 
-    fun formatDate(time: Long): String =
-        SimpleDateFormat("EEEE, d MMMM yyyy, h:mma", Locale.ENGLISH).format(Date(time))
+    fun formatDate(context: Context, time: Long): String {
+        val locale = context.resources.configuration.locales[0]
+        val skeleton = if (DateFormat.is24HourFormat(context)) "yMMMMdEEEEHm" else "yMMMMdEEEEhm"
+        val pattern = DateFormat.getBestDateTimePattern(locale, skeleton)
+        return SimpleDateFormat(pattern, locale).format(Date(time))
+    }
 
     fun wordCount(text: String): Int =
         text.trim().split(Regex("\\s+")).count { it.isNotBlank() }
@@ -226,14 +232,11 @@ object VoiceNoteUi {
             ?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    fun languageLabel(tag: String): String =
-        Locale.forLanguageTag(tag).getDisplayName(Locale.ENGLISH).ifBlank { tag }
-
     /** Full-screen "Choose Your Language" sheet (translate target) with search and Apply. */
     fun showTranslateLanguages(context: Context, selectedTag: String, onApply: (String) -> Unit) {
         val binding = VnSheetTranslateLanguageBinding.inflate(LayoutInflater.from(context))
         val dialog = transparentSheet(context, binding.root, fullScreen = true)
-        val all = NoteTranslateLanguages.options()
+        val all = NoteTranslateLanguages.options(context.resources.configuration.locales[0])
         var selected = selectedTag
         val adapter = LanguageAdapter(LanguageAdapter.Style.TRANSLATE) { tag -> selected = tag }
         adapter.submit(all, selected)
@@ -261,7 +264,7 @@ object VoiceNoteUi {
     fun showSpeechLanguages(context: Context, onSelected: () -> Unit) {
         val binding = VnSheetSpeechLanguageBinding.inflate(LayoutInflater.from(context))
         val dialog = transparentSheet(context, binding.root, fullScreen = true)
-        val all = speechLanguages()
+        val all = speechLanguages(context.resources.configuration.locales[0])
         val current = VoiceLanguagePicker.selected(context)
         val selected = all.firstOrNull { it.first.equals(current, true) }?.first
             ?: all.firstOrNull { Locale.forLanguageTag(it.first).language == Locale.forLanguageTag(current).language }?.first
@@ -284,14 +287,15 @@ object VoiceNoteUi {
         com.futurecode.voicelockscreen.utils.SystemBars.hide(dialog)
     }
 
-    private fun speechLanguages(): List<Pair<String, String>> {
+    private fun speechLanguages(displayLocale: Locale): List<Pair<String, String>> {
+        val collator = Collator.getInstance(displayLocale)
         val locales = Locale.getAvailableLocales()
             .filter { it.language.isNotBlank() && it.variant.isBlank() && it.script.isBlank() }
-            .map { it.toLanguageTag() to it.getDisplayName(Locale.ENGLISH) }
+            .map { it.toLanguageTag() to it.getDisplayName(displayLocale) }
             .filter { it.second.isNotBlank() }
             .distinctBy { it.second }
-            .sortedBy { it.second }
-        val english = locales.firstOrNull { it.first == "en-US" } ?: ("en-US" to Locale.US.getDisplayName(Locale.ENGLISH))
+            .sortedWith { first, second -> collator.compare(first.second, second.second) }
+        val english = locales.firstOrNull { it.first == "en-US" } ?: ("en-US" to Locale.US.getDisplayName(displayLocale))
         return listOf(english) + locales.filter { it.first != english.first }
     }
 

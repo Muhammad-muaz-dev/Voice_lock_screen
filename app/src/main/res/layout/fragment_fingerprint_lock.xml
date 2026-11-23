@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface"
+    android:background="@color/bg"
     android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -26,6 +26,7 @@
         android:layout_marginEnd="@dimen/spacing_lg"
         android:text="@string/fingerprint_lock"
         android:textColor="@color/textPrimary"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/ivBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivBack"
@@ -44,71 +45,88 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:paddingHorizontal="@dimen/spacing_xl"
             android:paddingVertical="@dimen/spacing_xxl">
 
-            <ImageView
-                android:id="@+id/ivFingerprint"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:background="@drawable/bg_credential_info"
-                android:importantForAccessibility="no"
-                android:padding="@dimen/spacing_xl"
-                android:src="@drawable/ic_fingerprint_simple"
-                app:layout_constraintBottom_toTopOf="@id/tvEnableDesc"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fingerprintSetupCard"
+                style="@style/Widget.VoiceLock.Card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="@dimen/radius_md"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:tint="@color/primary" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvEnableDesc"
-                style="@style/Text.VoiceLock.bodyM"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_lg">
+
+                    <TextView
+                        android:id="@+id/tvEnableFingerprint"
+                        style="@style/Text.VoiceLock.titleS"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_sm"
+                        android:gravity="center_vertical"
+                        android:importantForAccessibility="no"
+                        android:minHeight="@dimen/spacing_max"
+                        android:text="@string/enable_fingerprint"
+                        app:layout_constraintEnd_toStartOf="@id/switchFingerprint"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchFingerprint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/spacing_max"
+                        android:contentDescription="@string/enable_fingerprint"
+                        android:minWidth="@dimen/spacing_max"
+                        android:saveEnabled="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:thumbTint="@drawable/selector_permission_thumb"
+                        app:trackDecorationTint="@android:color/transparent"
+                        app:trackTint="@drawable/selector_permission_track" />
+
+                    <TextView
+                        android:id="@+id/tvEnableDesc"
+                        style="@style/Text.VoiceLock.bodyM"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/use_fingerprint_desc"
+                        android:textColor="@color/textSecondary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvEnableFingerprint" />
+
+                    <TextView
+                        android:id="@+id/tvFingerprintStatus"
+                        style="@style/Text.VoiceLock.bodyS"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:accessibilityLiveRegion="polite"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvEnableDesc" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <FrameLayout
+                android:id="@+id/fingerprintNativeAdContainer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_lg"
-                android:gravity="center"
-                android:text="@string/use_fingerprint_desc"
-                android:textColor="@color/textSecondary"
-                app:layout_constraintBottom_toTopOf="@id/tvFingerprintStatus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivFingerprint" />
-
-            <TextView
-                android:id="@+id/tvFingerprintStatus"
-                style="@style/Text.VoiceLock.bodyS"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:accessibilityLiveRegion="polite"
-                android:gravity="center"
-                android:textColor="@color/primary"
                 android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@id/btnEnable"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvEnableDesc" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnEnable"
-                style="@style/Text.VoiceLock.buttonL"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xl"
-                android:background="@drawable/bg_primary_pill_button"
-                android:gravity="center"
-                android:minHeight="@dimen/spacing_max"
-                android:paddingHorizontal="@dimen/spacing_lg"
-                android:paddingVertical="@dimen/spacing_md"
-                android:text="@string/enable_fingerprint"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvFingerprintStatus" />
+                app:layout_constraintTop_toBottomOf="@id/fingerprintSetupCard" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

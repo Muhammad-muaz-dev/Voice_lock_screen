@@ -2,7 +2,9 @@ package com.futurecode.voicelockscreen.adapter
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -17,8 +19,15 @@ import com.futurecode.voicelockscreen.api.wallpaper.Wallpaper
 import com.futurecode.voicelockscreen.databinding.ItemHomeWallpaperBinding
 
 class HomeWallpaperAdapter(
-    private val onWallpaperClick: (Wallpaper) -> Unit
-) : ListAdapter<Wallpaper?, HomeWallpaperAdapter.WallpaperHolder>(WallpaperDiff) {
+    private val onWallpaperClick: (Wallpaper) -> Unit,
+    private val onRetryThemes: () -> Unit
+) : ListAdapter<HomeWallpaperAdapter.Tile, HomeWallpaperAdapter.WallpaperHolder>(TileDiff) {
+
+    sealed interface Tile {
+        data object Loading : Tile
+        data object Retry : Tile
+        data class Preview(val wallpaper: Wallpaper) : Tile
+    }
 
     class WallpaperHolder(val binding: ItemHomeWallpaperBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -29,28 +38,31 @@ class HomeWallpaperAdapter(
         )
 
     override fun onBindViewHolder(holder: WallpaperHolder, position: Int) {
-        val wallpaper = getItem(position)
         val binding = holder.binding
-        val image = binding.ivWallpaper
-        val requests = Glide.with(image)
-        requests.clear(image)
-        image.setImageDrawable(null)
-        binding.wallpaperShimmer.isVisible = true
-        binding.root.isFocusable = wallpaper != null
-        binding.root.contentDescription = null
-        binding.root.setOnClickListener(null)
-        binding.root.isClickable = wallpaper != null
-        if (wallpaper == null) return
+        Glide.with(binding.ivWallpaper).clear(binding.ivWallpaper)
+        when (val tile = getItem(position)) {
+            Tile.Loading -> showLoading(binding)
+            Tile.Retry -> showRetry(binding, onRetryThemes)
+            is Tile.Preview -> loadPreview(binding, tile.wallpaper)
+        }
+    }
 
-        requests.load(wallpaper.fileUrl)
-            .error(R.color.surface)
+    override fun onViewRecycled(holder: WallpaperHolder) {
+        Glide.with(holder.binding.ivWallpaper).clear(holder.binding.ivWallpaper)
+        super.onViewRecycled(holder)
+    }
+
+    private fun loadPreview(binding: ItemHomeWallpaperBinding, wallpaper: Wallpaper) {
+        showLoading(binding)
+        Glide.with(binding.ivWallpaper)
+            .load(wallpaper.fileUrl)
             .centerCrop()
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?, model: Any?, target: Target<Drawable>,
                     isFirstResource: Boolean
                 ): Boolean {
-                    binding.wallpaperShimmer.isVisible = false
+                    showRetry(binding) { loadPreview(binding, wallpaper) }
                     return false
                 }
 
@@ -59,20 +71,50 @@ class HomeWallpaperAdapter(
                     dataSource: DataSource, isFirstResource: Boolean
                 ): Boolean {
                     binding.wallpaperShimmer.isVisible = false
+                    val label = wallpaper.title?.takeIf { it.isNotBlank() }
+                        ?: binding.root.context.getString(R.string.preview)
+                    bindAction(binding, label) { onWallpaperClick(wallpaper) }
                     return false
                 }
             })
-            .into(image)
-
-        binding.root.contentDescription = wallpaper.title?.takeIf { it.isNotBlank() }
-            ?: image.context.getString(R.string.preview)
-        binding.root.setOnClickListener { onWallpaperClick(wallpaper) }
+            .into(binding.ivWallpaper)
     }
-    private object WallpaperDiff : DiffUtil.ItemCallback<Wallpaper>() {
-        override fun areItemsTheSame(oldItem: Wallpaper, newItem: Wallpaper) =
-            oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Wallpaper, newItem: Wallpaper) =
-            oldItem == newItem
+    private fun showLoading(binding: ItemHomeWallpaperBinding) {
+        binding.ivWallpaper.isVisible = true
+        binding.wallpaperShimmer.isVisible = true
+        binding.ivWallpaperRetry.isVisible = false
+        binding.root.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.surface))
+        bindAction(binding)
+    }
+
+    private fun showRetry(binding: ItemHomeWallpaperBinding, onRetry: () -> Unit) {
+        binding.ivWallpaper.isVisible = false
+        binding.wallpaperShimmer.isVisible = false
+        binding.ivWallpaperRetry.isVisible = true
+        binding.root.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.surfaceSunken))
+        bindAction(binding, binding.root.context.getString(R.string.themes_retry), onRetry)
+    }
+
+    private fun bindAction(
+        binding: ItemHomeWallpaperBinding,
+        label: String? = null,
+        action: (() -> Unit)? = null
+    ) {
+        binding.root.contentDescription = label
+        binding.root.setOnClickListener(action?.let { click -> View.OnClickListener { click() } })
+        binding.root.isClickable = action != null
+        binding.root.isFocusable = action != null
+    }
+
+    private object TileDiff : DiffUtil.ItemCallback<Tile>() {
+        override fun areItemsTheSame(oldItem: Tile, newItem: Tile): Boolean =
+            if (oldItem is Tile.Preview && newItem is Tile.Preview) {
+                oldItem.wallpaper.id == newItem.wallpaper.id
+            } else {
+                oldItem == newItem
+            }
+
+        override fun areContentsTheSame(oldItem: Tile, newItem: Tile) = oldItem == newItem
     }
 }

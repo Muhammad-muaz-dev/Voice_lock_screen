@@ -16,15 +16,16 @@ import com.futurecode.voicelockscreen.model.LanguageOption
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
     private lateinit var languageAdapter: LanguageAdapter
-    private var selectedLanguageCode = "en"
+    private var selectedLanguageCode = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val languages = languageOptions()
         val stored = savedInstanceState?.getString(STATE_SELECTION)
-            ?: MyApplication.app.prefManager.selectedLanguage.ifBlank { "en" }
+            ?: MyApplication.app.prefManager.selectedLanguage
         val supportedCodes = languages.map { it.code }.toSet()
-        selectedLanguageCode = stored.substringBefore('-').takeIf { it in supportedCodes } ?: "en"
+        selectedLanguageCode = stored.substringBefore('-').let { if (it == "in") "id" else it }
+            .takeIf { it in supportedCodes }.orEmpty()
 
         languageAdapter = LanguageAdapter(languages, selectedLanguageCode) { language ->
             selectedLanguageCode = language.code
@@ -78,23 +79,21 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         fun option(code: String, label: String, country: String) =
             LanguageOption(code, label, label, country)
 
-        // Reference order first, then the remaining supported languages.
         return listOf(
+            option("", getString(R.string.language_system_default), ""),
+            option("hi", "हिन्दी", "IN"),
             option("en", "English", "GB"),
-            option("es", "Spanish", "ES"),
-            option("pt", "Portuguese", "PT"),
-            option("fr", "French", "FR"),
-            option("de", "German", "DE"),
-            option("it", "Italian", "IT"),
-            option("ru", "Russian", "RU"),
-            option("ar", "Arabic", "SA"),
-            option("tr", "Turkish", "TR"),
-            option("id", "Indonesian", "ID"),
-            option("nl", "Dutch", "NL"),
-            option("vi", "Vietnamese", "VN"),
-            option("ja", "Japanese", "JP"),
-            option("hi", "Hindi", "IN"),
-            option("zh", "Chinese", "CN")
+            option("de", "Deutsch", "DE"),
+            option("it", "Italiano", "IT"),
+            option("ar", "العربية", "SA"),
+            option("ja", "日本語", "JP"),
+            option("ko", "한국어", "KR"),
+            option("es", "Español", "ES"),
+            option("id", "Bahasa Indonesia", "ID"),
+            option("pt", "Português", "PT"),
+            option("fr", "Français", "FR"),
+            option("tr", "Türkçe", "TR"),
+            option("ms", "Bahasa Melayu", "MY")
         )
     }
 

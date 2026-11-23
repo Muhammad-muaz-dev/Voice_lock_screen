@@ -95,7 +95,7 @@ class LockScreenActivity : BaseActivity() {
                     fallbackOverlay?.findViewById<TextView>(R.id.tvPatternStatus)
                         ?.setText(R.string.lockout_active)
                     fallbackOverlay?.findViewById<PatternLockView>(R.id.patternView)?.clearPattern()
-                    Toast.makeText(this, "Too many attempts. Locked out.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.lockout_too_many_attempts, Toast.LENGTH_SHORT).show()
                 }
             }
         }

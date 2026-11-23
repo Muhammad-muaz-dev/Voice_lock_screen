@@ -145,7 +145,7 @@ class LockService : Service() {
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(getString(R.string.app_name))
+            .setContentTitle(ContextCompat.getString(this, R.string.app_name))
             .setContentIntent(pendingIntent)
             .setOngoing(true)
             .setSilent(true)
@@ -168,7 +168,7 @@ class LockService : Service() {
 
         val notification = NotificationCompat.Builder(this, LOCK_ALERT_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(getString(R.string.app_name))
+            .setContentTitle(ContextCompat.getString(this, R.string.app_name))
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -217,7 +217,7 @@ class LockService : Service() {
 
         val monitorChannel = NotificationChannel(
             CHANNEL_ID,
-            getString(R.string.app_name),
+            ContextCompat.getString(this, R.string.app_name),
             NotificationManager.IMPORTANCE_MIN
         ).apply {
             lockscreenVisibility = Notification.VISIBILITY_SECRET
@@ -225,7 +225,7 @@ class LockService : Service() {
         }
         val alertChannel = NotificationChannel(
             LOCK_ALERT_CHANNEL_ID,
-            getString(R.string.app_name),
+            ContextCompat.getString(this, R.string.app_name),
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
             lockscreenVisibility = Notification.VISIBILITY_PUBLIC

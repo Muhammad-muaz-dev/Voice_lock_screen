@@ -61,7 +61,7 @@ class AiQuoteFragment : BaseFragment<FragmentAiQuoteBinding>(FragmentAiQuoteBind
             }
         })
         binding.btnViewQuote.setOnClickListener {
-            val quote = input.trim().ifBlank { if (topic.isNotBlank()) VoiceLockFeatureStore.quoteForTopic(topic) else "" }
+            val quote = input.trim().ifBlank { if (topic.isNotBlank()) VoiceLockFeatureStore.quoteForTopic(requireContext(), topic) else "" }
             if (quote.isBlank()) return@setOnClickListener
             VoiceLockFeatureStore.saveLockQuote(requireContext(), quote)
             findNavController().navigate(R.id.themePreviewFragment, ThemePreviewFragment.quoteArgs(quote), VoiceNoteUi.slideNavOptions)

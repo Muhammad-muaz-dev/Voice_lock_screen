@@ -389,6 +389,16 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <FrameLayout
+                android:id="@+id/homeNativeAdContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/patternLock" />
+
             <!-- 3. Lock Screen Themes Section -->
             <TextView
                 android:id="@+id/tvThemesHeader"
@@ -400,7 +410,7 @@
                 android:text="@string/lock_screen_themes"
                 android:textColor="@color/primary_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/patternLock" />
+                app:layout_constraintTop_toBottomOf="@id/homeNativeAdContainer" />
 
             <TextView
                 android:id="@+id/btnSeeAllThemes"
@@ -438,6 +448,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_sm"
+                android:text="@string/themes_empty"
                 android:textColor="@color/textSecondary"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/rvHomeThemes"

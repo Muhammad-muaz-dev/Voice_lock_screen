@@ -32,8 +32,8 @@ import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import com.futurecode.voicelockscreen.utils.CredentialUnlockUi
 
 class LockOverlayWindow(private val context: Context) {
-    private val themedContext = ContextThemeWrapper(context, R.style.Theme_VoiceLockScreen)
-    private val inflater = LayoutInflater.from(themedContext)
+    private lateinit var themedContext: ContextThemeWrapper
+    private lateinit var inflater: LayoutInflater
     private val windowManager = context.getSystemService(WindowManager::class.java)
     private var root: FrameLayout? = null
     private var binding: ViewLockScreenBinding? = null
@@ -47,6 +47,11 @@ class LockOverlayWindow(private val context: Context) {
     fun show() {
         if (!canDrawOverlays() || root != null) return
 
+        themedContext = ContextThemeWrapper(
+            ContextCompat.getContextForLanguage(context),
+            R.style.Theme_VoiceLockScreen
+        )
+        inflater = LayoutInflater.from(themedContext)
         val overlayRoot = FrameLayout(themedContext).apply {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
                 systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
@@ -65,7 +70,7 @@ class LockOverlayWindow(private val context: Context) {
         binding = overlayBinding
         ThemeWallpaperStore.applyTo(overlayBinding.imgWallpaper, context)
         LockScreenUi.bind(overlayBinding, onHelp = {
-            CredentialUnlockUi.showRecovery(context, ::addFallbackView) {
+            CredentialUnlockUi.showRecovery(themedContext, ::addFallbackView) {
                 dismiss(unlocked = true)
             }
         }) { method ->
@@ -97,7 +102,7 @@ class LockOverlayWindow(private val context: Context) {
 
     private fun showPinFallback() {
         if (!SecurePinStore.hasPin(context)) {
-            Toast.makeText(context, R.string.pin_setup_required, Toast.LENGTH_SHORT).show()
+            Toast.makeText(themedContext, R.string.pin_setup_required, Toast.LENGTH_SHORT).show()
             return
         }
         CredentialUnlockUi.bindPin(addFallbackView(R.layout.dialog_pin_unlock), SecurePinStore.getPinLength(context)) { pin ->
@@ -106,14 +111,14 @@ class LockOverlayWindow(private val context: Context) {
                 isUnlocking = true
                 dismiss(unlocked = true)
             } else {
-                Toast.makeText(context, R.string.pin_wrong, Toast.LENGTH_SHORT).show()
+                Toast.makeText(themedContext, R.string.pin_wrong, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun showPatternFallback() {
         if (!SecurePatternStore.hasPattern(context)) {
-            Toast.makeText(context, R.string.pattern_setup_required, Toast.LENGTH_SHORT).show()
+            Toast.makeText(themedContext, R.string.pattern_setup_required, Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -127,9 +132,9 @@ class LockOverlayWindow(private val context: Context) {
                 patternView.onPatternComplete = null
                 dismiss(unlocked = true)
             } else {
-                status.text = context.getString(R.string.pattern_wrong)
-                binding?.tvSpeakHint?.text = context.getString(R.string.pattern_wrong)
-                Toast.makeText(context, R.string.pattern_wrong, Toast.LENGTH_SHORT).show()
+                status.text = themedContext.getString(R.string.pattern_wrong)
+                binding?.tvSpeakHint?.text = themedContext.getString(R.string.pattern_wrong)
+                Toast.makeText(themedContext, R.string.pattern_wrong, Toast.LENGTH_SHORT).show()
                 patternView.clearPattern()
             }
         }
@@ -168,7 +173,7 @@ class LockOverlayWindow(private val context: Context) {
         return ImageView(themedContext).apply {
             setBackgroundResource(R.drawable.bg_circle_white)
             setImageResource(R.drawable.ic_back_blue)
-            contentDescription = context.getString(R.string.back)
+            contentDescription = themedContext.getString(R.string.back)
             setPadding(11.dp, 11.dp, 11.dp, 11.dp)
             elevation = 8.dp.toFloat()
             setOnClickListener { removeFallbackView() }

@@ -9,8 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.ads.AdPlacement
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentFingerprintLockBinding
+import com.futurecode.voicelockscreen.security.AppLockState
 import com.futurecode.voicelockscreen.service.LockService
 
 class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(FragmentFingerprintLockBinding::inflate) {
@@ -22,12 +24,29 @@ class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(Fra
             findNavController().popBackStack()
         }
 
-        binding.btnEnable.setOnClickListener {
-            checkSupportAndAuthenticate()
-        }
+        renderFingerprintEnabled()
+        AdPlacement.loadAndShowNative(viewLifecycleOwner, binding.fingerprintNativeAdContainer)
+    }
 
-        if (isFingerprintEnabled()) {
-            showStatus(R.string.fingerprint_enabled)
+    private fun renderFingerprintEnabled() {
+        val enabled = isFingerprintEnabled()
+        binding.switchFingerprint.apply {
+            setOnCheckedChangeListener(null)
+            isChecked = enabled
+            setOnCheckedChangeListener { _, checked -> onFingerprintToggled(checked) }
+        }
+        binding.tvFingerprintStatus.isVisible = false
+    }
+
+    private fun onFingerprintToggled(checked: Boolean) {
+        if (checked) {
+            renderFingerprintEnabled()
+            checkSupportAndAuthenticate()
+        } else {
+            val context = requireContext()
+            saveFingerprintEnabled(false)
+            renderFingerprintEnabled()
+            if (!AppLockState.hasAnyLockEnabled(context)) LockService.stop(context)
         }
     }
 
@@ -47,7 +66,8 @@ class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(Fra
             ContextCompat.getMainExecutor(requireContext()),
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    saveFingerprintEnabled()
+                    saveFingerprintEnabled(true)
+                    renderFingerprintEnabled()
                     LockService.enableAndStart(requireContext())
                     showSetupSuccess(R.string.fingerprint_enabled) { findNavController().popBackStack() }
                 }
@@ -83,11 +103,11 @@ class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(Fra
         status.isVisible = true
     }
 
-    private fun saveFingerprintEnabled() {
+    private fun saveFingerprintEnabled(enabled: Boolean) {
         requireContext()
             .getSharedPreferences(FINGERPRINT_PREFS, Context.MODE_PRIVATE)
             .edit()
-            .putBoolean(KEY_FINGERPRINT_ENABLED, true)
+            .putBoolean(KEY_FINGERPRINT_ENABLED, enabled)
             .apply()
     }
 

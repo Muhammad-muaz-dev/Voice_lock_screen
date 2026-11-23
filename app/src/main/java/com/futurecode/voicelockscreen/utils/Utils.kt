@@ -137,6 +137,7 @@ object Utils {
     fun updateBaseContextLocale(context: Context): Context {
         val pref = PrefManager.get(context)
         val languageCode = pref.selectedLanguage
+        if (languageCode.isBlank()) return context
         val locale = Locale.forLanguageTag(languageCode)
         Locale.setDefault(locale)
 

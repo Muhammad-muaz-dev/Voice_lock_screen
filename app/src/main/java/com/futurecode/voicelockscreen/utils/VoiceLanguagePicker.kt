@@ -12,7 +12,8 @@ object VoiceLanguagePicker {
     fun selected(context: Context): String = context.getSharedPreferences(PREFS, 0)
         .getString(KEY, Locale.getDefault().toLanguageTag()).orEmpty()
 
-    fun label(context: Context): String = Locale.forLanguageTag(selected(context)).getDisplayName(Locale.ENGLISH)
+    fun label(context: Context): String =
+        Locale.forLanguageTag(selected(context)).getDisplayName(context.resources.configuration.locales[0])
 
     fun save(context: Context, tag: String) {
         context.getSharedPreferences(PREFS, 0).edit().putString(KEY, tag).apply()

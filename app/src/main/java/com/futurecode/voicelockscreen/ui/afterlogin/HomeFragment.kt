@@ -20,11 +20,13 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.futurecode.voicelockscreen.adapter.HomeWallpaperAdapter
 import com.futurecode.voicelockscreen.api.wallpaper.WallpaperRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.ads.AdPlacement
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentHomeBinding
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
@@ -37,6 +39,7 @@ import com.futurecode.voicelockscreen.utils.bindBottomTabs
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private var voicePulse: AnimatorSet? = null
+    private var homeThemesJob: Job? = null
 
     private val notificationPermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -53,6 +56,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupVoiceCardActions()
         setupFeatureActions()
         setupHomeThemes()
+        AdPlacement.loadAndShowNative(viewLifecycleOwner, binding.homeNativeAdContainer)
         bindBottomTabs(binding.bottomNav, 0)
         setupSwitchActions()
     }
@@ -140,37 +144,48 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setupHomeThemes() {
-        val adapter = HomeWallpaperAdapter { wallpaper ->
-            findNavController().navigate(
-                R.id.themePreviewFragment,
-                ThemePreviewFragment.wallpaperArgs(wallpaper)
-            )
-        }.apply {
+        val adapter = HomeWallpaperAdapter(
+            onWallpaperClick = { wallpaper ->
+                findNavController().navigate(
+                    R.id.themePreviewFragment,
+                    ThemePreviewFragment.wallpaperArgs(wallpaper)
+                )
+            },
+            onRetryThemes = { loadHomeThemes(forceRefresh = true) }
+        ).apply {
             stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT
         }
         binding.rvHomeThemes.adapter = adapter
-        adapter.submitList(List(HOME_THEME_PLACEHOLDERS) { null })
+        loadHomeThemes()
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
+    private fun loadHomeThemes(forceRefresh: Boolean = false) {
+        if (homeThemesJob?.isActive == true) return
+        val adapter = binding.rvHomeThemes.adapter as HomeWallpaperAdapter
+        adapter.submitList(List(HOME_THEME_PLACEHOLDERS) { HomeWallpaperAdapter.Tile.Loading })
+        binding.tvHomeThemesMessage.isVisible = false
+
+        homeThemesJob = viewLifecycleOwner.lifecycleScope.launch {
             val result = runCatching {
-                val category = WallpaperRepository.categories().firstOrNull()
+                val category = WallpaperRepository.categories(forceRefresh).firstOrNull()
                     ?: return@runCatching emptyList()
-                WallpaperRepository.wallpapers(category.id).items
+                WallpaperRepository.wallpapers(category.id, forceRefresh).items
             }
             currentCoroutineContext().ensureActive()
 
-            val wallpapers = result.getOrDefault(emptyList())
-            adapter.submitList(wallpapers) {
+            val tiles = result.fold(
+                onSuccess = { wallpapers -> wallpapers.map { HomeWallpaperAdapter.Tile.Preview(it) } },
+                onFailure = { List(HOME_THEME_PLACEHOLDERS) { HomeWallpaperAdapter.Tile.Retry } }
+            )
+            adapter.submitList(tiles) {
                 adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
             }
-            binding.tvHomeThemesMessage.isVisible = wallpapers.isEmpty()
-            binding.tvHomeThemesMessage.setText(
-                if (result.isFailure) R.string.themes_load_error else R.string.themes_empty
-            )
+            binding.tvHomeThemesMessage.isVisible = result.isSuccess && tiles.isEmpty()
         }
     }
 
     override fun onDestroyView() {
+        homeThemesJob?.cancel()
         binding.rvHomeThemes.adapter = null
         super.onDestroyView()
     }
@@ -225,7 +240,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.voiceSection.switchVoice.isChecked = active
         binding.voiceSection.tvVoiceSubtitle.setText(status)
         binding.voiceSection.voiceMic.alpha = if (active) 1f else INACTIVE_MIC_ALPHA
-        binding.voiceSection.voiceMic.contentDescription = "${getString(R.string.home_voice_title)}. ${getString(status)}"
+        binding.voiceSection.voiceMic.contentDescription = getString(R.string.home_voice_accessibility_status, getString(R.string.home_voice_title), getString(status))
         startVoiceWaves()
     }
 

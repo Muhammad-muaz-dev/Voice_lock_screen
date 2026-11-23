@@ -23,4 +23,15 @@
         android:layout_height="match_parent"
         android:importantForAccessibility="no"
         android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivWallpaperRetry"
+        android:layout_width="@dimen/spacing_xl"
+        android:layout_height="@dimen/spacing_xl"
+        android:layout_gravity="center"
+        android:importantForAccessibility="no"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_retry"
+        app:tint="@color/textSecondary" />
+
 </com.google.android.material.card.MaterialCardView>

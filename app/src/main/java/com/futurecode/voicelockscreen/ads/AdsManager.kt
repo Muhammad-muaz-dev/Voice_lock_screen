@@ -210,9 +210,9 @@ object AdsManager {
     // region Native
 
     /** Loads one native ad; [onResult] gets null on failure. Always delivered on main. */
-    fun loadNative(onResult: (NativeAd?) -> Unit) {
+    fun loadNative(adUnitId: String = AdIds.NATIVE, onResult: (NativeAd?) -> Unit) {
         if (!AdsConfig.adsAllowed) return onResult(null)
-        val request = NativeAdRequest.Builder(AdIds.NATIVE, listOf(NativeAd.NativeAdType.NATIVE)).build()
+        val request = NativeAdRequest.Builder(adUnitId, listOf(NativeAd.NativeAdType.NATIVE)).build()
         NativeAdLoader.load(request, object : NativeAdLoaderCallback {
             override fun onNativeAdLoaded(nativeAd: NativeAd) {
                 main.post { onResult(nativeAd) }

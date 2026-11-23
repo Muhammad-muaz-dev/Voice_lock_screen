@@ -71,7 +71,7 @@ class CameraVoiceService : Service(), DefaultLifecycleObserver {
         super<Service>.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notifications.createNotificationChannel(
-                NotificationChannel(CHANNEL, getString(R.string.camera_voice_channel), NotificationManager.IMPORTANCE_LOW)
+                NotificationChannel(CHANNEL, ContextCompat.getString(this, R.string.camera_voice_channel), NotificationManager.IMPORTANCE_LOW)
             )
         }
         ContextCompat.registerReceiver(this, screen, IntentFilter().apply {
@@ -97,7 +97,7 @@ class CameraVoiceService : Service(), DefaultLifecycleObserver {
             return START_NOT_STICKY
         }
         val notification = notification(R.string.camera_voice_enabled, CameraCommand.OPEN)
-            .addAction(0, getString(R.string.camera_voice_stop), stopAction())
+            .addAction(0, ContextCompat.getString(this, R.string.camera_voice_stop), stopAction())
             .setOngoing(true)
             .build()
         val type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -192,7 +192,7 @@ class CameraVoiceService : Service(), DefaultLifecycleObserver {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         return NotificationCompat.Builder(this, CHANNEL)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(getString(title))
+            .setContentTitle(ContextCompat.getString(this, title))
             .setContentIntent(open)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setOnlyAlertOnce(true)

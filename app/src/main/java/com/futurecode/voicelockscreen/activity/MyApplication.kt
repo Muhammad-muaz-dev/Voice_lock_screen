@@ -2,6 +2,7 @@ package com.futurecode.voicelockscreen.activity
 
 import android.app.Activity
 import android.app.Application
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
@@ -79,20 +80,17 @@ class MyApplication : Application() {
     }
 
     companion object {
-        private const val DEFAULT_LANGUAGE = "en"
         lateinit var app: MyApplication
 
         fun applyLanguage(languageCode: String, persistSelection: Boolean = true) {
-            val normalizedLanguageCode = languageCode.ifBlank { DEFAULT_LANGUAGE }
+            val appLocales = LocaleListCompat.forLanguageTags(languageCode)
 
             if (persistSelection) {
-                app.prefManager.selectedLanguage = normalizedLanguageCode
+                app.prefManager.selectedLanguage = languageCode
                 app.prefManager.isLanguageSelectedFirstTime = true
             }
 
-            Locale.setDefault(Locale.forLanguageTag(normalizedLanguageCode))
-
-            val appLocales = LocaleListCompat.forLanguageTags(normalizedLanguageCode)
+            Locale.setDefault(appLocales[0] ?: Resources.getSystem().configuration.locales[0])
             if (AppCompatDelegate.getApplicationLocales().toLanguageTags() != appLocales.toLanguageTags()) {
                 AppCompatDelegate.setApplicationLocales(appLocales)
             }

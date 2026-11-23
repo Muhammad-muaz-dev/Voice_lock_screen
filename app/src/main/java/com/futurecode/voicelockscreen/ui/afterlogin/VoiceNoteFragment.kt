@@ -160,7 +160,7 @@ class VoiceNoteFragment : BaseFragment<FragmentVoiceNoteBinding>(FragmentVoiceNo
         override fun onBindViewHolder(holder: Holder, position: Int) {
             val note = items[position]
             holder.row.tvName.text = note.title
-            holder.row.tvDate.text = VoiceNoteUi.formatDate(note.createdAt)
+            holder.row.tvDate.text = VoiceNoteUi.formatDate(holder.itemView.context, note.createdAt)
             holder.row.root.setOnClickListener { open(note) }
             holder.row.ivSummary.setOnClickListener { summary(note) }
             holder.row.ivSetting.setOnClickListener { more(note, it) }

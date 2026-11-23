@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.ads.AdPlacement
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPinLockBinding
 import com.futurecode.voicelockscreen.databinding.ItemPinOptionCardBinding
@@ -45,6 +46,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AdPlacement.loadAndShowNative(viewLifecycleOwner, binding.pinNativeAdContainer)
         if (savedInstanceState != null) restoreState(savedInstanceState)
         applySystemInsets()
         setupHeader()
@@ -271,11 +273,9 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
 
         binding.cardPinSetup.root.isVisible = isMenu
         binding.cardRecovery.root.isVisible = isMenu
+        binding.pinMenuAdSlot.isVisible = isMenu
         binding.pinEntry.root.isVisible = isEntry
         binding.clTest.isVisible = step == Step.TEST
-        binding.pinRoot.setBackgroundColor(
-            ContextCompat.getColor(requireContext(), if (isEntry) R.color.surface else R.color.bg)
-        )
         binding.tvToolbarTitle.setText(if (isEntry) R.string.pin_setup_screen_title else R.string.pin_setup_title)
 
         when (step) {

@@ -134,7 +134,7 @@ for status, or claim contrast compliance without checking the actual pairing.
 
 ### Credential setup
 
-PIN and pattern enrollment use a surface background, a start-aligned title and
+PIN and pattern enrollment use the shared screen background, a start-aligned title and
 back action, and a primary_light instruction panel. Center the entry or
 confirmation prompt below the panel. PIN entry uses a 4/6-digit segmented
 selector, 14 dp masked progress dots, 72 dp circular keypad targets, Delete,

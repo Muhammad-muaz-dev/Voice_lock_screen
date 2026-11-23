@@ -14,11 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.ads.AdPlacement
+import com.futurecode.voicelockscreen.ads.AdsConfig
 import com.futurecode.voicelockscreen.api.wallpaper.Wallpaper
 import com.futurecode.voicelockscreen.api.wallpaper.WallpaperCategory
 import com.futurecode.voicelockscreen.api.wallpaper.WallpaperRepository
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentSeeAllthemesBinding
+import com.futurecode.voicelockscreen.databinding.ItemThemeNativeAdBinding
 import com.futurecode.voicelockscreen.databinding.ItemWallpaperCategoryBinding
 import com.futurecode.voicelockscreen.databinding.VnItemThemeVerticalBinding
 import com.futurecode.voicelockscreen.databinding.VnItemUploadImageBinding
@@ -61,7 +64,8 @@ class SeeAllthemesFragment : BaseFragment<FragmentSeeAllthemesBinding>(FragmentS
     private fun setupGrid() {
         val grid = GridLayoutManager(requireContext(), GRID_COLUMNS)
         grid.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int) = if (position == 0) GRID_COLUMNS else 1
+            override fun getSpanSize(position: Int) =
+                if (wallpaperAdapter.getItemViewType(position) == TYPE_THEME) 1 else GRID_COLUMNS
         }
         binding.rvThemes.layoutManager = grid
         binding.rvThemes.adapter = wallpaperAdapter
@@ -70,9 +74,10 @@ class SeeAllthemesFragment : BaseFragment<FragmentSeeAllthemesBinding>(FragmentS
             override fun getItemOffsets(out: Rect, v: View, parent: RecyclerView, state: RecyclerView.State) {
                 val pos = parent.getChildAdapterPosition(v)
                 if (pos == RecyclerView.NO_POSITION) return
+                if (wallpaperAdapter.getItemViewType(pos) == TYPE_NATIVE_AD) return
                 out.bottom = gap
                 if (pos == 0) return
-                val column = (pos - 1) % GRID_COLUMNS
+                val column = wallpaperAdapter.themeIndex(pos) % GRID_COLUMNS
                 out.left = if (column == 0) 0 else gap / 2
                 out.right = if (column == 0) gap / 2 else 0
             }
@@ -131,7 +136,7 @@ class SeeAllthemesFragment : BaseFragment<FragmentSeeAllthemesBinding>(FragmentS
             runCatching { WallpaperRepository.loadNextPage(categoryId) }.onSuccess { page ->
                 if (selectedCategoryId == categoryId) {
                     hasNextPage = page.hasNext
-                    wallpaperAdapter.submit(page.items)
+                    wallpaperAdapter.submit(page.items, appendedPage = true)
                 }
             }
             pagingInFlight = false
@@ -186,22 +191,48 @@ class SeeAllthemesFragment : BaseFragment<FragmentSeeAllthemesBinding>(FragmentS
 
     private inner class WallpaperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private var items: List<Wallpaper> = emptyList()
+        private var showNativeAds = false
 
         inner class UploadHolder(val b: VnItemUploadImageBinding) : RecyclerView.ViewHolder(b.root)
         inner class ThemeHolder(val b: VnItemThemeVerticalBinding) : RecyclerView.ViewHolder(b.root)
-
-        fun submit(newItems: List<Wallpaper>) {
-            items = newItems
-            notifyDataSetChanged()
+        inner class NativeAdHolder(val b: ItemThemeNativeAdBinding) : RecyclerView.ViewHolder(b.root) {
+            var clearAd: (() -> Unit)? = null
         }
 
-        override fun getItemViewType(position: Int) = if (position == 0) TYPE_UPLOAD else TYPE_THEME
-        override fun getItemCount() = items.size + 1
+        fun submit(newItems: List<Wallpaper>, appendedPage: Boolean = false) {
+            val previousCount = itemCount
+            val adsAllowed = AdsConfig.adsAllowed
+            val canAppend = appendedPage && showNativeAds == adsAllowed &&
+                newItems.size >= items.size && newItems.subList(0, items.size) == items
+            items = newItems
+            showNativeAds = adsAllowed
+            if (canAppend) {
+                val addedCount = itemCount - previousCount
+                if (addedCount > 0) notifyItemRangeInserted(previousCount, addedCount)
+            } else {
+                notifyDataSetChanged()
+            }
+        }
+
+        fun themeIndex(position: Int): Int =
+            position - 1 - if (showNativeAds) position / (THEMES_PER_AD + 1) else 0
+
+        override fun getItemViewType(position: Int) = when {
+            position == 0 -> TYPE_UPLOAD
+            showNativeAds && position % (THEMES_PER_AD + 1) == 0 -> TYPE_NATIVE_AD
+            else -> TYPE_THEME
+        }
+
+        override fun getItemCount() =
+            items.size + 1 + if (showNativeAds) items.size / THEMES_PER_AD else 0
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val inflater = LayoutInflater.from(parent.context)
-            return if (viewType == TYPE_UPLOAD) UploadHolder(VnItemUploadImageBinding.inflate(inflater, parent, false))
-            else ThemeHolder(VnItemThemeVerticalBinding.inflate(inflater, parent, false))
+            return when (viewType) {
+                TYPE_UPLOAD -> UploadHolder(VnItemUploadImageBinding.inflate(inflater, parent, false))
+                TYPE_NATIVE_AD -> NativeAdHolder(ItemThemeNativeAdBinding.inflate(inflater, parent, false))
+                else -> ThemeHolder(VnItemThemeVerticalBinding.inflate(inflater, parent, false))
+            }
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -210,7 +241,7 @@ class SeeAllthemesFragment : BaseFragment<FragmentSeeAllthemesBinding>(FragmentS
                     findNavController().navigate(R.id.customThemeFragment, null, VoiceNoteUi.slideNavOptions)
                 }
                 is ThemeHolder -> {
-                    val wallpaper = items[position - 1]
+                    val wallpaper = items[themeIndex(position)]
                     Glide.with(holder.b.ivTheme)
                         .load(wallpaper.fileUrl)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -224,7 +255,19 @@ class SeeAllthemesFragment : BaseFragment<FragmentSeeAllthemesBinding>(FragmentS
                     holder.b.ivPremium.isVisible = wallpaper.isPremium && !prefManager.isPro
                     holder.b.root.setOnClickListener { openPreview(wallpaper) }
                 }
+                is NativeAdHolder -> {
+                    holder.clearAd?.invoke()
+                    holder.clearAd = AdPlacement.loadAndShowNative(viewLifecycleOwner, holder.b.nativeAdContainer)
+                }
             }
+        }
+
+        override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+            if (holder is NativeAdHolder) {
+                holder.clearAd?.invoke()
+                holder.clearAd = null
+            }
+            super.onViewRecycled(holder)
         }
     }
 
@@ -236,6 +279,8 @@ class SeeAllthemesFragment : BaseFragment<FragmentSeeAllthemesBinding>(FragmentS
         const val PAGING_THRESHOLD = 6
         const val TYPE_UPLOAD = 0
         const val TYPE_THEME = 1
+        const val TYPE_NATIVE_AD = 2
+        const val THEMES_PER_AD = 6
         const val THUMB_WIDTH_PX = 360
         const val THUMB_HEIGHT_PX = 640
     }
