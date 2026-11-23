@@ -39,12 +39,12 @@
             android:id="@+id/lockContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/spacing_xxxl"
             android:paddingBottom="@dimen/spacing_xxl">
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/lockHelp"
-                android:layout_width="@dimen/spacing_max"
-                android:layout_height="@dimen/spacing_max"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
                 android:src="@drawable/vn_ic_question_lock_screen"
                 android:contentDescription="@string/lock_screen_help"
                 android:background="@drawable/bg_lock_shortcut"
@@ -146,127 +146,86 @@
                     android:textStyle="italic" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:elevation="@dimen/elevation_card"
-                android:id="@+id/voiceNoteCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/quoteCard"
-                android:layout_marginTop="@dimen/spacing_xxl"
-                app:layout_constraintWidth_percent="0.79"
-                android:background="@drawable/bg_lock_note_panel"
-                android:padding="@dimen/spacing_lg">
-                <TextView
-                    android:id="@+id/lockNoteTitle"
-                    style="@style/Text.VoiceLock.titleL"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:fontFamily="@font/sora_bold"
-                    android:textColor="@color/white"
-                    android:text="@string/lock_screen_note_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:drawableStart="@drawable/ic_nav_voicenote"
-                    android:drawablePadding="@dimen/spacing_sm"
-                    android:drawableTint="@color/primary_light"
-                    app:layout_constrainedWidth="true" />
-
-                <TextView
-                    android:id="@+id/lockNoteSubtitle"
-                    style="@style/Text.VoiceLock.bodyL"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:fontFamily="@font/sora_regular"
-                    android:textColor="@color/white"
-                    android:text="@string/lock_screen_note_subtitle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lockNoteTitle"
-                    android:layout_marginTop="@dimen/spacing_sm" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/methodPin"
                 android:layout_width="@dimen/lock_shortcut_size"
                 android:layout_height="@dimen/lock_shortcut_size"
-                android:src="@drawable/vn_ic_pin_lock_screen"
+                android:layout_marginTop="@dimen/spacing_xxl"
+                android:background="@drawable/bg_lock_shortcut"
                 android:contentDescription="@string/pin"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:background="@drawable/bg_lock_shortcut"
                 android:padding="@dimen/spacing_md"
-                app:tint="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/voiceNoteCard"
-                android:layout_marginTop="@dimen/spacing_xxl"
-                app:layout_constraintStart_toStartOf="@id/voiceNoteCard"
-                app:layout_constraintEnd_toStartOf="@id/methodPattern" />
+                android:src="@drawable/vn_ic_pin_lock_screen"
+                app:layout_constraintBottom_toTopOf="@+id/micRings"
+                app:layout_constraintEnd_toStartOf="@id/methodPattern"
+                app:layout_constraintStart_toStartOf="@id/quoteCard"
+                app:layout_constraintTop_toBottomOf="@id/quoteCard"
+                app:tint="@color/white" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/methodPattern"
                 android:layout_width="@dimen/lock_shortcut_size"
                 android:layout_height="@dimen/lock_shortcut_size"
-                android:src="@drawable/vn_ic_pattern_lock_screen"
+                android:background="@drawable/bg_lock_shortcut"
                 android:contentDescription="@string/pattern"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:background="@drawable/bg_lock_shortcut"
                 android:padding="@dimen/spacing_md"
-                app:tint="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/voiceNoteCard"
-                android:layout_marginTop="@dimen/spacing_xxl"
+                android:src="@drawable/vn_ic_pattern_lock_screen"
+                app:layout_constraintBottom_toBottomOf="@+id/methodPin"
+                app:layout_constraintEnd_toStartOf="@id/methodFingerprint"
                 app:layout_constraintStart_toEndOf="@id/methodPin"
-                app:layout_constraintEnd_toStartOf="@id/methodFingerprint" />
+                app:layout_constraintTop_toTopOf="@+id/methodPin"
+                app:tint="@color/white" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/methodFingerprint"
                 android:layout_width="@dimen/lock_shortcut_size"
                 android:layout_height="@dimen/lock_shortcut_size"
-                android:src="@drawable/vn_ic_fingerprint_lock_screen"
+                android:background="@drawable/bg_lock_shortcut"
                 android:contentDescription="@string/fingerprint"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:background="@drawable/bg_lock_shortcut"
                 android:padding="@dimen/spacing_md"
-                app:tint="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/voiceNoteCard"
-                android:layout_marginTop="@dimen/spacing_xxl"
+                android:src="@drawable/vn_ic_fingerprint_lock_screen"
+                app:layout_constraintBottom_toBottomOf="@+id/methodPin"
+                app:layout_constraintEnd_toEndOf="@id/quoteCard"
                 app:layout_constraintStart_toEndOf="@id/methodPattern"
-                app:layout_constraintEnd_toEndOf="@id/voiceNoteCard" />
+                app:layout_constraintTop_toTopOf="@+id/methodPin"
+                app:tint="@color/white" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/micRings"
                 android:layout_width="@dimen/lock_mic_size"
                 android:layout_height="@dimen/lock_mic_size"
-                android:src="@drawable/ic_preview_mic_white"
-                android:contentDescription="@string/tap_microphone"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/bg_preview_mic_circle"
-                android:padding="@dimen/spacing_lg"
-                app:tint="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="@string/tap_microphone"
+                android:padding="@dimen/spacing_md"
+                android:src="@drawable/ic_preview_mic_white"
+                app:layout_constraintBottom_toTopOf="@+id/tvSpeakHint"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/methodPattern"
-                android:layout_marginTop="@dimen/spacing_max" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/tvSpeakHint"
                 style="@style/Text.VoiceLock.titleS"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:fontFamily="@font/sora_regular"
-                android:textColor="@color/white"
-                android:text="@string/tap_microphone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/micRings"
-                android:layout_marginTop="@dimen/spacing_xl"
+                android:layout_marginBottom="16dp"
                 android:layout_marginHorizontal="@dimen/spacing_lg"
+                android:layout_marginTop="@dimen/spacing_xl"
                 android:accessibilityLiveRegion="polite"
+                android:fontFamily="@font/sora_regular"
+                android:gravity="center"
                 android:shadowColor="@color/black"
-                android:shadowRadius="4" />
+                android:shadowRadius="4"
+                android:text="@string/tap_microphone"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+               />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
