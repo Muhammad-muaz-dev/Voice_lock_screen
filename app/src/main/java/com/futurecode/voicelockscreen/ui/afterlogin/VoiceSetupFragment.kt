@@ -211,7 +211,7 @@ class VoiceSetupFragment : BaseFragment<FragmentVoiceSetupBinding>(FragmentVoice
         val hasQuestion = context.getSharedPreferences(VOICE_PREFS, 0).getBoolean(KEY_SECURITY_READY, false)
         val destination = when {
             !hasQuestion -> R.id.securityQuestionFragment
-            VoiceLockSwitchStore.hasRequiredPermissions(context) -> R.id.setupCompleteFragment
+            VoiceLockSwitchStore.hasRequiredPermissions(context) -> return completeVoiceSetup()
             else -> R.id.permissionFragment
         }
         val args = if (destination == R.id.permissionFragment) {

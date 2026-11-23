@@ -127,8 +127,11 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
             navController.popBackStack()
             return
         }
+        if (target == TARGET_COMPLETE) {
+            completeVoiceSetup()
+            return
+        }
         val destination = when (target) {
-            TARGET_COMPLETE -> R.id.setupCompleteFragment
             TARGET_PIN -> R.id.pinLockFragment
             TARGET_PATTERN -> R.id.patternLockFragment
             TARGET_FINGERPRINT -> R.id.fingerprintLockFragment

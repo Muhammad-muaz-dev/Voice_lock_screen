@@ -1,5 +1,47 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/theme_three" android:gravity="center" android:orientation="vertical" android:id="@+id/mainLayout" android:padding="@dimen/spacing_lg">
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="@font/sora_bold" android:gravity="center" android:text="@string/pattern_lock" android:textColor="@color/textPrimary" android:textSize="@dimen/text_titleM" android:letterSpacing="0" android:lineHeight="24sp" app:lineHeight="24sp" />
-    <TextView android:id="@+id/tvPatternStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_sm" android:gravity="center" android:text="@string/pattern_confirm_hint" android:textColor="@color/text_gray" android:textSize="@dimen/text_caption" android:fontFamily="@font/sora_regular" android:letterSpacing="0" android:lineHeight="16sp" app:lineHeight="16sp" />
-    <com.futurecode.voicelockscreen.utils.VoiceLockPattern android:id="@+id/patternView" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="@dimen/spacing_md" />
-</LinearLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_max"
+        android:paddingBottom="@dimen/spacing_lg">
+
+        <TextView
+            android:id="@+id/tvPatternStatus"
+            style="@style/Text.VoiceLock.titleS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sora_semibold"
+            android:gravity="center"
+            android:accessibilityLiveRegion="polite"
+            android:text="@string/draw_pattern_to_unlock"
+            android:textColor="@color/white"
+            android:shadowColor="@color/scrimStrong"
+            android:shadowRadius="4"
+            android:padding="@dimen/spacing_sm"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/patternView"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.futurecode.voicelockscreen.ui.custom.PatternLockView
+            android:id="@+id/patternView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_lg"
+            app:layout_constraintTop_toBottomOf="@id/tvPatternStatus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_max="@dimen/credential_pattern_max_size"
+            app:layout_constraintDimensionRatio="H,1:1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

@@ -41,9 +41,16 @@ object LockScreenUi {
             binding.lockHelp.setOnClickListener {
                 Toast.makeText(context, R.string.lock_screen_help_message, Toast.LENGTH_LONG).show()
             }
-            binding.methodPin.setOnClickListener { onUnlock(LockMethod.PIN) }
-            binding.methodPattern.setOnClickListener { onUnlock(LockMethod.PATTERN) }
-            binding.methodFingerprint.setOnClickListener { onUnlock(LockMethod.FINGERPRINT) }
+            listOf(
+                binding.methodPin to LockMethod.PIN,
+                binding.methodPattern to LockMethod.PATTERN,
+                binding.methodFingerprint to LockMethod.FINGERPRINT
+            ).forEach { (button, method) ->
+                button.isClickable = true
+                button.isFocusable = true
+                button.importantForAccessibility = android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                button.setOnClickListener { onUnlock(method) }
+            }
             binding.micRings.setOnClickListener { onUnlock(LockMethod.VOICE) }
             val minTop = context.resources.getDimensionPixelSize(R.dimen.spacing_xxxl)
             val minBottom = context.resources.getDimensionPixelSize(R.dimen.spacing_xxl)

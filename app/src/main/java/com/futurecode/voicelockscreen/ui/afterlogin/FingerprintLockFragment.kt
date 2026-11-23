@@ -49,7 +49,7 @@ class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(Fra
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     saveFingerprintEnabled()
                     LockService.enableAndStart(requireContext())
-                    SuccessFragment.replaceCurrent(findNavController(), R.string.fingerprint_enabled)
+                    showSetupSuccess(R.string.fingerprint_enabled) { findNavController().popBackStack() }
                 }
 
                 override fun onAuthenticationFailed() {

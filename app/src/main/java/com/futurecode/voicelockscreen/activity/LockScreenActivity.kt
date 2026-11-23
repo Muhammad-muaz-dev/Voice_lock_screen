@@ -18,7 +18,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -44,7 +43,8 @@ import com.futurecode.voicelockscreen.utils.SpeechSession
 import com.futurecode.voicelockscreen.utils.LockMethod
 import com.futurecode.voicelockscreen.utils.LockScreenUi
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
-import com.futurecode.voicelockscreen.utils.VoiceLockPattern
+import com.futurecode.voicelockscreen.ui.custom.PatternLockView
+import com.futurecode.voicelockscreen.utils.CredentialUnlockUi
 
 class LockScreenActivity : BaseActivity() {
     private lateinit var binding: ViewLockScreenBinding
@@ -75,13 +75,21 @@ class LockScreenActivity : BaseActivity() {
 
         viewModel.unlockStatus.observe(this) { status ->
             when (status) {
-                is UnlockStatus.Success -> unlockAndClose()
+                is UnlockStatus.Success -> unlockAndClose(removeFallback = true)
                 is UnlockStatus.Failure -> {
                     binding.tvSpeakHint.text = getString(status.messageRes)
+                    if (status.messageRes == R.string.pattern_wrong) {
+                        fallbackOverlay?.findViewById<TextView>(R.id.tvPatternStatus)
+                            ?.setText(status.messageRes)
+                        fallbackOverlay?.findViewById<PatternLockView>(R.id.patternView)?.clearPattern()
+                    }
                     Toast.makeText(this, getString(status.messageRes), Toast.LENGTH_SHORT).show()
                 }
                 is UnlockStatus.Lockout -> {
                     binding.tvSpeakHint.text = getString(R.string.lockout_active) // Note: This resource needs to be added
+                    fallbackOverlay?.findViewById<TextView>(R.id.tvPatternStatus)
+                        ?.setText(R.string.lockout_active)
+                    fallbackOverlay?.findViewById<PatternLockView>(R.id.patternView)?.clearPattern()
                     Toast.makeText(this, "Too many attempts. Locked out.", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -245,113 +253,8 @@ class LockScreenActivity : BaseActivity() {
             Toast.makeText(this, R.string.pin_setup_required, Toast.LENGTH_SHORT).show()
             return
         }
-
-        val pinLength = SecurePinStore.getPinLength(this)
-        val enteredPin = StringBuilder()
-        val dialogView = showFallbackOverlay(R.layout.dialog_pin_unlock)
-        val dots = dialogView.findViewById<LinearLayout>(R.id.pinDotsContainer)
-        val buttons = listOf(
-            R.id.btnOne to "1",
-            R.id.btnTwo to "2",
-            R.id.btnThree to "3",
-            R.id.btnFour to "4",
-            R.id.btnFive to "5",
-            R.id.btnSix to "6",
-            R.id.btnSeven to "7",
-            R.id.btnEight to "8",
-            R.id.btnNine to "9",
-            R.id.btnZero to "0"
-        )
-        setupPinDialogDots(dots, pinLength, enteredPin.length)
-
-        buttons.forEach { (id, digit) ->
-            dialogView.findViewById<View>(id).setOnClickListener {
-                if (enteredPin.length < pinLength) {
-                    enteredPin.append(digit)
-                    setupPinDialogDots(dots, pinLength, enteredPin.length)
-                }
-            }
-        }
-        dialogView.findViewById<View>(R.id.btnBackspace).setOnClickListener {
-            if (enteredPin.isNotEmpty()) {
-                enteredPin.deleteCharAt(enteredPin.lastIndex)
-                setupPinDialogDots(dots, pinLength, enteredPin.length)
-            }
-        }
-        dialogView.findViewById<View>(R.id.btnConfirm).setOnClickListener {
-            if (isUnlocking) return@setOnClickListener
-            if (enteredPin.length != pinLength) {
-                Toast.makeText(this, R.string.pin_incomplete, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-     fun showPinUnlockDialog() {
-        if (!SecurePinStore.hasPin(this)) {
-            Toast.makeText(this, R.string.pin_setup_required, Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val pinLength = SecurePinStore.getPinLength(this)
-        val enteredPin = StringBuilder()
-        val dialogView = showFallbackOverlay(R.layout.dialog_pin_unlock)
-        val dots = dialogView.findViewById<LinearLayout>(R.id.pinDotsContainer)
-        val buttons = listOf(
-            R.id.btnOne to "1",
-            R.id.btnTwo to "2",
-            R.id.btnThree to "3",
-            R.id.btnFour to "4",
-            R.id.btnFive to "5",
-            R.id.btnSix to "6",
-            R.id.btnSeven to "7",
-            R.id.btnEight to "8",
-            R.id.btnNine to "9",
-            R.id.btnZero to "0"
-        )
-        setupPinDialogDots(dots, pinLength, enteredPin.length)
-
-        buttons.forEach { (id, digit) ->
-            dialogView.findViewById<View>(id).setOnClickListener {
-                if (enteredPin.length < pinLength) {
-                    enteredPin.append(digit)
-                    setupPinDialogDots(dots, pinLength, enteredPin.length)
-                }
-            }
-        }
-        dialogView.findViewById<View>(R.id.btnBackspace).setOnClickListener {
-            if (enteredPin.isNotEmpty()) {
-                enteredPin.deleteCharAt(enteredPin.lastIndex)
-                setupPinDialogDots(dots, pinLength, enteredPin.length)
-            }
-        }
-        dialogView.findViewById<View>(R.id.btnConfirm).setOnClickListener {
-            if (isUnlocking) return@setOnClickListener
-            if (enteredPin.length != pinLength) {
-                Toast.makeText(this, R.string.pin_incomplete, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            viewModel.verifyPin(this, enteredPin.toString())
-            if (viewModel.unlockStatus.value is LockScreenViewModel.UnlockStatus.Success) {
-                unlockAndClose(removeFallback = true)
-            } else {
-                enteredPin.clear()
-                setupPinDialogDots(dots, pinLength, enteredPin.length)
-            }
-        }
-    }
-        }
-    }
-
-    private fun setupPinDialogDots(container: LinearLayout, pinLength: Int, enteredLength: Int) {
-        container.removeAllViews()
-        repeat(pinLength) { index ->
-            val dot = View(this)
-            dot.background = ContextCompat.getDrawable(
-                this,
-                if (index < enteredLength) R.drawable.bg_pin_dot_filled else R.drawable.bg_pin_dot_empty
-            )
-            container.addView(dot, LinearLayout.LayoutParams(16.dp, 16.dp).apply {
-                marginStart = 8.dp
-                marginEnd = 8.dp
-            })
+        CredentialUnlockUi.bindPin(showFallbackOverlay(R.layout.dialog_pin_unlock), SecurePinStore.getPinLength(this)) { pin ->
+            if (!isUnlocking) viewModel.verifyPin(applicationContext, pin)
         }
     }
 
@@ -363,30 +266,17 @@ class LockScreenActivity : BaseActivity() {
         }
 
         val dialogView = showFallbackOverlay(R.layout.dialog_pattern_unlock)
-        val patternView = dialogView.findViewById<VoiceLockPattern>(R.id.patternView)
-        val status = dialogView.findViewById<TextView>(R.id.tvPatternStatus)
-
-      //  ThemeWallpaperStore.applyTo(binding.imgWallpaper, this)
-
+        val patternView = dialogView.findViewById<PatternLockView>(R.id.patternView).apply { useSetupAppearance(onWallpaper = true) }
         patternView.onPatternComplete = patternComplete@{ sequence ->
             if (isUnlocking) return@patternComplete
-            viewModel.verifyPattern(this, sequence)
-            if (viewModel.unlockStatus.value is UnlockStatus.Success) {
-                patternView.onPatternComplete = null
-                unlockAndClose(removeFallback = true)
-            } else {
-                status.text = getString(R.string.pattern_wrong)
-                binding.tvSpeakHint.text = getString(R.string.pattern_wrong)
-                Toast.makeText(this, R.string.pattern_wrong, Toast.LENGTH_SHORT).show()
-                patternView.clearPattern()
-            }
+            viewModel.verifyPattern(applicationContext, sequence)
         }
     }
 
     private fun showFallbackOverlay(layoutRes: Int): View {
         removeFallbackOverlay()
         val overlay = FrameLayout(this).apply {
-            setBackgroundColor(ContextCompat.getColor(this@LockScreenActivity, R.color.bg))
+            CredentialUnlockUi.styleOverlay(this, binding.lockContent)
             isClickable = true
             isFocusable = true
         }
@@ -406,6 +296,7 @@ class LockScreenActivity : BaseActivity() {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
+        CredentialUnlockUi.requestInsets(overlay)
         fallbackOverlay = overlay
         return fallbackView
     }

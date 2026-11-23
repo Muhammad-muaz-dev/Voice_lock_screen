@@ -53,7 +53,7 @@ import kotlinx.coroutines.launch
 class CameraVoiceFragment :
     BaseFragment<FragmentCameraVoiceBinding>(FragmentCameraVoiceBinding::inflate) {
 
-    private enum class Step { PERMISSIONS, RECORD, HOW_IT_WORKS, MAIN, COMPLETE }
+    private enum class Step { PERMISSIONS, RECORD, HOW_IT_WORKS, MAIN }
 
     private var step = Step.PERMISSIONS
     private var recordings = 0
@@ -116,7 +116,7 @@ class CameraVoiceFragment :
     }
 
     private fun syncSetupListening() {
-        CameraVoiceService.setSetupListening(isResumed && (step == Step.MAIN || step == Step.COMPLETE))
+        CameraVoiceService.setSetupListening(isResumed && step == Step.MAIN)
     }
 
     override fun onDestroyView() {
@@ -227,7 +227,6 @@ class CameraVoiceFragment :
                 returnToMain = false
                 goTo(Step.MAIN)
             }
-            Step.COMPLETE -> findNavController().popBackStack()
             else -> Unit
         }
     }
@@ -277,7 +276,7 @@ class CameraVoiceFragment :
             binding.cameraToggle.postDelayed({
                 if (bindingOrNull != null && step == Step.MAIN && CameraVoiceService.isRunning) {
                     returnToMain = true
-                    goTo(Step.COMPLETE)
+                    showSetupSuccess(R.string.camera_all_set_title) { findNavController().popBackStack() }
                 }
             }, TOGGLE_TO_COMPLETE_MS)
         }
@@ -445,7 +444,6 @@ class CameraVoiceFragment :
         binding.clRecording.isVisible = step == Step.RECORD
         binding.clHowItWorks.isVisible = step == Step.HOW_IT_WORKS
         binding.clMain.isVisible = step == Step.MAIN
-        binding.clComplete.root.isVisible = step == Step.COMPLETE
         binding.recordPanel.isVisible = step == Step.RECORD
         binding.mainControls.isVisible = step == Step.MAIN
         binding.btnHelp.isVisible = step == Step.MAIN
@@ -456,7 +454,6 @@ class CameraVoiceFragment :
             Step.RECORD -> renderRecording(animate = false)
             Step.HOW_IT_WORKS -> renderHowItWorks()
             Step.MAIN -> renderMain()
-            Step.COMPLETE -> renderComplete()
         }
     }
 
@@ -537,17 +534,6 @@ class CameraVoiceFragment :
         binding.cameraToggle.contentDescription =
             "${getString(R.string.open_camera_by_voice)}, ${binding.tvToggleLabel.text}"
         binding.ivTapHand.visibility = if (on) View.INVISIBLE else View.VISIBLE
-    }
-
-    private fun renderComplete() {
-        setTitle(null, centered = false)
-        binding.clComplete.bindSuccess(
-            R.string.camera_all_set_title,
-            R.string.camera_all_set_description,
-            R.string.camera_home,
-            ::onPrimaryTapped
-        )
-        binding.clComplete.successDescription.text = boldText(R.string.camera_all_set_description, highlight = true)
     }
 
     private fun setTitle(@StringRes title: Int?, centered: Boolean) {

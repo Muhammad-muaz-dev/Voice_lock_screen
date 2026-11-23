@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -27,7 +26,7 @@ import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 
 class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBinding::inflate) {
 
-    private enum class Step { MENU, ENTER, CONFIRM, SUCCESS, TEST }
+    private enum class Step { MENU, ENTER, CONFIRM, TEST }
 
     private var step = Step.MENU
     private var pinLength = DEFAULT_PIN_LENGTH
@@ -70,8 +69,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
     private fun restoreState(savedInstanceState: Bundle?) {
         pinLength = savedInstanceState?.getInt(KEY_LENGTH) ?: SecurePinStore.getPinLength(requireContext())
         step = savedInstanceState?.getString(KEY_STEP)?.let { savedStep -> Step.entries.firstOrNull { it.name == savedStep } } ?: Step.MENU
-        // The test needs the PIN in memory; after process death go back to the success step.
-        if (step == Step.TEST) step = Step.SUCCESS
+        if (step == Step.TEST && savedPin == null) step = Step.MENU
         if (step == Step.CONFIRM && firstPin == null) step = Step.ENTER
         if (step == Step.ENTER && pinLength !in PIN_LENGTHS) pinLength = DEFAULT_PIN_LENGTH
     }
@@ -212,7 +210,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
                 LockService.enableAndStart(requireContext())
                 firstPin = null
                 savedPin = pin
-                goTo(Step.SUCCESS)
+                showSetupSuccess(R.string.pin_setup_success) { goTo(Step.TEST) }
             }
             else -> Unit
         }
@@ -228,8 +226,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         val entered = testInput.toString()
         val correct = savedPin?.let { it == entered } ?: SecurePinStore.verifyPin(requireContext(), entered)
         if (correct) {
-            Toast.makeText(requireContext(), R.string.pin_test_success, Toast.LENGTH_SHORT).show()
-            finishFlow()
+            showSetupSuccess(R.string.pin_test_success, ::finishFlow)
         } else {
             binding.tvTestPrompt.setText(R.string.pin_wrong)
             shake(binding.testDots)
@@ -241,7 +238,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
     private fun navigateBack() {
         when (step) {
             Step.MENU -> findNavController().popBackStack()
-            Step.ENTER, Step.SUCCESS -> goTo(Step.MENU)
+            Step.ENTER -> goTo(Step.MENU)
             Step.CONFIRM -> {
                 firstPin = null
                 goTo(Step.ENTER)
@@ -275,7 +272,6 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         binding.cardPinSetup.root.isVisible = isMenu
         binding.cardRecovery.root.isVisible = isMenu
         binding.pinEntry.root.isVisible = isEntry
-        binding.cardStep.root.isVisible = step == Step.SUCCESS
         binding.clTest.isVisible = step == Step.TEST
         binding.pinRoot.setBackgroundColor(
             ContextCompat.getColor(requireContext(), if (isEntry) R.color.surface else R.color.bg)
@@ -284,7 +280,6 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
 
         when (step) {
             Step.ENTER, Step.CONFIRM -> renderPinStep()
-            Step.SUCCESS -> renderSuccess()
             Step.TEST -> renderTest()
             Step.MENU -> Unit
         }
@@ -330,14 +325,6 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
             )
         }
         dots.contentDescription = getString(R.string.pin_setup_progress, pinInput.length, pinLength)
-    }
-
-    private fun renderSuccess() {
-        binding.cardStep.bindSuccess(
-            R.string.pin_setup_success,
-            R.string.pin_setup_success_desc,
-            R.string.pin_success_test_action
-        ) { goTo(Step.TEST) }
     }
 
     private fun renderTest() {

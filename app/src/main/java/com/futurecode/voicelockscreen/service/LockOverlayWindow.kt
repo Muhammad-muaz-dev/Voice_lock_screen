@@ -16,13 +16,9 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.LockScreenActivity
 import com.futurecode.voicelockscreen.databinding.ViewLockScreenBinding
@@ -33,7 +29,7 @@ import com.futurecode.voicelockscreen.ui.custom.PatternLockView
 import com.futurecode.voicelockscreen.utils.LockMethod
 import com.futurecode.voicelockscreen.utils.LockScreenUi
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
-import com.futurecode.voicelockscreen.utils.VoiceLockPattern
+import com.futurecode.voicelockscreen.utils.CredentialUnlockUi
 
 class LockOverlayWindow(private val context: Context) {
     private val themedContext = ContextThemeWrapper(context, R.style.Theme_VoiceLockScreen)
@@ -100,68 +96,14 @@ class LockOverlayWindow(private val context: Context) {
             Toast.makeText(context, R.string.pin_setup_required, Toast.LENGTH_SHORT).show()
             return
         }
-
-        val fallback = addFallbackView(R.layout.dialog_pin_unlock)
-        val dots = fallback.findViewById<LinearLayout>(R.id.pinDotsContainer)
-        val enteredPin = StringBuilder()
-        val pinLength = SecurePinStore.getPinLength(context)
-        setupPinDots(dots, pinLength, enteredPin.length)
-
-        listOf(
-            R.id.btnOne to "1",
-            R.id.btnTwo to "2",
-            R.id.btnThree to "3",
-            R.id.btnFour to "4",
-            R.id.btnFive to "5",
-            R.id.btnSix to "6",
-            R.id.btnSeven to "7",
-            R.id.btnEight to "8",
-            R.id.btnNine to "9",
-            R.id.btnZero to "0"
-        ).forEach { (id, digit) ->
-            fallback.findViewById<View>(id).setOnClickListener {
-                if (enteredPin.length < pinLength) {
-                    enteredPin.append(digit)
-                    setupPinDots(dots, pinLength, enteredPin.length)
-                }
-            }
-        }
-        fallback.findViewById<View>(R.id.btnBackspace).setOnClickListener {
-            if (enteredPin.isNotEmpty()) {
-                enteredPin.deleteCharAt(enteredPin.lastIndex)
-                setupPinDots(dots, pinLength, enteredPin.length)
-            }
-        }
-        fallback.findViewById<View>(R.id.btnConfirm).setOnClickListener {
-            if (isUnlocking) return@setOnClickListener
-            if (enteredPin.length != pinLength) {
-                Toast.makeText(context, R.string.pin_incomplete, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if (SecurePinStore.verifyPin(context, enteredPin.toString())) {
+        CredentialUnlockUi.bindPin(addFallbackView(R.layout.dialog_pin_unlock), SecurePinStore.getPinLength(context)) { pin ->
+            if (isUnlocking) return@bindPin
+            if (SecurePinStore.verifyPin(context, pin)) {
                 isUnlocking = true
                 dismiss(unlocked = true)
             } else {
-                enteredPin.clear()
-                setupPinDots(dots, pinLength, enteredPin.length)
-                binding?.tvSpeakHint?.text = context.getString(R.string.pin_wrong)
                 Toast.makeText(context, R.string.pin_wrong, Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    private fun setupPinDots(container: LinearLayout, pinLength: Int, enteredLength: Int) {
-        container.removeAllViews()
-        repeat(pinLength) { index ->
-            val dot = View(themedContext)
-            dot.background = ContextCompat.getDrawable(
-                context,
-                if (index < enteredLength) R.drawable.bg_pin_dot_filled else R.drawable.bg_pin_dot_empty
-            )
-            container.addView(dot, LinearLayout.LayoutParams(16.dp, 16.dp).apply {
-                marginStart = 8.dp
-                marginEnd = 8.dp
-            })
         }
     }
 
@@ -172,7 +114,7 @@ class LockOverlayWindow(private val context: Context) {
         }
 
         val fallback = addFallbackView(R.layout.dialog_pattern_unlock)
-        val patternView = fallback.findViewById<VoiceLockPattern>(R.id.patternView)
+        val patternView = fallback.findViewById<PatternLockView>(R.id.patternView).apply { useSetupAppearance(onWallpaper = true) }
         val status = fallback.findViewById<TextView>(R.id.tvPatternStatus)
         patternView.onPatternComplete = patternComplete@{ sequence ->
             if (isUnlocking) return@patternComplete
@@ -194,16 +136,9 @@ class LockOverlayWindow(private val context: Context) {
         overlayRoot.findViewWithTag<View>(FALLBACK_TAG)?.let { overlayRoot.removeView(it) }
         val dim = FrameLayout(themedContext).apply {
             tag = FALLBACK_TAG
-            setBackgroundColor(ContextCompat.getColor(context, R.color.bg_color))
+            CredentialUnlockUi.styleOverlay(this, checkNotNull(binding).lockContent)
             isClickable = true
             isFocusable = true
-        }
-        ViewCompat.setOnApplyWindowInsetsListener(dim) { view, insets ->
-            val safe = insets.getInsetsIgnoringVisibility(
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
-            )
-            view.updatePadding(left = safe.left, top = safe.top, right = safe.right, bottom = safe.bottom)
-            insets
         }
         val fallback = inflater.inflate(layoutRes, dim, false)
         dim.addView(
@@ -221,7 +156,7 @@ class LockOverlayWindow(private val context: Context) {
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
         )
-        ViewCompat.requestApplyInsets(dim)
+        CredentialUnlockUi.requestInsets(dim)
         return fallback
     }
 

@@ -24,6 +24,7 @@ class PatternLockView @JvmOverloads constructor(
     var onPatternComplete: ((String) -> Unit)? = null
 
     private var setupAppearance = false
+    private var onWallpaper = false
     private val selected = mutableListOf<Int>()
     private val centers = MutableList(9) { PointF() }
     private var currentX = 0f
@@ -40,6 +41,10 @@ class PatternLockView @JvmOverloads constructor(
 
     private val setupRingColor = ContextCompat.getColor(context, R.color.textTertiary)
     private val setupDotColor = ContextCompat.getColor(context, R.color.primary_dark)
+    private val wallpaperRingColor = ContextCompat.getColor(context, R.color.white)
+    private val wallpaperNodePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = ContextCompat.getColor(context, R.color.scrim)
+    }
 
     // Default appearance
     private val cardBgColor = Color.parseColor("#FFFFFF")
@@ -131,7 +136,11 @@ class PatternLockView @JvmOverloads constructor(
             outerCircleStrokePaint.color = when {
                 !setupAppearance -> outerStrokeColor
                 isSelected -> activeColor
+                onWallpaper -> wallpaperRingColor
                 else -> setupRingColor
+            }
+            if (onWallpaper && !isSelected) {
+                canvas.drawCircle(point.x, point.y, outerCircleRadius, wallpaperNodePaint)
             }
             canvas.drawCircle(point.x, point.y, outerCircleRadius, outerCircleStrokePaint)
 
@@ -141,8 +150,9 @@ class PatternLockView @JvmOverloads constructor(
         }
     }
 
-    fun useSetupAppearance() {
+    fun useSetupAppearance(onWallpaper: Boolean = false) {
         setupAppearance = true
+        this.onWallpaper = onWallpaper
         invalidate()
     }
 

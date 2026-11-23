@@ -45,7 +45,7 @@ class PatternLockFragment : BaseFragment<FragmentPatternLockBinding>(FragmentPat
             else -> {
                 SecurePatternStore.savePattern(requireContext(), sequence)
                 LockService.enableAndStart(requireContext())
-                SuccessFragment.replaceCurrent(findNavController(), R.string.pattern_saved)
+                showSetupSuccess(R.string.pattern_saved) { findNavController().popBackStack() }
             }
         }
     }

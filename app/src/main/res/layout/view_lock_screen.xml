@@ -147,51 +147,62 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/methodPin"
-                android:layout_width="@dimen/lock_shortcut_size"
-                android:layout_height="@dimen/lock_shortcut_size"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lockShortcuts"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xxl"
-                android:background="@drawable/bg_lock_shortcut"
-                android:contentDescription="@string/pin"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/spacing_md"
-                android:src="@drawable/vn_ic_pin_lock_screen"
-                app:layout_constraintBottom_toTopOf="@+id/micRings"
-                app:layout_constraintEnd_toStartOf="@id/methodPattern"
-                app:layout_constraintStart_toStartOf="@id/quoteCard"
+                app:layout_constraintBottom_toTopOf="@id/micRings"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/quoteCard"
-                app:tint="@color/white" />
+                app:layout_constraintWidth_percent="0.70">
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/methodPattern"
-                android:layout_width="@dimen/lock_shortcut_size"
-                android:layout_height="@dimen/lock_shortcut_size"
-                android:background="@drawable/bg_lock_shortcut"
-                android:contentDescription="@string/pattern"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/spacing_md"
-                android:src="@drawable/vn_ic_pattern_lock_screen"
-                app:layout_constraintBottom_toBottomOf="@+id/methodPin"
-                app:layout_constraintEnd_toStartOf="@id/methodFingerprint"
-                app:layout_constraintStart_toEndOf="@id/methodPin"
-                app:layout_constraintTop_toTopOf="@+id/methodPin"
-                app:tint="@color/white" />
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/methodPin"
+                    android:layout_width="@dimen/lock_shortcut_size"
+                    android:layout_height="@dimen/lock_shortcut_size"
+                    android:background="@drawable/bg_lock_shortcut"
+                    android:contentDescription="@string/pin"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/spacing_md"
+                    android:src="@drawable/vn_ic_pin_lock_screen"
+                    app:layout_constraintEnd_toStartOf="@id/methodPattern"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:tint="@color/white" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/methodFingerprint"
-                android:layout_width="@dimen/lock_shortcut_size"
-                android:layout_height="@dimen/lock_shortcut_size"
-                android:background="@drawable/bg_lock_shortcut"
-                android:contentDescription="@string/fingerprint"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/spacing_md"
-                android:src="@drawable/vn_ic_fingerprint_lock_screen"
-                app:layout_constraintBottom_toBottomOf="@+id/methodPin"
-                app:layout_constraintEnd_toEndOf="@id/quoteCard"
-                app:layout_constraintStart_toEndOf="@id/methodPattern"
-                app:layout_constraintTop_toTopOf="@+id/methodPin"
-                app:tint="@color/white" />
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/methodPattern"
+                    android:layout_width="@dimen/lock_shortcut_size"
+                    android:layout_height="@dimen/lock_shortcut_size"
+                    android:background="@drawable/bg_lock_shortcut"
+                    android:contentDescription="@string/pattern"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/spacing_md"
+                    android:src="@drawable/vn_ic_pattern_lock_screen"
+                    app:layout_constraintEnd_toStartOf="@id/methodFingerprint"
+                    app:layout_constraintStart_toEndOf="@id/methodPin"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:tint="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/methodFingerprint"
+                    android:layout_width="@dimen/lock_shortcut_size"
+                    android:layout_height="@dimen/lock_shortcut_size"
+                    android:background="@drawable/bg_lock_shortcut"
+                    android:contentDescription="@string/fingerprint"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/spacing_md"
+                    android:src="@drawable/vn_ic_fingerprint_lock_screen"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/methodPattern"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:tint="@color/white" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/micRings"
