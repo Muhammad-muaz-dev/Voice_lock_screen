@@ -20,6 +20,7 @@ import com.futurecode.voicelockscreen.databinding.ItemSettingsRowBinding
 import com.futurecode.voicelockscreen.db.PrefManager
 import com.futurecode.voicelockscreen.ui.prelogin.LanguageFragment
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
+import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.utils.LockPermissionHelper
 import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
 
@@ -51,10 +52,14 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
             onNotificationsTapped()
         }
         binding.rowNotifications.switchRow.isVisible = true
+        binding.rowNotifications.ivChevron.isVisible = false
+        binding.rowNotifications.switchRow.contentDescription = getString(R.string.settings_notifications)
         binding.rowNotifications.switchRow.setOnClickListener { onNotificationsTapped() }
 
-        bindRow(binding.rowLockVoice, R.drawable.ic_settings_mic, R.string.home_lock_by_voice) { onLockVoiceTapped() }
+        bindRow(binding.rowLockVoice, R.drawable.ic_settings_mic, R.string.home_voice_title) { onLockVoiceTapped() }
         binding.rowLockVoice.switchRow.isVisible = true
+        binding.rowLockVoice.ivChevron.isVisible = false
+        binding.rowLockVoice.switchRow.contentDescription = getString(R.string.home_voice_title)
         binding.rowLockVoice.switchRow.setOnClickListener { onLockVoiceTapped() }
 
         bindRow(binding.rowVoiceCommand, R.drawable.ic_camera_reset, R.string.change_voice_command) {
@@ -72,6 +77,14 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         bindRow(binding.rowFeedback, R.drawable.ic_settings_feedback, R.string.settings_feedback) { sendFeedback() }
         bindRow(binding.rowShare, R.drawable.ic_settings_share, R.string.settings_share_app) { shareApp() }
         bindRow(binding.rowPrivacy, R.drawable.ic_settings_privacy, R.string.settings_privacy_policy) { openPrivacyPolicy() }
+        bindRow(binding.rowTerms, R.drawable.vn_ic_note, R.string.settings_terms_of_service) {
+            val uri = Uri.parse(prefManager.termsOfService.trim())
+            if (uri.scheme !in listOf("https", "http") || uri.host.isNullOrBlank()) {
+                Toast.makeText(requireContext(), R.string.settings_terms_unavailable, Toast.LENGTH_SHORT).show()
+            } else {
+                openIntent(Intent(Intent.ACTION_VIEW, uri), getString(R.string.no_app_found))
+            }
+        }
     }
 
     private fun bindRow(row: ItemSettingsRowBinding, @DrawableRes icon: Int, @StringRes title: Int, action: () -> Unit) {
@@ -84,19 +97,21 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
 
     private fun renderLockVoiceToggle() {
         val row = bindingOrNull?.rowLockVoice ?: return
-        row.switchRow.isChecked = VoiceLockSwitchStore.isLockEffective(requireContext())
+        row.switchRow.isChecked = VoiceLockSwitchStore.isUnlockEffective(requireContext())
     }
 
     private fun onLockVoiceTapped() {
         val context = requireContext()
-        val enable = !VoiceLockSwitchStore.isLockEffective(context)
-        VoiceLockSwitchStore.setLockEnabled(context, enable)
+        val enable = !VoiceLockSwitchStore.isUnlockEffective(context)
+        VoiceLockSwitchStore.setUnlockEnabled(context, enable)
         when {
-            enable && !SecureVoiceStore.hasPhrase(context) -> findNavController().navigate(R.id.voiceSetupFragment)
-            enable && !VoiceLockSwitchStore.hasRequiredPermissions(context) -> findNavController().navigate(
+            !enable -> LockService.stop(context)
+            !SecureVoiceStore.hasPhrase(context) -> findNavController().navigate(R.id.voiceSetupFragment)
+            !VoiceLockSwitchStore.hasRequiredPermissions(context) -> findNavController().navigate(
                 R.id.permissionFragment,
                 Bundle().apply { putString(PermissionFragment.ARG_TARGET, PermissionFragment.TARGET_HOME) }
             )
+            else -> LockService.startIfNeeded(context)
         }
         renderLockVoiceToggle()
     }

@@ -13,11 +13,11 @@
     <color name="vn_neutral08">#ffd1d3db</color>
     <color name="vn_neutral09">#ffeeeff2</color>
     <color name="vn_neutral10">#fff4f4f6</color>
-    <color name="vn_primary01">#ff635bff</color>
-    <color name="vn_primary02">#ff5047e2</color>
-    <color name="vn_primary05">#ff6e67fe</color>
-    <color name="vn_primary07">#ffdcdaff</color>
-    <color name="vn_primary08">#ffedecff</color>
+    <color name="vn_primary01">@color/primary</color>
+    <color name="vn_primary02">@color/primary</color>
+    <color name="vn_primary05">@color/primary</color>
+    <color name="vn_primary07">@color/primaryOutline</color>
+    <color name="vn_primary08">@color/primary_light</color>
     <color name="vn_primary09">#fff0f8ff</color>
     <color name="vn_warning">#ffef4444</color>
     <color name="vn_white">#ffffffff</color>

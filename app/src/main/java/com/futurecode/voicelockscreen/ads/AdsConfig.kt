@@ -1,6 +1,7 @@
 package com.futurecode.voicelockscreen.ads
 
 import com.futurecode.voicelockscreen.BuildConfig
+import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.MyApplication
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -33,7 +34,7 @@ object AdsConfig {
 
     const val ONBOARDING_PAGES = 4
 
-    private val brandCta = android.graphics.Color.parseColor("#635BFF")
+    private val brandCta = MyApplication.app.getColor(R.color.primary)
     private val white = android.graphics.Color.WHITE
 
     private val splashDefaults = ScreenAdConfig(

@@ -50,7 +50,15 @@ class ScreenPreviewFragment : BaseFragment<ViewLockScreenBinding>(ViewLockScreen
         super.onViewCreated(view, savedInstanceState)
         enterPreviewMode()
         ThemeWallpaperStore.applyTo(binding.imgWallpaper, requireContext())
-        LockScreenUi.bind(binding) { method ->
+        LockScreenUi.bind(binding, onHelp = {
+            CredentialUnlockUi.showRecovery(requireContext(), { layout ->
+                speechSession?.cancel()
+                showFallbackOverlay(layout)
+            }) {
+                removeFallbackOverlay()
+                unlockAndClose()
+            }
+        }) { method ->
             selectedMethod = method
             LockScreenUi.select(binding, method)
             openSelectedUnlockMethod()

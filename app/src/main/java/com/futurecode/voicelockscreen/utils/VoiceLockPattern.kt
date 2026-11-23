@@ -1,6 +1,8 @@
 package com.futurecode.voicelockscreen.utils
 
 import android.content.Context
+import androidx.core.content.ContextCompat
+import com.futurecode.voicelockscreen.R
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -37,10 +39,10 @@ class VoiceLockPattern @JvmOverloads constructor(
 
     // Colors matching screenshot
     private val cardBgColor = Color.TRANSPARENT
-    private val outerFillColor = Color.parseColor("#EDECFF") // light violet circle (brand tint)
-    private val outerStrokeColor = Color.parseColor("#C4C1FF") // light violet circle border
-    private val innerDotColor = Color.parseColor("#635BFF") // brand violet dot
-    private val activeLineColor = Color.parseColor("#635BFF")
+    private val outerFillColor = ContextCompat.getColor(context, R.color.primary_light)
+    private val outerStrokeColor = ContextCompat.getColor(context, R.color.primaryOutline)
+    private val innerDotColor = ContextCompat.getColor(context, R.color.primary)
+    private val activeLineColor = ContextCompat.getColor(context, R.color.primary)
     private val errorColor = Color.parseColor("#EF4444")
 
     // Paints

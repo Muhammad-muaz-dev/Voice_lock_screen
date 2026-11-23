@@ -125,6 +125,7 @@
     <string name="security_question_hint">Choose a question and answer to help recover your voice password if you forget it.</string>
     <string name="security_question_label">• SECURITY QUESTION</string>
     <string name="choose_security_question">Choose a security question</string>
+    <string name="choose_another_security_question">Choose another question</string>
     <string name="your_answer">• YOUR ANSWER</string>
     <string name="enter_your_answer">Enter your answer</string>
     <string name="answer_help">Use an answer you can remember but others cannot easily guess.</string>
@@ -540,6 +541,7 @@
     <string name="recovery_question_placeholder">Choose a question</string>
     <string name="recovery_answer_label">Your answer</string>
     <string name="recovery_apply">Apply</string>
+    <string name="recovery_answer_incorrect">Incorrect answer</string>
     <string name="recovery_save">Save</string>
 
     <!-- Home voice card -->

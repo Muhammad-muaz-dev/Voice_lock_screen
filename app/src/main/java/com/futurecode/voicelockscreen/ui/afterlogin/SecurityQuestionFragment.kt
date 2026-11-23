@@ -61,6 +61,9 @@ class SecurityQuestionFragment :
     private fun render() {
         binding.tvQuestion.text = question
         val ready = question != null
+        binding.questionField.setText(
+            if (ready) R.string.choose_another_security_question else R.string.choose_security_question
+        )
         binding.btnSave.isEnabled = ready
         binding.btnSave.alpha = if (ready) 1f else DISABLED_ALPHA
     }
@@ -162,15 +165,15 @@ class SecurityQuestionFragment :
 
     // endregion
 
-    private companion object {
-        const val KEY_QUESTION = "question"
-        const val KEY_ANSWER = "answer"
+    internal companion object {
+        private const val KEY_QUESTION = "question"
+        private const val KEY_ANSWER = "answer"
         const val PREF_QUESTION = "security_question"
         const val PREF_ANSWER = "security_answer"
-        const val PREF_READY = "security_ready"
-        const val ARG_EDITING = "editing"
-        const val MIN_ANSWER = 3
-        const val DISABLED_ALPHA = 0.45f
-        const val LIST_MAX_SCREEN_RATIO = 0.68f
+        private const val PREF_READY = "security_ready"
+        private const val ARG_EDITING = "editing"
+        private const val MIN_ANSWER = 3
+        private const val DISABLED_ALPHA = 0.45f
+        private const val LIST_MAX_SCREEN_RATIO = 0.68f
     }
 }

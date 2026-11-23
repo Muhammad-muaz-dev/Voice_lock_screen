@@ -48,10 +48,10 @@ class PatternLockView @JvmOverloads constructor(
 
     // Default appearance
     private val cardBgColor = Color.parseColor("#FFFFFF")
-    private val outerFillColor = Color.parseColor("#EDECFF") // light violet circle (brand tint)
-    private val outerStrokeColor = Color.parseColor("#C4C1FF") // light violet circle border
-    private val innerDotColor = Color.parseColor("#635BFF") // brand violet dot
-    private val activeLineColor = Color.parseColor("#635BFF")
+    private val outerFillColor = ContextCompat.getColor(context, R.color.primary_light)
+    private val outerStrokeColor = ContextCompat.getColor(context, R.color.primaryOutline)
+    private val innerDotColor = ContextCompat.getColor(context, R.color.primary)
+    private val activeLineColor = ContextCompat.getColor(context, R.color.primary)
     private val errorColor = Color.parseColor("#EF4444")
 
     // Paints

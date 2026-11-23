@@ -24,6 +24,7 @@ object LockScreenUi {
         binding: ViewLockScreenBinding,
         quote: String? = null,
         showClockAndQuote: Boolean? = null,
+        onHelp: (() -> Unit)? = null,
         onUnlock: ((LockMethod) -> Unit)? = null
     ) {
         val context = binding.root.context
@@ -39,7 +40,8 @@ object LockScreenUi {
 
         if (onUnlock != null) {
             binding.lockHelp.setOnClickListener {
-                Toast.makeText(context, R.string.lock_screen_help_message, Toast.LENGTH_LONG).show()
+                if (onHelp != null) onHelp()
+                else Toast.makeText(context, R.string.lock_screen_help_message, Toast.LENGTH_LONG).show()
             }
             listOf(
                 binding.methodPin to LockMethod.PIN,

@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.activity.OverlayGuideActivity
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPermissionBinding
@@ -124,6 +125,7 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
         val navController = findNavController()
         if (navController.currentDestination?.id != R.id.permissionFragment) return
         if (target == TARGET_HOME) {
+            LockService.startIfNeeded(requireContext())
             navController.popBackStack()
             return
         }

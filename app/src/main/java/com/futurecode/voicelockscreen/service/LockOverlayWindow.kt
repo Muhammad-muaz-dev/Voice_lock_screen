@@ -64,7 +64,11 @@ class LockOverlayWindow(private val context: Context) {
         root = overlayRoot
         binding = overlayBinding
         ThemeWallpaperStore.applyTo(overlayBinding.imgWallpaper, context)
-        LockScreenUi.bind(overlayBinding) { method ->
+        LockScreenUi.bind(overlayBinding, onHelp = {
+            CredentialUnlockUi.showRecovery(context, ::addFallbackView) {
+                dismiss(unlocked = true)
+            }
+        }) { method ->
             selectedMethod = method
             LockScreenUi.select(overlayBinding, method)
             openSelectedMethod()
@@ -224,6 +228,7 @@ class LockOverlayWindow(private val context: Context) {
             PixelFormat.TRANSLUCENT
         ).apply {
             gravity = Gravity.TOP or Gravity.START
+            softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 setFitInsetsTypes(0)
                 layoutInDisplayCutoutMode =

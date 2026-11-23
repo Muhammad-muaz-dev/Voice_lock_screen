@@ -104,7 +104,9 @@ data class AppSettings(
     @SerializedName("subscription_page")
     val subscriptionPage: String?,
     @SerializedName("inappbanner_url")
-    val inappbannerUrl: String?
+    val inappbannerUrl: String?,
+    @SerializedName("terms_of_service")
+    val termsOfService: String? = null
 )
 
 @Keep

@@ -1,3 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Primary pill button gradient (reference blue to cyan, mapped to our violet family). -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle"><corners android:radius="@dimen/vn_dp_1000" /><gradient android:angle="0" android:startColor="#FF5047E2" android:endColor="#FF8B84FF" /></shape>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle"><corners android:radius="@dimen/vn_dp_1000" /><gradient android:angle="0" android:startColor="@color/primary" android:endColor="@color/primaryHighlight" /></shape>

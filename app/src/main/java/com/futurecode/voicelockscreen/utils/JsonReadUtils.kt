@@ -53,6 +53,7 @@ object JsonReadUtils {
 
                             prefManager.contactUs = it.appSettings?.contactUs ?: ""
                             prefManager.privacyPolicy = it.appSettings?.privacyPolicy ?: ""
+                            prefManager.termsOfService = it.appSettings?.termsOfService.orEmpty()
                             prefManager.notificationUrl = it.appSettings?.notificationUrl ?: ""
 
 

@@ -42,6 +42,7 @@ enum class AppConstants {
 
     CONTACT_US,
     PRIVACY_POLICY,
+    TERMS_OF_SERVICE,
     SUBSCRIPTION_PAGE,
     KEY_ONBOARDING_DONE,
     KEY_LANGAUGE,

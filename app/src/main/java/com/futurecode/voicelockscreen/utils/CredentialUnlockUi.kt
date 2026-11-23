@@ -1,9 +1,12 @@
 package com.futurecode.voicelockscreen.utils
 
 import android.content.res.ColorStateList
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
@@ -12,8 +15,53 @@ import androidx.core.view.updatePadding
 import androidx.core.content.ContextCompat
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.databinding.ViewPinEntryBinding
+import com.futurecode.voicelockscreen.databinding.DialogSecurityRecoveryBinding
+import com.futurecode.voicelockscreen.ui.afterlogin.SecurityQuestionFragment
+import com.futurecode.voicelockscreen.ui.afterlogin.VoiceSetupFragment
 
 object CredentialUnlockUi {
+    private const val RECOVERY_ATTEMPTS = "recovery_failed_attempts"
+    private const val RECOVERY_LOCKOUT = "recovery_lockout_until"
+
+    fun showRecovery(context: Context, showOverlay: (Int) -> View, onVerified: () -> Unit) {
+        val prefs = context.getSharedPreferences(VoiceSetupFragment.VOICE_PREFS, Context.MODE_PRIVATE)
+        val question = prefs.getString(SecurityQuestionFragment.PREF_QUESTION, null).orEmpty()
+        val savedAnswer = prefs.getString(SecurityQuestionFragment.PREF_ANSWER, null).orEmpty()
+        if (question.isBlank() || savedAnswer.isBlank()) {
+            Toast.makeText(context, R.string.lock_screen_help_message, Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val recovery = DialogSecurityRecoveryBinding.bind(showOverlay(R.layout.dialog_security_recovery))
+        recovery.recoveryQuestion.text = question
+        recovery.recoveryAnswer.doAfterTextChanged { answer ->
+            recovery.recoveryApply.isEnabled = !answer.isNullOrBlank()
+            recovery.recoveryApply.alpha = if (recovery.recoveryApply.isEnabled) 1f else 0.5f
+            recovery.recoveryAnswer.error = null
+        }
+        recovery.recoveryApply.setOnClickListener {
+            val now = System.currentTimeMillis()
+            if (now < prefs.getLong(RECOVERY_LOCKOUT, 0L)) {
+                recovery.recoveryAnswer.error = context.getString(R.string.lockout_active)
+                return@setOnClickListener
+            }
+            val answer = recovery.recoveryAnswer.text.toString().trim()
+            if (answer == savedAnswer) {
+                prefs.edit().remove(RECOVERY_ATTEMPTS).remove(RECOVERY_LOCKOUT).apply()
+                recovery.recoveryAnswer.text?.clear()
+                onVerified()
+            } else {
+                val attempts = prefs.getInt(RECOVERY_ATTEMPTS, 0) + 1
+                val locked = attempts >= 5
+                prefs.edit().putInt(RECOVERY_ATTEMPTS, if (locked) 0 else attempts)
+                    .putLong(RECOVERY_LOCKOUT, if (locked) now + 30 * 60_000L else 0L)
+                    .apply()
+                recovery.recoveryAnswer.error = context.getString(
+                    if (locked) R.string.lockout_active else R.string.recovery_answer_incorrect
+                )
+            }
+        }
+    }
     fun bindPin(view: View, pinLength: Int, onSubmit: (String) -> Unit) {
         val entry = ViewPinEntryBinding.bind(view.findViewById(R.id.unlockPinEntry))
         val input = StringBuilder()

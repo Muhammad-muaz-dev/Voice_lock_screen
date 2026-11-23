@@ -88,6 +88,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCamera"
                 style="@style/Widget.VoiceLock.Card"
+                android:theme="@style/ThemeOverlay.VoiceLock.HomeCard"
+                app:cardBackgroundColor="@color/surface"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xl"
@@ -162,6 +164,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/pinLock"
                 style="@style/Widget.VoiceLock.Card"
+                android:theme="@style/ThemeOverlay.VoiceLock.HomeCard"
+                app:cardBackgroundColor="@color/surface"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="12dp"
@@ -236,6 +240,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/patternLock"
                 style="@style/Widget.VoiceLock.Card"
+                android:theme="@style/ThemeOverlay.VoiceLock.HomeCard"
+                app:cardBackgroundColor="@color/surface"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -310,6 +316,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/fingerLock"
                 style="@style/Widget.VoiceLock.Card"
+                android:theme="@style/ThemeOverlay.VoiceLock.HomeCard"
+                app:cardBackgroundColor="@color/surface"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="12dp"

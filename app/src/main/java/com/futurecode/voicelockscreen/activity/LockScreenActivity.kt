@@ -65,7 +65,12 @@ class LockScreenActivity : BaseActivity() {
         setContentView(binding.root)
 
         ThemeWallpaperStore.applyTo(binding.imgWallpaper, this)
-        LockScreenUi.bind(binding) { method ->
+        LockScreenUi.bind(binding, onHelp = {
+            CredentialUnlockUi.showRecovery(this, { layout ->
+                speechSession.cancel()
+                showFallbackOverlay(layout)
+            }) { unlockAndClose(removeFallback = true) }
+        }) { method ->
             selectedMethod = method
             LockScreenUi.select(binding, method)
             openSelectedUnlockMethod()

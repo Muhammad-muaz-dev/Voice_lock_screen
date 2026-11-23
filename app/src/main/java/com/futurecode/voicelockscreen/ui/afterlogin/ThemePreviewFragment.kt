@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.view.ViewCompat
@@ -68,6 +69,25 @@ class ThemePreviewFragment : BaseFragment<FragmentThemePreviewBinding>(FragmentT
     private fun setupEdgeToEdgePreview() {
         val views = binding
         val content = views.lockScreen.lockContent
+        // A natural-height preview needs top-to-bottom constraints before it can be scaled.
+        // The interactive lock screen uses bottom anchors to fill its full-height viewport.
+        ConstraintSet().apply {
+            clone(content)
+            clear(R.id.lockShortcuts, ConstraintSet.BOTTOM)
+            clear(R.id.micRings, ConstraintSet.BOTTOM)
+            clear(R.id.tvSpeakHint, ConstraintSet.BOTTOM)
+            connect(
+                R.id.micRings, ConstraintSet.TOP,
+                R.id.lockShortcuts, ConstraintSet.BOTTOM,
+                resources.getDimensionPixelSize(R.dimen.spacing_xxl)
+            )
+            connect(
+                R.id.tvSpeakHint, ConstraintSet.TOP,
+                R.id.micRings, ConstraintSet.BOTTOM,
+                resources.getDimensionPixelSize(R.dimen.spacing_sm)
+            )
+            applyTo(content)
+        }
         val scroll = content.parent as ViewGroup
         val scene = views.lockScreen.root
         val viewport = ThemePreviewViewport(requireContext())

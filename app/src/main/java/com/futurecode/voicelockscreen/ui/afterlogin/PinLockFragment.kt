@@ -94,7 +94,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
     private fun setupMenu() {
         bindOption(
             binding.cardPinSetup,
-            R.drawable.img_pin_setup_icon,
+            R.drawable.ic_pin,
             R.string.pin_setup_title,
             R.string.pin_setup_card_desc,
             R.string.pin_setup_now
@@ -104,7 +104,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         }
         bindOption(
             binding.cardRecovery,
-            R.drawable.img_pin_recovery_icon,
+            R.drawable.ic_security_question,
             R.string.recovery_password_title,
             R.string.recovery_password_card_desc,
             R.string.recovery_set_question

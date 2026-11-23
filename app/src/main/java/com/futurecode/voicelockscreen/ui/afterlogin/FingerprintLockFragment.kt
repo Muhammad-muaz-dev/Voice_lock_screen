@@ -3,10 +3,10 @@ package com.futurecode.voicelockscreen.ui.afterlogin
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
@@ -27,7 +27,7 @@ class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(Fra
         }
 
         if (isFingerprintEnabled()) {
-            binding.tvFingerprintStatus.text = getString(R.string.fingerprint_enabled)
+            showStatus(R.string.fingerprint_enabled)
         }
     }
 
@@ -57,7 +57,7 @@ class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(Fra
                 }
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    binding.tvFingerprintStatus.text = errString
+                    renderStatus(errString, isError = true)
                 }
             }
         )
@@ -73,8 +73,14 @@ class FingerprintLockFragment : BaseFragment<FragmentFingerprintLockBinding>(Fra
     }
 
     private fun showStatus(messageRes: Int) {
-        binding.tvFingerprintStatus.text = getString(messageRes)
-        Toast.makeText(requireContext(), messageRes, Toast.LENGTH_SHORT).show()
+        renderStatus(getString(messageRes), isError = messageRes != R.string.fingerprint_enabled)
+    }
+
+    private fun renderStatus(message: CharSequence, isError: Boolean) {
+        val status = bindingOrNull?.tvFingerprintStatus ?: return
+        status.text = message
+        status.setTextColor(ContextCompat.getColor(status.context, if (isError) R.color.error else R.color.successStrong))
+        status.isVisible = true
     }
 
     private fun saveFingerprintEnabled() {

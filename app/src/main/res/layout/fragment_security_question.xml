@@ -1,184 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Recovery Password: pick a question (bottom sheet) and save an answer. -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:clipToPadding="false"
-    android:clipChildren="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.afterlogin.SecurityQuestionFragment">
+    android:background="@color/surface"
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:id="@+id/btnBack"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/spacing_max"
+        android:layout_height="@dimen/spacing_max"
         android:layout_marginStart="@dimen/spacing_sm"
-        android:layout_marginTop="@dimen/spacing_md"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/back"
-        android:padding="10dp"
+        android:padding="@dimen/spacing_md"
         android:src="@drawable/ic_arrow_back_line"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvToolbarTitle"
-        style="@style/Text.VoiceLock.titleXL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="64dp"
-        android:fontFamily="@font/sora_semibold"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="@string/recovery_password_title"
-        android:textColor="@color/primary_text"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/btnBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btnBack" />
-
     <androidx.core.widget.NestedScrollView
-        android:paddingTop="@dimen/card_shadow_gutter"
-        android:clipChildren="true"
         android:id="@+id/recoveryScroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/spacing_lg"
-        android:clipToPadding="false"
         android:overScrollMode="never"
-        android:paddingBottom="@dimen/spacing_xxl"
         app:layout_constraintBottom_toTopOf="@id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnBack">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:clipToPadding="false"
-            android:clipChildren="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/spacing_lg">
+            android:paddingHorizontal="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_xl">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:elevation="@dimen/elevation_card"
-                android:id="@+id/answerCard"
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                style="@style/Text.VoiceLock.titleXL"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_settings_card"
-                android:padding="@dimen/spacing_xl"
+                android:gravity="center"
+                android:text="@string/vn_text_set_up_a_security_question"
+                android:textColor="@color/primary_text"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvQuestionLabel"
-                    style="@style/Text.VoiceLock.titleS"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sora_semibold"
-                    android:text="@string/recovery_question_label"
-                    android:textColor="@color/primary_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tvQuestionIntro"
+                style="@style/Text.VoiceLock.bodyS"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:gravity="center"
+                android:text="@string/security_question_hint"
+                android:textColor="@color/textSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvToolbarTitle" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/questionField"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:background="@drawable/bg_pin_input_field"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="56dp"
-                    android:paddingStart="@dimen/spacing_lg"
-                    android:paddingEnd="@dimen/spacing_md"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvQuestionLabel">
+            <TextView
+                android:id="@+id/questionField"
+                style="@style/Text.VoiceLock.bodyL"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxxl"
+                android:background="@drawable/bg_credential_info"
+                android:backgroundTint="@color/recovery_question_picker"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_chevron_right"
+                android:drawablePadding="@dimen/spacing_sm"
+                android:drawableTint="@color/info"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/spacing_max"
+                android:paddingHorizontal="@dimen/spacing_lg"
+                android:paddingVertical="@dimen/spacing_sm"
+                android:text="@string/choose_security_question"
+                android:textColor="@color/primary_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvQuestionIntro" />
 
-                    <TextView
-                        android:id="@+id/tvQuestion"
-                        style="@style/Text.VoiceLock.bodyL"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_sm"
-                        android:fontFamily="@font/sora_regular"
-                        android:hint="@string/recovery_question_placeholder"
-                        android:paddingVertical="@dimen/spacing_md"
-                        android:textColor="@color/primary_text"
-                        android:textColorHint="@color/textPlaceholder"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/ivQuestionArrow"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tvQuestion"
+                style="@style/Text.VoiceLock.bodyL"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:background="@drawable/bg_credential_info"
+                android:backgroundTint="@color/recovery_question_display"
+                android:gravity="center_vertical"
+                android:hint="@string/recovery_question_placeholder"
+                android:minHeight="60dp"
+                android:padding="@dimen/spacing_lg"
+                android:textColor="@color/primary_text"
+                android:textColorHint="@color/textSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/questionField" />
 
-                    <ImageView
-                        android:id="@+id/ivQuestionArrow"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/vn_ic_arrow_down"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/primary_text" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/etAnswer"
+                style="@style/Text.VoiceLock.bodyL"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:background="@drawable/bg_credential_info"
+                android:backgroundTint="@color/recovery_answer_fill"
+                android:gravity="top|start"
+                android:hint="@string/enter_your_answer"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLength="100"
+                android:minHeight="96dp"
+                android:padding="@dimen/spacing_lg"
+                android:textColor="@color/primary_text"
+                android:textColorHint="@color/textSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvQuestion" />
 
-                <TextView
-                    android:id="@+id/tvAnswerLabel"
-                    style="@style/Text.VoiceLock.titleS"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xl"
-                    android:fontFamily="@font/sora_semibold"
-                    android:text="@string/recovery_answer_label"
-                    android:textColor="@color/primary_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/questionField" />
-
-                <EditText
-                    android:id="@+id/etAnswer"
-                    style="@style/Text.VoiceLock.bodyL"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:background="@drawable/bg_pin_input_field"
-                    android:fontFamily="@font/sora_regular"
-                    android:hint="@string/enter_your_answer"
-                    android:importantForAutofill="no"
-                    android:inputType="textCapSentences"
-                    android:maxLength="100"
-                    android:minHeight="56dp"
-                    android:paddingHorizontal="@dimen/spacing_lg"
-                    android:paddingVertical="@dimen/spacing_md"
-                    android:textColor="@color/primary_text"
-                    android:textColorHint="@color/textPlaceholder"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvAnswerLabel" />
-
-                <TextView
-                    android:id="@+id/tvError"
-                    style="@style/Text.VoiceLock.bodyS"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:fontFamily="@font/sora_regular"
-                    android:text="@string/security_answer_short"
-                    android:textColor="@color/error"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etAnswer" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvError"
+                style="@style/Text.VoiceLock.bodyS"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:text="@string/security_answer_short"
+                android:textColor="@color/error"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etAnswer" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -186,17 +142,17 @@
         android:id="@+id/btnSave"
         style="@style/Text.VoiceLock.buttonL"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_lg"
         android:layout_marginBottom="@dimen/spacing_xxl"
         android:background="@drawable/bg_primary_pill_button"
         android:clickable="true"
         android:focusable="true"
-        android:fontFamily="@font/sora_semibold"
         android:gravity="center"
+        android:minHeight="56dp"
+        android:paddingVertical="@dimen/spacing_sm"
         android:text="@string/recovery_save"
         android:textColor="@color/white"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

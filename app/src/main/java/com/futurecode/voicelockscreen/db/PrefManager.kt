@@ -249,6 +249,12 @@ class PrefManager(private val context: Context) {
             editor.putString(AppConstants.PRIVACY_POLICY.name, value).apply()
         }
 
+    var termsOfService: String
+        get() = sharedPref.getString(AppConstants.TERMS_OF_SERVICE.name, "").orEmpty()
+        set(value) {
+            editor.putString(AppConstants.TERMS_OF_SERVICE.name, value).apply()
+        }
+
     var subscriptionPage: String
         get() = sharedPref.getString(AppConstants.SUBSCRIPTION_PAGE.name, "") ?: ""
         set(value) {

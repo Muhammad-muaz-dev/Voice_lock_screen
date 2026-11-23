@@ -47,10 +47,9 @@
         android:id="@+id/settingsScroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/spacing_xl"
+        android:layout_marginTop="@dimen/spacing_sm"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        android:paddingBottom="@dimen/spacing_xxl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,18 +60,32 @@
             android:clipChildren="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/spacing_lg">
+            android:paddingHorizontal="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_xxl">
 
             <!-- Card 1: Notifications, Language -->
+            <TextView
+                android:id="@+id/settingsPreferences"
+                style="@style/Text.VoiceLock.titleS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:accessibilityHeading="true"
+                android:text="@string/settings_section_preferences"
+                android:textColor="@color/textSecondary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:elevation="@dimen/elevation_card"
                 android:id="@+id/cardGeneral"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:background="@drawable/bg_settings_card"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/settingsPreferences">
 
                 <include
                     android:id="@+id/rowNotifications"
@@ -143,16 +156,28 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Card 2: Rate us, Feedback, Share app -->
+            <TextView
+                android:id="@+id/settingsSupport"
+                style="@style/Text.VoiceLock.titleS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:accessibilityHeading="true"
+                android:text="@string/settings_section_support"
+                android:textColor="@color/textSecondary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardGeneral" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:elevation="@dimen/elevation_card"
                 android:id="@+id/cardSupport"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_lg"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:background="@drawable/bg_settings_card"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardGeneral">
+                app:layout_constraintTop_toBottomOf="@id/settingsSupport">
 
                 <include
                     android:id="@+id/rowRate"
@@ -203,7 +228,7 @@
                     app:layout_constraintTop_toBottomOf="@id/dividerFeedback" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Card 3: Privacy policy -->
+            <!-- Legal links -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:elevation="@dimen/elevation_card"
                 android:id="@+id/cardPrivacy"
@@ -211,6 +236,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_lg"
                 android:background="@drawable/bg_settings_card"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardSupport">
@@ -220,10 +246,29 @@
                     layout="@layout/item_settings_row"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/dividerLegal"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
+                    android:background="@color/border"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rowPrivacy" />
+
+                <include
+                    android:id="@+id/rowTerms"
+                    layout="@layout/item_settings_row"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dividerLegal" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

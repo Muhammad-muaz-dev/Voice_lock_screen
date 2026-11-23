@@ -2,5 +2,5 @@
 <gradient android:angle="0.0" android:type="linear" android:startX="43.0" android:startY="0.0" android:endX="43.0" android:endY="86.0"
   xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt">
     <item android:color="#ff6e67fe" android:offset="0.0" />
-    <item android:color="#ff5047e2" android:offset="1.0" />
+    <item android:color="@color/primary" android:offset="1.0" />
 </gradient>

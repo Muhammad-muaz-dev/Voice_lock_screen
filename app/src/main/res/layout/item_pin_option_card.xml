@@ -13,11 +13,14 @@
         android:id="@+id/ivOptionIcon"
         android:layout_width="68dp"
         android:layout_height="68dp"
+        android:background="@drawable/bg_credential_info"
         android:importantForAccessibility="no"
+        android:padding="@dimen/spacing_lg"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/img_pin_setup_icon" />
+        app:tint="@color/primary"
+        tools:src="@drawable/ic_pin" />
 
     <TextView
         android:id="@+id/tvOptionTitle"
