@@ -34,9 +34,8 @@
             app:layout_constraintTop_toTopOf="parent" />
         <ImageView
             android:id="@+id/ivSettings"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="8dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_settings"
             app:tint="@color/primary_text"
             android:contentDescription="@string/settings"
