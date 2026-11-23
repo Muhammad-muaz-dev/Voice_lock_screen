@@ -27,23 +27,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.62" />
+            app:layout_constraintGuide_percent="0.68" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vpOnboarding"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/spacing_xs"
             app:layout_constraintBottom_toBottomOf="@id/guideIllustration"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnOnboardSkip" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/btnOnboardSkip"
             style="@style/Text.VoiceLock.titleS"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
             android:layout_marginEnd="@dimen/spacing_sm"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:fontFamily="@font/sora_medium"
@@ -51,7 +51,7 @@
             android:paddingHorizontal="@dimen/spacing_md"
             android:text="@string/onboarding_skip"
             android:textColor="@color/textSecondary"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

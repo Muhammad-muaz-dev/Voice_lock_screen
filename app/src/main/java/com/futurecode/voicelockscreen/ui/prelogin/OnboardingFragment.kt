@@ -168,7 +168,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
         override fun onBindViewHolder(holder: Holder, position: Int) {
             val page = pages[position]
             val view = holder.page
-            view.ivMockup.setImageResource(page.mockup)
+            bindMockup(view.ivMockup, page.mockup)
             view.ivShield.isVisible = page.showShield
             val slots = listOf(
                 view.badgeOne to view.badgeOneIcon,
@@ -177,6 +177,20 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
                 view.badgeFour to view.badgeFourIcon
             )
             slots.forEachIndexed { index, (frame, icon) -> bindBadge(frame, icon, page.badges.getOrNull(index)) }
+        }
+
+        private fun bindMockup(mockup: ImageView, @DrawableRes artwork: Int) {
+            val isVoiceArtwork = artwork == R.drawable.img_onboard_1
+            val gutter = resources.getDimensionPixelSize(
+                if (isVoiceArtwork) R.dimen.spacing_lg else R.dimen.spacing_xxxl
+            )
+            mockup.layoutParams = (mockup.layoutParams as ConstraintLayout.LayoutParams).apply {
+                marginStart = gutter
+                marginEnd = gutter
+                dimensionRatio = if (isVoiceArtwork) VOICE_ARTWORK_RATIO else null
+            }
+            mockup.scaleType = if (isVoiceArtwork) ImageView.ScaleType.FIT_XY else ImageView.ScaleType.FIT_CENTER
+            mockup.setImageResource(artwork)
         }
 
         private fun bindBadge(frame: FrameLayout, icon: ImageView, badge: Badge?) {
@@ -192,6 +206,8 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
     }
 
     private companion object {
+        // Slightly widen the full artwork, including its transparent shadow clearance.
+        const val VOICE_ARTWORK_RATIO = "0.56:1"
         const val DOT_DP = 8
         const val ACTIVE_DOT_DP = 28
         const val TEXT_FADE_MS = 220L
