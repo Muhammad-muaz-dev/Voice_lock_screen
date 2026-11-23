@@ -2,63 +2,62 @@ package com.futurecode.voicelockscreen.ui.afterlogin
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPatternLockBinding
 import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.service.LockService
+
 class PatternLockFragment : BaseFragment<FragmentPatternLockBinding>(FragmentPatternLockBinding::inflate) {
 
     private var firstPattern: String? = null
-    private var isConfirmingPattern = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.ivBack.setOnClickListener {
-            findNavController().popBackStack()
+        binding.ivBack.setOnClickListener { findNavController().popBackStack() }
+        binding.btnStartOver.setOnClickListener {
+            firstPattern = null
+            binding.patternView.clearPattern()
+            renderPrompt()
         }
-
-        binding.patternView.onPatternComplete = { sequence ->
-            handlePattern(sequence)
-        }
+        binding.patternView.useSetupAppearance()
+        binding.patternView.onPatternComplete = ::handlePattern
+        renderPrompt()
     }
 
     private fun handlePattern(sequence: String) {
-        val dotCount = sequence.split("-").filter { it.isNotBlank() }.size
-        if (dotCount < 4) {
-            binding.tvPatternStatus.text = getString(R.string.pattern_too_short)
-            Toast.makeText(requireContext(), R.string.pattern_too_short, Toast.LENGTH_SHORT).show()
-            binding.patternView.clearPattern()
+        binding.patternView.clearPattern()
+        if (sequence.count { it == '-' } < 3) {
+            renderPrompt(R.string.pattern_too_short)
             return
         }
 
-        if (!isConfirmingPattern) {
-            firstPattern = sequence
-            isConfirmingPattern = true
-            binding.tvCreatePattern.text = getString(R.string.confirm_your_pattern)
-            binding.tvPatternHint.text = getString(R.string.pattern_confirm_hint)
-            binding.tvPatternStatus.text = ""
-            binding.patternView.clearPattern()
-            return
+        val original = firstPattern
+        when {
+            original == null -> {
+                firstPattern = sequence
+                renderPrompt()
+            }
+            sequence != original -> renderPrompt(R.string.pattern_setup_retry)
+            else -> {
+                SecurePatternStore.savePattern(requireContext(), sequence)
+                LockService.enableAndStart(requireContext())
+                SuccessFragment.replaceCurrent(findNavController(), R.string.pattern_saved)
+            }
         }
+    }
 
-        if (sequence == firstPattern) {
-            SecurePatternStore.savePattern(requireContext(), sequence)
-            LockService.enableAndStart(requireContext())
-            binding.tvPatternStatus.text = getString(R.string.pattern_saved)
-            Toast.makeText(requireContext(), R.string.pattern_saved, Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack()
-        } else {
-            firstPattern = null
-            isConfirmingPattern = false
-            binding.tvCreatePattern.text = getString(R.string.create_your_pattern)
-            binding.tvPatternHint.text = getString(R.string.pattern_hint)
-            binding.tvPatternStatus.text = getString(R.string.pattern_mismatch)
-            Toast.makeText(requireContext(), R.string.pattern_mismatch, Toast.LENGTH_SHORT).show()
-            binding.patternView.clearPattern()
-        }
+    private fun renderPrompt(error: Int? = null) {
+        val confirming = firstPattern != null
+        binding.btnStartOver.isVisible = confirming
+        binding.tvCreatePattern.setText(
+            error ?: if (confirming) R.string.pattern_setup_confirm else R.string.pattern_setup_draw
+        )
+        binding.tvCreatePattern.setTextColor(
+            ContextCompat.getColor(requireContext(), if (error == null) R.color.textPrimary else R.color.error)
+        )
     }
 }

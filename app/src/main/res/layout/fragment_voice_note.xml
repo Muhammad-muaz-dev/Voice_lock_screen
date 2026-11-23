@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- AI Voice Notes list: copy of the reference layout (ad slots removed). -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,6 +27,7 @@
     <TextView
         android:id="@+id/tvTitle"
         style="@style/VN.Headline_XSM_Medium"
+        android:textSize="20sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/vn_dp_10"
@@ -58,6 +62,8 @@
         app:layout_constraintTop_toTopOf="@id/ivLogo" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:clipToPadding="false"
+        android:clipChildren="false"
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -70,6 +76,7 @@
         app:layout_constraintTop_toBottomOf="@id/ivLogo">
 
         <View
+            android:elevation="@dimen/elevation_card"
             android:id="@+id/frameCreateNew"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -81,6 +88,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:translationZ="@dimen/elevation_card"
             android:id="@+id/tvHeaderTitle"
             style="@style/VN.Text_LG_SemiBold"
             android:layout_width="wrap_content"
@@ -96,6 +104,7 @@
             app:layout_constraintTop_toTopOf="@id/frameCreateNew" />
 
         <TextView
+            android:translationZ="@dimen/elevation_card"
             android:id="@+id/tvHeaderTitle2"
             style="@style/VN.Text_LG_SemiBold"
             android:layout_width="wrap_content"
@@ -109,6 +118,7 @@
             app:layout_constraintTop_toTopOf="@id/tvHeaderTitle" />
 
         <TextView
+            android:translationZ="@dimen/elevation_card"
             android:id="@+id/tvDesc"
             style="@style/VN.Text_SM_Regular"
             android:layout_width="0dp"
@@ -123,6 +133,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvHeaderTitle" />
 
         <TextView
+            android:translationZ="@dimen/elevation_card"
             android:id="@+id/tvCreateNew"
             style="@style/VN.Text_MD_Medium"
             android:layout_width="wrap_content"
@@ -154,6 +165,8 @@
             app:layout_constraintTop_toBottomOf="@id/frameCreateNew" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:clipChildren="false"
+            android:paddingTop="@dimen/card_shadow_gutter"
             android:id="@+id/rvNotes"
             android:layout_width="0dp"
             android:layout_height="0dp"

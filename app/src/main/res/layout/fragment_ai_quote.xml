@@ -21,6 +21,7 @@
     <TextView
         android:id="@+id/tvName"
         style="@style/VN.Headline_XSM_Medium"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/vn_dp_8"

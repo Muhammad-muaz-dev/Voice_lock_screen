@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    PIN setup flow driven by PinLockFragment:
-    menu -> step 1 type -> step 2 enter -> step 3 confirm -> step 4 success -> PIN lock test.
--->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- PIN menu, credential entry, success and wallpaper test. -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pinRoot"
@@ -15,6 +15,8 @@
     <!-- ===================== Setup flow (system-bar insets applied in code) ===================== -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:clipToPadding="false"
+        android:clipChildren="false"
         android:id="@+id/clSetup"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -41,55 +43,21 @@
             style="@style/Text.VoiceLock.titleXL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="104dp"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_marginEnd="@dimen/spacing_max"
             android:fontFamily="@font/sora_semibold"
-            android:gravity="center"
-            android:maxLines="1"
+            android:gravity="start"
             android:text="@string/pin_setup_title"
             android:textColor="@color/primary_text"
-            android:textSize="22sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/btnBack"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btnBack" />
-
-        <TextView
-            android:id="@+id/btnHeaderNext"
-            style="@style/Text.VoiceLock.buttonS"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:layout_marginEnd="@dimen/spacing_lg"
-            android:background="@drawable/bg_header_pill_primary"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="@font/sora_medium"
-            android:gravity="center"
-            android:minWidth="80dp"
-            android:paddingHorizontal="@dimen/spacing_xl"
-            android:text="@string/next"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/btnBack"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btnBack"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/btnHeaderDone"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="@dimen/spacing_lg"
-            android:background="@drawable/bg_header_circle_primary"
-            android:contentDescription="@string/pin_done"
-            android:padding="11dp"
-            android:src="@drawable/ic_check_white"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/btnBack"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
             app:layout_constraintTop_toTopOf="@id/btnBack" />
 
         <androidx.core.widget.NestedScrollView
+            android:paddingTop="@dimen/card_shadow_gutter"
+            android:clipChildren="false"
             android:id="@+id/setupScroll"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -103,6 +71,8 @@
             app:layout_constraintTop_toBottomOf="@id/btnBack">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:clipToPadding="false"
+                android:clipChildren="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/spacing_lg">
@@ -128,194 +98,25 @@
                     app:layout_constraintTop_toBottomOf="@id/cardPinSetup" />
 
                 <!-- ===== Step 1: choose PIN length ===== -->
-                <TextView
-                    android:id="@+id/tvTypeStep"
-                    style="@style/Text.VoiceLock.titleM"
+                <include
+                    android:id="@+id/pinEntry"
+                    layout="@layout/view_pin_entry"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sora_medium"
-                    android:gravity="center"
-                    android:text="@string/pin_step_choose_type"
-                    android:textColor="@color/primary_text"
-                    android:textSize="17sp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <include
-                    android:id="@+id/stepperType"
-                    layout="@layout/view_pin_stepper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="@dimen/spacing_lg"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTypeStep" />
-
-                <include
-                    android:id="@+id/typeFour"
-                    layout="@layout/item_pin_type_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xl"
-                    android:layout_marginEnd="@dimen/spacing_sm"
-                    app:layout_constraintEnd_toStartOf="@id/typeFive"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/stepperType" />
-
-                <include
-                    android:id="@+id/typeFive"
-                    layout="@layout/item_pin_type_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_sm"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/typeFour"
-                    app:layout_constraintTop_toTopOf="@id/typeFour" />
-
-                <include
-                    android:id="@+id/typeSix"
-                    layout="@layout/item_pin_type_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_lg"
-                    android:layout_marginEnd="@dimen/spacing_sm"
-                    app:layout_constraintEnd_toStartOf="@id/typeEight"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/typeFour" />
-
-                <include
-                    android:id="@+id/typeEight"
-                    layout="@layout/item_pin_type_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_sm"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/typeSix"
-                    app:layout_constraintTop_toTopOf="@id/typeSix" />
-
-                <!-- ===== Steps 2-4: one card ===== -->
-                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardStep"
+                    layout="@layout/view_success_screen"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_settings_card"
-                    android:paddingHorizontal="@dimen/spacing_xl"
-                    android:paddingTop="@dimen/spacing_xxl"
-                    android:paddingBottom="@dimen/spacing_xxl"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/tvStepTitle"
-                        style="@style/Text.VoiceLock.titleL"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sora_semibold"
-                        android:gravity="center"
-                        android:textColor="@color/primary_text"
-                        android:textSize="17sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="@string/pin_step_input" />
-
-                    <ImageView
-                        android:id="@+id/ivStepArt"
-                        android:layout_width="104dp"
-                        android:layout_height="122dp"
-                        android:layout_marginTop="@dimen/spacing_lg"
-                        android:importantForAccessibility="no"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/img_pin_lock_illustration"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvStepTitle" />
-
-                    <TextView
-                        android:id="@+id/tvSuccessTitle"
-                        style="@style/Text.VoiceLock.titleL"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_lg"
-                        android:fontFamily="@font/sora_semibold"
-                        android:gravity="center"
-                        android:text="@string/pin_setup_success"
-                        android:textColor="@color/success"
-                        android:textSize="20sp"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ivStepArt" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/pinInputField"
-                        android:layout_width="0dp"
-                        android:layout_height="64dp"
-                        android:layout_marginTop="@dimen/spacing_xs"
-                        android:background="@drawable/bg_pin_input_field"
-                        android:paddingStart="@dimen/spacing_lg"
-                        android:paddingEnd="@dimen/spacing_xs"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvSuccessTitle">
-
-                        <EditText
-                            android:id="@+id/etPin"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:background="@null"
-                            android:fontFamily="@font/sora_semibold"
-                            android:importantForAutofill="no"
-                            android:inputType="numberPassword"
-                            android:letterSpacing="0.3"
-                            android:textColor="@color/primary_text"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/btnTogglePin"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="LabelFor" />
-
-                        <ImageView
-                            android:id="@+id/btnTogglePin"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:contentDescription="@string/pin_show"
-                            android:padding="10dp"
-                            android:src="@drawable/ic_eye_outline"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/tvStepHint"
-                        style="@style/Text.VoiceLock.bodyM"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_lg"
-                        android:fontFamily="@font/sora_regular"
-                        android:gravity="center"
-                        android:textColor="@color/textSecondary"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/pinInputField"
-                        tools:text="@string/pin_input_hint" />
-
-                    <include
-                        android:id="@+id/stepperStep"
-                        layout="@layout/view_pin_stepper"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="@dimen/spacing_xl"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvStepHint" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -375,7 +176,7 @@
                 android:fontFamily="@font/sora_regular"
                 android:text="@string/pin_lock_test_title"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

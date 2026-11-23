@@ -154,4 +154,5 @@
     <color name="switch_track_lock">#E6E8EF</color>
     <color name="switch_track_unlock_translucent">#33635BFF</color>
     <color name="text_purple">#635BFF</color>
+    <color name="lock_wallpaper_scrim">#99171829</color>
 </resources>

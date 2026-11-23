@@ -124,6 +124,7 @@ class HomeActivity : BaseActivity() { // Assumed mapping, adjust if you inherit 
 
         /** Screens where a full-screen ad would interrupt a lock/unlock or purchase step. */
         private val NO_COOLDOWN_AD = setOf(
+            R.id.successFragment,
             R.id.screenPreviewFragment,
             R.id.premiumFragment
         )

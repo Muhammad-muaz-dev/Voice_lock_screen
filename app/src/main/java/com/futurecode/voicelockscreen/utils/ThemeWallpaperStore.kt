@@ -49,18 +49,6 @@ object ThemeWallpaperStore {
         image.setImageResource(getSelectedWallpaperRes(context))
     }
 
-    fun applyContent(binding: com.futurecode.voicelockscreen.databinding.FragmentScreenPreviewBinding, context: Context) {
-        binding.tvQuote.text = VoiceLockFeatureStore.lockQuote(context)
-        binding.tvGreeting.text = context.getTimeBasedGreetingRes()
-        val show = VoiceLockFeatureStore.showClockAndQuote(context)
-        binding.timeCard.visibility = if (show) android.view.View.VISIBLE else android.view.View.GONE
-        binding.quoteCard.visibility = if (show) android.view.View.VISIBLE else android.view.View.GONE
-        binding.tvGreeting.visibility = if (show) android.view.View.VISIBLE else android.view.View.GONE
-        binding.tvStatusTime.visibility = android.view.View.GONE
-        binding.tvLastNote.text = VoiceLockFeatureStore.notes(context).firstOrNull()?.title
-            ?: context.getString(R.string.record_first_note)
-    }
-
     fun getSelectedThemeId(context: Context): Int {
         return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             .getInt(KEY_THEME_ID, THEME_DEFAULT_ID)

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Lock screen themes: category chips from the themes API, then a wallpaper grid with paging. -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -55,6 +58,8 @@
         tools:listitem="@layout/item_wallpaper_category" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:clipChildren="false"
+        android:paddingTop="@dimen/card_shadow_gutter"
         android:id="@+id/rvThemes"
         android:layout_width="0dp"
         android:layout_height="0dp"

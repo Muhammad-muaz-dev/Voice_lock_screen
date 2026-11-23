@@ -20,8 +20,8 @@
         <item name="android:letterSpacing">0</item>
     </style>
     <style parent="" name="Text.VoiceLock.titleXL">
-        <item name="android:textSize">@dimen/text_titleXL</item>
-        <item name="lineHeight">24sp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="lineHeight">20sp</item>
         <item name="android:letterSpacing">0</item>
     </style>
     <style parent="" name="Text.VoiceLock.titleL">

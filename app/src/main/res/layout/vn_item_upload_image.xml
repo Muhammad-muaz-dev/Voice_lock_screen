@@ -6,9 +6,9 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@android:color/transparent"
+    app:cardBackgroundColor="@color/vn_white"
     app:cardCornerRadius="16dp"
-    app:cardElevation="0dp"
+    app:cardElevation="@dimen/elevation_card"
     app:strokeColor="@android:color/transparent">
 
     <LinearLayout

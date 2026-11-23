@@ -93,30 +93,31 @@ object AdsManager {
         val interstitial = splashInterstitial
         splashAppOpen = null
         splashInterstitial = null
-        when {
-            appOpen != null -> {
-                markFullScreenShown()
+        if (appOpen == null && interstitial == null) {
+            done()
+            return
+        }
+        startFullscreenTransition(activity, done) { transition ->
+            markFullScreenShown()
+            if (appOpen != null) {
                 appOpen.adEventCallback = object : AppOpenAdEventCallback {
                     override fun onAdShowedFullScreenContent() {
-                        main.post { markFullScreenShown() }
+                        main.post { markFullScreenShown(); transition.onAdOpened() }
                     }
 
                     override fun onAdDismissedFullScreenContent() {
-                        main.post { markFullScreenShown(); done() }
+                        main.post { markFullScreenShown(); transition.finish() }
                     }
 
                     override fun onAdFailedToShowFullScreenContent(fullScreenContentError: FullScreenContentError) {
-                        main.post(done)
+                        main.post { transition.finish() }
                     }
                 }
                 appOpen.show(activity)
-            }
-            interstitial != null -> {
-                markFullScreenShown()
-                interstitial.adEventCallback = interstitialCallback(done)
+            } else if (interstitial != null) {
+                interstitial.adEventCallback = interstitialCallback(transition)
                 interstitial.show(activity)
             }
-            else -> done()
         }
     }
 
@@ -141,7 +142,7 @@ object AdsManager {
 
     /**
      * Shows the cooldown interstitial when remote config allows it, the cooldown since the last
-     * full-screen ad has passed, and an ad is ready. Returns true when an ad is shown.
+     * full-screen ad has passed, and an ad is ready. Returns true when an ad is queued to show.
      */
     fun showCooldownInterstitial(activity: Activity): Boolean {
         if (!AdsConfig.cooldownInter || showingFullScreen) return false
@@ -153,25 +154,49 @@ object AdsManager {
             return false
         }
         cooldownAd = null
-        showingFullScreen = true
-        markFullScreenShown()
-        ad.adEventCallback = interstitialCallback { preloadCooldownInterstitial() }
-        ad.show(activity)
-        return true
+        return startFullscreenTransition(activity, ::preloadCooldownInterstitial) { transition ->
+            markFullScreenShown()
+            ad.adEventCallback = interstitialCallback(transition)
+            ad.show(activity)
+        }
     }
 
-    private fun interstitialCallback(onClosed: () -> Unit) = object : InterstitialAdEventCallback {
+    private fun startFullscreenTransition(
+        activity: Activity,
+        onComplete: () -> Unit,
+        show: (FullscreenAdTransition) -> Unit
+    ): Boolean {
+        if (showingFullScreen) {
+            onComplete()
+            return false
+        }
+        showingFullScreen = true
+        val transition = FullscreenAdTransition(activity) {
+            showingFullScreen = false
+            onComplete()
+        }
+        transition.show { show(transition) }
+        return showingFullScreen
+    }
+
+    private fun interstitialCallback(transition: FullscreenAdTransition) = object : InterstitialAdEventCallback {
         override fun onAdShowedFullScreenContent() {
-            main.post { markFullScreenShown() }
+            main.post {
+                markFullScreenShown()
+                transition.onAdOpened()
+            }
         }
 
         override fun onAdDismissedFullScreenContent() {
             // The cooldown counts from when the user is back in the app.
-            main.post { showingFullScreen = false; markFullScreenShown(); onClosed() }
+            main.post {
+                markFullScreenShown()
+                transition.finish()
+            }
         }
 
         override fun onAdFailedToShowFullScreenContent(fullScreenContentError: FullScreenContentError) {
-            main.post { showingFullScreen = false; onClosed() }
+            main.post { transition.finish() }
         }
     }
 

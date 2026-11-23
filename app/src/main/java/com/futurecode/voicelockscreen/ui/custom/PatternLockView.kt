@@ -8,6 +8,8 @@ import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.futurecode.voicelockscreen.R
 import kotlin.math.hypot
 import kotlin.math.min
 import kotlin.math.abs
@@ -21,6 +23,7 @@ class PatternLockView @JvmOverloads constructor(
 
     var onPatternComplete: ((String) -> Unit)? = null
 
+    private var setupAppearance = false
     private val selected = mutableListOf<Int>()
     private val centers = MutableList(9) { PointF() }
     private var currentX = 0f
@@ -35,7 +38,10 @@ class PatternLockView @JvmOverloads constructor(
     private var cardCornerRadius = 0f
     private val cardRect = RectF()
 
-    // Colors matching screenshot
+    private val setupRingColor = ContextCompat.getColor(context, R.color.textTertiary)
+    private val setupDotColor = ContextCompat.getColor(context, R.color.primary_dark)
+
+    // Default appearance
     private val cardBgColor = Color.parseColor("#FFFFFF")
     private val outerFillColor = Color.parseColor("#EDECFF") // light violet circle (brand tint)
     private val outerStrokeColor = Color.parseColor("#C4C1FF") // light violet circle border
@@ -83,18 +89,17 @@ class PatternLockView @JvmOverloads constructor(
         val size = w.toFloat()
 
         cardRect.set(0f, 0f, size, size)
-        cardCornerRadius = size * 0.10f // Rounded white card
+        cardCornerRadius = size * 0.10f
 
-        val padding = size * 0.10f
+        val padding = size * if (setupAppearance) 0f else 0.10f
         val usableSize = size - (padding * 2)
         val cell = usableSize / 3f
 
-        // Exact proportions matching your screenshot
-        outerCircleRadius = cell * 0.36f
-        innerDotRadius = cell * 0.10f
+        outerCircleRadius = cell * if (setupAppearance) 0.275f else 0.36f
+        innerDotRadius = cell * if (setupAppearance) 0.105f else 0.10f
         activeDotRadius = cell * 0.12f
 
-        outerCircleStrokePaint.strokeWidth = cell * 0.035f
+        outerCircleStrokePaint.strokeWidth = if (setupAppearance) resources.displayMetrics.density else cell * 0.035f
         linePaint.strokeWidth = cell * 0.07f
 
         for (row in 0 until 3) {
@@ -110,30 +115,35 @@ class PatternLockView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        // 1. Draw White Rounded Container Card
-        canvas.drawRoundRect(cardRect, cardCornerRadius, cardCornerRadius, cardPaint)
+        if (!setupAppearance) {
+            canvas.drawRoundRect(cardRect, cardCornerRadius, cardCornerRadius, cardPaint)
+        }
 
-        // 2. Draw Pattern Connecting Lines
+        val activeColor = if (isErrorState) errorColor else activeLineColor
+        linePaint.color = activeColor
         drawLines(canvas)
-
-        // 3. Draw 3x3 Pattern Dots (Exact Screenshot Style)
-        val currentColor = if (isErrorState) errorColor else innerDotColor
-        linePaint.color = currentColor
-        dotPaint.color = currentColor
 
         centers.forEachIndexed { index, point ->
             val isSelected = index in selected
-
-            // Outer Soft Blue Fill Circle
-            canvas.drawCircle(point.x, point.y, outerCircleRadius, outerCircleFillPaint)
-
-            // Outer Soft Blue Border
+            if (!setupAppearance || isSelected) {
+                canvas.drawCircle(point.x, point.y, outerCircleRadius, outerCircleFillPaint)
+            }
+            outerCircleStrokePaint.color = when {
+                !setupAppearance -> outerStrokeColor
+                isSelected -> activeColor
+                else -> setupRingColor
+            }
             canvas.drawCircle(point.x, point.y, outerCircleRadius, outerCircleStrokePaint)
 
-            // Inner Blue Dot
+            dotPaint.color = if (setupAppearance && !isSelected) setupDotColor else activeColor
             val radius = if (isSelected) activeDotRadius else innerDotRadius
             canvas.drawCircle(point.x, point.y, radius, dotPaint)
         }
+    }
+
+    fun useSetupAppearance() {
+        setupAppearance = true
+        invalidate()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -146,6 +156,14 @@ class PatternLockView @JvmOverloads constructor(
                 currentX = event.x
                 currentY = event.y
                 addTouchedDot(event.x, event.y)
+                if (setupAppearance) {
+                    if (selected.isEmpty()) {
+                        resetPattern()
+                        invalidate()
+                        return false
+                    }
+                    parent.requestDisallowInterceptTouchEvent(true)
+                }
                 invalidate()
                 return true
             }
@@ -157,7 +175,8 @@ class PatternLockView @JvmOverloads constructor(
                     invalidate()
                 }
             }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+            MotionEvent.ACTION_UP -> {
+                if (setupAppearance) parent.requestDisallowInterceptTouchEvent(false)
                 if (drawing) {
                     drawing = false
                     invalidate()
@@ -165,6 +184,10 @@ class PatternLockView @JvmOverloads constructor(
                         onPatternComplete?.invoke(selected.joinToString(separator = "-"))
                     }
                 }
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                if (setupAppearance) parent.requestDisallowInterceptTouchEvent(false)
+                clearPattern()
             }
         }
         return true
@@ -203,7 +226,7 @@ class PatternLockView @JvmOverloads constructor(
     }
 
     private fun addTouchedDot(x: Float, y: Float) {
-        val hitRadius = width / 6f
+        val hitRadius = if (setupAppearance) outerCircleRadius else width / 6f
         centers.forEachIndexed { index, point ->
             if (index !in selected && hypot(x - point.x, y - point.y) <= hitRadius) {
                 if (selected.isNotEmpty()) {

@@ -78,7 +78,7 @@
         android:id="@+id/screenPreviewFragment"
         android:name="com.futurecode.voicelockscreen.ui.afterlogin.ScreenPreviewFragment"
         android:label="@string/preview"
-        tools:layout="@layout/fragment_screen_preview" />
+        tools:layout="@layout/view_lock_screen" />
     <fragment
         android:id="@+id/pinLockFragment"
         android:name="com.futurecode.voicelockscreen.ui.afterlogin.PinLockFragment"
@@ -123,4 +123,9 @@
         android:name="com.futurecode.voicelockscreen.ui.afterlogin.VoiceNoteFragment"
         android:label="@string/tab_voice_note"
         tools:layout="@layout/fragment_voice_note" />
-<fragment android:id="@+id/setupCompleteFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.SetupCompleteFragment" android:label="@string/setup_done_title" /><fragment android:id="@+id/noteRecordFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.NoteRecordFragment" android:label="@string/note_new_title" /><fragment android:id="@+id/noteDetailFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.NoteDetailFragment" android:label="@string/note_detail_title" /><fragment android:id="@+id/customThemeFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.CustomThemeFragment" android:label="@string/lock_screen_themes" /><fragment android:id="@+id/themePreviewFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.ThemePreviewFragment" android:label="@string/preview" /></navigation>
+<fragment android:id="@+id/setupCompleteFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.SetupCompleteFragment" android:label="@string/setup_done_title" /><fragment android:id="@+id/noteRecordFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.NoteRecordFragment" android:label="@string/note_new_title" /><fragment android:id="@+id/noteDetailFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.NoteDetailFragment" android:label="@string/note_detail_title" /><fragment android:id="@+id/customThemeFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.CustomThemeFragment" android:label="@string/lock_screen_themes" /><fragment android:id="@+id/themePreviewFragment" android:name="com.futurecode.voicelockscreen.ui.afterlogin.ThemePreviewFragment" android:label="@string/preview" />
+    <fragment
+        android:id="@+id/successFragment"
+        android:name="com.futurecode.voicelockscreen.ui.afterlogin.SuccessFragment"
+        tools:layout="@layout/view_success_page" />
+</navigation>

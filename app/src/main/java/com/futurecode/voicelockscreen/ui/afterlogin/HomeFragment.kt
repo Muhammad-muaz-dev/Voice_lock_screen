@@ -16,10 +16,14 @@ import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
+import com.futurecode.voicelockscreen.adapter.HomeWallpaperAdapter
 import com.futurecode.voicelockscreen.ads.AdViews
 import com.futurecode.voicelockscreen.ads.AdsConfig
 import com.futurecode.voicelockscreen.api.wallpaper.WallpaperRepository
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
@@ -50,6 +54,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupHeaderActions()
         setupVoiceCardActions()
         setupFeatureActions()
+        setupHomeThemes()
         bindBottomTabs(binding.bottomNav, 0)
         loadHomeBanner()
         setupSwitchActions()
@@ -134,35 +139,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             )
         }
 
-        // Lock Screen Themes actions
         bindNavigation(binding.btnSeeAllThemes, R.id.action_homeFragment_to_seeAllthemesFragment)
-        bindNavigation(binding.cardTheme1, R.id.action_homeFragment_to_themesFragment)
-        bindNavigation(binding.cardTheme2, R.id.action_homeFragment_to_themesFragment)
-        bindNavigation(binding.cardTheme3, R.id.action_homeFragment_to_themesFragment)
-        bindNavigation(binding.cardTheme4, R.id.action_homeFragment_to_themesFragment)
-        loadThemeThumbnails()
     }
 
-    /**
-     * Fills the four theme thumbnails with the newest wallpapers from the themes API.
-     * Bundled images stay in place when offline; tapping a loaded one opens its preview.
-     */
-    private fun loadThemeThumbnails() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val wallpapers = runCatching {
-                val category = WallpaperRepository.categories().firstOrNull() ?: return@runCatching emptyList()
-                WallpaperRepository.wallpapers(category.id).items
-            }.getOrDefault(emptyList())
-            val b = bindingOrNull ?: return@launch
-            val slots = listOf(b.cardTheme1 to b.ivTheme1, b.cardTheme2 to b.ivTheme2, b.cardTheme3 to b.ivTheme3, b.cardTheme4 to b.ivTheme4)
-            slots.zip(wallpapers).forEach { (slot, wallpaper) ->
-                val (card, image) = slot
-                Glide.with(image).load(wallpaper.fileUrl).override(240, 400).centerCrop().into(image)
-                card.setOnClickListener {
-                    findNavController().navigate(R.id.themePreviewFragment, ThemePreviewFragment.wallpaperArgs(wallpaper))
-                }
-            }
+    private fun setupHomeThemes() {
+        val adapter = HomeWallpaperAdapter { wallpaper ->
+            findNavController().navigate(
+                R.id.themePreviewFragment,
+                ThemePreviewFragment.wallpaperArgs(wallpaper)
+            )
+        }.apply {
+            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT
         }
+        binding.rvHomeThemes.adapter = adapter
+        adapter.submitList(List(HOME_THEME_PLACEHOLDERS) { null })
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val result = runCatching {
+                val category = WallpaperRepository.categories().firstOrNull()
+                    ?: return@runCatching emptyList()
+                WallpaperRepository.wallpapers(category.id).items
+            }
+            currentCoroutineContext().ensureActive()
+
+            val wallpapers = result.getOrDefault(emptyList())
+            adapter.submitList(wallpapers) {
+                adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+            }
+            binding.tvHomeThemesMessage.isVisible = wallpapers.isEmpty()
+            binding.tvHomeThemesMessage.setText(
+                if (result.isFailure) R.string.themes_load_error else R.string.themes_empty
+            )
+        }
+    }
+
+    override fun onDestroyView() {
+        binding.rvHomeThemes.adapter = null
+        super.onDestroyView()
     }
 
     /** Banner at the bottom of Home when switched on from remote config. */
@@ -309,6 +322,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private companion object {
+        const val HOME_THEME_PLACEHOLDERS = 4
         const val INACTIVE_MIC_ALPHA = 0.55f
         const val WAVE_SCALE = 1.75f
         const val WAVE_START_ALPHA = 0.8f

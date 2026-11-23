@@ -28,7 +28,6 @@ class PremiumFragment : BaseFragment<FragmentPremiumBinding>(FragmentPremiumBind
             } else showFail()
         }
         binding.btnPurchase.setOnClickListener { completePurchase() }
-        binding.btnLetsGo.setOnClickListener { close() }
         if (prefManager.isPro) showSuccess()
     }
 
@@ -50,7 +49,8 @@ class PremiumFragment : BaseFragment<FragmentPremiumBinding>(FragmentPremiumBind
     }
 
     private fun showSuccess() {
-        binding.successOverlay.isVisible = true
+        binding.successOverlay.root.isVisible = true
+        binding.successOverlay.successScreen.bindSuccess(R.string.youre_in, R.string.thanks_pro, R.string.lets_go, ::close)
     }
 
     private fun showFail() {

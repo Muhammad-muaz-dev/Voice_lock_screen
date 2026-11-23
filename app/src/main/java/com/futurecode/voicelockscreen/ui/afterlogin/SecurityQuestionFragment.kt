@@ -87,7 +87,7 @@ class SecurityQuestionFragment :
         val context = requireContext()
         when {
             arguments?.getBoolean(ARG_EDITING) == true || !SecureVoiceStore.hasPhrase(context) ->
-                findNavController().popBackStack()
+                SuccessFragment.replaceCurrent(findNavController(), R.string.recovery_question_saved)
             VoiceLockSwitchStore.hasRequiredPermissions(context) ->
                 findNavController().navigate(R.id.setupCompleteFragment)
             else -> findNavController().navigate(R.id.permissionFragment, Bundle().apply {

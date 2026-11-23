@@ -357,7 +357,7 @@
     <string name="camera_access_desc">So we can take photos and record video.</string>
     <string name="confirm_your_voice">Confirm Your Voice</string>
     <string name="say_open_camera">Say “Open Camera”</string>
-    <string name="open_camera_by_voice">Open Camera by Voice</string>
+    <string name="open_camera_by_voice">Open Camera</string>
     <string name="camera_voice_desc">Take photos or record videos with your voice.</string>
     <string name="re_record_voice">Re-record my voice</string>
     <string name="ai_quote">AI Quote</string>
@@ -483,7 +483,7 @@
     <string name="camera_command_open_video">Say “&lt;b&gt;Open Video&lt;/b&gt;” to switch to video</string>
     <string name="camera_command_record">Say “&lt;b&gt;Record&lt;/b&gt;” to start video</string>
     <string name="camera_command_end_record">Say “&lt;b&gt;End Record&lt;/b&gt;” to stop</string>
-    <string name="camera_main_description">Open your camera and capture photos or videos using simple voice commands.</string>
+    <string name="camera_main_description">Voice Camera needs an internet connection. The Android speech provider may process your voice online. Turn Voice Camera off here or from the notification.</string>
     <string name="camera_toggle_on">ON</string>
     <string name="camera_toggle_off">OFF</string>
     <string name="camera_help">Camera guide</string>
@@ -524,7 +524,7 @@
     <string name="pin_input_hint">Please enter your pin code, pin lock will replace in case voice unlock fails.</string>
     <string name="pin_confirm_input_hint">Please re-enter the same pin code to confirm it.</string>
     <string name="pin_setup_success">Setup Success!</string>
-    <string name="pin_setup_success_desc">Your PIN setup is complete.\nTap done to start test this function.</string>
+    <string name="pin_setup_success_desc">Your PIN is ready. Test it to make sure you can unlock your screen.</string>
     <string name="pin_show">Show PIN</string>
     <string name="pin_hide">Hide PIN</string>
     <string name="pin_done">Done</string>
@@ -585,5 +585,48 @@
     <!-- Ads -->
     <string name="ad_label">Ad</string>
     <string name="onboarding_skip">Skip</string>
+    <string name="pin_setup_screen_title">Set your PIN</string>
+    <string name="pin_setup_info">Use this PIN to unlock Voice Lock when you need a backup. It’s encrypted with a key stored in Android Keystore. Your phone’s PIN is managed separately.</string>
+    <string name="pin_length_4">4 digits</string>
+    <string name="pin_length_6">6 digits</string>
+    <string name="pin_setup_enter_prompt">Enter a new %1$d-digit PIN</string>
+    <string name="pin_setup_confirm_prompt">Enter it again to confirm</string>
+    <string name="pin_setup_clear">Clear</string>
+    <string name="pin_setup_delete">Delete last digit</string>
+    <string name="pin_setup_progress">%1$d of %2$d digits entered</string>
+    <string name="pattern_setup_title">Set your pattern</string>
+    <string name="pattern_setup_info">Connect at least 4 dots. Passing directly over a dot between two others adds it automatically.</string>
+    <string name="pattern_setup_draw">Draw a new pattern</string>
+    <string name="pattern_setup_confirm">Draw it again to confirm</string>
+    <string name="pattern_setup_restart">Start over</string>
+    <string name="pattern_setup_retry">Patterns differ. Draw it again.</string>
+    <string name="voice_camera_try">Try camera</string>
+    <string name="voice_camera_photo">Photo</string>
+    <string name="voice_camera_video">Video</string>
+    <string name="voice_camera_flash">Flash</string>
+    <string name="voice_camera_flash_on">Flash on</string>
+    <string name="voice_camera_flash_off">Flash off</string>
+    <string name="voice_camera_flip">Switch camera</string>
+    <string name="voice_camera_take_photo">Take photo</string>
+    <string name="voice_camera_start_recording">Start recording</string>
+    <string name="voice_camera_stop_recording">Stop recording</string>
+    <string name="voice_camera_recording_with_audio">Recording</string>
+    <string name="voice_camera_recording">Recording without audio</string>
+    <string name="voice_camera_silent_video">Video without audio</string>
+    <string name="voice_camera_saved">Capture saved</string>
+    <string name="voice_camera_save_error">Couldn’t save the capture</string>
+    <string name="voice_camera_error">Couldn’t open or use the camera</string>
+    <string name="camera_voice_channel">Voice camera</string>
+    <string name="camera_voice_enabled">Voice camera is enabled</string>
+    <string name="camera_voice_stop">Turn off</string>
+    <string name="camera_voice_tap_to_open">Voice command heard. Tap to open camera.</string>
+    <string name="camera_voice_internet_required">Connect to the internet to use Voice Camera.</string>
+    <string name="camera_voice_unavailable">Android speech recognition is unavailable.</string>
+    <string name="lock_screen_help">Unlock help</string>
+    <string name="lock_screen_help_message">Tap the microphone to speak your unlock phrase, or choose PIN, pattern, or fingerprint.</string>
+    <string name="lock_screen_note_title">Voice Note</string>
+    <string name="lock_screen_note_subtitle">Your private voice diary</string>
+    <string name="loading_fullscreen_ad">Loading ad…</string>
+    <string name="pin_success_test_action">Test PIN</string>
+    <string name="recovery_question_saved">Recovery question saved</string>
 </resources>
-

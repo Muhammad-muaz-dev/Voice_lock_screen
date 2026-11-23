@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+    <ImageView
+        android:id="@+id/imgWallpaper"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/lock_preview_wallpaper"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:paddingBottom="@dimen/card_shadow_gutter"
+        android:paddingTop="@dimen/card_shadow_gutter"
+        android:clipChildren="false"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:id="@+id/lockContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacing_xxxl"
+            android:paddingBottom="@dimen/spacing_xxl">
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/lockHelp"
+                android:layout_width="@dimen/spacing_max"
+                android:layout_height="@dimen/spacing_max"
+                android:src="@drawable/vn_ic_question_lock_screen"
+                android:contentDescription="@string/lock_screen_help"
+                android:background="@drawable/bg_lock_shortcut"
+                android:padding="@dimen/spacing_xs"
+                app:tint="@color/white"
+                android:layout_marginEnd="@dimen/spacing_lg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:elevation="@dimen/elevation_card"
+                android:id="@+id/timeCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lockHelp"
+                android:layout_marginTop="@dimen/spacing_xxxl"
+                app:layout_constraintWidth_percent="0.40"
+                android:background="@drawable/bg_lock_content_panel"
+                android:padding="@dimen/spacing_lg">
+                <TextView
+                    android:id="@+id/tvMainTime"
+                    style="@style/Text.VoiceLock.clock"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/sora_bold"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    style="@style/Text.VoiceLock.bodyL"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/sora_semibold"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvMainTime"
+                    android:layout_marginTop="@dimen/spacing_md" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvGreeting"
+                style="@style/Text.VoiceLock.titleS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/sora_semibold"
+                android:textColor="@color/white"
+                android:text="@string/good_afternoon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timeCard"
+                android:layout_marginTop="@dimen/spacing_xxl"
+                app:layout_constrainedWidth="true"
+                android:background="@drawable/bg_lock_content_panel"
+                android:paddingHorizontal="@dimen/spacing_lg"
+                android:paddingVertical="@dimen/spacing_xs" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:elevation="@dimen/elevation_card"
+                android:id="@+id/quoteCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvGreeting"
+                android:layout_marginTop="@dimen/spacing_sm"
+                app:layout_constraintWidth_percent="0.79"
+                android:background="@drawable/bg_lock_content_panel"
+                android:padding="@dimen/spacing_lg">
+                <ImageView
+                    android:layout_width="@dimen/spacing_lg"
+                    android:layout_height="@dimen/spacing_lg"
+                    android:src="@drawable/vn_ic_quote"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvQuote"
+                    style="@style/Text.VoiceLock.titleS"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/sora_regular"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginHorizontal="@dimen/spacing_lg"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:textStyle="italic" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:elevation="@dimen/elevation_card"
+                android:id="@+id/voiceNoteCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/quoteCard"
+                android:layout_marginTop="@dimen/spacing_xxl"
+                app:layout_constraintWidth_percent="0.79"
+                android:background="@drawable/bg_lock_note_panel"
+                android:padding="@dimen/spacing_lg">
+                <TextView
+                    android:id="@+id/lockNoteTitle"
+                    style="@style/Text.VoiceLock.titleL"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/sora_bold"
+                    android:textColor="@color/white"
+                    android:text="@string/lock_screen_note_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:drawableStart="@drawable/ic_nav_voicenote"
+                    android:drawablePadding="@dimen/spacing_sm"
+                    android:drawableTint="@color/primary_light"
+                    app:layout_constrainedWidth="true" />
+
+                <TextView
+                    android:id="@+id/lockNoteSubtitle"
+                    style="@style/Text.VoiceLock.bodyL"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/sora_regular"
+                    android:textColor="@color/white"
+                    android:text="@string/lock_screen_note_subtitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lockNoteTitle"
+                    android:layout_marginTop="@dimen/spacing_sm" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/methodPin"
+                android:layout_width="@dimen/lock_shortcut_size"
+                android:layout_height="@dimen/lock_shortcut_size"
+                android:src="@drawable/vn_ic_pin_lock_screen"
+                android:contentDescription="@string/pin"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/bg_lock_shortcut"
+                android:padding="@dimen/spacing_md"
+                app:tint="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/voiceNoteCard"
+                android:layout_marginTop="@dimen/spacing_xxl"
+                app:layout_constraintStart_toStartOf="@id/voiceNoteCard"
+                app:layout_constraintEnd_toStartOf="@id/methodPattern" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/methodPattern"
+                android:layout_width="@dimen/lock_shortcut_size"
+                android:layout_height="@dimen/lock_shortcut_size"
+                android:src="@drawable/vn_ic_pattern_lock_screen"
+                android:contentDescription="@string/pattern"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/bg_lock_shortcut"
+                android:padding="@dimen/spacing_md"
+                app:tint="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/voiceNoteCard"
+                android:layout_marginTop="@dimen/spacing_xxl"
+                app:layout_constraintStart_toEndOf="@id/methodPin"
+                app:layout_constraintEnd_toStartOf="@id/methodFingerprint" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/methodFingerprint"
+                android:layout_width="@dimen/lock_shortcut_size"
+                android:layout_height="@dimen/lock_shortcut_size"
+                android:src="@drawable/vn_ic_fingerprint_lock_screen"
+                android:contentDescription="@string/fingerprint"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/bg_lock_shortcut"
+                android:padding="@dimen/spacing_md"
+                app:tint="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/voiceNoteCard"
+                android:layout_marginTop="@dimen/spacing_xxl"
+                app:layout_constraintStart_toEndOf="@id/methodPattern"
+                app:layout_constraintEnd_toEndOf="@id/voiceNoteCard" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/micRings"
+                android:layout_width="@dimen/lock_mic_size"
+                android:layout_height="@dimen/lock_mic_size"
+                android:src="@drawable/ic_preview_mic_white"
+                android:contentDescription="@string/tap_microphone"
+                android:background="@drawable/bg_preview_mic_circle"
+                android:padding="@dimen/spacing_lg"
+                app:tint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/methodPattern"
+                android:layout_marginTop="@dimen/spacing_max" />
+
+            <TextView
+                android:id="@+id/tvSpeakHint"
+                style="@style/Text.VoiceLock.titleS"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/sora_regular"
+                android:textColor="@color/white"
+                android:text="@string/tap_microphone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/micRings"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:layout_marginHorizontal="@dimen/spacing_lg"
+                android:accessibilityLiveRegion="polite"
+                android:shadowColor="@color/black"
+                android:shadowRadius="4" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

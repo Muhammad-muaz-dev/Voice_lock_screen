@@ -12,6 +12,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withResumed
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.ads.AdPlacement
 import com.futurecode.voicelockscreen.ads.AdViews
@@ -78,7 +79,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
     private fun showFullscreenThenRoute() {
         val activity = activity ?: return
-        AdsManager.showSplashFullscreen(activity) { route() }
+        val owner = viewLifecycleOwner
+        AdsManager.showSplashFullscreen(activity) {
+            owner.lifecycleScope.launch { owner.lifecycle.withResumed { route() } }
+        }
     }
 
     private fun route() {

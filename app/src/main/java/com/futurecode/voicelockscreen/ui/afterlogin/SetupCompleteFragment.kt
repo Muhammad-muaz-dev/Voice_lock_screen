@@ -38,6 +38,11 @@ class SetupCompleteFragment : BaseFragment<FragmentSetupCompleteBinding>(Fragmen
             override fun handleOnBackPressed() = goHome()
         })
         binding.ivClose.setOnClickListener { goHome() }
+        binding.setupSuccess.bindSuccess(
+            R.string.vn_text_congratulations,
+            R.string.vn_text_your_voice_has_been_set_up_successfully_you_can_now_use_it_to_control_your_lock_screen,
+            onAction = ::goHome
+        )
         binding.framePreview.setOnClickListener { findNavController().navigate(R.id.screenPreviewFragment) }
         binding.tvSeeAll.setOnClickListener { findNavController().navigate(R.id.seeAllthemesFragment) }
         binding.rcvBackupLock.layoutManager = GridLayoutManager(requireContext(), 3)

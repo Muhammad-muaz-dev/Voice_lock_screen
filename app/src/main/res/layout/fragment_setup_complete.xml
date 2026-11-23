@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:background="@color/bg" android:layout_width="match_parent" android:layout_height="match_parent"
+<FrameLayout
+  android:clipToPadding="false"
+  android:clipChildren="false" android:background="@color/bg" android:layout_width="match_parent" android:layout_height="match_parent"
  
   xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.appcompat.widget.LinearLayoutCompat android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
-        <ScrollView android:id="@+id/scrollSuccess" android:layout_width="match_parent" android:layout_height="0dp" android:fillViewport="true" android:layout_weight="1.0">
-            <androidx.appcompat.widget.LinearLayoutCompat android:orientation="vertical" android:paddingBottom="@dimen/vn_dp_6" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <androidx.appcompat.widget.LinearLayoutCompat android:clipToPadding="false" android:clipChildren="false" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ScrollView android:paddingBottom="@dimen/card_shadow_gutter" android:paddingTop="@dimen/card_shadow_gutter" android:clipToPadding="false" android:clipChildren="false" android:id="@+id/scrollSuccess" android:layout_width="match_parent" android:layout_height="0dp" android:fillViewport="true" android:layout_weight="1.0">
+            <androidx.appcompat.widget.LinearLayoutCompat android:clipToPadding="false" android:clipChildren="false" android:orientation="vertical" android:paddingBottom="@dimen/vn_dp_6" android:layout_width="match_parent" android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatImageView android:layout_gravity="end" android:id="@+id/ivClose" android:padding="@dimen/vn_dp_12" android:layout_width="@dimen/vn_dp_48" android:layout_height="@dimen/vn_dp_48" android:src="@drawable/vn_ic_close" android:layout_marginEnd="@dimen/vn_dp_16" />
-                <androidx.appcompat.widget.AppCompatImageView android:layout_gravity="center" android:layout_width="@dimen/vn_dp_50" android:layout_height="@dimen/vn_dp_50" android:src="@drawable/vn_ic_success" android:scaleType="centerCrop" />
-                <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Title_Large" android:textColor="@color/vn_neutral01" android:gravity="center" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/vn_dp_24" android:layout_marginTop="@dimen/vn_dp_20" android:layout_marginRight="@dimen/vn_dp_24" android:text="@string/vn_text_congratulations" android:includeFontPadding="false" android:layout_marginHorizontal="@dimen/vn_dp_24" />
-                <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Text_LG_Regular" android:textColor="@color/vn_neutral05" android:gravity="center" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/vn_dp_24" android:layout_marginTop="@dimen/vn_dp_8" android:layout_marginRight="@dimen/vn_dp_24" android:text="@string/vn_text_your_voice_has_been_set_up_successfully_you_can_now_use_it_to_control_your_lock_screen" android:includeFontPadding="false" android:layout_marginHorizontal="@dimen/vn_dp_24" />
+                <include
+                    android:id="@+id/setupSuccess"
+                    layout="@layout/view_success_screen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_lg" />
                 <androidx.recyclerview.widget.RecyclerView android:id="@+id/rcvBackupLock" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/vn_dp_12" android:layout_marginTop="@dimen/vn_dp_16" android:layout_marginRight="@dimen/vn_dp_12" android:overScrollMode="never" android:nestedScrollingEnabled="false" android:layout_marginHorizontal="@dimen/vn_dp_12" />
-                <FrameLayout android:id="@+id/framePreview" android:background="@drawable/vn_bg_corner_16_stroke_primary_5" android:layout_width="match_parent" android:layout_height="@dimen/vn_dp_116" android:layout_marginLeft="@dimen/vn_dp_16" android:layout_marginTop="@dimen/vn_dp_20" android:layout_marginRight="@dimen/vn_dp_16" android:foreground="@drawable/vn_bg_corner_16_stroke_primary_5" android:layout_marginHorizontal="@dimen/vn_dp_16">
+                <FrameLayout android:elevation="@dimen/elevation_card" android:id="@+id/framePreview" android:background="@drawable/vn_bg_radius_16_white" android:clipToOutline="true" android:layout_width="match_parent" android:layout_height="@dimen/vn_dp_116" android:layout_marginLeft="@dimen/vn_dp_16" android:layout_marginTop="@dimen/vn_dp_20" android:layout_marginRight="@dimen/vn_dp_16" android:foreground="@drawable/vn_bg_corner_16_stroke_primary_5" android:layout_marginHorizontal="@dimen/vn_dp_16">
                     <androidx.appcompat.widget.AppCompatImageView android:id="@+id/ivBgPreview" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/lock_preview_wallpaper" android:scaleType="centerCrop" />
                     <androidx.appcompat.widget.LinearLayoutCompat android:gravity="center_horizontal" android:layout_gravity="end|center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="@dimen/vn_dp_32">
                         <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Text_LG_SemiBold" android:textColor="@color/vn_neutral01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/vn_text_preview" />
@@ -24,7 +29,7 @@
                     <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1.0" />
                     <androidx.appcompat.widget.AppCompatTextView style="@style/VN.Label_Small" android:textColor="@color/vn_neutral04" android:gravity="center" android:id="@+id/tvSeeAll" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/vn_text_see_all" android:includeFontPadding="false" android:drawableEnd="@drawable/vn_ic_arrow_right_blue" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
-                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rcvTheme" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_8" android:layout_marginStart="@dimen/vn_dp_16" />
+                <androidx.recyclerview.widget.RecyclerView android:clipToPadding="false" android:clipChildren="false" android:paddingBottom="@dimen/card_shadow_gutter" android:paddingTop="@dimen/card_shadow_gutter" android:paddingEnd="@dimen/card_shadow_gutter" android:id="@+id/rcvTheme" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/vn_dp_8" android:layout_marginStart="@dimen/vn_dp_16" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>
         <Space android:layout_width="match_parent" android:layout_height="0dp"   android:visibility="gone"/>

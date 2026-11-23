@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentCustomThemeBinding
-import com.futurecode.voicelockscreen.utils.ThemePreviewBinder
+import com.futurecode.voicelockscreen.utils.LockScreenUi
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 
 /** Upload Image: system picker, then the reference preview with Apply. */
@@ -29,7 +29,7 @@ class CustomThemeFragment : BaseFragment<FragmentCustomThemeBinding>(FragmentCus
         val preview = binding.preview
         uri = savedInstanceState?.getString("uri")?.let(Uri::parse)
         preview.ivBack.setOnClickListener { findNavController().popBackStack() }
-        ThemePreviewBinder.bindContent(preview, requireContext(), VoiceLockFeatureStore.lockQuote(requireContext()))
+        LockScreenUi.bind(preview.lockScreen, showClockAndQuote = true)
         preview.btnApply.setOnClickListener {
             val picked = uri ?: return@setOnClickListener
             VoiceLockFeatureStore.saveCustomThemeUri(requireContext(), picked)
@@ -42,7 +42,7 @@ class CustomThemeFragment : BaseFragment<FragmentCustomThemeBinding>(FragmentCus
 
     private fun showImage() {
         val preview = bindingOrNull?.preview ?: return
-        runCatching { preview.ivTheme.setImageURI(uri) }.onFailure {
+        runCatching { preview.lockScreen.imgWallpaper.setImageURI(uri) }.onFailure {
             uri = null; Toast.makeText(requireContext(), R.string.picture_unavailable, Toast.LENGTH_SHORT).show()
         }
         preview.btnApply.isVisible = uri != null

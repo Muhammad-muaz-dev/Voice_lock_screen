@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Settings: Notifications + Language / Rate, Feedback, Share / Privacy policy. -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,13 +35,15 @@
         android:gravity="center"
         android:text="@string/settings_title"
         android:textColor="@color/primary_text"
-        android:textSize="22sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/ivBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/ivBack" />
 
     <androidx.core.widget.NestedScrollView
+        android:paddingTop="@dimen/card_shadow_gutter"
+        android:clipChildren="false"
         android:id="@+id/settingsScroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -52,12 +57,15 @@
         app:layout_constraintTop_toBottomOf="@id/ivBack">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:clipToPadding="false"
+            android:clipChildren="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/spacing_lg">
 
             <!-- Card 1: Notifications, Language -->
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:elevation="@dimen/elevation_card"
                 android:id="@+id/cardGeneral"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -136,6 +144,7 @@
 
             <!-- Card 2: Rate us, Feedback, Share app -->
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:elevation="@dimen/elevation_card"
                 android:id="@+id/cardSupport"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -196,6 +205,7 @@
 
             <!-- Card 3: Privacy policy -->
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:elevation="@dimen/elevation_card"
                 android:id="@+id/cardPrivacy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

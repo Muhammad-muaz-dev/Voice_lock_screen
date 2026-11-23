@@ -55,4 +55,11 @@
     <dimen name="text_overline">11sp</dimen>
     <dimen name="text_buttonL">14sp</dimen>
     <dimen name="text_buttonS">12sp</dimen>
+    <dimen name="credential_pin_key_size">72dp</dimen>
+    <dimen name="credential_pin_dot_size">14dp</dimen>
+    <dimen name="credential_pattern_max_size">304dp</dimen>
+    <dimen name="lock_shortcut_size">52dp</dimen>
+    <dimen name="lock_mic_size">58dp</dimen>
+    <dimen name="elevation_card">2dp</dimen>
+    <dimen name="card_shadow_gutter">8dp</dimen>
 </resources>

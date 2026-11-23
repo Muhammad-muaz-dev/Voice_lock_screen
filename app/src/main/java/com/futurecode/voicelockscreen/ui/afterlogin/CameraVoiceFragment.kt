@@ -10,7 +10,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.MediaStore
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -29,16 +28,23 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.activity.OverlayGuideActivity
+import com.futurecode.voicelockscreen.activity.VoiceCameraActivity
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentCameraVoiceBinding
 import com.futurecode.voicelockscreen.databinding.ItemCameraCommandBinding
+import com.futurecode.voicelockscreen.service.CameraVoiceService
+import com.futurecode.voicelockscreen.utils.CameraSpeech
 import com.futurecode.voicelockscreen.utils.LockPermissionHelper
 import com.futurecode.voicelockscreen.utils.SpeechSession
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 import java.util.Locale
+import kotlinx.coroutines.launch
 
 /**
  * Open Camera by Voice: permissions -> confirm voice (3 recordings) -> how it works
@@ -60,8 +66,7 @@ class CameraVoiceFragment :
     private var ttsReady = false
 
     private val stepAnimators = mutableListOf<ValueAnimator>()
-    private val sceneHandler = Handler(Looper.getMainLooper())
-    private var sceneIndex = 0
+    private val guideHandler = Handler(Looper.getMainLooper())
 
     private val singlePermission = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -88,12 +93,30 @@ class CameraVoiceFragment :
         setupMain()
         setupBottomActions()
         setupBackHandling()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                CameraVoiceService.runningStatus.collect {
+                    if (step == Step.MAIN) renderToggle()
+                }
+            }
+        }
         render()
     }
 
     override fun onResume() {
         super.onResume()
+        syncSetupListening()
         if (step == Step.PERMISSIONS) refreshPermissionSwitches()
+        if (step == Step.MAIN) renderToggle()
+    }
+
+    override fun onPause() {
+        CameraVoiceService.setSetupListening(false)
+        super.onPause()
+    }
+
+    private fun syncSetupListening() {
+        CameraVoiceService.setSetupListening(isResumed && (step == Step.MAIN || step == Step.COMPLETE))
     }
 
     override fun onDestroyView() {
@@ -174,9 +197,8 @@ class CameraVoiceFragment :
     private fun setupMain() {
         binding.cameraToggle.setOnClickListener { onToggleTapped() }
         binding.btnResetVoice.setOnClickListener { resetVoice() }
-        binding.tvCompleteDescription.text = boldText(R.string.camera_all_set_description, highlight = true)
+        binding.btnTryVoiceCamera.setOnClickListener { startActivity(VoiceCameraActivity.newIntent(requireContext())) }
         // Keep the decorative blobs inside the artwork card's rounded corners.
-        binding.cameraArtwork.clipToOutline = true
     }
 
     private fun setupBottomActions() {
@@ -232,17 +254,28 @@ class CameraVoiceFragment :
 
     private fun onToggleTapped() {
         val context = requireContext()
-        val turnOn = !VoiceLockFeatureStore.isCameraEnabled(context)
+        val turnOn = !CameraVoiceService.isRunning
+        if (turnOn && !CameraSpeech.hasInternet(context)) {
+            toast(R.string.camera_voice_internet_required)
+            return
+        }
         if (turnOn && !hasAllPermissions()) {
             returnToMain = true
             goTo(Step.PERMISSIONS)
             return
         }
         VoiceLockFeatureStore.setCameraEnabled(context, turnOn)
+        if (turnOn && !CameraVoiceService.start(context)) {
+            VoiceLockFeatureStore.setCameraEnabled(context, false)
+            toast(R.string.camera_voice_unavailable)
+            renderToggle()
+            return
+        }
+        if (!turnOn) CameraVoiceService.stop(context)
         renderToggle()
         if (turnOn) {
             binding.cameraToggle.postDelayed({
-                if (bindingOrNull != null && step == Step.MAIN) {
+                if (bindingOrNull != null && step == Step.MAIN && CameraVoiceService.isRunning) {
                     returnToMain = true
                     goTo(Step.COMPLETE)
                 }
@@ -309,7 +342,7 @@ class CameraVoiceFragment :
         }
         // Settings forwards through a trampoline activity; launch the guide once that has
         // settled so it lands on top of the real settings page in the same task.
-        sceneHandler.postDelayed({
+        guideHandler.postDelayed({
             if (!activity.isFinishing && !activity.isDestroyed) {
                 activity.startActivity(Intent(activity, OverlayGuideActivity::class.java))
             }
@@ -330,15 +363,20 @@ class CameraVoiceFragment :
     private fun startListening() {
         if (listening) return
         val context = requireContext()
+        if (!CameraSpeech.hasInternet(context)) {
+            toast(R.string.camera_voice_internet_required)
+            return
+        }
         if (!SpeechSession.isAvailable(context)) {
             toast(R.string.speech_not_available)
             return
         }
         listening = true
         renderListening(true)
-        // "open camera" is matched in English, so this keeps the device default language.
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, CameraSpeech.COMMAND_LANGUAGE)
+            putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, false)
         }
         val session = speechSession ?: SpeechSession(context).also { speechSession = it }
         session.start(intent, recognitionListener)
@@ -369,6 +407,10 @@ class CameraVoiceFragment :
         listening = false
         if (bindingOrNull == null || step != Step.RECORD) return
         renderListening(false)
+        if (!CameraSpeech.hasInternet(requireContext())) {
+            toast(R.string.camera_voice_internet_required)
+            return
+        }
         if (spoken == null) {
             showRecordingError()
             return
@@ -397,16 +439,17 @@ class CameraVoiceFragment :
     }
 
     private fun render() {
+        syncSetupListening()
         stopStepAnimations()
         binding.clPermissions.isVisible = step == Step.PERMISSIONS
         binding.clRecording.isVisible = step == Step.RECORD
         binding.clHowItWorks.isVisible = step == Step.HOW_IT_WORKS
         binding.clMain.isVisible = step == Step.MAIN
-        binding.clComplete.isVisible = step == Step.COMPLETE
+        binding.clComplete.root.isVisible = step == Step.COMPLETE
         binding.recordPanel.isVisible = step == Step.RECORD
         binding.mainControls.isVisible = step == Step.MAIN
         binding.btnHelp.isVisible = step == Step.MAIN
-        binding.btnPrimary.isVisible = step in setOf(Step.PERMISSIONS, Step.HOW_IT_WORKS, Step.COMPLETE)
+        binding.btnPrimary.isVisible = step in setOf(Step.PERMISSIONS, Step.HOW_IT_WORKS)
 
         when (step) {
             Step.PERMISSIONS -> renderPermissions()
@@ -477,7 +520,7 @@ class CameraVoiceFragment :
     }
 
     private fun renderToggle() {
-        val on = VoiceLockFeatureStore.isCameraEnabled(requireContext())
+        val on = CameraVoiceService.isRunning && VoiceLockFeatureStore.isCameraEnabled(requireContext())
         val knobParams = binding.toggleKnob.layoutParams as ConstraintLayout.LayoutParams
         knobParams.horizontalBias = if (on) 1f else 0f
         binding.toggleKnob.layoutParams = knobParams
@@ -498,28 +541,13 @@ class CameraVoiceFragment :
 
     private fun renderComplete() {
         setTitle(null, centered = false)
-        binding.btnPrimary.setText(R.string.camera_home)
-        sceneIndex = 0
-        binding.ivSceneBack.setImageResource(SCENE_FRAMES[0])
-        binding.ivSceneFront.setImageResource(SCENE_FRAMES[0])
-        binding.ivSceneFront.alpha = 1f
-        sceneHandler.postDelayed(sceneRunnable, SCENE_INTERVAL_MS)
-    }
-
-    /** Plays the All Set animation: crossfades through the reference frames in a loop. */
-    private val sceneRunnable = object : Runnable {
-        override fun run() {
-            val b = bindingOrNull ?: return
-            if (step != Step.COMPLETE) return
-            val current = SCENE_FRAMES[sceneIndex % SCENE_FRAMES.size]
-            sceneIndex++
-            val next = SCENE_FRAMES[sceneIndex % SCENE_FRAMES.size]
-            b.ivSceneBack.setImageResource(current)
-            b.ivSceneFront.setImageResource(next)
-            b.ivSceneFront.alpha = 0f
-            b.ivSceneFront.animate().alpha(1f).setDuration(SCENE_FADE_MS).start()
-            sceneHandler.postDelayed(this, SCENE_INTERVAL_MS)
-        }
+        binding.clComplete.bindSuccess(
+            R.string.camera_all_set_title,
+            R.string.camera_all_set_description,
+            R.string.camera_home,
+            ::onPrimaryTapped
+        )
+        binding.clComplete.successDescription.text = boldText(R.string.camera_all_set_description, highlight = true)
     }
 
     private fun setTitle(@StringRes title: Int?, centered: Boolean) {
@@ -622,7 +650,6 @@ class CameraVoiceFragment :
     private fun stopStepAnimations() {
         stepAnimators.forEach { it.cancel() }
         stepAnimators.clear()
-        sceneHandler.removeCallbacks(sceneRunnable)
     }
 
     private fun toast(@StringRes message: Int) {
@@ -642,23 +669,8 @@ class CameraVoiceFragment :
         private const val RECORD_DONE_MS = 700L
         private const val TOGGLE_TO_COMPLETE_MS = 450L
         private const val TAP_MS = 550L
-        private const val SCENE_INTERVAL_MS = 1600L
-        private const val SCENE_FADE_MS = 400L
-        private val SCENE_FRAMES = intArrayOf(
-            R.drawable.img_camera_all_set_1,
-            R.drawable.img_camera_all_set_2,
-            R.drawable.img_camera_all_set_3,
-            R.drawable.img_camera_all_set_4
-        )
         private const val COACH_TARGET_ELEVATION_DP = 16f
         private const val OVERLAY_GUIDE_DELAY_MS = 700L
 
-        fun openCamera(context: Context) {
-            runCatching {
-                context.startActivity(
-                    Intent(MediaStore.ACTION_IMAGE_CAPTURE).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
-            }
-        }
     }
 }

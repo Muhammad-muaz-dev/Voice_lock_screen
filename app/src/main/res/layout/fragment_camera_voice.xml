@@ -3,7 +3,10 @@
     Open Camera by Voice flow. One screen, five states driven by CameraVoiceFragment:
     permissions -> confirm voice (3 recordings) -> how it works -> main toggle -> all set.
 -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -39,7 +42,7 @@
         android:includeFontPadding="false"
         android:maxLines="2"
         android:textColor="@color/primary_text"
-        android:textSize="22sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnBack"
@@ -64,6 +67,8 @@
     <!-- ===================== Scrollable content ===================== -->
 
     <androidx.core.widget.NestedScrollView
+        android:paddingTop="@dimen/card_shadow_gutter"
+        android:clipChildren="false"
         android:id="@+id/contentScroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -77,6 +82,8 @@
         app:layout_constraintTop_toBottomOf="@id/btnBack">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:clipToPadding="false"
+            android:clipChildren="false"
             android:id="@+id/contentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -84,6 +91,8 @@
             <!-- ===== State: Permissions Required ===== -->
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:clipToPadding="false"
+                android:clipChildren="false"
                 android:id="@+id/clPermissions"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -110,6 +119,7 @@
                 <TextView
                     android:id="@+id/tvPermissionHeading"
                     style="@style/Text.VoiceLock.titleL"
+                    android:textSize="20sp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_md"
@@ -137,6 +147,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tvPermissionHeading" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:elevation="@dimen/elevation_card"
                     android:id="@+id/permissionCard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -439,6 +450,7 @@
                 <TextView
                     android:id="@+id/tvRecordingTitle"
                     style="@style/Text.VoiceLock.titleL"
+                    android:textSize="20sp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_xxl"
@@ -469,6 +481,8 @@
             <!-- ===== State: How It Works ===== -->
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:clipToPadding="false"
+                android:clipChildren="false"
                 android:id="@+id/clHowItWorks"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -495,6 +509,7 @@
 
                 <!-- Step 1 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:elevation="@dimen/elevation_card"
                     android:id="@+id/cardWakeCamera"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -539,6 +554,7 @@
                     <TextView
                         android:id="@+id/tvWakeTitle"
                         style="@style/Text.VoiceLock.titleS"
+                        android:textSize="20sp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_lg"
@@ -566,6 +582,7 @@
 
                 <!-- Step 2 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:elevation="@dimen/elevation_card"
                     android:id="@+id/cardCameraCommands"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -741,7 +758,7 @@
                     android:gravity="center"
                     android:text="@string/open_camera_by_voice"
                     android:textColor="@color/primary_text"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/mainHero" />
@@ -765,88 +782,15 @@
 
             <!-- ===== State: You're All Set ===== -->
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <include
                 android:id="@+id/clComplete"
+                layout="@layout/view_success_screen"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/spacing_lg"
-                android:paddingBottom="@dimen/spacing_xl"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/successBadge"
-                    android:layout_width="136dp"
-                    android:layout_height="136dp"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:importantForAccessibility="no"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/img_camera_success"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvCompleteTitle"
-                    style="@style/Text.VoiceLock.titleXL"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:fontFamily="@font/sora_bold"
-                    android:gravity="center"
-                    android:text="@string/camera_all_set_title"
-                    android:textColor="@color/primary_text"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/successBadge" />
-
-                <TextView
-                    android:id="@+id/tvCompleteDescription"
-                    style="@style/Text.VoiceLock.bodyL"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:fontFamily="@font/sora_regular"
-                    android:gravity="center"
-                    android:textColor="@color/textSecondary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCompleteTitle"
-                    tools:text="Now, start by saying “Open Camera”" />
-
-                <!-- All Set animation: reference frames crossfaded in a loop. -->
-                <FrameLayout
-                    android:id="@+id/cameraArtwork"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/spacing_xxl"
-                    android:background="@drawable/bg_camera_artwork"
-                    android:contentDescription="@string/open_camera_by_voice"
-                    app:layout_constraintDimensionRatio="618:344"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCompleteDescription">
-
-                    <ImageView
-                        android:id="@+id/ivSceneBack"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:importantForAccessibility="no"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_camera_all_set_1" />
-
-                    <ImageView
-                        android:id="@+id/ivSceneFront"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:importantForAccessibility="no"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/img_camera_all_set_1" />
-                </FrameLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -1015,6 +959,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ivTapHand" />
+
+            <TextView
+                android:id="@+id/btnTryVoiceCamera"
+                style="@style/Text.VoiceLock.buttonS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/spacing_max"
+                android:paddingHorizontal="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="@font/sora_semibold"
+                android:gravity="center"
+                android:text="@string/voice_camera_try"
+                android:textColor="@color/primary_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnResetVoice" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView

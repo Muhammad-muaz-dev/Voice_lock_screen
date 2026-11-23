@@ -19,7 +19,7 @@
         android:fontFamily="@font/sora_medium"
         android:text="@string/language"
         android:textColor="@color/primary_text"
-        android:textSize="22sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/btnContinue"
         app:layout_constraintEnd_toStartOf="@id/btnContinue"
         app:layout_constraintStart_toStartOf="parent"

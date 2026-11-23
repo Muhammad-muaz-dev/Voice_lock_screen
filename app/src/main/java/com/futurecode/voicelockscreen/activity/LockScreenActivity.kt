@@ -29,9 +29,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.children
 import com.futurecode.voicelockscreen.R
-import com.futurecode.voicelockscreen.databinding.FragmentScreenPreviewBinding
+import com.futurecode.voicelockscreen.databinding.ViewLockScreenBinding
 import com.futurecode.voicelockscreen.security.AppLockState
 import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.security.SecurePinStore
@@ -39,42 +38,36 @@ import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.ui.afterlogin.FingerprintLockFragment
 import com.futurecode.voicelockscreen.utils.SpeechSession
+import com.futurecode.voicelockscreen.utils.LockMethod
+import com.futurecode.voicelockscreen.utils.LockScreenUi
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import com.futurecode.voicelockscreen.utils.VoiceLockPattern
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class LockScreenActivity : BaseActivity() {
-    private lateinit var binding: FragmentScreenPreviewBinding
+    private lateinit var binding: ViewLockScreenBinding
     private val viewModel: LockScreenViewModel by viewModels()
-    private var selectedMethod = VOICE_INDEX
+    private var selectedMethod = LockMethod.VOICE
     private val speechSession by lazy { SpeechSession(this) }
     private var fallbackOverlay: FrameLayout? = null
     private var isUnlocking = false
     private var didStartVoiceForCurrentResume = false
 
-    private val methods = listOf(
-        PreviewMethod(R.string.pin, R.drawable.ic_pin_lock),
-        PreviewMethod(R.string.pattern, R.drawable.ic_pattern_lock),
-        PreviewMethod(R.string.voice, R.drawable.ic_mic_blue),
-        PreviewMethod(R.string.fingerprint, R.drawable.ic_fingerprint_lock)
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         configureLockWindow()
         super.onCreate(savedInstanceState)
         getSystemService(NotificationManager::class.java)
             .cancel(LockService.LOCK_ALERT_NOTIFICATION_ID)
-        binding = FragmentScreenPreviewBinding.inflate(layoutInflater)
+        binding = ViewLockScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ThemeWallpaperStore.applyTo(binding.imgWallpaper, this)
-        bindDateTime()
-        ThemeWallpaperStore.applyContent(binding, this)
-        bindMethods()
-        updateSelectedMethod()
-        binding.micRings.setOnClickListener { openSelectedUnlockMethod() }
+        LockScreenUi.bind(binding) { method ->
+            selectedMethod = method
+            LockScreenUi.select(binding, method)
+            openSelectedUnlockMethod()
+        }
+        LockScreenUi.select(binding, selectedMethod)
         setupBackNavigation()
 
         viewModel.unlockStatus.observe(this) { status ->
@@ -92,11 +85,20 @@ class LockScreenActivity : BaseActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+    }
+
     override fun onResume() {
         super.onResume()
         if (!didStartVoiceForCurrentResume && fallbackOverlay == null && !isUnlocking) {
             didStartVoiceForCurrentResume = true
-            binding.root.post { startVoiceUnlock() }
+            val fingerprint = intent.getBooleanExtra(EXTRA_FINGERPRINT, false)
+            intent.removeExtra(EXTRA_FINGERPRINT)
+            binding.root.post {
+                if (fingerprint) startFingerprintUnlock() else startVoiceUnlock()
+            }
         }
     }
 
@@ -146,67 +148,19 @@ class LockScreenActivity : BaseActivity() {
         window.navigationBarColor = Color.TRANSPARENT
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            hide(WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.navigationBars())
+            isAppearanceLightStatusBars = false
+            show(WindowInsetsCompat.Type.statusBars())
+            hide(WindowInsetsCompat.Type.navigationBars())
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-    }
-
-    private fun bindDateTime() {
-        val now = Date()
-        binding.tvStatusTime.text = SimpleDateFormat("H:mm", Locale.getDefault()).format(now)
-        binding.tvMainTime.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(now)
-        binding.tvDate.text = SimpleDateFormat("EEE, dd MMM", Locale.getDefault()).format(now)
-    }
-
-    private fun bindMethods() {
-        binding.methodsRow.children.forEachIndexed { index, child ->
-            val method = methods[index]
-            val container = child as LinearLayout
-            container.findViewById<ImageView>(R.id.imgMethod).setImageResource(method.iconRes)
-            container.findViewById<TextView>(R.id.tvMethod).setText(method.titleRes)
-            container.setOnClickListener {
-                selectedMethod = index
-                updateSelectedMethod()
-                openSelectedUnlockMethod()
-            }
-        }
-    }
-
-    private fun updateSelectedMethod() {
-        binding.methodsRow.children.forEachIndexed { index, child ->
-            val container = child as LinearLayout
-            val icon = container.findViewById<ImageView>(R.id.imgMethod)
-            val label = container.findViewById<TextView>(R.id.tvMethod)
-            val selected = index == selectedMethod
-
-            container.setBackgroundResource(
-                if (selected) R.drawable.bg_preview_method_selected else R.drawable.bg_preview_method
-            )
-            icon.setBackgroundResource(
-                if (selected) R.drawable.bg_preview_method_icon_selected else R.drawable.bg_preview_method_icon
-            )
-            icon.setColorFilter(
-                ContextCompat.getColor(this, if (selected) R.color.primaryStart else R.color.textPrimary)
-            )
-            label.setTextColor(
-                ContextCompat.getColor(this, if (selected) R.color.primaryStart else R.color.textPrimary)
-            )
-        }
-
-        binding.tvSpeakHint.text = when (selectedMethod) {
-            PIN_INDEX -> getString(R.string.pin_unlock)
-            PATTERN_INDEX -> getString(R.string.draw_pattern_to_unlock)
-            VOICE_INDEX -> getString(R.string.tap_microphone)
-            else -> getString(R.string.touch_fingerprint_sensor)
         }
     }
 
     private fun openSelectedUnlockMethod() {
         when (selectedMethod) {
-            PIN_INDEX -> showPinUnlockDialog()
-            PATTERN_INDEX -> showPatternUnlockDialog()
-            VOICE_INDEX -> startVoiceUnlock()
-            FINGERPRINT_INDEX -> startFingerprintUnlock()
+            LockMethod.PIN -> showPinUnlockDialog()
+            LockMethod.PATTERN -> showPatternUnlockDialog()
+            LockMethod.VOICE -> startVoiceUnlock()
+            LockMethod.FINGERPRINT -> startFingerprintUnlock()
         }
     }
 
@@ -224,8 +178,8 @@ class LockScreenActivity : BaseActivity() {
             return
         }
 
-        selectedMethod = VOICE_INDEX
-        updateSelectedMethod()
+        selectedMethod = LockMethod.VOICE
+        LockScreenUi.select(binding, selectedMethod)
         binding.tvSpeakHint.text = getString(R.string.listening_unlock)
         speechSession.start(SpeechSession.voiceIntent(this), voiceUnlockListener)
     }
@@ -462,7 +416,7 @@ class LockScreenActivity : BaseActivity() {
 
     private fun closeFallbackScreen() {
         removeFallbackOverlay()
-        updateSelectedMethod()
+        LockScreenUi.select(binding, selectedMethod)
     }
 
     private fun removeFallbackOverlay() {
@@ -538,21 +492,15 @@ class LockScreenActivity : BaseActivity() {
     private val Int.dp: Int
         get() = (this * resources.displayMetrics.density).toInt()
 
-    private data class PreviewMethod(
-        val titleRes: Int,
-        val iconRes: Int
-    )
 
     companion object {
         private const val TAG = "LockScreenActivity"
-        private const val PIN_INDEX = 0
-        private const val PATTERN_INDEX = 1
-        private const val VOICE_INDEX = 2
-        private const val FINGERPRINT_INDEX = 3
+        private const val EXTRA_FINGERPRINT = "lock_fingerprint_requested"
         private const val BIOMETRIC_AUTHENTICATORS = BiometricManager.Authenticators.BIOMETRIC_WEAK
 
-        fun newIntent(context: Context): Intent {
+        fun newIntent(context: Context, fingerprint: Boolean = false): Intent {
             return Intent(context, LockScreenActivity::class.java).apply {
+                putExtra(EXTRA_FINGERPRINT, fingerprint)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
@@ -561,4 +509,3 @@ class LockScreenActivity : BaseActivity() {
         }
     }
 }
-

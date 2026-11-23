@@ -21,35 +21,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.children
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
-import com.futurecode.voicelockscreen.databinding.FragmentScreenPreviewBinding
+import com.futurecode.voicelockscreen.databinding.ViewLockScreenBinding
 import com.futurecode.voicelockscreen.security.AppLockState
 import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.security.SecurePatternStore
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.utils.SpeechSession
+import com.futurecode.voicelockscreen.utils.LockMethod
+import com.futurecode.voicelockscreen.utils.LockScreenUi
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 import com.futurecode.voicelockscreen.utils.VoiceLockPattern
 import com.futurecode.voicelockscreen.utils.getTimeBasedGreetingRes
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(FragmentScreenPreviewBinding::inflate) {
+class ScreenPreviewFragment : BaseFragment<ViewLockScreenBinding>(ViewLockScreenBinding::inflate) {
 
     //tvGreeting
-    private val methods = listOf(
-        PreviewMethod(R.string.pin, R.drawable.ic_pin_lock),
-        PreviewMethod(R.string.pattern, R.drawable.ic_pattern_lock),
-        PreviewMethod(R.string.voice, R.drawable.ic_mic_blue),
-        PreviewMethod(R.string.fingerprint, R.drawable.ic_fingerprint_lock)
-    )
-    private var selectedMethod = 2
+    private var selectedMethod = LockMethod.VOICE
     private var speechSession: SpeechSession? = null
     private var fallbackOverlay: FrameLayout? = null
+    private var previousLightStatusBars = false
     private var previousStatusBarColor: Int = Color.TRANSPARENT
     private var previousNavigationBarColor: Int = Color.TRANSPARENT
 
@@ -57,17 +50,14 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
         super.onViewCreated(view, savedInstanceState)
         enterPreviewMode()
         ThemeWallpaperStore.applyTo(binding.imgWallpaper, requireContext())
-        bindDateTime()
-        bindMethods()
-        updateSelectedMethod()
-        setupBackNavigation()
-
-        binding.micRings.setOnClickListener {
+        LockScreenUi.bind(binding) { method ->
+            selectedMethod = method
+            LockScreenUi.select(binding, method)
             openSelectedUnlockMethod()
         }
+        LockScreenUi.select(binding, selectedMethod)
+        setupBackNavigation()
 
-        ThemeWallpaperStore.applyContent(binding, requireContext())
-        binding.tvSpeakHint.setText(R.string.listening_unlock_hint)
     }
 
     override fun onDestroyView() {
@@ -79,13 +69,16 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
 
     private fun enterPreviewMode() {
         val window = requireActivity().window
+        previousLightStatusBars = WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars
         previousStatusBarColor = window.statusBarColor
         previousNavigationBarColor = window.navigationBarColor
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            hide(WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.navigationBars())
+            isAppearanceLightStatusBars = false
+            show(WindowInsetsCompat.Type.statusBars())
+            hide(WindowInsetsCompat.Type.navigationBars())
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
@@ -93,70 +86,22 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
     private fun exitPreviewMode() {
         val window = requireActivity().window
         // The system navigation bar stays hidden app-wide (see SystemBars).
-        WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.statusBars())
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = previousLightStatusBars
+            show(WindowInsetsCompat.Type.statusBars())
+        }
         WindowCompat.setDecorFitsSystemWindows(window, true)
         window.statusBarColor = previousStatusBarColor
         window.navigationBarColor = previousNavigationBarColor
     }
 
 
-    private fun bindDateTime() {
-        val now = Date()
-        binding.tvStatusTime.text = SimpleDateFormat("H:mm", Locale.getDefault()).format(now)
-        binding.tvMainTime.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(now)
-        binding.tvDate.text = SimpleDateFormat("EEE, dd MMM", Locale.getDefault()).format(now)
-    }
-
-    private fun bindMethods() {
-        binding.methodsRow.children.forEachIndexed { index, child ->
-            val method = methods[index]
-            val container = child as LinearLayout
-            val icon = container.findViewById<ImageView>(R.id.imgMethod)
-            val label = container.findViewById<TextView>(R.id.tvMethod)
-            icon.setImageResource(method.iconRes)
-            label.setText(method.titleRes)
-            container.setOnClickListener {
-                selectedMethod = index
-                updateSelectedMethod()
-                openSelectedUnlockMethod()
-            }
-        }
-    }
-
     private fun openSelectedUnlockMethod() {
         when (selectedMethod) {
-            0 -> showPinUnlockDialog()
-            1 -> showPatternUnlockDialog()
-            2 -> startVoiceUnlock()
-            3 -> startFingerprintUnlock()
-        }
-    }
-
-    private fun updateSelectedMethod() {
-        binding.methodsRow.children.forEachIndexed { index, child ->
-            val container = child as LinearLayout
-            val icon = container.findViewById<ImageView>(R.id.imgMethod)
-            val label = container.findViewById<TextView>(R.id.tvMethod)
-            val selected = index == selectedMethod
-            container.setBackgroundResource(
-                if (selected) R.drawable.bg_preview_method_selected else R.drawable.bg_preview_method
-            )
-            icon.setBackgroundResource(
-                if (selected) R.drawable.bg_preview_method_icon_selected else R.drawable.bg_preview_method_icon
-            )
-            icon.setColorFilter(
-                ContextCompat.getColor(requireContext(), if (selected) R.color.blue_primary else R.color.white)
-            )
-            label.setTextColor(
-                ContextCompat.getColor(requireContext(), if (selected) R.color.blue_primary else R.color.white)
-            )
-        }
-
-        binding.tvSpeakHint.text = when (selectedMethod) {
-            0 -> getString(R.string.pin_unlock)
-            1 -> getString(R.string.draw_pattern_to_unlock)
-            2 -> getString(R.string.tap_microphone)
-            else -> getString(R.string.touch_fingerprint_sensor)
+            LockMethod.PIN -> showPinUnlockDialog()
+            LockMethod.PATTERN -> showPatternUnlockDialog()
+            LockMethod.VOICE -> startVoiceUnlock()
+            LockMethod.FINGERPRINT -> startFingerprintUnlock()
         }
     }
 
@@ -449,10 +394,6 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
         speechSession = null
     }
 
-    private data class PreviewMethod(
-        val titleRes: Int,
-        val iconRes: Int
-    )
 
     private val Int.dp: Int
         get() = (this * resources.displayMetrics.density).toInt()
@@ -463,4 +404,3 @@ class ScreenPreviewFragment : BaseFragment<FragmentScreenPreviewBinding>(Fragmen
         const val KEY_UNLOCKED_THIS_SESSION = "unlocked_this_session"
     }
 }
-

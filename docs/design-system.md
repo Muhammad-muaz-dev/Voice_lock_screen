@@ -61,7 +61,7 @@ describe its visual intent.
 
 ## Typography
 
-Use `Text.VoiceLock.<role>` with `text_<role>` dimensions. Size and line height
+Set every screen title directly with `android:textSize="20sp"`. Keep title sizes independent of dimension resources. Use `Text.VoiceLock.<role>` for typography roles. Size and line height
 are in sp. Every screen has one title (maximum two lines); descriptions use
 `textSecondary`. Reuse a role from this table rather than inventing a size.
 
@@ -71,7 +71,7 @@ are in sp. Every screen has one title (maximum two lines); descriptions use
 | clock | 36 / 44 | 700 | Lock screen time |
 | display | 34 / 42 | 700 | Paywall title |
 | headline | 28 / 36 | 700 | Onboarding title |
-| titleXL | 22 / 28 | 600 | Tab screen title |
+| titleXL | 20 / 20 | 600 | Tab screen title |
 | titleL | 20 / 28 | 600; 700 for success | Sub-screen title |
 | titleM | 18 / 24 | 700 | Card title |
 | titleS | 16 / 24 | 600 | Section heading |
@@ -94,11 +94,12 @@ for their respective weights, or resolve the corresponding weight through the
 | Spacing | xs 4, sm 8, md 12, lg 16, xl 20, xxl 24, xxxl 32, huge 40, max 48 |
 | Radius | xs 8 (tags), sm 12 (icon squares), md 16 (cards/buttons), lg 20 (large cards), xl 24 (big surfaces) |
 | Border | 1 default, 2 selected outline |
-| Shadow | xs 2 subtle, sm 4 cards, md 8 elevated cards, lg 16 modals/sheets |
+| Shadow | xs 2 cards, sm 4 moderate, md 8 elevated cards, lg 16 modals/sheets |
 | Icon | xs 12 small, sm 16 standard, md 20 large, lg 24 extra large |
 
 Android spacing and radius names are `spacing_<scale>` and `radius_<scale>`.
 The existing 28/32 dp radii are compatibility extensions, not part of this board.
+Use `elevation_card` for card elevation and `card_shadow_gutter` for clearance at scroll boundaries. Keep clipping disabled on containers that host elevated cards.
 Shadow values describe the reference scale; Android elevation does not reproduce
 identical shadows on every device. Icon sizes describe artwork, not touch areas.
 
@@ -109,7 +110,7 @@ identical shadows on every device. Icon sizes describe artwork, not touch areas.
 | App bar | Dark background; back affordance at start, Sora screen title, compact circular premium/settings actions at end. Respect status bar inset. |
 | Primary button | Violet gradient, md radius, white icon and buttonL label. Disabled: surfaceDisabled and textDisabled, with action disabled. |
 | Text button | primarySoft/primaryLight label and optional directional icon; no filled background. |
-| Card | surface background, border stroke, md radius; titleM heading. Large containers may use surfaceSunken with lg/xl radius. |
+| Card | surface background, border stroke, md radius, and 2 dp elevation; titleM heading. Large containers may use surfaceSunken with lg/xl radius. |
 | Lock status card | Leading lock illustration, title, trailing toggle; inner status/example strip with divider. Status requires text as well as color. |
 | Icon tile | Rounded outlined tile; colored circular icon, centered short title, secondary description. Use brand violet for camera and semantic green for PIN as shown. |
 | List row | Rounded surface with border; leading icon tile, bodyL label, secondary caption, trailing chevron or control. |
@@ -130,6 +131,44 @@ tokens; adjust to the actual content instead of treating these defaults as measu
 reference values. Interactive targets should be at least 48 × 48 dp. Account for
 system bars, keyboard, localization, and font scaling. Do not rely on color alone
 for status, or claim contrast compliance without checking the actual pairing.
+
+### Credential setup
+
+PIN and pattern enrollment use a surface background, a start-aligned title and
+back action, and a primary_light instruction panel. Center the entry or
+confirmation prompt below the panel. PIN entry uses a 4/6-digit segmented
+selector, 14 dp masked progress dots, 72 dp circular keypad targets, Delete,
+and Clear. Hide the selector during confirmation. Pattern enrollment uses a
+square grid up to 304 dp wide, thin rings, violet centers, and an outlined
+Start over action during confirmation. Present validation feedback in the
+prompt using error text and the semantic error color.
+
+### In-app camera
+
+The live preview fills the display. Use scrim-backed controls along the top
+and bottom, white icons and text, and a primary violet Photo/Video selection.
+Place Close and Flash at the top and Switch camera beside the shutter.
+Use a violet shutter outline at rest, the error color while recording, and
+a text status for recording and microphone availability. Respect safe
+insets and keep control targets at least 48 dp.
+
+### Lock screen over wallpaper
+
+The lock activity, overlay, unlock preview, and wallpaper and quote previews
+use the shared `view_lock_screen` layout. Center the
+clock and date on a compact scrim panel. Stack the greeting, quote and
+Voice Note card above three 52 dp credential shortcuts. Place the separate
+58 dp violet microphone and its instruction below that row. Use white text
+and icons over the lock wallpaper scrim, with a lavender outline on the
+Voice Note card. Keep the selected wallpaper edge to edge. Respect system
+insets and allow the controls to scroll on short screens or at larger font sizes.
+
+### Success screens
+
+Use `view_success_screen` for completion UI. The animated PIN checkmark sits
+on a lavender halo above a 20sp title, optional description, and a violet
+action. Use the shared 2 dp card elevation and leave room for the shadow.
+Use `view_success_page` when the success screen fills its own viewport.
 
 ## Android reuse example
 

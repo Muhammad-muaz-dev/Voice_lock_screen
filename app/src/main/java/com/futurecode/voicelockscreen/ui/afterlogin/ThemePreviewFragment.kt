@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentThemePreviewBinding
-import com.futurecode.voicelockscreen.utils.ThemePreviewBinder
+import com.futurecode.voicelockscreen.utils.LockScreenUi
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 
@@ -30,7 +30,7 @@ class ThemePreviewFragment : BaseFragment<FragmentThemePreviewBinding>(FragmentT
         val themeRes = args.getInt(ARG_THEME_RES, 0)
         val quote = args.getString(ARG_QUOTE) ?: VoiceLockFeatureStore.lockQuote(requireContext())
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
-        ThemePreviewBinder.bindContent(binding, requireContext(), quote)
+        LockScreenUi.bind(binding.lockScreen, quote = quote, showClockAndQuote = true)
         val wallpaperUrl = args.getString(ARG_WALLPAPER_URL)
         if (wallpaperUrl != null) {
             bindRemoteWallpaper(
@@ -44,7 +44,7 @@ class ThemePreviewFragment : BaseFragment<FragmentThemePreviewBinding>(FragmentT
                 )
             )
         } else if (themeId != NO_THEME && themeRes != 0) {
-            binding.ivTheme.setImageResource(themeRes)
+            binding.lockScreen.imgWallpaper.setImageResource(themeRes)
             binding.btnApply.isVisible = true
             binding.btnApply.setOnClickListener {
                 ThemeWallpaperStore.saveSelectedTheme(requireContext(), themeId, themeRes)
@@ -52,14 +52,14 @@ class ThemePreviewFragment : BaseFragment<FragmentThemePreviewBinding>(FragmentT
                 findNavController().popBackStack()
             }
         } else {
-            ThemeWallpaperStore.applyTo(binding.ivTheme, requireContext())
+            ThemeWallpaperStore.applyTo(binding.lockScreen.imgWallpaper, requireContext())
             binding.btnApply.isVisible = false
         }
     }
 
     /** API wallpaper: preview from the URL; Apply downloads it once and uses it on the lock screen. */
     private fun bindRemoteWallpaper(wallpaper: Wallpaper) {
-        Glide.with(binding.ivTheme).load(wallpaper.fileUrl).centerCrop().into(binding.ivTheme)
+        Glide.with(binding.lockScreen.imgWallpaper).load(wallpaper.fileUrl).centerCrop().into(binding.lockScreen.imgWallpaper)
         binding.btnApply.isVisible = true
         binding.btnApply.setOnClickListener {
             if (wallpaper.isPremium && !prefManager.isPro) {

@@ -3,50 +3,38 @@ package com.futurecode.voicelockscreen.ui.afterlogin
 import android.animation.ObjectAnimator
 import android.graphics.Color
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentPinLockBinding
 import com.futurecode.voicelockscreen.databinding.ItemPinOptionCardBinding
-import com.futurecode.voicelockscreen.databinding.ItemPinTypeCardBinding
-import com.futurecode.voicelockscreen.databinding.ViewPinStepperBinding
 import com.futurecode.voicelockscreen.security.SecurePinStore
 import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.utils.FullBleed
 import com.futurecode.voicelockscreen.utils.ThemeWallpaperStore
 import com.futurecode.voicelockscreen.utils.VoiceLockFeatureStore
 
-/**
- * PIN setup, matching the reference flow:
- * menu (Pin Setup / Recovery Password) -> step 1 choose length -> step 2 enter ->
- * step 3 confirm -> step 4 success -> PIN lock test on the lock wallpaper.
- */
 class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBinding::inflate) {
 
-    private enum class Step { MENU, TYPE, ENTER, CONFIRM, SUCCESS, TEST }
+    private enum class Step { MENU, ENTER, CONFIRM, SUCCESS, TEST }
 
     private var step = Step.MENU
     private var pinLength = DEFAULT_PIN_LENGTH
     private var firstPin: String? = null
     /** The PIN saved in this session, used by the test screen (keeps real lockout counters untouched). */
     private var savedPin: String? = null
-    private var pinVisible = false
+    private val pinInput = StringBuilder()
     private val testInput = StringBuilder()
 
     private var previousStatusBarColor = Color.TRANSPARENT
@@ -58,11 +46,10 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        restoreState(savedInstanceState)
+        if (savedInstanceState != null) restoreState(savedInstanceState)
         applySystemInsets()
         setupHeader()
         setupMenu()
-        setupTypeCards()
         setupPinInput()
         setupTestKeypad()
         setupBackHandling()
@@ -78,16 +65,15 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         super.onSaveInstanceState(outState)
         outState.putString(KEY_STEP, step.name)
         outState.putInt(KEY_LENGTH, pinLength)
-        outState.putString(KEY_FIRST_PIN, firstPin)
     }
 
     private fun restoreState(savedInstanceState: Bundle?) {
         pinLength = savedInstanceState?.getInt(KEY_LENGTH) ?: SecurePinStore.getPinLength(requireContext())
-        if (pinLength !in PIN_LENGTHS) pinLength = DEFAULT_PIN_LENGTH
-        firstPin = savedInstanceState?.getString(KEY_FIRST_PIN)
-        step = savedInstanceState?.getString(KEY_STEP)?.let(Step::valueOf) ?: Step.MENU
+        step = savedInstanceState?.getString(KEY_STEP)?.let { savedStep -> Step.entries.firstOrNull { it.name == savedStep } } ?: Step.MENU
         // The test needs the PIN in memory; after process death go back to the success step.
         if (step == Step.TEST) step = Step.SUCCESS
+        if (step == Step.CONFIRM && firstPin == null) step = Step.ENTER
+        if (step == Step.ENTER && pinLength !in PIN_LENGTHS) pinLength = DEFAULT_PIN_LENGTH
     }
 
     private fun applySystemInsets() {
@@ -105,8 +91,6 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
 
     private fun setupHeader() {
         binding.btnBack.setOnClickListener { navigateBack() }
-        binding.btnHeaderNext.setOnClickListener { goTo(Step.ENTER) }
-        binding.btnHeaderDone.setOnClickListener { goTo(Step.TEST) }
     }
 
     private fun setupMenu() {
@@ -116,7 +100,10 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
             R.string.pin_setup_title,
             R.string.pin_setup_card_desc,
             R.string.pin_setup_now
-        ) { goTo(Step.TYPE) }
+        ) {
+            pinLength = DEFAULT_PIN_LENGTH
+            goTo(Step.ENTER)
+        }
         bindOption(
             binding.cardRecovery,
             R.drawable.img_pin_recovery_icon,
@@ -143,34 +130,39 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         card.btnOption.setOnClickListener { onClick() }
     }
 
-    private fun typeCards(): List<Pair<Int, ItemPinTypeCardBinding>> = listOf(
-        4 to binding.typeFour,
-        5 to binding.typeFive,
-        6 to binding.typeSix,
-        8 to binding.typeEight
-    )
-
-    private fun setupTypeCards() {
-        typeCards().forEach { (length, card) ->
-            card.tvTypeTitle.text = getString(R.string.pin_type_label, length)
-            card.tvTypeMask.text = "*".repeat(length)
-            card.root.contentDescription = getString(R.string.pin_type_label, length)
-            card.root.setOnClickListener {
-                pinLength = length
-                renderTypeSelection()
+    private fun setupPinInput() {
+        val entry = binding.pinEntry
+        val keys = listOf(
+            entry.entryKey0, entry.entryKey1, entry.entryKey2, entry.entryKey3,
+            entry.entryKey4, entry.entryKey5, entry.entryKey6, entry.entryKey7,
+            entry.entryKey8, entry.entryKey9
+        )
+        keys.forEachIndexed { digit, key ->
+            key.setOnClickListener {
+                if (pinInput.length >= pinLength) return@setOnClickListener
+                pinInput.append(digit)
+                renderPinPrompt()
+                renderPinDots()
+                if (pinInput.length == pinLength) onPinEntered(pinInput.toString())
             }
         }
-    }
-
-    private fun setupPinInput() {
-        binding.etPin.doAfterTextChanged { text ->
-            val value = text?.toString().orEmpty()
-            clearInputError()
-            if (value.length == pinLength) onPinEntered(value)
+        entry.entryKeyDelete.setOnClickListener {
+            if (pinInput.isNotEmpty()) pinInput.deleteCharAt(pinInput.lastIndex)
+            renderPinPrompt()
+            renderPinDots()
         }
-        binding.btnTogglePin.setOnClickListener {
-            pinVisible = !pinVisible
-            renderPinVisibility()
+        entry.clearPin.setOnClickListener {
+            pinInput.clear()
+            renderPinPrompt()
+            renderPinDots()
+        }
+        entry.pinLengths.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked || step != Step.ENTER) return@addOnButtonCheckedListener
+            val length = if (checkedId == R.id.pinLength6) 6 else 4
+            if (length == pinLength) return@addOnButtonCheckedListener
+            pinLength = length
+            pinInput.clear()
+            renderPinStep()
         }
     }
 
@@ -210,11 +202,15 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
             }
             Step.CONFIRM -> {
                 if (pin != firstPin) {
-                    showInputError()
+                    pinInput.clear()
+                    renderPinDots()
+                    renderPinPrompt(isError = true)
+                    shake(binding.pinEntry.pinEntryDots)
                     return
                 }
                 SecurePinStore.savePin(requireContext(), pin)
                 LockService.enableAndStart(requireContext())
+                firstPin = null
                 savedPin = pin
                 goTo(Step.SUCCESS)
             }
@@ -245,9 +241,11 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
     private fun navigateBack() {
         when (step) {
             Step.MENU -> findNavController().popBackStack()
-            Step.TYPE, Step.SUCCESS -> goTo(Step.MENU)
-            Step.ENTER -> goTo(Step.TYPE)
-            Step.CONFIRM -> goTo(Step.ENTER)
+            Step.ENTER, Step.SUCCESS -> goTo(Step.MENU)
+            Step.CONFIRM -> {
+                firstPin = null
+                goTo(Step.ENTER)
+            }
             Step.TEST -> finishFlow()
         }
     }
@@ -263,6 +261,7 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
 
     private fun goTo(next: Step) {
         val leavingTest = step == Step.TEST && next != Step.TEST
+        pinInput.clear()
         step = next
         if (leavingTest) restoreSystemBars()
         render()
@@ -271,131 +270,83 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
 
     private fun render() {
         val isMenu = step == Step.MENU
-        val isType = step == Step.TYPE
-        val isCard = step in setOf(Step.ENTER, Step.CONFIRM, Step.SUCCESS)
+        val isEntry = step == Step.ENTER || step == Step.CONFIRM
 
         binding.cardPinSetup.root.isVisible = isMenu
         binding.cardRecovery.root.isVisible = isMenu
-        binding.tvTypeStep.isVisible = isType
-        binding.stepperType.root.isVisible = isType
-        typeCards().forEach { (_, card) -> card.root.isVisible = isType }
-        binding.cardStep.isVisible = isCard
-        binding.btnHeaderNext.isVisible = isType
-        binding.btnHeaderDone.isVisible = step == Step.SUCCESS
+        binding.pinEntry.root.isVisible = isEntry
+        binding.cardStep.root.isVisible = step == Step.SUCCESS
         binding.clTest.isVisible = step == Step.TEST
+        binding.pinRoot.setBackgroundColor(
+            ContextCompat.getColor(requireContext(), if (isEntry) R.color.surface else R.color.bg)
+        )
+        binding.tvToolbarTitle.setText(if (isEntry) R.string.pin_setup_screen_title else R.string.pin_setup_title)
 
         when (step) {
-            Step.TYPE -> renderType()
             Step.ENTER, Step.CONFIRM -> renderPinStep()
             Step.SUCCESS -> renderSuccess()
             Step.TEST -> renderTest()
-            Step.MENU -> hideKeyboard()
-        }
-    }
-
-    private fun renderType() {
-        hideKeyboard()
-        renderStepper(binding.stepperType, 1)
-        renderTypeSelection()
-    }
-
-    private fun renderTypeSelection() {
-        typeCards().forEach { (length, card) ->
-            val selected = length == pinLength
-            card.root.setBackgroundResource(
-                if (selected) R.drawable.bg_pin_type_card_selected else R.drawable.bg_pin_type_card
-            )
-            card.root.isSelected = selected
+            Step.MENU -> Unit
         }
     }
 
     private fun renderPinStep() {
-        val confirming = step == Step.CONFIRM
-        binding.tvStepTitle.setText(if (confirming) R.string.pin_step_confirm else R.string.pin_step_input)
-        binding.ivStepArt.setImageResource(R.drawable.img_pin_lock_illustration)
-        binding.ivStepArt.layoutParams = binding.ivStepArt.layoutParams.apply {
-            width = dp(104)
-            height = dp(122)
+        val entry = binding.pinEntry
+        entry.pinLengths.isVisible = step == Step.ENTER
+        entry.pinLengths.check(if (pinLength == 6) R.id.pinLength6 else R.id.pinLength4)
+        entry.pinLength4.setIconResource(if (pinLength == 4) R.drawable.ic_pin_check else 0)
+        entry.pinLength6.setIconResource(if (pinLength == 6) R.drawable.ic_pin_check else 0)
+        renderPinPrompt()
+        renderPinDots()
+    }
+
+    private fun renderPinPrompt(isError: Boolean = false) {
+        binding.pinEntry.pinPrompt.apply {
+            text = when {
+                isError -> getString(R.string.pin_mismatch)
+                step == Step.CONFIRM -> getString(R.string.pin_setup_confirm_prompt)
+                else -> getString(R.string.pin_setup_enter_prompt, pinLength)
+            }
+            setTextColor(ContextCompat.getColor(context, if (isError) R.color.error else R.color.textPrimary))
         }
-        binding.tvSuccessTitle.isVisible = false
-        binding.pinInputField.isVisible = true
-        binding.tvStepHint.setText(if (confirming) R.string.pin_confirm_input_hint else R.string.pin_input_hint)
-        binding.tvStepHint.setTextColor(ContextCompat.getColor(requireContext(), R.color.textSecondary))
-        binding.etPin.filters = arrayOf(android.text.InputFilter.LengthFilter(pinLength))
-        binding.etPin.text?.clear()
-        clearInputError()
-        renderPinVisibility()
-        renderStepper(binding.stepperStep, if (confirming) 3 else 2)
-        showKeyboard()
+    }
+
+    private fun renderPinDots() {
+        val dots = binding.pinEntry.pinEntryDots
+        if (dots.childCount != pinLength) {
+            dots.removeAllViews()
+            val size = resources.getDimensionPixelSize(R.dimen.credential_pin_dot_size)
+            val margin = resources.getDimensionPixelSize(R.dimen.spacing_sm)
+            repeat(pinLength) {
+                dots.addView(View(requireContext()), LinearLayout.LayoutParams(size, size).apply {
+                    marginStart = margin
+                    marginEnd = margin
+                })
+            }
+        }
+        dots.children.forEachIndexed { index, dot ->
+            dot.setBackgroundResource(
+                if (index < pinInput.length) R.drawable.bg_pin_dot_filled else R.drawable.bg_pin_dot_empty
+            )
+        }
+        dots.contentDescription = getString(R.string.pin_setup_progress, pinInput.length, pinLength)
     }
 
     private fun renderSuccess() {
-        hideKeyboard()
-        binding.tvStepTitle.setText(R.string.pin_step_done)
-        binding.ivStepArt.layoutParams = binding.ivStepArt.layoutParams.apply {
-            width = dp(112)
-            height = dp(112)
-        }
-        playSuccessTick()
-        binding.tvSuccessTitle.isVisible = true
-        binding.pinInputField.isVisible = false
-        binding.tvStepHint.setText(R.string.pin_setup_success_desc)
-        binding.tvStepHint.setTextColor(ContextCompat.getColor(requireContext(), R.color.textSecondary))
-        renderStepper(binding.stepperStep, 4)
-    }
-
-    /** Vector tick animation: crisp at any density, seal pops in and the check draws itself. */
-    private fun playSuccessTick() {
-        val tick = AnimatedVectorDrawableCompat.create(requireContext(), R.drawable.avd_pin_success)
-        if (tick == null) {
-            binding.ivStepArt.setImageResource(R.drawable.ic_pin_success_seal)
-            return
-        }
-        binding.ivStepArt.setImageDrawable(tick)
-        tick.start()
+        binding.cardStep.bindSuccess(
+            R.string.pin_setup_success,
+            R.string.pin_setup_success_desc,
+            R.string.pin_success_test_action
+        ) { goTo(Step.TEST) }
     }
 
     private fun renderTest() {
-        hideKeyboard()
         applyTestWallpaper()
         enterImmersiveBars()
         testInput.clear()
         binding.tvTestPrompt.setText(R.string.pin_please_enter)
         buildTestDots()
         renderTestDots()
-    }
-
-    private fun renderStepper(stepper: ViewPinStepperBinding, current: Int) {
-        val dots = listOf(stepper.dot1, stepper.dot2, stepper.dot3, stepper.dot4)
-        val lines = listOf(stepper.line1, stepper.line2, stepper.line3)
-        dots.forEachIndexed { index, dot ->
-            dot.setBackgroundResource(if (index < current) R.drawable.bg_pin_step_dot_on else R.drawable.bg_pin_step_dot_off)
-        }
-        val on = ContextCompat.getColor(requireContext(), R.color.primary)
-        val off = ContextCompat.getColor(requireContext(), R.color.primaryGlow)
-        lines.forEachIndexed { index, line -> line.setBackgroundColor(if (index < current - 1) on else off) }
-        stepper.root.contentDescription = getString(R.string.pin_step_progress, current)
-    }
-
-    private fun renderPinVisibility() {
-        binding.etPin.transformationMethod =
-            if (pinVisible) HideReturnsTransformationMethod.getInstance() else PasswordTransformationMethod.getInstance()
-        binding.etPin.setSelection(binding.etPin.text?.length ?: 0)
-        binding.btnTogglePin.setImageResource(if (pinVisible) R.drawable.ic_eye_off_outline else R.drawable.ic_eye_outline)
-        binding.btnTogglePin.contentDescription = getString(if (pinVisible) R.string.pin_hide else R.string.pin_show)
-    }
-
-    private fun showInputError() {
-        binding.pinInputField.setBackgroundResource(R.drawable.bg_pin_input_field_error)
-        binding.tvStepHint.setText(R.string.pin_mismatch)
-        binding.tvStepHint.setTextColor(ContextCompat.getColor(requireContext(), R.color.error))
-        shake(binding.pinInputField)
-        binding.etPin.text?.clear()
-    }
-
-    private fun clearInputError() {
-        if (step != Step.CONFIRM && step != Step.ENTER) return
-        binding.pinInputField.setBackgroundResource(R.drawable.bg_pin_input_field)
     }
 
     private fun buildTestDots() {
@@ -457,20 +408,6 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
         bindingOrNull?.let { ViewCompat.requestApplyInsets(it.pinRoot) }
     }
 
-    private fun showKeyboard() {
-        binding.etPin.requestFocus()
-        binding.etPin.post {
-            val imm = context?.getSystemService(InputMethodManager::class.java) ?: return@post
-            imm.showSoftInput(bindingOrNull?.etPin ?: return@post, InputMethodManager.SHOW_IMPLICIT)
-        }
-    }
-
-    private fun hideKeyboard() {
-        val imm = context?.getSystemService(InputMethodManager::class.java) ?: return
-        imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
-        binding.etPin.clearFocus()
-    }
-
     private fun shake(view: View) {
         ObjectAnimator.ofFloat(view, View.TRANSLATION_X, 0f, 18f, -18f, 12f, -12f, 6f, 0f).apply {
             duration = SHAKE_MS
@@ -485,9 +422,8 @@ class PinLockFragment : BaseFragment<FragmentPinLockBinding>(FragmentPinLockBind
     private companion object {
         const val KEY_STEP = "pin_step"
         const val KEY_LENGTH = "pin_length"
-        const val KEY_FIRST_PIN = "pin_first"
         const val DEFAULT_PIN_LENGTH = 4
-        val PIN_LENGTHS = setOf(4, 5, 6, 8)
+        val PIN_LENGTHS = setOf(4, 6)
         const val SHAKE_MS = 400L
     }
 }
