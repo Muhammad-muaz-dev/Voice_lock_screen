@@ -36,7 +36,7 @@
     </style>
     <style parent="" name="Text.VoiceLock.titleS">
         <item name="android:textSize">@dimen/text_titleS</item>
-        <item name="lineHeight">24sp</item>
+        <item name="lineHeight">20sp</item>
         <item name="android:letterSpacing">0</item>
     </style>
     <style parent="" name="Text.VoiceLock.bodyL">

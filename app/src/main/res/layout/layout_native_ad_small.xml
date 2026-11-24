@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Compact native ad: icon, headline, body and call to action (Splash, Language). -->
-<com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,10 +13,23 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_md">
 
+        <!-- Ad Icon -->
+        <ImageView
+            android:id="@+id/adIcon"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_ad_icon"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Ad Badge -->
         <TextView
             android:id="@+id/adBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
             android:background="@drawable/bg_ad_badge"
             android:fontFamily="@font/sora_semibold"
             android:paddingHorizontal="6dp"
@@ -24,57 +37,52 @@
             android:text="@string/ad_label"
             android:textColor="@color/badge_pro_text"
             android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/adIcon"
+            app:layout_constraintTop_toTopOf="@id/adHeadline"
+            app:layout_constraintBottom_toBottomOf="@id/adHeadline" />
 
-        <ImageView
-            android:id="@+id/adIcon"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:background="@drawable/bg_ad_icon"
-            android:importantForAccessibility="no"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/adBadge" />
-
+        <!-- Ad Headline -->
         <TextView
             android:id="@+id/adHeadline"
             style="@style/Text.VoiceLock.titleS"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_marginStart="@dimen/spacing_xs"
             android:ellipsize="end"
             android:fontFamily="@font/sora_semibold"
             android:maxLines="1"
             android:textColor="@color/primary_text"
+            app:layout_constraintStart_toEndOf="@id/adBadge"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/adIcon"
-            app:layout_constraintTop_toTopOf="@id/adIcon"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Ad headline" />
 
+        <!-- Ad Description -->
         <TextView
             android:id="@+id/adBody"
             style="@style/Text.VoiceLock.bodyS"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:fontFamily="@font/sora_regular"
             android:maxLines="2"
             android:textColor="@color/textSecondary"
+            app:layout_constraintStart_toStartOf="@id/adBadge"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/adHeadline"
             app:layout_constraintTop_toBottomOf="@id/adHeadline"
             tools:text="Ad body text goes here." />
 
+        <!-- Header Bottom Barrier -->
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/adHeaderBarrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:barrierAllowsGoneWidgets="false"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="adIcon,adBody" />
+            app:constraint_referenced_ids="adIcon,adBadge,adHeadline,adBody" />
 
+        <!-- Call To Action -->
         <Button
             android:id="@+id/adCallToAction"
             style="@style/Text.VoiceLock.buttonS"
@@ -88,10 +96,12 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:backgroundTint="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/adHeaderBarrier"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:text="Install" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView>

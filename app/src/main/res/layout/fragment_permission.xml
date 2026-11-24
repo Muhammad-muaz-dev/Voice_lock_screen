@@ -76,6 +76,7 @@
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
                 android:src="@drawable/img_camera_permission_hero"
+                app:tint="@color/primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -149,7 +150,8 @@
                             android:layout_height="22dp"
                             android:layout_gravity="center"
                             android:importantForAccessibility="no"
-                            android:src="@drawable/ic_camera_mic_outline" />
+                            android:src="@drawable/ic_camera_mic_outline"
+                            app:tint="@color/primary" />
                     </FrameLayout>
 
                     <TextView
@@ -223,7 +225,8 @@
                             android:layout_height="22dp"
                             android:layout_gravity="center"
                             android:importantForAccessibility="no"
-                            android:src="@drawable/ic_perm_phone" />
+                            android:src="@drawable/ic_perm_phone"
+                            app:tint="@color/primary" />
                     </FrameLayout>
 
                     <TextView
@@ -298,7 +301,8 @@
                             android:layout_height="22dp"
                             android:layout_gravity="center"
                             android:importantForAccessibility="no"
-                            android:src="@drawable/ic_camera_layers" />
+                            android:src="@drawable/ic_camera_layers"
+                            app:tint="@color/primary" />
                     </FrameLayout>
 
                     <TextView

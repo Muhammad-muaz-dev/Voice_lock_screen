@@ -8,8 +8,8 @@
     <color name="primary_dark">@color/primary</color>
     <color name="primaryHighlight">#64B8F0</color>
     <color name="primaryOutline">#B4DDF8</color>
-    <color name="primaryDeep">#00447A</color>
-    <color name="primaryBackdrop">#08233D</color>
+    <color name="primaryDeep">#007DDC</color>
+    <color name="primaryBackdrop">#007DDC</color>
     <color name="primaryWash">#14007DDC</color>
 
     <!-- Semantic Primary Aliases (for existing layout & drawable compatibility) -->

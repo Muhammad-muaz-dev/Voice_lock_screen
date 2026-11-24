@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.pm.PackageManager
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.core.view.isVisible
@@ -27,6 +29,7 @@ import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.ads.AdPlacement
+import com.futurecode.voicelockscreen.ads.AdsConfig
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentHomeBinding
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
@@ -63,6 +66,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onResume() {
         super.onResume()
+        updateVoiceAnimationColor()
         updateVoiceLockSwitches()
 
         binding.root.post {
@@ -70,6 +74,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             if (viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 maybeAskNotifications()
             }
+        }
+    }
+
+    private fun updateVoiceAnimationColor() {
+        val color = AdsConfig.onboardingAds.ctaColor
+        val glowColor = ColorUtils.setAlphaComponent(color, 0x33)
+        val section = binding.voiceSection
+
+        fun tintShape(view: View, fillColor: Int, strokeWidthDp: Float = 0f) {
+            val shape = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setColor(fillColor)
+            }
+            if (strokeWidthDp > 0f) {
+                shape.setStroke(
+                    (strokeWidthDp * resources.displayMetrics.density).toInt(),
+                    color
+                )
+            }
+            view.background = shape
+        }
+
+        tintShape(section.voiceMic, color)
+        tintShape(section.voiceRingInner, glowColor)
+        tintShape(section.voiceRingOuter, ColorUtils.setAlphaComponent(color, 0x14))
+        (section.voiceRingOuter.background as GradientDrawable).setStroke(
+            resources.displayMetrics.density.toInt(),
+            glowColor
+        )
+        listOf(section.voicePulse, section.voicePulse2, section.voicePulse3).forEach {
+            tintShape(it, glowColor, 1.5f)
         }
     }
 
@@ -239,7 +274,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
         binding.voiceSection.switchVoice.isChecked = active
         binding.voiceSection.tvVoiceSubtitle.setText(status)
-        binding.voiceSection.voiceMic.alpha = if (active) 1f else INACTIVE_MIC_ALPHA
+        binding.voiceSection.voiceMic.alpha = 1f
         binding.voiceSection.voiceMic.contentDescription = getString(R.string.home_voice_accessibility_status, getString(R.string.home_voice_title), getString(status))
         startVoiceWaves()
     }
@@ -328,7 +363,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private companion object {
         const val HOME_THEME_PLACEHOLDERS = 4
-        const val INACTIVE_MIC_ALPHA = 0.55f
         const val WAVE_SCALE = 1.75f
         const val WAVE_START_ALPHA = 0.8f
         const val WAVE_DURATION_MS = 2400L

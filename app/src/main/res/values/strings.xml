@@ -791,12 +791,12 @@
     <string name="vn_ai_voice_note">AI Voice Note</string>
     <string name="vn_text_v">V</string>
     <string name="vn_text_ice_note">ice Note</string>
-    <string name="vn_voice_note_desc">Private Voice Diary,\n only yours</string>
+    <string name="vn_voice_note_desc">Record your thoughts, then summarize or translate your notes.</string>
     <string name="vn_create_new">Create New</string>
     <string name="vn_create_now">Create Now</string>
     <string name="vn_my_notes">My Notes</string>
     <string name="vn_no_voice_notes_yet">No Voice Notes Yet</string>
-    <string name="vn_empty_note_desc">Start recording to save your first voice note.</string>
+    <string name="vn_empty_note_desc">Tap Create Now, choose your language, then tap Start to record your first note.</string>
     <string name="vn_ai_summary">AI Summary</string>
     <string name="vn_more_options">More options</string>
     <string name="vn_back">Back</string>
@@ -813,7 +813,7 @@
     <string name="vn_continue">Continue</string>
     <string name="vn_apply">Apply</string>
     <string name="vn_timer_zero">00:00</string>
-    <string name="vn_choose_language_record_note_desc">Choosing the correct voice language will help the speech recognition system to text most accurately.</string>
+    <string name="vn_choose_language_record_note_desc">Choose the language you will speak for a more accurate transcript.</string>
     <string name="vn_cant_detect_your_voice">Can\'t detect your voice</string>
     <string name="vn_transcript">Transcript</string>
     <string name="vn_translate">Translate</string>
@@ -891,4 +891,7 @@
     <string name="pin_key_7" translatable="false">7</string>
     <string name="pin_key_8" translatable="false">8</string>
     <string name="pin_key_9" translatable="false">9</string>
+    <string name="note_record_hint">Tap Start and speak clearly. Your words will appear here. Tap Stop when you are finished, then Save to keep your note.</string>
+    <string name="note_transcript_hint">Your transcript will appear here. Tap Edit to add or correct text.</string>
+    <string name="note_name_hint">Enter a note title, e.g. Meeting notes</string>
 </resources>

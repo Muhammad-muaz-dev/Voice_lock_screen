@@ -63,7 +63,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:clipToPadding="false"
-        android:clipChildren="true"
+        android:clipChildren="false"
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -81,8 +81,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/vn_dp__16"
-            android:background="@drawable/vn_bg_radius_16_primary02"
-            app:layout_constraintBottom_toBottomOf="@id/tvDesc"
+            android:background="@drawable/bg_voice_note_card"
+            app:layout_constraintBottom_toBottomOf="@id/tvCreateNew"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -98,8 +98,9 @@
             android:drawablePadding="@dimen/vn_dp_2"
             android:gravity="center"
             android:text="@string/vn_text_v"
-            android:textColor="@color/vn_white"
+            android:textColor="@color/textPrimary"
             app:drawableEndCompat="@drawable/vn_ic_mic_white"
+            app:drawableTint="@color/primary"
             app:layout_constraintStart_toStartOf="@id/frameCreateNew"
             app:layout_constraintTop_toTopOf="@id/frameCreateNew" />
 
@@ -112,7 +113,7 @@
             android:layout_marginStart="@dimen/vn_dp_2"
             android:gravity="center"
             android:text="@string/vn_text_ice_note"
-            android:textColor="@color/vn_white"
+            android:textColor="@color/textPrimary"
             app:layout_constraintBottom_toBottomOf="@id/tvHeaderTitle"
             app:layout_constraintStart_toEndOf="@id/tvHeaderTitle"
             app:layout_constraintTop_toTopOf="@id/tvHeaderTitle" />
@@ -124,11 +125,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/vn_dp_4"
-            android:layout_marginEnd="@dimen/vn_dp_33"
+            android:layout_marginEnd="@dimen/spacing_lg"
             android:gravity="start"
             android:text="@string/vn_voice_note_desc"
-            android:textColor="@color/vn_neutral10"
-            app:layout_constraintEnd_toStartOf="@id/tvCreateNew"
+            android:textColor="@color/textSecondary"
+            app:layout_constraintEnd_toEndOf="@id/frameCreateNew"
             app:layout_constraintStart_toStartOf="@id/tvHeaderTitle"
             app:layout_constraintTop_toBottomOf="@id/tvHeaderTitle" />
 
@@ -139,16 +140,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/vn_dp_20"
-            android:background="@drawable/vn_bg_radius_1000_white"
+            android:background="@drawable/vn_bg_radius_1000_primary01"
+            android:minHeight="48dp"
+            android:gravity="center"
             android:paddingStart="@dimen/vn_dp_16"
             android:paddingTop="@dimen/vn_dp_8"
             android:paddingEnd="@dimen/vn_dp_16"
             android:paddingBottom="@dimen/vn_dp_8"
             android:text="@string/vn_create_new"
-            android:textColor="@color/vn_primary02"
-            app:layout_constraintBottom_toBottomOf="@id/frameCreateNew"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@id/frameCreateNew"
-            app:layout_constraintTop_toTopOf="@id/frameCreateNew" />
+            app:layout_constraintTop_toBottomOf="@id/tvDesc"
+            android:layout_marginTop="@dimen/spacing_md" />
 
         <TextView
             android:id="@+id/tvMyNotes"
@@ -165,8 +168,9 @@
             app:layout_constraintTop_toBottomOf="@id/frameCreateNew" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:clipChildren="true"
+            android:clipChildren="false"
             android:paddingTop="@dimen/card_shadow_gutter"
+            android:paddingHorizontal="@dimen/card_shadow_gutter"
             android:id="@+id/rvNotes"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -234,7 +238,7 @@
             android:paddingEnd="@dimen/vn_dp_16"
             android:paddingBottom="@dimen/vn_dp_8"
             android:text="@string/vn_create_now"
-            android:textColor="@color/vn_white"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

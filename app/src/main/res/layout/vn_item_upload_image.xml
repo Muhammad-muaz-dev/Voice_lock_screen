@@ -8,7 +8,7 @@
     android:focusable="true"
     app:cardBackgroundColor="@color/vn_white"
     app:cardCornerRadius="16dp"
-    app:cardElevation="@dimen/elevation_card"
+    app:cardElevation="3dp"
     app:strokeColor="@android:color/transparent">
 
     <LinearLayout

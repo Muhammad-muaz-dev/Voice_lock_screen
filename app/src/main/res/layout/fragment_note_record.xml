@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg"
     android:fitsSystemWindows="true"
+    android:clipChildren="false"
     tools:context=".ui.afterlogin.NoteRecordFragment">
 
     <ImageView
@@ -73,7 +74,9 @@
         android:layout_marginTop="@dimen/vn_dp_16"
         android:layout_marginEnd="@dimen/vn_dp_16"
         android:layout_marginBottom="@dimen/vn_dp_58"
-        android:background="@drawable/vn_bg_radius_16_neutral10_for_create_note"
+        android:background="@drawable/bg_voice_note_card"
+        android:elevation="@dimen/elevation_card"
+        android:padding="@dimen/spacing_lg"
         app:layout_constraintBottom_toTopOf="@id/tvRecordTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +84,7 @@
 
         <EditText
             android:id="@+id/etRecorded"
+            android:hint="@string/note_record_hint"
             style="@style/VN.Text_MD_Regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +95,7 @@
             android:inputType="textMultiLine|textCapSentences"
             android:paddingBottom="@dimen/vn_dp_16"
             android:textColor="@color/vn_neutral01"
-            android:textColorHint="@color/vn_neutral05"
+            android:textColorHint="@color/textSecondary"
             tools:ignore="LabelFor" />
     </ScrollView>
 
