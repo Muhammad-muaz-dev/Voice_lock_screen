@@ -177,6 +177,9 @@ Use `view_success_page` when the success screen fills its own viewport.
 The language reference uses pill rows: `language_row_height` 64 dp minimum,
 `language_row_radius` 32 dp, 32 dp circular flags, 24 dp radio/expand indicators,
 16 dp row padding, and 8 dp row gaps. Regional choices are indented 32 dp.
+The flat app language screen uses leading circular flags, with a globe for System
+default. A primary border alone marks the selected row.
+
 Rows grow for wrapped labels/font scaling. Use surface/border by default and
 surfaceTint/primarySelected for the selected option. Group rows toggle expansion;
 leaf rows select a locale. Apply the selected locale when Continue is pressed.

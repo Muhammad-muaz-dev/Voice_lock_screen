@@ -33,10 +33,14 @@ class LanguageFlagView @JvmOverloads constructor(
     }
 
     private fun drawFlag(canvas: Canvas, region: String, x: Float, y: Float, size: Float) {
-        val glyph = region.uppercase(java.util.Locale.ROOT).map {
-            String(Character.toChars(0x1F1E6 + it.code - 'A'.code))
-        }.joinToString("")
-        paint.textSize = size * 1.2f
+        val glyph = if (region.isEmpty()) {
+            "🌐"
+        } else {
+            region.uppercase(java.util.Locale.ROOT).map {
+                String(Character.toChars(0x1F1E6 + it.code - 'A'.code))
+            }.joinToString("")
+        }
+        paint.textSize = if (region.isEmpty()) size * 0.8f else size * 1.2f
         paint.getTextBounds(glyph, 0, glyph.length, bounds)
         val textWidth = paint.measureText(glyph)
         canvas.drawText(glyph, x - textWidth / 2, y - bounds.exactCenterY(), paint)

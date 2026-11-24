@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Language row: leading radio and the language name in a white pill. -->
+<!-- Language row: leading flag badge and the language name in a white pill. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,15 +14,14 @@
     android:paddingHorizontal="@dimen/spacing_lg"
     android:paddingVertical="@dimen/spacing_lg">
 
-    <ImageView
-        android:id="@+id/imgLanguageSelected"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+    <com.futurecode.voicelockscreen.ui.view.LanguageFlagView
+        android:id="@+id/languageFlag"
+        android:layout_width="@dimen/language_flag_size"
+        android:layout_height="@dimen/language_flag_size"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_radio_on_ring" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvLanguageName"
@@ -35,7 +34,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgLanguageSelected"
+        app:layout_constraintStart_toEndOf="@id/languageFlag"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="English" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,8 +28,8 @@ class OnboardingPreviewImage(context: Context, attrs: AttributeSet?) :
     }
     private val featureBadges by lazy {
         listOf(
-            badge(R.drawable.bg_feature_tile_camera, R.drawable.ic_feature_camera, 121, 656),
-            badge(R.drawable.bg_feature_tile_pin, R.drawable.ic_feature_pin, 367, 656),
+            badge(R.drawable.bg_feature_tile_camera, R.drawable.ic_feature_camera, 121, 674),
+            badge(R.drawable.bg_feature_tile_pin, R.drawable.ic_feature_pin, 367, 674),
             badge(R.drawable.bg_feature_tile_pattern, R.drawable.ic_feature_pattern, 121, 881),
             badge(R.drawable.bg_feature_tile_fingerprint, R.drawable.ic_feature_fingerprint, 367, 881)
         )
@@ -75,6 +75,9 @@ class OnboardingPreviewImage(context: Context, attrs: AttributeSet?) :
         canvas.scale(676f / bounds.width(), 1312f / bounds.height())
         artwork.draw(canvas)
         canvas.restoreToCount(navigationLayer)
+        // Clear the original top-row badges before redrawing them below the voice card.
+        canvas.drawRect(121f, 656f, 182f, 674f, cardPaint)
+        canvas.drawRect(367f, 656f, 428f, 674f, cardPaint)
         featureBadges.forEach { (background, icon) ->
             // The source already has colored tiles and icons. Cover both before drawing Home's badge.
             val tile = background.bounds

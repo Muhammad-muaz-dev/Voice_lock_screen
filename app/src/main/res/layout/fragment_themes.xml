@@ -75,21 +75,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivLogo">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:clipToPadding="false"
             android:clipChildren="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:paddingBottom="@dimen/vn_dp_36">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAiQuote"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/vn_dp_16"
                 android:clickable="true"
                 android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:cardBackgroundColor="@color/vn_th_card_bg"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="@dimen/elevation_card"
@@ -224,13 +226,16 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardLockScreenTheme"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/vn_dp_16"
                 android:layout_marginTop="@dimen/vn_dp_20"
                 android:layout_marginBottom="@dimen/vn_dp_2"
                 android:clickable="true"
                 android:focusable="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardAiQuote"
                 app:cardBackgroundColor="@color/vn_th_card_bg"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="@dimen/elevation_card"
@@ -354,7 +359,16 @@
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
+            <FrameLayout
+                android:id="@+id/themesNativeAdContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/cardLockScreenTheme"
+                app:layout_constraintStart_toStartOf="@id/cardLockScreenTheme"
+                app:layout_constraintTop_toBottomOf="@id/cardLockScreenTheme" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <include

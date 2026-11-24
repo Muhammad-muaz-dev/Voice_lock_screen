@@ -29,7 +29,6 @@ import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.ads.AdPlacement
-import com.futurecode.voicelockscreen.ads.AdsConfig
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentHomeBinding
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
@@ -56,6 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         setupNotificationResultListener()
         setupBackNavigation()
         setupHeaderActions()
+        updateVoiceAnimationColor()
         setupVoiceCardActions()
         setupFeatureActions()
         setupHomeThemes()
@@ -66,7 +66,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onResume() {
         super.onResume()
-        updateVoiceAnimationColor()
         updateVoiceLockSwitches()
 
         binding.root.post {
@@ -78,7 +77,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun updateVoiceAnimationColor() {
-        val color = AdsConfig.onboardingAds.ctaColor
+        val color = ContextCompat.getColor(requireContext(), R.color.primary)
         val glowColor = ColorUtils.setAlphaComponent(color, 0x33)
         val section = binding.voiceSection
 

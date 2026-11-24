@@ -43,10 +43,7 @@ class LanguageAdapter(
                 if (isSelected) R.drawable.bg_language_picker_row_selected
                 else R.drawable.bg_language_picker_row
             )
-            binding.imgLanguageSelected.setImageResource(
-                if (isSelected) R.drawable.ic_radio_on_ring
-                else R.drawable.ic_radio_off_ring
-            )
+            binding.languageFlag.country = language.country
             binding.root.isSelected = isSelected
             ViewCompat.setStateDescription(
                 binding.root,

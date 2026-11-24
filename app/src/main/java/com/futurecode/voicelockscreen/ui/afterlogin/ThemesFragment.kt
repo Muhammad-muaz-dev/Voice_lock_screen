@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.futurecode.voicelockscreen.R
+import com.futurecode.voicelockscreen.ads.AdPlacement
 import com.futurecode.voicelockscreen.base.BaseFragment
 import com.futurecode.voicelockscreen.databinding.FragmentThemesBinding
 import com.futurecode.voicelockscreen.utils.ThemePreviewBinder
 import com.futurecode.voicelockscreen.utils.bindBottomTabs
 
-/** Themes tab: AI Quote card + Lock Screen Theme card (reference layout, no ad slot). */
 class ThemesFragment : BaseFragment<FragmentThemesBinding>(FragmentThemesBinding::inflate) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,5 +23,6 @@ class ThemesFragment : BaseFragment<FragmentThemesBinding>(FragmentThemesBinding
         val openThemes = View.OnClickListener { findNavController().navigate(R.id.seeAllthemesFragment, null, VoiceNoteUi.slideNavOptions) }
         binding.cardLockScreenTheme.setOnClickListener(openThemes)
         binding.btnLockThemeNext.setOnClickListener(openThemes)
+        AdPlacement.loadAndShowNative(viewLifecycleOwner, binding.themesNativeAdContainer)
     }
 }

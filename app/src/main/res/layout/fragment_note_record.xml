@@ -191,9 +191,17 @@
         android:layout_marginBottom="@dimen/vn_dp_12"
         android:text="@string/vn_timer_zero"
         android:textColor="@color/vn_neutral01"
-        app:layout_constraintBottom_toTopOf="@id/tvRecord"
+        app:layout_constraintBottom_toTopOf="@id/recordActionsTop"
         app:layout_constraintEnd_toEndOf="@id/tvRecord"
         app:layout_constraintStart_toStartOf="@id/tvRecord" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/recordActionsTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierAllowsGoneWidgets="false"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="tvRecord,tvContinue,tvSave" />
 
     <TextView
         android:id="@+id/tvRecord"
