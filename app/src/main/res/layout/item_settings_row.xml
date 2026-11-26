@@ -50,9 +50,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:thumbTint="@drawable/selector_permission_thumb"
+        app:thumbTint="@drawable/selector_permission_thumb_card"
         app:trackDecorationTint="@android:color/transparent"
-        app:trackTint="@drawable/selector_permission_track"
+        app:trackTint="@drawable/selector_permission_track_card"
         tools:visibility="visible" />
 
     <ImageView

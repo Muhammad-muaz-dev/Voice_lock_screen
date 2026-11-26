@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.futurecode.voicelockscreen.R
 import com.futurecode.voicelockscreen.service.LockService
 import com.futurecode.voicelockscreen.activity.OverlayGuideActivity
@@ -34,6 +35,14 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
 
     private val runtimePermissions = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
+    ) { results ->
+        onPermissionsChanged()
+        if (results[Manifest.permission.READ_PHONE_STATE] == false) {
+            showPhonePermissionSettingsPrompt()
+        }
+    }
+    private val phoneSettings = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
     ) { onPermissionsChanged() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,7 +56,7 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
 
     override fun onResume() {
         super.onResume()
-        // Returning from system Settings (overlay) lands here.
+        // Returning from system Settings (overlay or phone access) lands here.
         if (bindingOrNull != null) render()
     }
 
@@ -102,8 +111,30 @@ class PermissionFragment : BaseFragment<FragmentPermissionBinding>(FragmentPermi
     }
 
     private fun onPermissionsChanged() {
+        if (bindingOrNull == null) return
         render()
         if (needs().all(::isGranted)) navigateToTarget()
+    }
+
+    private fun showPhonePermissionSettingsPrompt() {
+        if (!isAdded || bindingOrNull == null) return
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.phone_call_access)
+            .setMessage(R.string.phone_call_desc)
+            .setNegativeButton(R.string.not_now, null)
+            .setPositiveButton(R.string.open_app_settings) { _, _ -> openPhonePermissionSettings() }
+            .show()
+    }
+
+    private fun openPhonePermissionSettings() {
+        val context = requireContext()
+        val opened = runCatching {
+            phoneSettings.launch(LockPermissionHelper.appDetailsSettingsIntent(context))
+        }
+        if (opened.isFailure) {
+            Toast.makeText(context, R.string.permissions_required, Toast.LENGTH_SHORT).show()
+        }
     }
 
     /** System overlay page, with our "find Voice Lock and turn it on" guide on top of it. */

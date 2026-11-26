@@ -192,10 +192,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:enabled="false"
+                    android:enabled="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:gravity="start|top"
                     android:importantForAutofill="no"
                     android:inputType="textMultiLine|textCapSentences"
+                    android:cursorVisible="false"
                     android:textColor="@color/vn_neutral01"
                     android:textColorHint="@color/vn_neutral05"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -379,6 +382,39 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+
+        <TextView
+            android:id="@+id/tvVoiceEditStatus"
+            style="@style/VN.Text_SM_Regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:layout_marginBottom="@dimen/vn_dp_12"
+            android:gravity="center"
+            android:textColor="@color/primary"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/tvVoiceEdit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvVoiceEdit"
+            style="@style/VN.Text_LG_SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/vn_dp_48"
+            android:background="@drawable/vn_bg_radius_1000_primary01"
+            android:paddingStart="@dimen/vn_dp_50"
+            android:paddingTop="@dimen/vn_dp_12"
+            android:paddingEnd="@dimen/vn_dp_50"
+            android:paddingBottom="@dimen/vn_dp_12"
+            android:text="@string/vn_start"
+            android:textColor="@color/vn_white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

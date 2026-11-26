@@ -4,13 +4,13 @@
     <!-- Voice Lock Design System v1.0 — Primary Palette                            -->
     <!-- ========================================================================= -->
     <color name="primary">#007DDC</color>
-    <color name="primary_light">#EDF7FD</color>
-    <color name="primary_dark">@color/primary</color>
+    <color name="primary_light">#EDECFF</color>
+    <color name="primary_dark">#5047E2</color>
     <color name="primaryHighlight">#64B8F0</color>
     <color name="primaryOutline">#B4DDF8</color>
-    <color name="primaryDeep">#007DDC</color>
-    <color name="primaryBackdrop">#007DDC</color>
-    <color name="primaryWash">#14007DDC</color>
+    <color name="primaryDeep">@color/primary_dark</color>
+    <color name="primaryBackdrop">@color/primary</color>
+    <color name="primaryWash">#14635BFF</color>
 
     <!-- Semantic Primary Aliases (for existing layout & drawable compatibility) -->
     <color name="primaryStart">@color/primary</color>
@@ -22,16 +22,16 @@
     <!-- ========================================================================= -->
     <!-- Voice Lock Design System v1.0 — Background & Surface Colors                -->
     <!-- ========================================================================= -->
-    <color name="bg">#E9EEF6</color>
-    <color name="bg_screen">#E9EEF6</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="card">#FFFFFF</color>
-    <color name="card_bg">#FFFFFF</color>
+    <color name="bg">#FFFFFF</color>
+    <color name="bg_screen">@color/bg</color>
+    <color name="surface">@color/switch_track_off</color>
+    <color name="card">@color/surface</color>
+    <color name="card_bg">@color/card</color>
     <color name="border">#E6E8EF</color>
 
     <!-- Elevated & Container Aliases -->
     <color name="surfaceElevated">#FFFFFF</color>
-    <color name="surfaceSunken">#F7F8FC</color>
+    <color name="surfaceSunken">#F2F2F2</color>
     <color name="field">#FFFFFF</color>
     <color name="recovery_question_picker">#CCE7FA</color>
     <color name="recovery_question_display">#EDF7FD</color>
@@ -78,7 +78,7 @@
     <color name="scrim">#66000000</color>
     <color name="scrimStrong">#CC000000</color>
     <color name="successGlow">#3322C55E</color>
-    <color name="primaryGlow">#33007DDC</color>
+    <color name="primaryGlow">#33635BFF</color>
     <color name="glassFill">#40FFFFFF</color>
     <color name="whiteSoft">#1FFFFFFF</color>
     <color name="whiteMuted">#D9FFFFFF</color>
@@ -118,7 +118,7 @@
 
     <!-- Component UI States (Buttons, Controls, Dialogs, Toast) -->
     <color name="switch_track_on">@color/primary</color>
-    <color name="switch_track_off">#D4D7E1</color>
+    <color name="switch_track_off">#D6D6D6</color>
     <color name="dialog_btn_cancel_bg">#F1F2F6</color>
     <color name="toast_bg_dark">#1E293B</color>
     <color name="toast_bg_info">#EFF6FF</color>
@@ -129,20 +129,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="text_white">#FFFFFF</color>
-    <color name="screen_bg_dark">#E9EEF6</color> <!-- was #0B1020 (old dark design); app is light-only -->
-    <color name="card_bg_dark">#FFFFFF</color> <!-- was #151B33 -->
+    <color name="screen_bg_dark">@color/bg</color> <!-- was #0B1020 (old dark design); app is light-only -->
+    <color name="card_bg_dark">@color/card</color> <!-- was #151B33 -->
     <color name="card_stroke_dark">#E6E8EF</color> <!-- was #232B4A -->
     <color name="brand_purple">@color/primary</color>
     <color name="gradient_purple_end">@color/primary</color>
     <color name="sub_pill_lock_bg">#F1F2F6</color> <!-- was #0F1428 -->
-    <color name="bottom_nav_bg">#FFFFFF</color>
+    <color name="bottom_nav_bg">@color/navBar</color>
     <color name="text_muted_sub">#74768A</color>
     <color name="accent_camera_bg">@color/primary</color>
     <color name="accent_pin_bg">#F43F5E</color>
     <color name="accent_pattern_bg">@color/primary</color>
     <color name="accent_fingerprint_bg">#10B981</color>
     <color name="divider_unlock_translucent">#1A171829</color>
-    <color name="bg_color">#E9EEF6</color>
+    <color name="bg_color">@color/bg</color>
     <color name="blue_primary">@color/primary</color>
     <color name="blue_light">@color/primary_light</color>
     <color name="text_dark">#171829</color>
@@ -158,9 +158,9 @@
     <color name="chip_bg_dark">#F1F2F6</color>
     <color name="outline_purple">@color/primary</color>
     <color name="radio_unselected">#E6E8EF</color>
-    <color name="sub_pill_unlock_translucent">#1A007DDC</color>
+    <color name="sub_pill_unlock_translucent">#1A635BFF</color>
     <color name="switch_track_lock">#E6E8EF</color>
-    <color name="switch_track_unlock_translucent">#33007DDC</color>
+    <color name="switch_track_unlock_translucent">#33635BFF</color>
     <color name="text_purple">@color/primary</color>
     <color name="lock_wallpaper_scrim">#99171829</color>
 </resources>

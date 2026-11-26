@@ -22,9 +22,17 @@ class OnboardingPreviewImage(context: Context, attrs: AttributeSet?) :
         color = ContextCompat.getColor(context, R.color.surface)
     }
     private val cameraTitlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.primary_text)
+        color = ContextCompat.getColor(context, R.color.primary)
         typeface = ResourcesCompat.getFont(context, R.font.sora_bold)
         textSize = 23f
+    }
+    private val featureTilePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = ContextCompat.getColor(context, R.color.surface)
+    }
+    private val featureTileOutlinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = ContextCompat.getColor(context, R.color.border)
+        style = Paint.Style.STROKE
+        strokeWidth = 1.5f
     }
     private val featureBadges by lazy {
         listOf(
@@ -48,6 +56,7 @@ class OnboardingPreviewImage(context: Context, attrs: AttributeSet?) :
     private fun createVoicePreview() =
         ViewHomeVoiceSectionBinding.inflate(LayoutInflater.from(context)).apply {
             tvVoiceSubtitle.setText(R.string.home_voice_status_line_off)
+            tvVoiceTitle.setTextColor(ContextCompat.getColor(context, R.color.primary))
             val width = (340 * resources.displayMetrics.density).toInt()
             root.measure(
                 MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
@@ -92,11 +101,44 @@ class OnboardingPreviewImage(context: Context, attrs: AttributeSet?) :
         canvas.drawRect(119f, 735f, 313f, 800f, cardPaint)
         canvas.drawText(context.getString(R.string.onboard_camera_tile_title), 121f, 759f, cameraTitlePaint)
         canvas.drawRoundRect(47.3f, 236f, 628.7f, 671f, 43f, 43f, cardPaint)
-        val scale = minOf(570f / preview.width, 410f / preview.height)
-        canvas.translate(338f - preview.width * scale / 2, 453.5f - preview.height * scale / 2)
+        val scale = minOf(570f / preview.width, 390f / preview.height)
+        val previewLayer = canvas.save()
+        canvas.translate(338f - preview.width * scale / 2, 442f - preview.height * scale / 2)
         canvas.scale(scale, scale)
         preview.draw(canvas)
+        canvas.restoreToCount(previewLayer)
+        drawFeatureTileTopEdges(canvas)
         canvas.restoreToCount(saved)
+    }
+
+    private fun drawFeatureTileTopEdges(canvas: Canvas) {
+        val tileTop = 650f
+        val tileBottom = 842f
+        val edgeClipBottom = 673f
+        val tileRadius = 24f
+        listOf(101f to 328f, 348f to 575f).forEach { (left, right) ->
+            val tile = canvas.save()
+            canvas.clipRect(left, tileTop, right, edgeClipBottom)
+            canvas.drawRoundRect(
+                left,
+                tileTop,
+                right,
+                tileBottom,
+                tileRadius,
+                tileRadius,
+                featureTilePaint
+            )
+            canvas.drawRoundRect(
+                left,
+                tileTop,
+                right,
+                tileBottom,
+                tileRadius,
+                tileRadius,
+                featureTileOutlinePaint
+            )
+            canvas.restoreToCount(tile)
+        }
     }
 
     private fun badge(@DrawableRes background: Int, @DrawableRes icon: Int, left: Int, top: Int) =

@@ -130,7 +130,8 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/img_camera_tap_hand"
                 app:layout_constraintStart_toStartOf="@id/guideSwitch"
-                app:layout_constraintTop_toTopOf="@id/guideSwitch" />
+                app:layout_constraintTop_toTopOf="@id/guideSwitch"
+                app:tint="@color/primary" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView

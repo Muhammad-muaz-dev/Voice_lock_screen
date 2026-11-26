@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_ad_slot"
+    android:importantForAccessibility="no">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_sm">
+
+        <com.futurecode.voicelockscreen.ads.NativeAdShimmerBlock
+            android:id="@+id/adMediaSkeleton"
+            android:layout_width="@dimen/native_ad_onboarding_media_size"
+            android:layout_height="@dimen/native_ad_onboarding_media_size"
+            app:shimmerCornerRadius="@dimen/radius_xs"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.futurecode.voicelockscreen.ads.NativeAdShimmerBlock
+            android:id="@+id/adIconSkeleton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/spacing_md"
+            app:shimmerCornerRadius="@dimen/radius_xs"
+            app:layout_constraintStart_toEndOf="@id/adMediaSkeleton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.futurecode.voicelockscreen.ads.NativeAdShimmerBlock
+            android:id="@+id/adBadgeSkeleton"
+            android:layout_width="20dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="@dimen/spacing_xs"
+            app:shimmerCornerRadius="@dimen/radius_xs"
+            app:layout_constraintBottom_toBottomOf="@id/adIconSkeleton"
+            app:layout_constraintStart_toEndOf="@id/adIconSkeleton"
+            app:layout_constraintTop_toTopOf="@id/adIconSkeleton" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/adHeaderBarrierSkeleton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierAllowsGoneWidgets="false"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="adIconSkeleton,adBadgeSkeleton" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/adHeadlineSkeletonRow"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_marginTop="@dimen/spacing_xs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/adMediaSkeleton"
+            app:layout_constraintTop_toBottomOf="@id/adHeaderBarrierSkeleton">
+
+            <com.futurecode.voicelockscreen.ads.NativeAdShimmerBlock
+                android:layout_width="0dp"
+                android:layout_height="12dp"
+                app:shimmerCornerRadius="@dimen/radius_xs"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/adBodySkeleton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_marginTop="@dimen/spacing_xs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/adMediaSkeleton"
+            app:layout_constraintTop_toBottomOf="@id/adHeadlineSkeletonRow">
+
+            <com.futurecode.voicelockscreen.ads.NativeAdShimmerBlock
+                android:id="@+id/adBodyLineOneSkeleton"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                app:shimmerCornerRadius="@dimen/radius_xs"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.futurecode.voicelockscreen.ads.NativeAdShimmerBlock
+                android:id="@+id/adBodyLineTwoSkeleton"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
+                app:shimmerCornerRadius="@dimen/radius_xs"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/adBodyLineOneSkeleton"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintWidth_percent="0.72" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.futurecode.voicelockscreen.ads.NativeAdShimmerBlock
+            android:id="@+id/adCallToActionSkeleton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_marginTop="@dimen/spacing_sm"
+            app:shimmerCornerRadius="@dimen/radius_xs"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/adMediaSkeleton"
+            app:layout_constraintTop_toBottomOf="@id/adBodySkeleton"
+            app:layout_constraintVertical_bias="1.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

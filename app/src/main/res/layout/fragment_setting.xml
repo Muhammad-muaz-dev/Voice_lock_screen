@@ -14,13 +14,12 @@
 
     <ImageView
         android:id="@+id/ivBack"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_marginStart="@dimen/spacing_sm"
         android:layout_marginTop="@dimen/spacing_md"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/back"
-        android:padding="10dp"
         android:src="@drawable/ic_arrow_back_line"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
         android:fontFamily="@font/sora_semibold"
-        android:gravity="center"
+        android:gravity="start"
         android:text="@string/settings_title"
         android:textColor="@color/primary_text"
         android:textSize="20sp"
@@ -69,9 +68,9 @@
                 style="@style/Text.VoiceLock.titleS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
                 android:accessibilityHeading="true"
                 android:text="@string/settings_section_preferences"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/textSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

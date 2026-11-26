@@ -930,7 +930,8 @@
                 android:src="@drawable/img_camera_tap_hand"
                 app:layout_constraintEnd_toEndOf="@id/cameraToggle"
                 app:layout_constraintStart_toStartOf="@id/cameraToggle"
-                app:layout_constraintTop_toBottomOf="@id/cameraToggle" />
+                app:layout_constraintTop_toBottomOf="@id/cameraToggle"
+                app:tint="@color/primary" />
 
             <TextView
                 android:id="@+id/btnResetVoice"

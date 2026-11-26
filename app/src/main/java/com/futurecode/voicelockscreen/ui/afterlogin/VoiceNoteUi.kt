@@ -113,7 +113,7 @@ object VoiceNoteUi {
      * system-bar padding (see VN.BottomSheet.Modal); the nav-bar inset is added once, to the white surface
      * [inset], so the white runs behind the gesture bar instead of leaving a gap (edge-to-edge on Android 15+).
      */
-    private fun transparentSheet(
+    internal fun transparentSheet(
         context: Context,
         root: View,
         inset: View = root,

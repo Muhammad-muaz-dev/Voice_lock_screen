@@ -26,7 +26,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/surface</item>
+        <item name="android:navigationBarColor">@color/navBar</item>
     </style>
 
     <style name="MaterialSearch" parent="@android:style/Theme.Dialog">

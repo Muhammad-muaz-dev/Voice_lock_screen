@@ -17,6 +17,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,9 +26,9 @@
             android:id="@+id/tvAppTitle"
             style="@style/Text.VoiceLock.titleXL"
             android:textSize="20sp"
+            android:fontFamily="@font/sora_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sora_bold"
             android:text="@string/voice_lock"
             android:textColor="@color/primary_text"
             app:layout_constraintStart_toStartOf="parent"
@@ -109,15 +110,14 @@
 
                     <ImageView
                         android:id="@+id/badgeCamera"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/bg_feature_tile_camera"
-                        android:src="@drawable/ic_feature_camera"
-                        android:padding="12dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:contentDescription="@null"
+                        android:src="@drawable/ic_feature_camera"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
+<!--
                     <ImageView
                         android:id="@+id/chevronCamera"
                         android:layout_width="30dp"
@@ -128,22 +128,23 @@
                         android:padding="7dp"
                         android:contentDescription="@null"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />-->
 
                     <TextView
                         android:id="@+id/tvCameraTitle"
                         style="@style/Text.VoiceLock.titleS"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:fontFamily="@font/sora_bold"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/sora_semibold"
                         android:text="@string/open_camera_by_voice"
+                        android:gravity="center"
                         android:textColor="@color/primary_text"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/badgeCamera" />
 
-                    <TextView
+             <!--       <TextView
                         android:id="@+id/tvCameraSubtitle"
                         style="@style/Text.VoiceLock.caption"
                         android:layout_width="0dp"
@@ -155,7 +156,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvCameraTitle"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -185,16 +186,15 @@
 
                     <ImageView
                         android:id="@+id/badgePin"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/bg_feature_tile_pin"
-                        android:src="@drawable/ic_feature_pin"
-                        android:padding="12dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:contentDescription="@null"
+                        android:src="@drawable/ic_feature_pin"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
+                  <!--  <ImageView
                         android:id="@+id/chevronPin"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
@@ -204,22 +204,23 @@
                         android:padding="7dp"
                         android:contentDescription="@null"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />-->
 
                     <TextView
                         android:id="@+id/tvPinTitle"
                         style="@style/Text.VoiceLock.titleS"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:fontFamily="@font/sora_bold"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/sora_semibold"
                         android:text="@string/pin_lock"
+                        android:gravity="center"
                         android:textColor="@color/primary_text"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/badgePin" />
 
-                    <TextView
+                <!--    <TextView
                         android:id="@+id/tvPinSubtitle"
                         style="@style/Text.VoiceLock.caption"
                         android:layout_width="0dp"
@@ -231,7 +232,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvPinTitle"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -261,16 +262,15 @@
 
                     <ImageView
                         android:id="@+id/badgePattern"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/bg_feature_tile_pattern"
-                        android:src="@drawable/ic_feature_pattern"
-                        android:padding="12dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:contentDescription="@null"
+                        android:src="@drawable/ic_feature_pattern"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
+              <!--      <ImageView
                         android:id="@+id/chevronPattern"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
@@ -280,22 +280,23 @@
                         android:padding="7dp"
                         android:contentDescription="@null"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />-->
 
                     <TextView
                         android:id="@+id/tvPatternTitle"
                         style="@style/Text.VoiceLock.titleS"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:fontFamily="@font/sora_bold"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/sora_semibold"
                         android:text="@string/pattern_lock"
+                        android:gravity="center"
                         android:textColor="@color/primary_text"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/badgePattern" />
 
-                    <TextView
+                <!--    <TextView
                         android:id="@+id/tvPatternSubtitle"
                         style="@style/Text.VoiceLock.caption"
                         android:layout_width="0dp"
@@ -307,7 +308,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvPatternTitle"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -337,16 +338,15 @@
 
                     <ImageView
                         android:id="@+id/badgeFingerprint"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/bg_feature_tile_fingerprint"
-                        android:src="@drawable/ic_feature_fingerprint"
-                        android:padding="12dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:contentDescription="@null"
+                        android:src="@drawable/ic_feature_fingerprint"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
+               <!--     <ImageView
                         android:id="@+id/chevronFingerprint"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
@@ -356,22 +356,23 @@
                         android:padding="7dp"
                         android:contentDescription="@null"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent" />-->
 
                     <TextView
                         android:id="@+id/tvFingerprintTitle"
                         style="@style/Text.VoiceLock.titleS"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:fontFamily="@font/sora_bold"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/sora_semibold"
                         android:text="@string/fingerprint_lock"
+                        android:gravity="center"
                         android:textColor="@color/primary_text"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/badgeFingerprint" />
 
-                    <TextView
+               <!--     <TextView
                         android:id="@+id/tvFingerprintSubtitle"
                         style="@style/Text.VoiceLock.caption"
                         android:layout_width="0dp"
@@ -383,7 +384,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvFingerprintTitle"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -400,7 +401,7 @@
                 app:layout_constraintTop_toBottomOf="@id/patternLock" />
 
             <!-- 3. Lock Screen Themes Section -->
-            <TextView
+<!--            <TextView
                 android:id="@+id/tvThemesHeader"
                 style="@style/Text.VoiceLock.titleM"
                 android:layout_width="wrap_content"
@@ -440,9 +441,9 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tvThemesHeader"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />-->
 
-            <TextView
+         <!--   <TextView
                 android:id="@+id/tvHomeThemesMessage"
                 style="@style/Text.VoiceLock.bodyS"
                 android:layout_width="0dp"
@@ -453,7 +454,7 @@
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/rvHomeThemes"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />-->
 
             <View android:id="@+id/ivPremium" android:visibility="gone" android:layout_width="0dp" android:layout_height="0dp" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
 
@@ -466,8 +467,6 @@
         layout="@layout/include_bottom_tabs"
         android:layout_width="0dp"
         android:layout_height="64dp"
-        android:layout_marginHorizontal="@dimen/spacing_sm"
-        android:layout_marginBottom="@dimen/spacing_sm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

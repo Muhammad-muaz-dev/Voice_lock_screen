@@ -1,45 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- One recovery question with a radio ring and a bottom divider. -->
+<!-- Recovery question row, styled like a selectable language row. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:layout_marginBottom="@dimen/vn_dp_12"
+    android:background="@drawable/vn_bg_radius_16_neutral10"
+    android:clickable="true"
+    android:focusable="true"
     android:minHeight="64dp">
 
-    <ImageView
-        android:id="@+id/ivRadio"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/ic_radio_off_ring"
-        app:layout_constraintBottom_toTopOf="@id/vDivider"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvQuestion"
-        style="@style/Text.VoiceLock.titleS"
+        style="@style/VN.Text_MD_Medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_lg"
-        android:fontFamily="@font/sora_regular"
-        android:paddingVertical="@dimen/spacing_lg"
-        android:textColor="@color/primary_text"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/vDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivRadio"
+        android:layout_marginEnd="@dimen/vn_dp_8"
+        android:textColor="@color/vn_neutral03"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivRadio"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="What was the name of your first pet?" />
 
-    <View
-        android:id="@+id/vDivider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/border"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivRadio"
+        android:layout_width="@dimen/vn_dp_24"
+        android:layout_height="@dimen/vn_dp_24"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_radio_off_ring"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

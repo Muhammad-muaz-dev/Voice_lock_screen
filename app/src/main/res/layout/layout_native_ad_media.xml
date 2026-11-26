@@ -96,7 +96,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_cta_gradient"
+            android:background="@drawable/bg_ad_cta"
             android:fontFamily="@font/sora_semibold"
             android:insetTop="0dp"
             android:insetBottom="0dp"

@@ -10,7 +10,7 @@ import com.futurecode.voicelockscreen.model.LanguageOption
 
 class LanguageAdapter(
     private val languages: List<LanguageOption>,
-    private var selectedLanguageCode: String,
+    private var selectedLanguageCode: String?,
     private val onLanguageClick: (LanguageOption) -> Unit
 ) : RecyclerView.Adapter<LanguageAdapter.LanguageViewHolder>() {
 
@@ -24,7 +24,7 @@ class LanguageAdapter(
 
     override fun getItemCount() = languages.size
 
-    fun updateSelection(languageCode: String) {
+    fun updateSelection(languageCode: String?) {
         selectedLanguageCode = languageCode
         notifyDataSetChanged()
     }
@@ -33,7 +33,7 @@ class LanguageAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(language: LanguageOption) {
-            val isSelected = language.code == selectedLanguageCode
+            val isSelected = selectedLanguageCode != null && language.code == selectedLanguageCode
             val params = binding.root.layoutParams as ViewGroup.MarginLayoutParams
             params.marginStart = 0
             binding.root.layoutParams = params

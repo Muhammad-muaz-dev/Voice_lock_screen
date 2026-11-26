@@ -53,6 +53,32 @@
         tools:itemCount="10"
         tools:listitem="@layout/item_language" />
 
+    <FrameLayout
+        android:id="@+id/languageListOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="false"
+        android:clipChildren="false"
+        android:focusable="false"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="@id/rvLanguages"
+        app:layout_constraintEnd_toEndOf="@id/rvLanguages"
+        app:layout_constraintStart_toStartOf="@id/rvLanguages"
+        app:layout_constraintTop_toTopOf="@id/rvLanguages">
+
+        <ImageView
+            android:id="@+id/ivEnglishHint"
+            android:layout_width="48dp"
+            android:layout_height="44dp"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="@dimen/spacing_lg"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            android:src="@drawable/img_camera_tap_hand"
+            android:visibility="gone"
+            app:tint="@color/primary" />
+    </FrameLayout>
+
     <!-- Native ad (preloaded on Splash). Hidden when off or not filled. -->
     <FrameLayout
         android:id="@+id/languageAdContainer"

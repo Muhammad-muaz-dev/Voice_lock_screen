@@ -96,21 +96,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ivShield" />
 
-            <TextView
-                android:id="@+id/tvMainDesc"
-                style="@style/Text.VoiceLock.bodyL"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/spacing_lg"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:fontFamily="@font/sora_regular"
-                android:gravity="center"
-                android:text="@string/camera_permissions_description"
-                android:textColor="@color/textSecondary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvMainTitle" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:elevation="@dimen/elevation_card"
                 android:id="@+id/llPermissions"
@@ -122,7 +107,7 @@
                 android:paddingVertical="@dimen/spacing_md"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvMainDesc">
+                app:layout_constraintTop_toBottomOf="@id/tvMainTitle">
 
                 <!-- Microphone (voice flows only) -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -194,9 +179,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:thumbTint="@drawable/selector_permission_thumb"
+                        app:thumbTint="@drawable/selector_permission_thumb_card"
                         app:trackDecorationTint="@android:color/transparent"
-                        app:trackTint="@drawable/selector_permission_track" />
+                        app:trackTint="@drawable/selector_permission_track_card" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!-- Phone -->
@@ -269,9 +254,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:thumbTint="@drawable/selector_permission_thumb"
+                        app:thumbTint="@drawable/selector_permission_thumb_card"
                         app:trackDecorationTint="@android:color/transparent"
-                        app:trackTint="@drawable/selector_permission_track" />
+                        app:trackTint="@drawable/selector_permission_track_card" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <!-- Display over other apps -->
@@ -345,9 +330,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:thumbTint="@drawable/selector_permission_thumb"
+                        app:thumbTint="@drawable/selector_permission_thumb_card"
                         app:trackDecorationTint="@android:color/transparent"
-                        app:trackTint="@drawable/selector_permission_track" />
+                        app:trackTint="@drawable/selector_permission_track_card" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

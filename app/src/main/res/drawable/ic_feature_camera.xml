@@ -3,18 +3,11 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
+
     <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M14.5,4H9.5L7,7H4C2.9,7 2,7.9 2,9V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V9C22,7.9 21.1,7 20,7H17Z"
-        android:strokeColor="@color/icon_accent_camera"
-        android:strokeWidth="1.8"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round" />
-    <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M12,13m-3.5,0a3.5,3.5 0,1 1,7.0,0a3.5,3.5 0,1 1,-7.0,0"
-        android:strokeColor="@color/icon_accent_camera"
-        android:strokeWidth="1.8"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round" />
+        android:fillColor="@color/icon_accent_camera"
+        android:fillType="evenOdd"
+        android:pathData="M14.5,4H9.5L7,7H4C2.9,7 2,7.9 2,9V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V9C22,7.9 21.1,7 20,7H17Z
+        M12,9.5A3.5,3.5 0,1 0,12 16.5A3.5,3.5 0,1 0,12 9.5Z" />
+
 </vector>

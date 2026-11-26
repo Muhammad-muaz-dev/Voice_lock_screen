@@ -17,10 +17,13 @@ object AdPlacement {
     fun loadAndShowNative(owner: LifecycleOwner, container: ViewGroup): () -> Unit {
         val lifecycle = owner.lifecycle
         if (lifecycle.currentState == Lifecycle.State.DESTROYED) return {}
-        AdViews.clear(container)
-        if (!AdsConfig.adsAllowed) return {}
+        if (!AdsConfig.adsAllowed) {
+            AdViews.clear(container)
+            return {}
+        }
 
         val requestToken = Any()
+        AdViews.showNativeShimmer(container, R.layout.layout_native_ad_shimmer_onboarding)
         container.tag = requestToken
         var placementTag: Any = requestToken
         val cleanup = object : DefaultLifecycleObserver {
@@ -52,17 +55,31 @@ object AdPlacement {
         config: ScreenAdConfig,
         @LayoutRes mediaLayout: Int = R.layout.layout_native_ad_media
     ) {
-        if (!AdsConfig.adsAllowed) return
+        if (!AdsConfig.adsAllowed) {
+            AdViews.clear(container)
+            return
+        }
         when {
-            config.native -> AdsManager.loadNative { ad ->
-                val alive = fragment.view != null && container.isAttachedToWindow
-                when {
-                    ad == null -> Unit
-                    !alive -> ad.destroy()
-                    else -> AdViews.showNative(container, ad, config, mediaLayout)
+            config.native -> {
+                val requestToken = Any()
+                AdViews.showNativeShimmer(container, config, mediaLayout)
+                container.tag = requestToken
+                AdsManager.loadNative { ad ->
+                    if (container.tag !== requestToken) {
+                        ad?.destroy()
+                        return@loadNative
+                    }
+                    val alive = fragment.view != null
+                    if (ad == null || !alive || !AdsConfig.adsAllowed) {
+                        ad?.destroy()
+                        AdViews.clear(container)
+                        return@loadNative
+                    }
+                    AdViews.showNative(container, ad, config, mediaLayout)
                 }
             }
             config.banner -> fragment.activity?.let { AdViews.loadBanner(it, container) }
+            else -> AdViews.clear(container)
         }
     }
 }

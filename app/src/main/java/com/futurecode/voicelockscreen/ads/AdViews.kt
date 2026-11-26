@@ -38,11 +38,33 @@ object AdViews {
         container.findViewById<Button>(R.id.adCallToAction)?.let { styleCta(it, config) }
     }
 
+    /** Shows the loading skeleton that uses the same layout geometry as the selected native ad. */
+    fun showNativeShimmer(
+        container: ViewGroup,
+        config: ScreenAdConfig,
+        @LayoutRes mediaLayout: Int = R.layout.layout_native_ad_media
+    ) {
+        val shimmerLayout = when {
+            !config.nativeHasMedia -> R.layout.layout_native_ad_shimmer_small
+            mediaLayout == R.layout.layout_native_ad_onboarding -> R.layout.layout_native_ad_shimmer_onboarding
+            else -> R.layout.layout_native_ad_shimmer_media
+        }
+        showNativeShimmer(container, shimmerLayout)
+    }
+
+    /** Inflates a format-specific loading skeleton into [container]. */
+    fun showNativeShimmer(container: ViewGroup, @LayoutRes layoutRes: Int) {
+        clear(container)
+        val shimmer = LayoutInflater.from(container.context).inflate(layoutRes, container, false)
+        container.addView(shimmer)
+        container.isVisible = true
+    }
+
     /** Remote CTA styling: background colour, text colour and weight. */
     private fun styleCta(cta: Button, config: ScreenAdConfig) {
         cta.background = android.graphics.drawable.GradientDrawable().apply {
             setColor(config.ctaColor)
-            cornerRadius = cta.resources.getDimension(R.dimen.radius_md)
+            cornerRadius = cta.resources.getDimension(R.dimen.radius_xs)
         }
         cta.setTextColor(config.ctaTextColor)
         val font = when (config.ctaTextStyle) {

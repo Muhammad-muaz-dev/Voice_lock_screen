@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Bottom navigation: lavender pill bar; the selected tab is a white pill with violet icon and label. -->
+<!-- White full-width bottom navigation; selected state uses a violet icon and label. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottomNavContainer"

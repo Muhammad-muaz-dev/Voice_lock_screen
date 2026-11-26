@@ -13,8 +13,7 @@
     <color name="vn_black">#ff000000</color>
     <color name="vn_neutral01_30">#4d1f2128</color>
     <color name="vn_neutral06">#ff989cae</color>
-    <!-- Reference card tint #F0F8FF (light blue) mapped to our light violet. -->
-    <color name="vn_th_card_bg">#fff4f3ff</color>
+    <color name="vn_th_card_bg">@color/card</color>
 
 
     <style name="VN.Text_SM_Italic">

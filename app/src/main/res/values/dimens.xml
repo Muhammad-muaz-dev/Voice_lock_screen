@@ -60,7 +60,8 @@
     <dimen name="credential_pattern_max_size">304dp</dimen>
     <dimen name="lock_shortcut_size">52dp</dimen>
     <dimen name="lock_mic_size">58dp</dimen>
-    <dimen name="elevation_card">2dp</dimen>
+    <dimen name="elevation_card">0dp</dimen>
     <dimen name="card_shadow_gutter">8dp</dimen>
     <dimen name="onboarding_artwork_max_width">360dp</dimen>
+    <dimen name="native_ad_onboarding_media_size">130dp</dimen>
 </resources>

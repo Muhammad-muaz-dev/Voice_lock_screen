@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
@@ -17,7 +16,6 @@ import com.futurecode.voicelockscreen.databinding.FragmentSecurityQuestionBindin
 import com.futurecode.voicelockscreen.databinding.ItemRecoveryQuestionBinding
 import com.futurecode.voicelockscreen.security.SecureVoiceStore
 import com.futurecode.voicelockscreen.utils.VoiceLockSwitchStore
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 /** Recovery Password: choose a question from a bottom sheet, then save an answer. */
@@ -106,20 +104,22 @@ class SecurityQuestionFragment :
         val items = resources.getStringArray(R.array.security_questions).toList()
         var pending = question
         val sheetBinding = BottomSheetRecoveryQuestionBinding.inflate(layoutInflater)
-        val dialog = BottomSheetDialog(requireContext())
-        dialog.setContentView(sheetBinding.root)
-        (sheetBinding.root.parent as? View)?.setBackgroundResource(android.R.color.transparent)
-        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        dialog.behavior.skipCollapsed = true
-
-        // Keep Apply on screen: cap the list at ~70% of the screen height.
-        val listParams = sheetBinding.rvSheetQuestions.layoutParams as ConstraintLayout.LayoutParams
-        listParams.matchConstraintMaxHeight = (resources.displayMetrics.heightPixels * LIST_MAX_SCREEN_RATIO).toInt()
-        sheetBinding.rvSheetQuestions.layoutParams = listParams
+        val dialog = VoiceNoteUi.transparentSheet(
+            context = requireContext(),
+            root = sheetBinding.root,
+            fullScreen = true
+        )
 
         val adapter = QuestionAdapter(items, { pending }) { picked -> pending = picked }
         sheetBinding.rvSheetQuestions.layoutManager = LinearLayoutManager(requireContext())
         sheetBinding.rvSheetQuestions.adapter = adapter
+        sheetBinding.etSearch.doAfterTextChanged { text ->
+            val query = text?.toString()?.trim().orEmpty()
+            val filteredItems = items.filter { it.contains(query, ignoreCase = true) }
+            adapter.submit(filteredItems)
+            sheetBinding.rvSheetQuestions.isVisible = filteredItems.isNotEmpty()
+            sheetBinding.tvNoQuestionsFound.isVisible = filteredItems.isEmpty()
+        }
         sheetBinding.btnSheetClose.setOnClickListener { dialog.dismiss() }
         sheetBinding.btnSheetApply.setOnClickListener {
             if (pending != null) {
@@ -128,8 +128,6 @@ class SecurityQuestionFragment :
             }
             dialog.dismiss()
         }
-        // Match the strip behind the navigation bar to the sheet so the bottom edge doesn't break.
-        dialog.window?.navigationBarColor = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.surface)
         dialog.setOnDismissListener { sheet = null }
         sheet = dialog
         dialog.show()
@@ -137,10 +135,12 @@ class SecurityQuestionFragment :
     }
 
     private class QuestionAdapter(
-        private val items: List<String>,
+        initialItems: List<String>,
         private val selected: () -> String?,
         private val onPick: (String) -> Unit
     ) : RecyclerView.Adapter<QuestionAdapter.Holder>() {
+
+        private var items = initialItems
 
         class Holder(val row: ItemRecoveryQuestionBinding) : RecyclerView.ViewHolder(row.root)
 
@@ -149,13 +149,21 @@ class SecurityQuestionFragment :
 
         override fun getItemCount() = items.size
 
+        fun submit(items: List<String>) {
+            this.items = items
+            notifyDataSetChanged()
+        }
+
         override fun onBindViewHolder(holder: Holder, position: Int) {
             val item = items[position]
             val isSelected = item == selected()
             holder.row.tvQuestion.text = item
             holder.row.ivRadio.setImageResource(if (isSelected) R.drawable.ic_radio_on_ring else R.drawable.ic_radio_off_ring)
+            holder.row.root.setBackgroundResource(
+                if (isSelected) R.drawable.vn_bg_radius_16_stroke_primary01
+                else R.drawable.vn_bg_radius_16_neutral10
+            )
             holder.row.root.isSelected = isSelected
-            holder.row.vDivider.isVisible = position != items.lastIndex
             holder.row.root.setOnClickListener {
                 onPick(item)
                 notifyDataSetChanged()
@@ -174,6 +182,5 @@ class SecurityQuestionFragment :
         private const val ARG_EDITING = "editing"
         private const val MIN_ANSWER = 3
         private const val DISABLED_ALPHA = 0.45f
-        private const val LIST_MAX_SCREEN_RATIO = 0.68f
     }
 }

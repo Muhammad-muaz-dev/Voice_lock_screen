@@ -7,7 +7,7 @@ describe its visual intent.
 
 ## Foundations
 
-- Theme: Light / Clean Modern. Mood: consistent, modern, friendly, rounded, violet accents.
+- Theme: Light / Clean Modern. Mood: consistent, modern, friendly, rounded, violet primary accents.
 - Typeface: **Plus Jakarta Sans** (with Sora compatibility), weights 400, 500, 600, 700.
 - Reference frame: **390 × 844 dp**, adapting to **360–412 dp** widths.
 - Android sizes: dp for geometry, sp for text.
@@ -23,8 +23,9 @@ describe its visual intent.
 | **Primary** | `primary` / `primaryStart` | #635BFF | Main brand violet; primary buttons, active toggles, accents |
 | **Primary** | `primary_light` / `primaryLight` | #EDECFF | Soft lavender; icon backgrounds, tags, selected tints |
 | **Primary** | `primary_dark` / `primaryDark` | #5047E2 | Deep indigo; pressed button states, gradient endpoints |
-| **Background** | `bg` / `bg_screen` | #E9EEF6 | Screen background for every app screen (window, status bar, root layouts) |
-| **Background** | `surface` / `card` | #FFFFFF | Cards, bottom sheet, bottom nav containers |
+| **Background** | `bg` / `bg_screen` | #FFFFFF | Screen background for every app screen (window, status bar, root layouts) |
+| **Background** | `surface` / `card` | #D6D6D6 | Neutral gray cards; matches the Home switch off track |
+| **Background** | `surfaceElevated` / `navBar` | #FFFFFF | Elevated sheets and bottom navigation container |
 | **Background** | `border` | #E6E8EF | Card strokes, input outlines, unselected controls |
 | **Text** | `primary_text` / `textPrimary` | #171829 | Headings, titles, main body text |
 | **Text** | `secondary_text` / `textSecondary` | #74768A | Subtitles, helper text, captions |
@@ -49,7 +50,7 @@ describe its visual intent.
 | Icons | `icon_accent_quotes` / `icon_bg_quotes` | #F59E0B / #FEF3C7 | Quotes feature icon & container |
 | Icons | `icon_accent_themes` / `icon_bg_themes` | #8B5CF6 / #F3E8FF | Themes feature icon & container |
 | Icons | `icon_accent_settings` / `icon_bg_settings` | #64748B / #F1F5F9 | Settings feature icon & container |
-| Controls | `switch_track_on` / `switch_track_off` | #635BFF / #E6E8EF | Switch track on / off |
+| Controls | `switch_track_on` / `switch_track_off` | #635BFF / #D6D6D6 | Switch track on / off |
 | Overlays | `dialog_btn_cancel_bg` | #F1F2F6 | Dialog secondary / cancel button |
 | Overlays | `scrim` / `scrimStrong` | #66000000 / #CC000000 | Coach-mark dim / full guide overlay above system settings |
 | Glow | `primaryGlow` | #33635BFF | Soft violet halos, illustration glows, pressed-mic ring |
@@ -94,14 +95,14 @@ for their respective weights, or resolve the corresponding weight through the
 | Spacing | xs 4, sm 8, md 12, lg 16, xl 20, xxl 24, xxxl 32, huge 40, max 48 |
 | Radius | xs 8 (tags), sm 12 (icon squares), md 16 (cards/buttons), lg 20 (large cards), xl 24 (big surfaces) |
 | Border | 1 default, 2 selected outline |
-| Shadow | xs 2 cards, sm 4 moderate, md 8 elevated cards, lg 16 modals/sheets |
+| Shadow | Cards use 0 dp elevation; overlays may use elevation when they need separation |
 | Icon | xs 12 small, sm 16 standard, md 20 large, lg 24 extra large |
 
 Android spacing and radius names are `spacing_<scale>` and `radius_<scale>`.
 The existing 28/32 dp radii are compatibility extensions, not part of this board.
-Use `elevation_card` for card elevation and `card_shadow_gutter` for clearance at scroll boundaries. Keep clipping disabled on containers that host elevated cards.
-Shadow values describe the reference scale; Android elevation does not reproduce
-identical shadows on every device. Icon sizes describe artwork, not touch areas.
+Set `elevation_card` to 0 dp so cards remain flat. Existing `card_shadow_gutter`
+values may remain as layout spacing at scroll boundaries. Icon sizes describe
+artwork, not touch areas.
 
 ## Reusable component recipes
 
@@ -110,15 +111,17 @@ identical shadows on every device. Icon sizes describe artwork, not touch areas.
 | App bar | Dark background; back affordance at start, Sora screen title, compact circular premium/settings actions at end. Respect status bar inset. |
 | Primary button | Violet gradient, md radius, white icon and buttonL label. Disabled: surfaceDisabled and textDisabled, with action disabled. |
 | Text button | primarySoft/primaryLight label and optional directional icon; no filled background. |
-| Card | surface background, border stroke, md radius, and 2 dp elevation; titleM heading. Large containers may use surfaceSunken with lg/xl radius. |
+| Card | surface background, border stroke, md radius, and no elevation; titleM heading. Large containers may use surfaceSunken with lg/xl radius. |
 | Lock status card | Leading lock illustration, title, trailing toggle; inner status/example strip with divider. Status requires text as well as color. |
 | Icon tile | Rounded outlined tile; colored circular icon, centered short title, secondary description. Use brand violet for camera and semantic green for PIN as shown. |
 | List row | Rounded surface with border; leading icon tile, bodyL label, secondary caption, trailing chevron or control. |
 | Search/input | field background, outline stroke, md radius, leading search icon; placeholder uses textPlaceholder. Error uses error outline and errorSoft helper text. |
-| Switch | Off: `switch_track_off` (#D4D7E1) track and white knob. On: violet track and white knob. Keep the knob position synchronized with state. |
+| Switch | Off: `switch_track_off` (#D6D6D6) track and white knob by default. On gray permission and Settings cards, use `surfaceElevated` (white) for the off track and `switch_track_off` for the knob. On: violet track and white knob. Keep the knob position synchronized with state. |
+| AI Voice Notes hint | Keep each helper hint to one short sentence or phrase. Leave detailed instructions to visible controls and actions. |
 | Chip/tag | Compact rounded pill; violet for “New”, gold with dark text for “Pro”; icon optional. |
-| Bottom navigation | navBar rounded container; selected item has violet pill, other items use soft secondary icons/labels. caption labels and consistent icon sizes. |
+| Bottom navigation | White bar flush to the screen sides and bottom; selected item uses a violet icon and bold label without an item background. Other items use ink icons/labels. Keep caption labels and consistent icon sizes. |
 | Waveform/progress | accentCyan signal bars on a dark background. Provide a text/state equivalent for recording or loading. |
+| Native ad loading | Keep the skeleton at the selected native-ad layout's exact outer and media bounds. Use `radius_xs` (8 dp) for ad container, media, icon, badge, CTA, and skeleton corners. Mirror the icon, badge, headline, description lines, and CTA geometry; animate blocks from `surfaceDisabled` to `surface`. Hide the slot on load failure or when ads are disabled. Home and Language native ads use the same media layout. |
 | Divider | border color, 1 dp; align with the content it separates. |
 | Radio | Unselected radioRing outline; selected primarySelected ring and filled center. |
 | Permission dialog | Elevated rounded dark surface, short title and secondary explanation; subdued Cancel and gradient Allow; scrim behind. |
@@ -159,15 +162,15 @@ use the shared `view_lock_screen` layout. Center the
 clock and date on a compact scrim panel. Stack the greeting, quote and
 Voice Note card above three 52 dp credential shortcuts. Place the separate
 58 dp violet microphone and its instruction below that row. Use white text
-and icons over the lock wallpaper scrim, with a lavender outline on the
+and icons over the lock wallpaper scrim, with a soft blue outline on the
 Voice Note card. Keep the selected wallpaper edge to edge. Respect system
 insets and allow the controls to scroll on short screens or at larger font sizes.
 
 ### Success screens
 
 Use `view_success_screen` for completion UI. The animated PIN checkmark sits
-on a lavender halo above a 20sp title, optional description, and a violet
-action. Use the shared 2 dp card elevation and leave room for the shadow.
+on a soft lavender halo above a 20sp title, optional description, and a violet
+action. Keep the success card flat with no elevation or shadow.
 Use `view_success_page` when the success screen fills its own viewport.
 
 ## Android reuse example
@@ -181,10 +184,15 @@ The flat app language screen uses leading circular flags, with a globe for Syste
 default. A primary border alone marks the selected row.
 
 Rows grow for wrapped labels/font scaling. Use surface/border by default and
-surfaceTint/primarySelected for the selected option. Group rows toggle expansion;
+primary_light fill with a primary border for the selected option. Group rows toggle expansion;
 leaf rows select a locale. Apply the selected locale when Continue is pressed.
 Flags retain national colors and are decorative; language names label each row.
 This component is an approved pill-radius exception to the standard card radius.
+Leave all languages unselected when no language preference exists; continuing
+without a choice uses the device language. Show the animated primary-colored hand
+beside English until the user chooses a language.
+The security-question picker reuses the full-screen language-sheet shell with its
+close/title header, search field, rounded option rows, and bottom action.
 
 ### Onboarding extension
 
@@ -201,11 +209,15 @@ and pill shape match the approved onboarding reference.
 The voice onboarding page previews the Home voice control inside a rounded surface.
 Both screens share the microphone orb, rings, title, switch, and status layout.
 Onboarding artwork fits proportionally between Skip and the title with a 360 dp
-maximum width. The same bounds apply when the ad slot is hidden.
+maximum width. The same bounds apply when the ad slot is hidden. Keep the voice
+control title, microphone, switch, and status within its surface; leave a clear
+gap above the four feature tiles. The first row's card edges and icon tiles must
+align with the fully visible lower row.
 
 Onboarding native ads with media use a 130 dp square media area next to a compact
 column for the advertiser icon, Ad badge, title, description, and CTA. Descriptions
 use up to two lines. The ad slot wraps its content and the CTA keeps a 48 dp touch target.
+The loading skeleton uses the same 130 dp media size and column geometry.
 
 ### Home, settings, and notification extension
 

@@ -174,7 +174,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             )
         }
 
-        bindNavigation(binding.btnSeeAllThemes, R.id.action_homeFragment_to_seeAllthemesFragment)
+       // bindNavigation(binding.btnSeeAllThemes, R.id.action_homeFragment_to_seeAllthemesFragment)
     }
 
     private fun setupHomeThemes() {
@@ -185,14 +185,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     ThemePreviewFragment.wallpaperArgs(wallpaper)
                 )
             },
-            onRetryThemes = { loadHomeThemes(forceRefresh = true) }
+            onRetryThemes = { /*loadHomeThemes(forceRefresh = true)*/ }
         ).apply {
             stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT
         }
-        binding.rvHomeThemes.adapter = adapter
-        loadHomeThemes()
+      //  binding.rvHomeThemes.adapter = adapter
+       // loadHomeThemes()
     }
 
+/*
     private fun loadHomeThemes(forceRefresh: Boolean = false) {
         if (homeThemesJob?.isActive == true) return
         val adapter = binding.rvHomeThemes.adapter as HomeWallpaperAdapter
@@ -217,10 +218,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             binding.tvHomeThemesMessage.isVisible = result.isSuccess && tiles.isEmpty()
         }
     }
+*/
 
     override fun onDestroyView() {
         homeThemesJob?.cancel()
-        binding.rvHomeThemes.adapter = null
+       // binding.rvHomeThemes.adapter = null
         super.onDestroyView()
     }
 
