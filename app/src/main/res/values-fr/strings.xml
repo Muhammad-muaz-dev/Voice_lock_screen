@@ -79,11 +79,11 @@
     <string name="allow_required_permissions">Accorder les autorisations requises</string>
     <string name="permissions_desc">Activez ces autorisations pour que le verrouillage vocal fonctionne correctement.</string>
     <string name="phone_call_access">Accès aux appels téléphoniques</string>
-    <string name="phone_call_desc">Aide à détecter les appels et à maintenir le verrouillage vocal actif.</string>
+    <string name="phone_call_desc">Met l’écran de verrouillage en pause pendant les appels.</string>
     <string name="display_over_other_apps">Afficher par-dessus d\'autres applications</string>
     <string name="display_over_desc">Affiche l\'écran de verrouillage vocal au-dessus d\'autres apps.</string>
     <string name="microphone_access">Accès au micro</string>
-    <string name="microphone_desc">Requis pour enregistrer et reconnaître votre commande vocale.</string>
+    <string name="microphone_desc">Enregistrez un mot de passe vocal pour déverrouiller par la voix.</string>
     <string name="privacy_protected">Votre vie privée est protégée</string>
     <string name="privacy_desc">Nous n\'utilisons ces autorisations que pour les fonctionnalités de la chaîne vocale.</string>
     <string name="permissions_enabled_count">%1$d sur %2$d autorisations activées</string>
@@ -252,7 +252,7 @@
     <string name="just_now">à l\'instant</string>
     <string name="hours_short">%1$d h</string>
     <string name="local_notification_channel">Notifications locales de récupération des messages supprimés</string>
-    <string name="display_over_other_apps_desc">Affiche un écran de verrouillage au-dessus des autres applications.</string>
+    <string name="display_over_other_apps_desc">Affiche votre écran de verrouillage au-dessus des autres applis.</string>
     <string name="home_switch_off">OFF</string>
     <string name="home_switch_on">ON</string>
     <string name="home_status_inactive">Inactif</string>

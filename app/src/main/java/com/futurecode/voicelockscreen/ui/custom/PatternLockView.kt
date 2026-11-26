@@ -40,7 +40,7 @@ class PatternLockView @JvmOverloads constructor(
     private val cardRect = RectF()
 
     private val setupRingColor = ContextCompat.getColor(context, R.color.textTertiary)
-    private val setupDotColor = ContextCompat.getColor(context, R.color.primary_dark)
+    private val setupDotColor = ContextCompat.getColor(context, R.color.primary)
     private val wallpaperRingColor = ContextCompat.getColor(context, R.color.white)
     private val wallpaperNodePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.scrim)

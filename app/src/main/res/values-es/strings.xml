@@ -79,11 +79,11 @@
     <string name="allow_required_permissions">Permitir permisos requeridos</string>
     <string name="permissions_desc">Habilita estos permisos para que el bloqueo por voz funcione correctamente.</string>
     <string name="phone_call_access">Acceso a llamadas telefónicas</string>
-    <string name="phone_call_desc">Ayuda a detectar llamadas y mantener el bloqueo por voz funcionando.</string>
+    <string name="phone_call_desc">Pausa el bloqueo de pantalla durante las llamadas.</string>
     <string name="display_over_other_apps">Mostrar sobre otras aplicaciones</string>
     <string name="display_over_desc">Muestra la pantalla de bloqueo por voz sobre otras apps.</string>
     <string name="microphone_access">Acceso al micrófono</string>
-    <string name="microphone_desc">Requerido para grabar y reconocer tu comando de voz.</string>
+    <string name="microphone_desc">Graba una clave de voz para desbloquear con tu voz.</string>
     <string name="privacy_protected">Tu privacidad está protegida</string>
     <string name="privacy_desc">Solo usamos estos permisos para las funciones de bloqueo por voz.</string>
     <string name="permissions_enabled_count">%1$d de %2$d permisos habilitados</string>
@@ -252,7 +252,7 @@
     <string name="just_now">justo ahora</string>
     <string name="hours_short">%1$d h</string>
     <string name="local_notification_channel">Notificaciones locales de mensajes eliminados recuperados</string>
-    <string name="display_over_other_apps_desc">Muestra la pantalla de bloqueo sobre otras aplicaciones cuando la pantalla está bloqueada.</string>
+    <string name="display_over_other_apps_desc">Muestra tu pantalla de bloqueo sobre otras apps.</string>
     <string name="home_switch_off">OFF</string>
     <string name="home_switch_on">ON</string>
     <string name="home_status_inactive">Inactivo</string>

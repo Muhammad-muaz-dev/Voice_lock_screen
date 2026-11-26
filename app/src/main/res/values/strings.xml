@@ -79,11 +79,11 @@
     <string name="allow_required_permissions">Allow Required Permissions</string>
     <string name="permissions_desc">Enable these permissions so Voice Screen Lock can work correctly.</string>
     <string name="phone_call_access">Phone Call Access</string>
-    <string name="phone_call_desc">Helps detect calls and keep voice lock working correctly.</string>
+    <string name="phone_call_desc">Pause the lock screen during calls.</string>
     <string name="display_over_other_apps">Display Over Other Apps</string>
     <string name="display_over_desc">Shows the voice lock screen above other apps.</string>
     <string name="microphone_access">Microphone Access</string>
-    <string name="microphone_desc">Required to record and recognize your voice command.</string>
+    <string name="microphone_desc">Record a voice password to unlock by voice.</string>
     <string name="privacy_protected">Your privacy is protected</string>
     <string name="privacy_desc">We only use these permissions for Voice Screen Lock features.</string>
     <string name="permissions_enabled_count">%1$d of %2$d permissions enabled</string>
@@ -451,7 +451,7 @@
     <string name="pro_feature_unavailable">&#8212;</string>
     <string name="pro_price_summary">Rs 2,550.00/week after FREE 3-day trial</string>
     <string name="pro_legal_disclosure">By continuing you agree to our &lt;u&gt;Terms&lt;/u&gt; and &lt;u&gt;Privacy&lt;/u&gt; policies. Subscription is billed after the trial ends and will auto-renew. Cancel subscription anytime before trial ends to avoid charges.</string>
-    <string name="display_over_other_apps_desc">Shows the lock screen above other apps when your screen is locked.</string>
+    <string name="display_over_other_apps_desc">Show your lock screen over other apps.</string>
 
     <!-- Open Camera by Voice flow -->
     <string name="camera_permissions_heading">Additional permissions required</string>

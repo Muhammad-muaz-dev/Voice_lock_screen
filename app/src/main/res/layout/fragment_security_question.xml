@@ -118,7 +118,7 @@
                 android:minHeight="96dp"
                 android:padding="@dimen/spacing_lg"
                 android:textColor="@color/primary_text"
-                android:textColorHint="@color/textSecondary"
+                android:textColorHint="@color/primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvQuestion" />

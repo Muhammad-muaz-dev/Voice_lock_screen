@@ -162,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_xs"
                         android:fontFamily="@font/sora_regular"
-                        android:text="@string/camera_microphone_access_desc"
+                        android:text="@string/microphone_desc"
                         android:textColor="@color/textSecondary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@id/tvMicrophoneTitle"

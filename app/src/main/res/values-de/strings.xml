@@ -79,11 +79,11 @@
     <string name="allow_required_permissions">Erforderliche Berechtigungen zulassen</string>
     <string name="permissions_desc">Aktivieren Sie diese Berechtigungen, damit die Sprachsperre ordnungsgemäß funktioniert.</string>
     <string name="phone_call_access">Zugriff auf Anrufe</string>
-    <string name="phone_call_desc">Hilft, Anrufe zu erkennen und die Sprachsperre aufrechtzuerhalten.</string>
+    <string name="phone_call_desc">Pausiert den Sperrbildschirm während eines Anrufs.</string>
     <string name="display_over_other_apps">Über anderen Apps anzeigen</string>
     <string name="display_over_desc">Zeigt den Sprachsperrbildschirm über anderen Apps an.</string>
     <string name="microphone_access">Mikrofonzugriff</string>
-    <string name="microphone_desc">Erforderlich, um Ihren Sprachbefehl aufzunehmen und zu erkennen.</string>
+    <string name="microphone_desc">Nehmen Sie ein Sprachpasswort zum Entsperren auf.</string>
     <string name="privacy_protected">Ihre Privatsphäre ist geschützt</string>
     <string name="privacy_desc">Wir verwenden diese Berechtigungen nur für Sprachsperr-Funktionen.</string>
     <string name="permissions_enabled_count">%1$d von %2$d Berechtigungen aktiviert</string>
@@ -253,7 +253,7 @@
     <string name="just_now">gerade eben</string>
     <string name="hours_short">%1$d Std.</string>
     <string name="local_notification_channel">Gelöschte Nachrichten wiederherstellen Lokale Benachrichtigungen</string>
-    <string name="display_over_other_apps_desc">Zeigt den Sperrbildschirm über anderen Apps an, wenn der Bildschirm gesperrt ist.</string>
+    <string name="display_over_other_apps_desc">Zeigt den Sperrbildschirm über anderen Apps.</string>
     <string name="home_switch_off">AUS</string>
     <string name="home_switch_on">AN</string>
     <string name="home_status_inactive">Inaktiv</string>

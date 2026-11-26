@@ -79,11 +79,11 @@
     <string name="allow_required_permissions">必要な権限を許可</string>
     <string name="permissions_desc">ボイス画面ロックが正常に動作するように、これらの権限を有効にしてください。</string>
     <string name="phone_call_access">通話へのアクセス</string>
-    <string name="phone_call_desc">着信を検知し、ボイスロックが正しく動作するのを助けます。</string>
+    <string name="phone_call_desc">通話中はロック画面を一時停止します。</string>
     <string name="display_over_other_apps">他のアプリの上に重ねて表示</string>
     <string name="display_over_desc">他のアプリの上にボイスロック画面を表示します。</string>
     <string name="microphone_access">マイクへのアクセス</string>
-    <string name="microphone_desc">音声コマンドの録音と認識に必要です。</string>
+    <string name="microphone_desc">音声でロック解除するためのパスワードを録音します。</string>
     <string name="privacy_protected">プライバシーは保護されています</string>
     <string name="privacy_desc">これらの権限はボイスロック画面機能にのみ使用されます。</string>
     <string name="permissions_enabled_count">%1$d / %2$d の権限が許可されています</string>
@@ -252,7 +252,7 @@
     <string name="just_now">たった今</string>
     <string name="hours_short">%1$d 時間</string>
     <string name="local_notification_channel">削除されたメッセージの復元 ローカル通知</string>
-    <string name="display_over_other_apps_desc">画面がロックされているとき、他のアプリの上にロック画面を表示します。</string>
+    <string name="display_over_other_apps_desc">他のアプリの上にロック画面を表示します。</string>
     <string name="home_switch_off">OFF</string>
     <string name="home_switch_on">ON</string>
     <string name="home_status_inactive">無効</string>
