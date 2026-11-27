@@ -12,7 +12,7 @@
     <color name="vn_neutral07">#ffb5b7c5</color>
     <color name="vn_neutral08">#ffd1d3db</color>
     <color name="vn_neutral09">#ffeeeff2</color>
-    <color name="vn_neutral10">#fff4f4f6</color>
+    <color name="vn_neutral10">@color/surface</color>
     <color name="vn_primary01">@color/primary</color>
     <color name="vn_primary02">@color/primary</color>
     <color name="vn_primary05">@color/primary</color>

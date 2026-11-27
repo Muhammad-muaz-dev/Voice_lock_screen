@@ -1,0 +1,561 @@
+<style>
+#voice-onboarding-toon {
+  color-scheme: light;
+  font-family: "Sora", "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+#voice-onboarding-toon .screen {
+  box-sizing: border-box;
+  display: flex;
+  width: min(100%, 390px);
+  aspect-ratio: 390 / 844;
+  flex-direction: column;
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid #e6e8ef;
+  border-radius: 30px;
+  background: #fff;
+  color: #171829;
+}
+
+#voice-onboarding-toon .status,
+#voice-onboarding-toon .status-right,
+#voice-onboarding-toon .topline,
+#voice-onboarding-toon .bottomline,
+#voice-onboarding-toon .dots,
+#voice-onboarding-toon .wave,
+#voice-onboarding-toon .speech-row,
+#voice-onboarding-toon .flow-row {
+  display: flex;
+  align-items: center;
+}
+
+#voice-onboarding-toon .status {
+  justify-content: space-between;
+  padding: 11px 24px 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#voice-onboarding-toon .status-right { gap: 5px; }
+#voice-onboarding-toon .status-right i { width: 14px; height: 14px; }
+
+#voice-onboarding-toon .topline {
+  min-height: 47px;
+  justify-content: flex-end;
+  padding-inline: 22px;
+  color: #74768a;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+#voice-onboarding-toon .scene {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  margin-inline: 17px;
+  overflow: hidden;
+  border-radius: 30px;
+}
+
+#voice-onboarding-toon .scene-phone {
+  background:
+    radial-gradient(circle at 18% 19%, #fff 0 4px, transparent 5px),
+    radial-gradient(circle at 83% 28%, #fff 0 3px, transparent 4px),
+    radial-gradient(ellipse at 50% 75%, rgba(99, 91, 255, 0.32), transparent 55%),
+    linear-gradient(145deg, #f5f2ff, #e2e9ff);
+}
+
+#voice-onboarding-toon .phone {
+  position: relative;
+  width: 205px;
+  height: 335px;
+  padding: 7px;
+  border: 3px solid #22223d;
+  border-radius: 35px;
+  background: #22223d;
+  box-shadow: 0 22px 40px rgba(48, 38, 115, 0.28), 0 8px 0 rgba(37, 31, 84, 0.18);
+  transform: rotate(-6deg);
+}
+
+#voice-onboarding-toon .phone-screen {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 27px;
+  background:
+    radial-gradient(circle at 50% 59%, rgba(127, 119, 255, 0.6), transparent 30%),
+    linear-gradient(180deg, #4531a1, #28235e 58%, #1d2149);
+  color: #fff;
+  text-align: center;
+}
+
+#voice-onboarding-toon .phone-notch {
+  position: absolute;
+  z-index: 2;
+  top: 7px;
+  left: calc(50% - 28px);
+  width: 56px;
+  height: 13px;
+  border-radius: 999px;
+  background: #16172c;
+}
+
+#voice-onboarding-toon .phone-clock {
+  margin-top: 36px;
+  font-size: 43px;
+  font-weight: 500;
+  letter-spacing: -2px;
+}
+
+#voice-onboarding-toon .phone-date {
+  margin-top: 1px;
+  color: #ddd9ff;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#voice-onboarding-toon .phone-lock {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  margin-top: 25px;
+  border: 7px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: #635bff;
+  box-shadow: 0 0 25px rgba(136, 128, 255, 0.65);
+}
+
+#voice-onboarding-toon .phone-lock i { width: 29px; height: 29px; }
+#voice-onboarding-toon .phone-screen-label { margin-top: 11px; font-size: 11px; font-weight: 600; }
+#voice-onboarding-toon .phone-screen-hint { margin-top: 5px; color: #dedcff; font-size: 9px; }
+
+#voice-onboarding-toon .sound-orbit {
+  position: absolute;
+  width: 265px;
+  height: 265px;
+  border: 1px solid rgba(99, 91, 255, 0.28);
+  border-radius: 50%;
+  transform: rotate(24deg) scaleY(0.55);
+}
+
+#voice-onboarding-toon .sound-orbit::before,
+#voice-onboarding-toon .sound-orbit::after {
+  position: absolute;
+  inset: 14px -5px;
+  border: 2px solid rgba(99, 91, 255, 0.24);
+  border-radius: 50%;
+  content: "";
+}
+
+#voice-onboarding-toon .sound-orbit::after { inset: 29px -10px; border-color: rgba(59, 190, 255, 0.34); }
+
+#voice-onboarding-toon .floating-badge {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 20px;
+  background: linear-gradient(150deg, #fff, #e8e6ff);
+  color: #635bff;
+  box-shadow: 0 12px 24px rgba(57, 47, 137, 0.2);
+}
+
+#voice-onboarding-toon .floating-badge i { width: 25px; height: 25px; }
+#voice-onboarding-toon .badge-shield { top: 19%; right: 10%; transform: rotate(9deg); }
+#voice-onboarding-toon .badge-wave { bottom: 18%; left: 8%; background: linear-gradient(150deg, #fff, #dffaff); color: #00a6b8; transform: rotate(-9deg); }
+
+#voice-onboarding-toon .scene-buddy {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(255, 255, 255, 0.95), transparent 35%),
+    linear-gradient(150deg, #e4f8ff, #ece8ff 55%, #ffe8ef);
+}
+
+#voice-onboarding-toon .buddy-halo {
+  position: absolute;
+  width: 244px;
+  height: 244px;
+  border: 2px dashed rgba(99, 91, 255, 0.24);
+  border-radius: 50%;
+}
+
+#voice-onboarding-toon .buddy {
+  position: relative;
+  z-index: 2;
+  width: 194px;
+  height: 218px;
+  filter: drop-shadow(0 18px 15px rgba(74, 60, 169, 0.24));
+  transform: rotate(3deg);
+}
+
+#voice-onboarding-toon .buddy-head {
+  position: absolute;
+  top: 2px;
+  left: 23px;
+  display: flex;
+  width: 148px;
+  height: 142px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border: 5px solid #272143;
+  border-radius: 48% 48% 44% 44%;
+  background: linear-gradient(145deg, #a59dff, #635bff 72%);
+  box-shadow: inset -10px -8px 0 rgba(57, 45, 153, 0.16), inset 8px 8px 0 rgba(255, 255, 255, 0.22);
+}
+
+#voice-onboarding-toon .buddy-head::before,
+#voice-onboarding-toon .buddy-head::after {
+  position: absolute;
+  top: 58px;
+  width: 13px;
+  height: 19px;
+  border-radius: 50%;
+  background: #fff;
+  content: "";
+}
+
+#voice-onboarding-toon .buddy-head::before { left: 39px; }
+#voice-onboarding-toon .buddy-head::after { right: 39px; }
+
+#voice-onboarding-toon .buddy-smile {
+  position: absolute;
+  top: 88px;
+  width: 27px;
+  height: 12px;
+  border-bottom: 4px solid #fff;
+  border-radius: 0 0 25px 25px;
+}
+
+#voice-onboarding-toon .buddy-ear {
+  position: absolute;
+  top: 49px;
+  width: 19px;
+  height: 39px;
+  border: 4px solid #272143;
+  border-radius: 10px;
+  background: #ffbd67;
+}
+
+#voice-onboarding-toon .buddy-ear-left { left: 10px; }
+#voice-onboarding-toon .buddy-ear-right { right: 10px; }
+
+#voice-onboarding-toon .buddy-body {
+  position: absolute;
+  bottom: 0;
+  left: 44px;
+  display: grid;
+  width: 106px;
+  height: 91px;
+  place-items: center;
+  border: 5px solid #272143;
+  border-radius: 39px 39px 29px 29px;
+  background: linear-gradient(145deg, #63d5ef, #35a8d2);
+}
+
+#voice-onboarding-toon .buddy-body i { width: 33px; height: 33px; color: #fff; }
+
+#voice-onboarding-toon .speech-chip {
+  position: absolute;
+  z-index: 3;
+  top: 16%;
+  right: 5%;
+  padding: 10px 12px;
+  border: 2px solid #282344;
+  border-radius: 16px 16px 5px 16px;
+  background: #fff;
+  color: #282344;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 8px 0 rgba(40, 35, 68, 0.12);
+  transform: rotate(5deg);
+}
+
+#voice-onboarding-toon .buddy-check {
+  position: absolute;
+  z-index: 3;
+  bottom: 17%;
+  left: 7%;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 3px solid #272143;
+  border-radius: 18px;
+  background: #ffe38a;
+  color: #30264f;
+  box-shadow: 0 8px 0 rgba(40, 35, 68, 0.12);
+  transform: rotate(-10deg);
+}
+
+#voice-onboarding-toon .buddy-check i { width: 25px; height: 25px; }
+
+#voice-onboarding-toon .scene-flow {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.96), transparent 42%),
+    linear-gradient(145deg, #fff1d8, #f4e7ff 55%, #e0f6ff);
+}
+
+#voice-onboarding-toon .flow-row {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  justify-content: center;
+  gap: 10px;
+}
+
+#voice-onboarding-toon .mini-phone {
+  position: relative;
+  display: flex;
+  width: 102px;
+  height: 181px;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 24px;
+  border: 4px solid #292441;
+  border-radius: 24px;
+  background: linear-gradient(160deg, #4738b3, #211f4c);
+  color: #fff;
+  box-shadow: 0 13px 0 rgba(43, 35, 80, 0.16);
+}
+
+#voice-onboarding-toon .mini-phone::before {
+  position: absolute;
+  top: 8px;
+  width: 31px;
+  height: 6px;
+  border-radius: 8px;
+  background: #1b1b30;
+  content: "";
+}
+
+#voice-onboarding-toon .mini-time { font-size: 21px; font-weight: 500; }
+#voice-onboarding-toon .mini-lock { display: grid; width: 42px; height: 42px; place-items: center; margin-top: 18px; border-radius: 50%; background: #635bff; }
+#voice-onboarding-toon .mini-lock i { width: 21px; height: 21px; }
+#voice-onboarding-toon .mini-label { margin-top: 8px; color: #e3e0ff; font-size: 8px; }
+
+#voice-onboarding-toon .flow-arrow {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 2px solid #282344;
+  border-radius: 50%;
+  background: #ffcf74;
+  color: #282344;
+  box-shadow: 0 5px 0 rgba(40, 35, 68, 0.13);
+}
+
+#voice-onboarding-toon .flow-arrow i { width: 17px; height: 17px; }
+
+#voice-onboarding-toon .voice-wave {
+  position: absolute;
+  z-index: 1;
+  top: 26%;
+  left: 17%;
+  display: flex;
+  height: 40px;
+  align-items: center;
+  gap: 4px;
+  color: #635bff;
+  transform: rotate(-8deg);
+}
+
+#voice-onboarding-toon .voice-wave span { width: 4px; border-radius: 8px; background: currentColor; }
+#voice-onboarding-toon .voice-wave span:nth-child(3n) { height: 34px; }
+#voice-onboarding-toon .voice-wave span:nth-child(3n + 1) { height: 15px; }
+#voice-onboarding-toon .voice-wave span:nth-child(3n + 2) { height: 25px; }
+
+#voice-onboarding-toon .voice-bubble {
+  position: absolute;
+  top: 17%;
+  left: 8%;
+  padding: 9px 12px;
+  border: 2px solid #292441;
+  border-radius: 15px 15px 15px 4px;
+  background: #fff;
+  color: #292441;
+  font-size: 10px;
+  font-weight: 600;
+  box-shadow: 0 6px 0 rgba(43, 35, 80, 0.1);
+  transform: rotate(-5deg);
+}
+
+#voice-onboarding-toon .sparkle {
+  position: absolute;
+  color: #ffad4d;
+  font-size: 29px;
+  font-weight: 700;
+}
+
+#voice-onboarding-toon .sparkle-one { top: 17%; right: 18%; }
+#voice-onboarding-toon .sparkle-two { right: 13%; bottom: 17%; color: #635bff; font-size: 21px; }
+
+#voice-onboarding-toon .copy {
+  padding: 21px 23px 0;
+  text-align: center;
+}
+
+#voice-onboarding-toon .copy h2 {
+  margin: 0;
+  color: #171829;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+#voice-onboarding-toon .copy p {
+  margin: 9px 0 0;
+  color: #74768a;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#voice-onboarding-toon .bottomline {
+  min-height: 73px;
+  justify-content: space-between;
+  padding: 12px 22px 20px;
+}
+
+#voice-onboarding-toon .dots { gap: 6px; }
+#voice-onboarding-toon .dots span { width: 8px; height: 8px; border-radius: 99px; background: #dedfea; }
+#voice-onboarding-toon .dots span:first-child { width: 27px; background: #635bff; }
+
+#voice-onboarding-toon .next {
+  display: flex;
+  min-width: 112px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid #272143;
+  border-radius: 999px;
+  background: #635bff;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 5px 0 #39317f;
+}
+
+#voice-onboarding-toon .next i { width: 16px; height: 16px; }
+
+@media (max-width: 360px) {
+  #voice-onboarding-toon .scene { margin-inline: 12px; }
+  #voice-onboarding-toon .copy { padding-inline: 16px; }
+  #voice-onboarding-toon .phone { transform: scale(0.9) rotate(-6deg); }
+  #voice-onboarding-toon .buddy { transform: scale(0.9) rotate(3deg); }
+}
+</style>
+
+<div id="voice-onboarding-toon" class="viz-carousel viz-dotted-background" aria-label="Toon-style Voice Screen Lock onboarding designs">
+  <section data-variant="Toon Phone" aria-label="Toon Phone design">
+    <div class="screen">
+      <div class="status">
+        <span>9:41</span>
+        <span class="status-right" aria-hidden="true"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span>
+      </div>
+      <div class="topline">Skip</div>
+      <div class="scene scene-phone">
+        <div class="sound-orbit" aria-hidden="true"></div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-clock">9:41</div>
+            <div class="phone-date">Monday · 12 June</div>
+            <div class="phone-lock"><i data-lucide="mic"></i></div>
+            <div class="phone-screen-label">Voice Lock is ready</div>
+            <div class="phone-screen-hint">Speak your private phrase</div>
+          </div>
+        </div>
+        <div class="floating-badge badge-shield" aria-hidden="true"><i data-lucide="shield-check"></i></div>
+        <div class="floating-badge badge-wave" aria-hidden="true"><i data-lucide="audio-lines"></i></div>
+      </div>
+      <div class="copy">
+        <h2>Voice Screen Lock</h2>
+        <p>Unlock your phone with a phrase only you know.</p>
+      </div>
+      <div class="bottomline">
+        <div class="dots" aria-label="Page 1 of 4"><span></span><span></span><span></span><span></span></div>
+        <button class="next" type="button">Next <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section data-variant="Voice Buddy" aria-label="Voice Buddy design" hidden>
+    <div class="screen">
+      <div class="status">
+        <span>9:41</span>
+        <span class="status-right" aria-hidden="true"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span>
+      </div>
+      <div class="topline">Skip</div>
+      <div class="scene scene-buddy">
+        <div class="buddy-halo" aria-hidden="true"></div>
+        <div class="speech-chip">“Unlock my screen!”</div>
+        <div class="buddy" aria-hidden="true">
+          <div class="buddy-ear buddy-ear-left"></div>
+          <div class="buddy-ear buddy-ear-right"></div>
+          <div class="buddy-head"><div class="buddy-smile"></div></div>
+          <div class="buddy-body"><i data-lucide="mic"></i></div>
+        </div>
+        <div class="buddy-check" aria-hidden="true"><i data-lucide="lock-keyhole-open"></i></div>
+      </div>
+      <div class="copy">
+        <h2>Your voice is the key</h2>
+        <p>Set a private phrase and unlock your screen hands-free.</p>
+      </div>
+      <div class="bottomline">
+        <div class="dots" aria-label="Page 1 of 4"><span></span><span></span><span></span><span></span></div>
+        <button class="next" type="button">Next <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section data-variant="Unlock Flow" aria-label="Unlock Flow design" hidden>
+    <div class="screen">
+      <div class="status">
+        <span>9:41</span>
+        <span class="status-right" aria-hidden="true"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span>
+      </div>
+      <div class="topline">Skip</div>
+      <div class="scene scene-flow">
+        <span class="sparkle sparkle-one" aria-hidden="true">✦</span>
+        <span class="sparkle sparkle-two" aria-hidden="true">✦</span>
+        <div class="voice-bubble">“Hey, unlock my screen”</div>
+        <div class="voice-wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="flow-row">
+          <div class="mini-phone">
+            <span class="mini-time">9:41</span>
+            <span class="mini-lock"><i data-lucide="lock-keyhole"></i></span>
+            <span class="mini-label">LOCKED</span>
+          </div>
+          <span class="flow-arrow" aria-hidden="true"><i data-lucide="arrow-right"></i></span>
+          <div class="mini-phone">
+            <span class="mini-time">9:41</span>
+            <span class="mini-lock"><i data-lucide="lock-keyhole-open"></i></span>
+            <span class="mini-label">UNLOCKED</span>
+          </div>
+        </div>
+      </div>
+      <div class="copy">
+        <h2>Speak. Unlock. Go.</h2>
+        <p>Your voice phrase gets you straight to your screen.</p>
+      </div>
+      <div class="bottomline">
+        <div class="dots" aria-label="Page 1 of 4"><span></span><span></span><span></span><span></span></div>
+        <button class="next" type="button">Next <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+</div>

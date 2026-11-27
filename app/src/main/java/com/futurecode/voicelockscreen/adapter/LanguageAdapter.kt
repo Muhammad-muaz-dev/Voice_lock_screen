@@ -1,6 +1,7 @@
 package com.futurecode.voicelockscreen.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -39,10 +40,7 @@ class LanguageAdapter(
             binding.root.layoutParams = params
 
             binding.tvLanguageName.text = language.name
-            binding.languageContainer.setBackgroundResource(
-                if (isSelected) R.drawable.bg_language_picker_row_selected
-                else R.drawable.bg_language_picker_row
-            )
+            binding.ivSelectedCheck.visibility = if (isSelected) View.VISIBLE else View.INVISIBLE
             binding.languageFlag.country = language.country
             binding.root.isSelected = isSelected
             ViewCompat.setStateDescription(

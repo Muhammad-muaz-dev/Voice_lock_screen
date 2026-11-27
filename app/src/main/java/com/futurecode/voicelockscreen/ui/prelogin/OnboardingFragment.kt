@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -37,11 +38,17 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
         @StringRes val title: Int,
         @StringRes val body: Int,
         val badges: List<Badge> = emptyList(),
-        val showShield: Boolean = false
+        val showShield: Boolean = false,
+        val isVoiceHero: Boolean = false
     )
 
     private val allPages = listOf(
-        Page(R.drawable.img_onboard_1, R.string.onboard_title_1, R.string.onboard_body_1),
+        Page(
+            R.drawable.img_onboard_1,
+            R.string.onboard_title_1,
+            R.string.onboard_body_1,
+            isVoiceHero = true
+        ),
         Page(
             R.drawable.img_onboard_2, R.string.onboard_title_2, R.string.onboard_body_2,
             listOf(Badge(R.drawable.ic_badge_theme, R.drawable.bg_badge_orange, 1f, 0.14f))
@@ -93,8 +100,19 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
     }
 
     override fun onDestroyView() {
+        updateVoiceHeroAnimations(RecyclerView.NO_POSITION)
         binding.vpOnboarding.unregisterOnPageChangeCallback(pageCallback)
         super.onDestroyView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateVoiceHeroAnimations()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        updateVoiceHeroAnimations()
     }
 
     private fun onNext() {
@@ -136,6 +154,22 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
             it.alpha = 0f
             it.animate().alpha(1f).setDuration(TEXT_FADE_MS).start()
         }
+        updateVoiceHeroAnimations(position)
+    }
+
+    private fun updateVoiceHeroAnimations(selectedPosition: Int = binding.vpOnboarding.currentItem) {
+        val recyclerView = binding.vpOnboarding.getChildAt(0) as? RecyclerView ?: return
+        recyclerView.children.forEach { child ->
+            val holder = recyclerView.getChildViewHolder(child) as? PageAdapter.Holder ?: return@forEach
+            val adapterPosition = holder.bindingAdapterPosition
+            val isSelectedVoicePage =
+                adapterPosition != RecyclerView.NO_POSITION &&
+                    adapterPosition == selectedPosition &&
+                    pages.getOrNull(adapterPosition)?.isVoiceHero == true
+            val hero = holder.page.root.findViewById<OnboardingVoiceHeroView>(R.id.voiceHero)
+                ?: return@forEach
+            hero.setAnimationActive(isResumed && isSelectedVoicePage)
+        }
     }
 
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
@@ -152,8 +186,10 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
         override fun onBindViewHolder(holder: Holder, position: Int) {
             val page = pages[position]
             val view = holder.page
-            view.ivMockup.bindArtwork(page.mockup)
-            view.ivShield.isVisible = page.showShield
+            view.ivMockup.isVisible = !page.isVoiceHero
+            if (!page.isVoiceHero) view.ivMockup.bindArtwork(page.mockup)
+            view.root.findViewById<OnboardingVoiceHeroView>(R.id.voiceHero)?.isVisible = page.isVoiceHero
+            view.ivShield.isVisible = page.showShield && !page.isVoiceHero
             val slots = listOf(
                 view.badgeOne to view.badgeOneIcon,
                 view.badgeTwo to view.badgeTwoIcon,
@@ -161,6 +197,18 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
                 view.badgeFour to view.badgeFourIcon
             )
             slots.forEachIndexed { index, (frame, icon) -> bindBadge(frame, icon, page.badges.getOrNull(index)) }
+        }
+
+        override fun onViewAttachedToWindow(holder: Holder) {
+            super.onViewAttachedToWindow(holder)
+            updateVoiceHeroAnimations()
+        }
+
+        override fun onViewDetachedFromWindow(holder: Holder) {
+            holder.page.root
+                .findViewById<OnboardingVoiceHeroView>(R.id.voiceHero)
+                ?.setAnimationActive(false)
+            super.onViewDetachedFromWindow(holder)
         }
 
         private fun bindBadge(frame: FrameLayout, icon: ImageView, badge: Badge?) {
@@ -177,7 +225,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(FragmentOnboa
 
     private companion object {
         const val DOT_DP = 8
-        const val ACTIVE_DOT_DP = 28
+        const val ACTIVE_DOT_DP = 20
         const val TEXT_FADE_MS = 220L
     }
 }

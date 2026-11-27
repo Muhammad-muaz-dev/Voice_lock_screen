@@ -9,10 +9,12 @@
     android:layout_marginBottom="@dimen/spacing_sm"
     android:background="@drawable/bg_language_picker_row"
     android:clickable="true"
+    android:elevation="2dp"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
+    android:minHeight="@dimen/language_row_height"
     android:paddingHorizontal="@dimen/spacing_lg"
-    android:paddingVertical="@dimen/spacing_lg">
+    android:paddingVertical="@dimen/spacing_sm">
 
     <com.futurecode.voicelockscreen.ui.view.LanguageFlagView
         android:id="@+id/languageFlag"
@@ -23,17 +25,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ivSelectedCheck"
+        android:layout_width="@dimen/language_indicator_size"
+        android:layout_height="@dimen/language_indicator_size"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_language_done"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvLanguageName"
         style="@style/Text.VoiceLock.titleS"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_lg"
+        android:layout_marginEnd="@dimen/spacing_md"
         android:fontFamily="@font/sora_medium"
         android:textColor="@color/primary_text"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivSelectedCheck"
         app:layout_constraintStart_toEndOf="@id/languageFlag"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="English" />

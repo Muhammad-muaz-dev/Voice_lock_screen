@@ -39,6 +39,11 @@
         <item name="fontFamily">@font/vn_bevietnampro_regular</item>
         <item name="android:letterSpacing">0</item>
     </style>
+    <style name="ThemeOverlay.VoiceLock.BlackCursor" parent="">
+        <item name="colorControlActivated">@color/black</item>
+        <item name="android:colorAccent">@color/black</item>
+        <item name="android:colorControlActivated">@color/black</item>
+    </style>
     <style name="VN.Text_MD_Medium">
         <item name="android:textSize">@dimen/vn_sp_14</item>
         <item name="android:fontFamily">@font/vn_bevietnampro_medium</item>

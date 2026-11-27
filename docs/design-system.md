@@ -24,9 +24,9 @@ describe its visual intent.
 | **Primary** | `primary_light` / `primaryLight` | #EDECFF | Soft lavender; icon backgrounds, tags, selected tints |
 | **Primary** | `primary_dark` / `primaryDark` | #5047E2 | Deep indigo; pressed button states, gradient endpoints |
 | **Background** | `bg` / `bg_screen` | #FFFFFF | Screen background for every app screen (window, status bar, root layouts) |
-| **Background** | `surface` / `card` | #D6D6D6 | Neutral gray cards; matches the Home switch off track |
+| **Background** | `surface` / `card` | #F4F4F6 | Light neutral card surface; switch off tracks retain their separate #D6D6D6 token |
 | **Background** | `surfaceElevated` / `navBar` | #FFFFFF | Elevated sheets and bottom navigation container |
-| **Background** | `border` | #E6E8EF | Card strokes, input outlines, unselected controls |
+| **Background** | `border` | #E6E8EF | Input outlines and unselected controls |
 | **Text** | `primary_text` / `textPrimary` | #171829 | Headings, titles, main body text |
 | **Text** | `secondary_text` / `textSecondary` | #74768A | Subtitles, helper text, captions |
 | **Text** | `tertiary_text` / `textTertiary` | #A1A4B7 | Placeholders, disabled text, search hints |
@@ -111,17 +111,17 @@ artwork, not touch areas.
 | App bar | Dark background; back affordance at start, Sora screen title, compact circular premium/settings actions at end. Respect status bar inset. |
 | Primary button | Violet gradient, md radius, white icon and buttonL label. Disabled: surfaceDisabled and textDisabled, with action disabled. |
 | Text button | primarySoft/primaryLight label and optional directional icon; no filled background. |
-| Card | surface background, border stroke, md radius, and no elevation; titleM heading. Large containers may use surfaceSunken with lg/xl radius. |
+| Card | surface background, md radius, and no stroke or elevation; titleM heading. Large containers may use surfaceSunken with lg/xl radius. |
 | Lock status card | Leading lock illustration, title, trailing toggle; inner status/example strip with divider. Status requires text as well as color. |
 | Icon tile | Rounded outlined tile; colored circular icon, centered short title, secondary description. Use brand violet for camera and semantic green for PIN as shown. |
 | List row | Rounded surface with border; leading icon tile, bodyL label, secondary caption, trailing chevron or control. |
 | Search/input | field background, outline stroke, md radius, leading search icon; placeholder uses textPlaceholder. Error uses error outline and errorSoft helper text. |
-| Switch | Off: `switch_track_off` (#D6D6D6) track and white knob by default. On gray permission and Settings cards, use `surfaceElevated` (white) for the off track and `switch_track_off` for the knob. On: violet track and white knob. Keep the knob position synchronized with state. |
+| Switch | Off: `switch_track_off` (#D6D6D6) track and white knob. On: violet track and white knob. Keep the knob position synchronized with state. |
 | AI Voice Notes hint | Keep each helper hint to one short sentence or phrase. Leave detailed instructions to visible controls and actions. |
 | Chip/tag | Compact rounded pill; violet for “New”, gold with dark text for “Pro”; icon optional. |
 | Bottom navigation | White bar flush to the screen sides and bottom; selected item uses a violet icon and bold label without an item background. Other items use ink icons/labels. Keep caption labels and consistent icon sizes. |
 | Waveform/progress | accentCyan signal bars on a dark background. Provide a text/state equivalent for recording or loading. |
-| Native ad loading | Keep the skeleton at the selected native-ad layout's exact outer and media bounds. Use `radius_xs` (8 dp) for ad container, media, icon, badge, CTA, and skeleton corners. Mirror the icon, badge, headline, description lines, and CTA geometry; animate blocks from `surfaceDisabled` to `surface`. Hide the slot on load failure or when ads are disabled. Home and Language native ads use the same media layout. |
+| Native ad loading | Keep the skeleton at the selected native-ad layout's exact outer and media bounds. Use `radius_xs` (8 dp) for ad container, media, icon, badge, CTA, and skeleton corners. Mirror the icon, badge, headline, description lines, and CTA geometry; animate blocks from `surfaceDisabled` to `surface`. Language and Onboarding native-ad CTAs use `primary_light` fill with `primary_text` labels. Hide the slot on load failure or when ads are disabled. Home and Language native ads use the same media layout. |
 | Divider | border color, 1 dp; align with the content it separates. |
 | Radio | Unselected radioRing outline; selected primarySelected ring and filled center. |
 | Permission dialog | Elevated rounded dark surface, short title and secondary explanation; subdued Cancel and gradient Allow; scrim behind. |
@@ -161,10 +161,10 @@ The lock activity, overlay, unlock preview, and wallpaper and quote previews
 use the shared `view_lock_screen` layout. Center the
 clock and date on a compact scrim panel. Stack the greeting, quote and
 Voice Note card above three 52 dp credential shortcuts. Place the separate
-58 dp violet microphone and its instruction below that row. Use white text
-and icons over the lock wallpaper scrim, with a soft blue outline on the
-Voice Note card. Keep the selected wallpaper edge to edge. Respect system
-insets and allow the controls to scroll on short screens or at larger font sizes.
+58 dp violet microphone and its instruction below that row. Use white text and
+icons over the lock wallpaper scrim. Keep the selected wallpaper edge to edge.
+Respect system insets and allow the controls to scroll on short screens or at
+larger font sizes.
 
 ### Success screens
 
@@ -177,42 +177,46 @@ Use `view_success_page` when the success screen fills its own viewport.
 
 ### Language picker extension
 
-The language reference uses pill rows: `language_row_height` 64 dp minimum,
-`language_row_radius` 32 dp, 32 dp circular flags, 24 dp radio/expand indicators,
-16 dp row padding, and 8 dp row gaps. Regional choices are indented 32 dp.
-The flat app language screen uses leading circular flags, with a globe for System
-default. A primary border alone marks the selected row.
+The language picker uses white 48 dp minimum rows with 16 dp corners, 2 dp
+elevation, 16 dp horizontal padding, 8 dp vertical padding, and 8 dp row gaps.
+Use 28 dp circular flags and an 18 dp trailing check for the selected row.
+Regional choices are indented 32 dp. The flat app language screen uses leading
+circular flags, with a globe for System default. Keep every row white; the check
+and accessible selected state identify the current choice.
 
-Rows grow for wrapped labels/font scaling. Use surface/border by default and
-primary_light fill with a primary border for the selected option. Group rows toggle expansion;
-leaf rows select a locale. Apply the selected locale when Continue is pressed.
-Flags retain national colors and are decorative; language names label each row.
-This component is an approved pill-radius exception to the standard card radius.
+Rows grow for wrapped labels/font scaling. Group rows toggle expansion; leaf
+rows select a locale. Apply the selected locale when Continue is pressed. Flags
+retain national colors and are decorative; language names label each row.
 Leave all languages unselected when no language preference exists; continuing
 without a choice uses the device language. Show the animated primary-colored hand
-beside English until the user chooses a language.
+beside English until the user chooses a language; size the hint at 36 × 33 dp.
 The security-question picker reuses the full-screen language-sheet shell with its
 close/title header, search field, rounded option rows, and bottom action.
 
 ### Onboarding extension
 
-Three full-width photographic hero artworks introduce voice commands, camera
-control, and voice notes/AI summaries. Artwork fades into bg at the lower edge;
-headings and descriptions remain native, localized text below the image. Use
-headline/Sora bold for centered headings and bodyL/Sora regular/textSecondary
-for descriptions. Keep a bottom navigation row: three 8 dp dots at start (active
-dot 20 dp wide in primaryLight), and a primaryLight outlined pill Next button at
-end, minimum 48 dp touch height. Swipe and Next advance pages; Next on page three
+The first voice page uses a native, responsive lock-screen phone illustration
+with a live clock/date, glowing lock glyph, sample phrase bubble, and microphone
+orb. The phrase waveform, microphone pulse rings, and gentle phone float animate while this page
+is selected and the fragment is resumed; stop them when the page is hidden or
+the fragment is paused. Use `primary` and `primary_dark` for the active accents.
+The artwork is decorative to accessibility; title and description remain native,
+localized text below it. Other onboarding pages keep their existing hero artwork
+and feature badges. Use headline/Sora bold for centered headings and
+bodyL/Sora regular/textSecondary for descriptions. The onboarding title and
+description use the compact 18/24 sp and 10/14 sp sizes with 8 dp horizontal
+gutters. Keep a bottom navigation row: three 8 dp dots at start (active dot 20 dp
+wide in primaryLight), and a primaryLight outlined pill Next button at end,
+minimum 48 dp touch height. Swipe and Next advance pages; Next on page three
 finishes onboarding through the existing navigation flow. The outlined action
 and pill shape match the approved onboarding reference.
 
-The voice onboarding page previews the Home voice control inside a rounded surface.
-Both screens share the microphone orb, rings, title, switch, and status layout.
-Onboarding artwork fits proportionally between Skip and the title with a 360 dp
-maximum width. The same bounds apply when the ad slot is hidden. Keep the voice
-control title, microphone, switch, and status within its surface; leave a clear
-gap above the four feature tiles. The first row's card edges and icon tiles must
-align with the fully visible lower row.
+The first page's phone has a 196 dp maximum width and a 1:1.78 width-to-height
+ratio. ConstraintLayout ratio sizing lets it shrink on short screens and when an
+ad slot reduces the available hero area. Keep the phrase bubble and microphone
+orb inside the 360–412 dp viewport and leave a clear gap between the artwork and
+the title. Home continues to use its separate voice control card and four feature
+tiles; the onboarding illustration does not embed the interactive Home controls.
 
 Onboarding native ads with media use a 130 dp square media area next to a compact
 column for the advertiser icon, Ad badge, title, description, and CTA. Descriptions
@@ -222,7 +226,7 @@ The loading skeleton uses the same 130 dp media size and column geometry.
 ### Home, settings, and notification extension
 
 Home follows the approved reference composition: a violet gradient Unlock Screen
-card, a surface Lock Screen card with primaryLight outline, large phone/lock/voice
+card, a surface Lock Screen card, large phone/lock/voice
 illustrations, trailing command-edit controls, and labelled OFF/ON switches. Card
 headers are 94 dp, illustrations 88 dp wide, status/example strips at least 64 dp,
 and switches 80 × 48 dp with 28 dp knobs. Use successSoft for status text. The four

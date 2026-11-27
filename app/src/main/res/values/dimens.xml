@@ -11,10 +11,12 @@
     <dimen name="settings_row_height">52dp</dimen>
     <dimen name="settings_banner_height">110dp</dimen>
     <!-- Language picker: reference pill rows and indented regional choices. -->
-    <dimen name="language_row_height">52dp</dimen>
-    <dimen name="language_row_radius">50dp</dimen>
+    <dimen name="language_row_height">48dp</dimen>
+    <dimen name="language_row_radius">16dp</dimen>
     <dimen name="language_flag_size">28dp</dimen>
     <dimen name="language_indicator_size">18dp</dimen>
+    <dimen name="language_hint_hand_width">36dp</dimen>
+    <dimen name="language_hint_hand_height">33dp</dimen>
     <!-- Spacing Tokens -->
     <!-- Floating bottom nav: 64dp bar + 8dp margin + 16dp breathing room for the last item. -->
     <dimen name="bottom_nav_content_inset">88dp</dimen>
@@ -63,5 +65,21 @@
     <dimen name="elevation_card">0dp</dimen>
     <dimen name="card_shadow_gutter">8dp</dimen>
     <dimen name="onboarding_artwork_max_width">360dp</dimen>
+    <!-- First onboarding page's responsive phone and voice interaction artwork. -->
+    <dimen name="onboarding_title_text_size">18sp</dimen>
+    <dimen name="onboarding_title_line_height">24sp</dimen>
+    <dimen name="onboarding_body_text_size">10sp</dimen>
+    <dimen name="onboarding_body_line_height">14sp</dimen>
+    <dimen name="onboarding_voice_phone_max_width">196dp</dimen>
+    <dimen name="onboarding_voice_phone_screen_inset">6dp</dimen>
+    <dimen name="onboarding_voice_phone_notch_width">34dp</dimen>
+    <dimen name="onboarding_voice_phone_notch_height">9dp</dimen>
+    <dimen name="onboarding_voice_phone_lock_size">58dp</dimen>
+    <dimen name="onboarding_voice_phrase_width">190dp</dimen>
+    <dimen name="onboarding_voice_phrase_height">54dp</dimen>
+    <dimen name="onboarding_voice_mic_size">92dp</dimen>
+    <dimen name="onboarding_voice_mic_ring_inner">112dp</dimen>
+    <dimen name="onboarding_voice_mic_ring_outer">132dp</dimen>
+    <dimen name="onboarding_voice_glow_size">228dp</dimen>
     <dimen name="native_ad_onboarding_media_size">130dp</dimen>
 </resources>

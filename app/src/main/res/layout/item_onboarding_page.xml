@@ -4,7 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <include
+        android:id="@+id/voiceHero"
+        layout="@layout/view_onboarding_voice_hero"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:importantForAccessibility="noHideDescendants"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <com.futurecode.voicelockscreen.ui.prelogin.OnboardingPreviewImage
         android:id="@+id/ivMockup"

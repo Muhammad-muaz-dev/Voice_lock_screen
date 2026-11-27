@@ -455,9 +455,9 @@
 
     <!-- Open Camera by Voice flow -->
     <string name="camera_permissions_heading">Additional permissions required</string>
-    <string name="camera_permissions_description">Our app needs access to these permissions to work correctly.</string>
+    <string name="camera_permissions_description">Camera and microphone access let you open the camera and use voice commands. Display access keeps the voice controls visible over other apps.</string>
     <string name="camera_access_row_desc">To take photos and record videos</string>
-    <string name="camera_microphone_access_desc">To record your voice and create voice password</string>
+    <string name="camera_microphone_access_desc">To hear and recognize your camera voice commands</string>
     <string name="camera_display_access_desc">To show the camera controls while you are using other screens</string>
     <string name="camera_permission_denied">Allow camera and microphone to use voice camera.</string>
     <string name="camera_enable_permission">Enable Permission</string>
@@ -465,12 +465,10 @@
     <string name="camera_got_it">Got It</string>
     <string name="camera_phrase_test">Say “&lt;b&gt;Open Camera&lt;/b&gt;” to test your voice</string>
     <string name="camera_record_say">Say “&lt;b&gt;Open Camera&lt;/b&gt;”</string>
-    <string name="camera_recording_initial">Initial Recording 1/3</string>
-    <string name="camera_recording_initial_desc">Speak the phrase to establish your voice profile</string>
-    <string name="camera_recording_second">Recording 2/3</string>
-    <string name="camera_recording_second_desc">Say the same phrase again to verify.</string>
-    <string name="camera_recording_third">Verification 3/3</string>
-    <string name="camera_recording_third_desc">Say the same phrase one last time to ensure accuracy</string>
+    <string name="camera_recording_initial">Recording 1 of 2</string>
+    <string name="camera_recording_initial_desc">Say “Open Camera” to create your voice profile.</string>
+    <string name="camera_recording_second">Recording 2 of 2</string>
+    <string name="camera_recording_second_desc">Say “Open Camera” once more to confirm your voice.</string>
     <string name="camera_voice_progress">Voice recording progress</string>
     <string name="camera_how_description">Control your camera effortlessly in 2 easy steps</string>
     <string name="camera_step_one">STEP 1</string>
@@ -569,9 +567,10 @@
     <string name="home_lock_by_voice">Lock screen by voice</string>
 
     <!-- Onboarding -->
-    <string name="onboard_title_1">Unlock by voice</string>
+    <string name="onboard_title_1">Speak to unlock</string>
     <string name="onboard_camera_tile_title">Open Camera</string>
-    <string name="onboard_body_1">Set a phrase to unlock your phone.</string>
+    <string name="onboard_body_1">Set a phrase. Unlock hands-free.</string>
+    <string name="onboard_voice_phrase">Open sesame</string>
     <string name="onboard_title_2">Make it yours</string>
     <string name="onboard_body_2">Pick a theme and add a daily quote.</string>
     <string name="onboard_title_3">Choose your lock</string>

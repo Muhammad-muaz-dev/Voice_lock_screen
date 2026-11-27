@@ -1,0 +1,539 @@
+<style>
+#voice-onboard-options {
+  color-scheme: light;
+  font-family: "Sora", "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+#voice-onboard-options .design-stage {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 390px);
+  aspect-ratio: 390 / 844;
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid #e6e8ef;
+  border-radius: 30px;
+  background: #ffffff;
+  color: #171829;
+}
+
+#voice-onboard-options .status-row,
+#voice-onboard-options .status-icons,
+#voice-onboard-options .skip-row,
+#voice-onboard-options .pager-row,
+#voice-onboard-options .dots,
+#voice-onboard-options .action-row,
+#voice-onboard-options .mock-row,
+#voice-onboard-options .phrase-row,
+#voice-onboard-options .unlock-row {
+  display: flex;
+  align-items: center;
+}
+
+#voice-onboard-options .status-row {
+  justify-content: space-between;
+  padding: 11px 24px 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#voice-onboard-options .status-icons {
+  gap: 5px;
+}
+
+#voice-onboard-options .status-icons i {
+  width: 14px;
+  height: 14px;
+}
+
+#voice-onboard-options .skip-row {
+  justify-content: flex-end;
+  min-height: 42px;
+  padding-inline: 22px;
+  color: #74768a;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+#voice-onboard-options .hero {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+#voice-onboard-options .hero-lockscreen {
+  background:
+    radial-gradient(ellipse at 50% 75%, rgba(99, 91, 255, 0.62), transparent 45%),
+    linear-gradient(160deg, #34276f 0%, #211c49 60%, #181a35 100%);
+  color: #ffffff;
+}
+
+#voice-onboard-options .lock-content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 27px 22px 24px;
+  text-align: center;
+}
+
+#voice-onboard-options .lock-time {
+  font-size: clamp(42px, 12vw, 58px);
+  font-weight: 500;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+#voice-onboard-options .lock-date,
+#voice-onboard-options .eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+#voice-onboard-options .lock-date {
+  margin-top: 8px;
+  color: #e1defe;
+}
+
+#voice-onboard-options .voice-panel {
+  width: 100%;
+  padding: 18px 16px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.11);
+  backdrop-filter: blur(14px);
+}
+
+#voice-onboard-options .voice-panel-label {
+  color: #e1defe;
+  font-size: 11px;
+}
+
+#voice-onboard-options .mic-button {
+  display: grid;
+  width: 68px;
+  height: 68px;
+  place-items: center;
+  margin: 12px auto 9px;
+  border-radius: 50%;
+  background: #635bff;
+  color: #ffffff;
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+#voice-onboard-options .mic-button i {
+  width: 27px;
+  height: 27px;
+}
+
+#voice-onboard-options .voice-panel strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#voice-onboard-options .lock-shortcuts {
+  display: flex;
+  gap: 15px;
+  color: #ffffff;
+}
+
+#voice-onboard-options .lock-shortcuts span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+#voice-onboard-options .lock-shortcuts i {
+  width: 18px;
+  height: 18px;
+}
+
+#voice-onboard-options .hero-setup {
+  background: linear-gradient(155deg, #f4f2ff 0%, #e9e7ff 100%);
+  padding: 22px;
+}
+
+#voice-onboard-options .setup-screen {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  border-radius: 24px;
+  background: #ffffff;
+  text-align: center;
+}
+
+#voice-onboard-options .setup-chip {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #edecff;
+  color: #5047e2;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+#voice-onboard-options .setup-mic {
+  display: grid;
+  width: 94px;
+  height: 94px;
+  place-items: center;
+  margin: 25px 0 17px;
+  border: 9px solid #edecff;
+  border-radius: 50%;
+  background: #635bff;
+  color: #ffffff;
+}
+
+#voice-onboard-options .setup-mic i {
+  width: 34px;
+  height: 34px;
+}
+
+#voice-onboard-options .wave-bars {
+  display: flex;
+  height: 32px;
+  align-items: center;
+  gap: 4px;
+  margin: 0 0 15px;
+  color: #635bff;
+}
+
+#voice-onboard-options .wave-bars span {
+  width: 4px;
+  border-radius: 5px;
+  background: currentColor;
+}
+
+#voice-onboard-options .wave-bars span:nth-child(1),
+#voice-onboard-options .wave-bars span:nth-child(7) { height: 9px; }
+#voice-onboard-options .wave-bars span:nth-child(2),
+#voice-onboard-options .wave-bars span:nth-child(6) { height: 17px; }
+#voice-onboard-options .wave-bars span:nth-child(3),
+#voice-onboard-options .wave-bars span:nth-child(5) { height: 24px; }
+#voice-onboard-options .wave-bars span:nth-child(4) { height: 31px; }
+
+#voice-onboard-options .setup-screen h3,
+#voice-onboard-options .page-copy h2 {
+  margin: 0;
+  color: #171829;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+}
+
+#voice-onboard-options .setup-screen h3 {
+  font-size: 19px;
+}
+
+#voice-onboard-options .page-copy h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+#voice-onboard-options .setup-screen p {
+  margin: 8px 0 0;
+  color: #74768a;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+#voice-onboard-options .phrase-row {
+  width: 100%;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 21px;
+  padding: 12px 10px;
+  border-radius: 14px;
+  background: #f5f4ff;
+  color: #34276f;
+  font-size: 12px;
+}
+
+#voice-onboard-options .phrase-row i {
+  width: 15px;
+  height: 15px;
+  color: #635bff;
+}
+
+#voice-onboard-options .record-dots {
+  display: flex;
+  gap: 7px;
+  margin-top: 19px;
+}
+
+#voice-onboard-options .record-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #dedcf5;
+}
+
+#voice-onboard-options .record-dots span:first-child {
+  background: #635bff;
+}
+
+#voice-onboard-options .hero-speak {
+  flex-direction: column;
+  gap: 23px;
+  background: #f8f7ff;
+  padding: 24px 20px;
+}
+
+#voice-onboard-options .speak-bubble {
+  max-width: 250px;
+  padding: 14px 17px;
+  border: 1px solid #e6e8ef;
+  border-radius: 20px 20px 20px 5px;
+  background: #ffffff;
+  color: #171829;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+}
+
+#voice-onboard-options .speak-wave {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  gap: 5px;
+  color: #635bff;
+}
+
+#voice-onboard-options .speak-wave span {
+  width: 5px;
+  border-radius: 8px;
+  background: currentColor;
+}
+
+#voice-onboard-options .speak-wave span:nth-child(3n) { height: 36px; }
+#voice-onboard-options .speak-wave span:nth-child(3n + 1) { height: 20px; }
+#voice-onboard-options .speak-wave span:nth-child(3n + 2) { height: 29px; }
+
+#voice-onboard-options .unlock-row {
+  justify-content: center;
+  gap: 18px;
+  color: #635bff;
+}
+
+#voice-onboard-options .unlock-circle {
+  display: grid;
+  width: 108px;
+  height: 108px;
+  place-items: center;
+  border: 1px solid #d7d4ff;
+  border-radius: 50%;
+  background: #edecff;
+}
+
+#voice-onboard-options .unlock-circle i {
+  width: 44px;
+  height: 44px;
+}
+
+#voice-onboard-options .unlock-arrow i {
+  width: 21px;
+  height: 21px;
+}
+
+#voice-onboard-options .unlock-caption {
+  color: #74768a;
+  font-size: 12px;
+}
+
+#voice-onboard-options .page-copy {
+  padding: 22px 24px 0;
+}
+
+#voice-onboard-options .page-copy p {
+  margin: 9px 0 0;
+  color: #74768a;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+#voice-onboard-options .pager-row {
+  justify-content: space-between;
+  padding: 18px 22px 22px;
+}
+
+#voice-onboard-options .dots {
+  gap: 6px;
+}
+
+#voice-onboard-options .dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 9px;
+  background: #dedfea;
+}
+
+#voice-onboard-options .dots span:first-child {
+  width: 27px;
+  background: #635bff;
+}
+
+#voice-onboard-options .next-button {
+  display: flex;
+  min-width: 104px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 0;
+  border-radius: 999px;
+  background: #635bff;
+  color: #ffffff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#voice-onboard-options .next-button i {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 360px) {
+  #voice-onboard-options .hero { margin-inline: 14px; }
+  #voice-onboard-options .page-copy { padding-inline: 18px; }
+  #voice-onboard-options .setup-screen { padding-inline: 14px; }
+}
+</style>
+
+<div id="voice-onboard-options" class="viz-carousel viz-dotted-background" aria-label="Voice Screen Lock onboarding designs">
+  <section data-variant="Lock Screen" aria-label="Lock Screen design">
+    <div class="design-stage">
+      <div class="status-row">
+        <span>9:41</span>
+        <span class="status-icons" aria-hidden="true">
+          <i data-lucide="signal"></i>
+          <i data-lucide="wifi"></i>
+          <i data-lucide="battery-full"></i>
+        </span>
+      </div>
+      <div class="skip-row">Skip</div>
+      <div class="hero hero-lockscreen">
+        <div class="lock-content">
+          <div>
+            <div class="lock-time">9:41</div>
+            <div class="lock-date">Monday · 12 June</div>
+          </div>
+          <div class="voice-panel">
+            <div class="voice-panel-label">VOICE SCREEN LOCK</div>
+            <div class="mic-button" aria-hidden="true"><i data-lucide="mic"></i></div>
+            <strong>Speak to unlock</strong>
+          </div>
+          <div class="lock-shortcuts" aria-label="Other unlock methods">
+            <span><i data-lucide="grid-3x3"></i></span>
+            <span><i data-lucide="key-round"></i></span>
+            <span><i data-lucide="fingerprint"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="page-copy">
+        <h2>Voice Screen Lock</h2>
+        <p>Unlock your phone with a voice phrase you choose.</p>
+      </div>
+      <div class="pager-row">
+        <div class="dots" aria-label="Page 1 of 4">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <button class="next-button" type="button">Next <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section data-variant="Voice Setup" aria-label="Voice Setup design" hidden>
+    <div class="design-stage">
+      <div class="status-row">
+        <span>9:41</span>
+        <span class="status-icons" aria-hidden="true">
+          <i data-lucide="signal"></i>
+          <i data-lucide="wifi"></i>
+          <i data-lucide="battery-full"></i>
+        </span>
+      </div>
+      <div class="skip-row">Skip</div>
+      <div class="hero hero-setup">
+        <div class="setup-screen">
+          <div class="setup-chip">Voice key · Step 1 of 3</div>
+          <div class="setup-mic" aria-hidden="true"><i data-lucide="mic"></i></div>
+          <div class="wave-bars" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <h3>Record your phrase</h3>
+          <p>Choose words that feel natural to you.</p>
+          <div class="phrase-row"><i data-lucide="audio-lines"></i><span>“Unlock my screen”</span></div>
+          <div class="record-dots" aria-label="Recording 1 of 3"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="page-copy">
+        <h2>Set up your voice key</h2>
+        <p>Record a phrase once, then unlock by voice.</p>
+      </div>
+      <div class="pager-row">
+        <div class="dots" aria-label="Page 1 of 4">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <button class="next-button" type="button">Next <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section data-variant="Speak to Unlock" aria-label="Speak to Unlock design" hidden>
+    <div class="design-stage">
+      <div class="status-row">
+        <span>9:41</span>
+        <span class="status-icons" aria-hidden="true">
+          <i data-lucide="signal"></i>
+          <i data-lucide="wifi"></i>
+          <i data-lucide="battery-full"></i>
+        </span>
+      </div>
+      <div class="skip-row">Skip</div>
+      <div class="hero hero-speak">
+        <div class="speak-bubble">“Hey, unlock my screen”</div>
+        <div class="speak-wave" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="unlock-row" aria-hidden="true">
+          <div class="unlock-circle"><i data-lucide="lock-keyhole"></i></div>
+          <span class="unlock-arrow"><i data-lucide="arrow-right"></i></span>
+          <div class="unlock-circle"><i data-lucide="lock-keyhole-open"></i></div>
+        </div>
+        <div class="unlock-caption">Your voice. Your screen.</div>
+      </div>
+      <div class="page-copy">
+        <h2>Unlock hands-free</h2>
+        <p>Speak your phrase to open your lock screen.</p>
+      </div>
+      <div class="pager-row">
+        <div class="dots" aria-label="Page 1 of 4">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <button class="next-button" type="button">Next <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </section>
+</div>

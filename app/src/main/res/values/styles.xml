@@ -21,9 +21,6 @@
     <style name="Widget.VoiceLock.Card" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/surface</item>
         <item name="cardCornerRadius">@dimen/radius_xl</item>
-        <item name="cardElevation">@dimen/elevation_card</item>
-        <item name="strokeColor">@color/border</item>
-        <item name="strokeWidth">1dp</item>
     </style>
 
     <style name="PinKeyButton" parent="Widget.MaterialComponents.Button.TextButton">

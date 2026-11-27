@@ -35,14 +35,24 @@ object AdsConfig {
     const val ONBOARDING_PAGES = 4
 
     private val brandCta = MyApplication.app.getColor(R.color.primary)
+    private val preloginCtaBackground = MyApplication.app.getColor(R.color.primary_light)
+    private val preloginCtaText = MyApplication.app.getColor(R.color.primary_text)
     private val white = android.graphics.Color.WHITE
+
+    /** Keep Language and Onboarding CTAs softly branded and readable on their light card. */
+    private fun withPreloginCta(config: ScreenAdConfig) = config.copy(
+        ctaColor = preloginCtaBackground,
+        ctaTextColor = preloginCtaText
+    )
 
     private val splashDefaults = ScreenAdConfig(
         appOpen = true, interstitial = false, banner = false, native = true, timeoutMs = 7000,
         nativeFormat = ScreenAdConfig.FORMAT_COMPACT, ctaColor = brandCta, ctaTextColor = white, ctaTextStyle = "bold"
     )
-    private val languageDefaults = splashDefaults.copy(appOpen = false)
-    private val onboardingDefaults = splashDefaults.copy(appOpen = false, nativeFormat = ScreenAdConfig.FORMAT_MEDIA)
+    private val languageDefaults = withPreloginCta(splashDefaults.copy(appOpen = false))
+    private val onboardingDefaults = withPreloginCta(
+        splashDefaults.copy(appOpen = false, nativeFormat = ScreenAdConfig.FORMAT_MEDIA)
+    )
 
     private val defaults: Map<String, Any> = buildMap {
         put(SPLASH_ADS, ScreenAdConfig.toJson(splashDefaults))
@@ -81,8 +91,10 @@ object AdsConfig {
     val adsAllowed: Boolean get() = !MyApplication.app.prefManager.adsOff
 
     val splashAds: ScreenAdConfig get() = ScreenAdConfig.parse(remote.getString(SPLASH_ADS), splashDefaults)
-    val languageAds: ScreenAdConfig get() = ScreenAdConfig.parse(remote.getString(LANGUAGE_ADS), languageDefaults)
-    val onboardingAds: ScreenAdConfig get() = ScreenAdConfig.parse(remote.getString(ONBOARDING_ADS), onboardingDefaults)
+    val languageAds: ScreenAdConfig
+        get() = withPreloginCta(ScreenAdConfig.parse(remote.getString(LANGUAGE_ADS), languageDefaults))
+    val onboardingAds: ScreenAdConfig
+        get() = withPreloginCta(ScreenAdConfig.parse(remote.getString(ONBOARDING_ADS), onboardingDefaults))
     val inAppScreen: Boolean get() = remote.getBoolean(INAPP_SCREEN)
     val languageScreen: Boolean get() = remote.getBoolean(LANGUAGE_SCREEN)
     val onboardingScreen: Boolean get() = remote.getBoolean(ONBOARDING_SCREEN) && enabledOnboardingPages().isNotEmpty()

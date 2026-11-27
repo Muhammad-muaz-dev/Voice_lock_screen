@@ -47,7 +47,7 @@ import java.util.Locale
 import kotlinx.coroutines.launch
 
 /**
- * Open Camera by Voice: permissions -> confirm voice (3 recordings) -> how it works
+ * Open Camera by Voice: permissions -> confirm voice (2 recordings) -> how it works
  * -> main ON/OFF toggle (with first-run coach mark) -> all set.
  */
 class CameraVoiceFragment :
@@ -469,8 +469,7 @@ class CameraVoiceFragment :
         binding.promptPill.isVisible = stage == 0
         val (title, description) = when (stage) {
             0 -> R.string.camera_recording_initial to R.string.camera_recording_initial_desc
-            1 -> R.string.camera_recording_second to R.string.camera_recording_second_desc
-            else -> R.string.camera_recording_third to R.string.camera_recording_third_desc
+            else -> R.string.camera_recording_second to R.string.camera_recording_second_desc
         }
         binding.tvRecordingTitle.setText(title)
         binding.tvRecordingDescription.setText(description)
@@ -491,10 +490,10 @@ class CameraVoiceFragment :
     }
 
     private fun renderRecordingDescriptionOnly() {
-        val description = when (recordings.coerceIn(0, REQUIRED_RECORDINGS - 1)) {
-            0 -> R.string.camera_recording_initial_desc
-            1 -> R.string.camera_recording_second_desc
-            else -> R.string.camera_recording_third_desc
+        val description = if (recordings == 0) {
+            R.string.camera_recording_initial_desc
+        } else {
+            R.string.camera_recording_second_desc
         }
         binding.tvRecordingDescription.setText(description)
         binding.tvRecordingDescription.setTextColor(ContextCompat.getColor(requireContext(), R.color.textSecondary))
@@ -649,7 +648,7 @@ class CameraVoiceFragment :
         private const val KEY_RECORDINGS = "recordings"
         private const val KEY_RETURN_TO_MAIN = "return_to_main"
         private const val CAMERA_PHRASE = "open camera"
-        private const val REQUIRED_RECORDINGS = 3
+        private const val REQUIRED_RECORDINGS = 2
         private const val TTS_UTTERANCE = "camera_phrase"
 
         private const val RECORD_DONE_MS = 700L

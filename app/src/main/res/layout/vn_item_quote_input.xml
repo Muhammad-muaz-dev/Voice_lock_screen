@@ -39,6 +39,8 @@
             android:maxLength="80"
             android:minHeight="0dp"
             android:padding="0dp"
+            android:theme="@style/ThemeOverlay.VoiceLock.BlackCursor"
+            android:textCursorDrawable="@drawable/vn_bg_text_cursor_black"
             android:textColor="@color/vn_neutral01"
             android:textColorHint="@color/vn_neutral06"
             app:layout_constraintBottom_toTopOf="@id/tvCounter"
